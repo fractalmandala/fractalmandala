@@ -1,0 +1,38 @@
+body, html
+	margin: 0
+	box-sizing: border-box
+	font-family: 'Akshar', sans-serif
+	background-color: hsla(0,2%,2%,1)
+	background-image: radial-gradient(at 80% 80%, hsla(101,79%,9%,1) 0px, transparent 50%), radial-gradient(at 40% 0%, hsla(126,75%,7%,1) 0px, transparent 50%)
+	color: white
+
+a
+	text-decoration: none
+	color: inherit
+	&:hover
+		color: inherit
+
+.bdr
+	border: 1px solid red
+
+*
+	box-sizing: border-box
+
+.boxr
+	display: flex
+	flex-direction: row
+	row-gap: 8px
+
+.boxc
+	display: flex
+	flex-direction: column
+
+.pagecontainer
+	box-sizing: border-box
+	display: flex
+	flex-direction: column
+	min-height: 100vh
+	@media screen and (min-width: 1024px)	
+		padding: 40px
+	@media screen and (max-width: 1023px)
+		padding: 20px
