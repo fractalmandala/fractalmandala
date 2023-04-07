@@ -1,7 +1,7 @@
 <script lang="ts">
 
 	import { get, writable } from 'svelte/store'
-	import { crossfade, fly } from 'svelte/transition'
+	import { crossfade, fly, scale } from 'svelte/transition'
 	import { quintIn } from 'svelte/easing'
 	import { clickOutsideAction } from 'svelte-legos'
 	import supabase from '$lib/utils/supabase'
@@ -12,6 +12,25 @@
 	let showResults:boolean
 	let searchinput
 	let fauxtoggler:boolean = false
+	let notepad:boolean = false
+
+	let title:string 
+	let type:string
+	let tags:string
+	let lang:string
+	let url:string
+	let note:string
+	let codesnippet:string
+
+	function handleClickOutside(){
+		if ( notepad === true ) {
+			notepad = !notepad
+		}
+	}
+
+	function toggleNotepad(){
+		notepad = !notepad
+	}
 
 	function toggleFaux(){
 		fauxtoggler = !fauxtoggler
@@ -42,6 +61,24 @@
 	resultsStore.set(data)
 	loadingStore = false
 	input = ''
+}
+
+export async function inputNote(){
+	try {
+		const { data, error } = await supabase
+		.from('amrit-notes')
+		.insert({ title: title, type: type, lang: lang, tags: tags, url: url, note: note, codesnippet: codesnippet})
+		if (error) throw new Error(error.message)
+		title = ''
+		type = ''
+		lang = ''
+		tags = ''
+		url = ''
+		note = ''
+		codesnippet = ''
+	} finally {
+			alert('submitted')
+		}
 }
 
 	$: if ( y > 500) {
@@ -94,7 +131,7 @@
 				<path d="M47.9482 41.7487L38.6014 32.4019C38.1795 31.98 37.6076 31.7456 37.0076 31.7456H35.4795C38.067 28.4362 39.6045 24.2737 39.6045 19.7456C39.6045 8.97373 30.8764 0.245605 20.1045 0.245605C9.33262 0.245605 0.604492 8.97373 0.604492 19.7456C0.604492 30.5175 9.33262 39.2456 20.1045 39.2456C24.6326 39.2456 28.7951 37.7081 32.1045 35.1206V36.6487C32.1045 37.2487 32.3389 37.8206 32.7607 38.2425L42.1076 47.5894C42.9889 48.4706 44.4139 48.4706 45.2857 47.5894L47.9389 44.9362C48.8201 44.055 48.8201 42.63 47.9482 41.7487ZM20.1045 31.7456C13.4764 31.7456 8.10449 26.3831 8.10449 19.7456C8.10449 13.1175 13.467 7.74561 20.1045 7.74561C26.7326 7.74561 32.1045 13.1081 32.1045 19.7456C32.1045 26.3737 26.742 31.7456 20.1045 31.7456Z" fill="#272727"/>
 			</svg>
 		</div>
-		<svg width="16" height="16" viewBox="0 0 35 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<svg width="16" height="16" viewBox="0 0 35 34" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={toggleNotepad} on:keydown={toggleFaux}>
 			<path id="iconpath" d="M20.5216 0.0751953L14.3867 0.075197L14.5262 13.8787L0.722656 13.7393V19.8742L14.5262 19.7348L14.3867 33.5383H20.5216L20.3822 19.7348L34.1857 19.8742V13.7393L20.3822 13.8787L20.5216 0.0751953Z" fill="#FFFFFF"/>
 		</svg>
 	</div>
@@ -117,6 +154,22 @@
 			</p>
 		{/each}
 	{/if}
+	</div>
+{/if}
+
+{#if notepad}
+	<div class="boxc notes" transition:scale>
+		<div class="notesection boxc" use:clickOutsideAction on:clickoutside={handleClickOutside}>
+			<input type="text" placeholder="title" bind:value={title}/>
+			<input type="text" placeholder="type" bind:value={type}/>
+			<input type="text" placeholder="tags" bind:value={tags}/>
+			<input type="text" placeholder="lang" bind:value={lang}/>
+			<small>Note:</small>
+			<textarea bind:value={note}/>
+			<small>Code:</small>
+			<textarea bind:value={codesnippet}/>
+			<button class="neon" on:click={inputNote} on:keydown={toggleFaux}>Submit</button>
+		</div>
 	</div>
 {/if}
 
@@ -193,5 +246,28 @@
 	background-color: hsla(141,2%,4%,1)
 	background-image: radial-gradient(at 84% 29%, hsla(130,85%,11%,1) 0px, transparent 50%), radial-gradient(at 25% 80%, hsla(85,3%,4%,1) 0px, transparent 50%)
 	
+.notes
+	position: fixed
+	top: 0
+	left: 0
+	height: 100%
+	width: 100%
+	x-index: 900
+	backdrop-filter: blur(10px)
+	align-items: center
+	justify-content: center
+	.notesection
+		input[type="text"]
+			padding: 8px
+			margin-bottom: 16px
+		textarea
+			height: 100px
+			margin-bottom: 16px
+			padding: 8px
+		@media screen and (min-width: 1024px)
+			width: 50%	
+		@media screen and (max-width: 1023px)
+			width: 80%
+
 
 </style>
