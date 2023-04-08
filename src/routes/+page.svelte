@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte'
 	import { flip } from 'svelte/animate'
 	import { crossfade, fly } from 'svelte/transition'
-	import { allNotes, allCodes, allOthers, CodeCSS, CodeJS, CodeHTML } from '$lib/utils/supabase'
+	import { allNotes, allCodes, allOthers, CodeCSS, CodeJS, CodeHTML, quillNotes } from '$lib/utils/supabase'
 	import { allDocs } from '$lib/utils/localpulls'
 	
 	let notes:any
@@ -12,8 +12,9 @@
 	let cjs:any
 	let chtml:any
 	let docs:any
+	let quills:any
 	let faux:boolean = false
-	let area:boolean[] = Array(7).fill(false)
+	let area:boolean[] = Array(8).fill(false)
 	area[1] = true
 
 	function toggleArea(index:number) {
@@ -41,6 +42,7 @@
 		cjs = await CodeJS()
 		chtml = await CodeHTML()
 		docs = await allDocs()
+		quills = await quillNotes()
 	})
 </script>
 <div class="pagecontainer">
@@ -52,6 +54,7 @@
 		<h5 on:click={() => toggleArea(5)} on:keydown={toggleFaux}>js</h5>
 		<h5 on:click={() => toggleArea(6)} on:keydown={toggleFaux}>styling</h5>
 		<h5 on:click={() => toggleArea(7)} on:keydown={toggleFaux}>docs</h5>
+		<h5 on:click={() => toggleArea(8)} on:keydown={toggleFaux}>blog</h5>
 	</div>
 	{#if area[1]}
 		{#if notes && notes.length > 0}
@@ -138,6 +141,19 @@
 				<h4 in:fly={{ duration: 100, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: i * 20, x: 0, y: -48}}>
 					<a href="{item.path}">
 						{item.meta.title}
+					</a>
+				</h4>
+			{/each}
+			</div>
+		{/if}
+	{/if}
+	{#if area[8]}
+		{#if quills && quills.length > 0}
+			<div class="boxc">
+			{#each quills as item, i}
+				<h4 in:fly={{ duration: 100, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: i * 20, x: 0, y: -48}}>
+					<a href="/blog/{item.id}">
+						{item.title}
 					</a>
 				</h4>
 			{/each}

@@ -34,8 +34,12 @@
 	"type": "module",
 	"dependencies": {
 		"@supabase/supabase-js": "^2.14.0",
+		"gpt3-tokenizer": "^1.1.5",
 		"highlight.js": "^11.7.0",
+		"openai": "^3.2.1",
 		"prismjs": "^1.29.0",
+		"quill": "^1.3.7",
+		"sse": "^0.0.8",
 		"svelte-legos": "^0.1.9",
 		"svelte-swipe": "^1.9.2"
 	}

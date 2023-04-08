@@ -117,6 +117,17 @@ export async function allNotes() {
 	const { data, error } = await supabase
 		.from('amrit-notes')
 		.select()
+		.neq('type','quillnote')
+		.order('id',{ascending: false})
+		if (error) throw new Error(error.message)
+	return data
+}
+
+export async function quillNotes() {
+	const { data, error } = await supabase
+		.from('amrit-notes')
+		.select()
+		.eq('type','quillnote')
 		.order('id',{ascending: false})
 		if (error) throw new Error(error.message)
 	return data
@@ -219,3 +230,13 @@ export async function formentries(){
 		if (error) throw new Error(error.message)
 		return data
 	}
+
+export async function blogPosts(){
+	const { data, error } = await supabase
+	.from('amrit-notes')
+	.select()
+	.eq('type','quillnote')
+	.order('id')
+	if (error) throw new Error(error.message)
+	return data
+}

@@ -48,5 +48,5 @@ Then, modify your layout.svelte to get the current path, compare it with the ite
 Here's what's happening:
 
 We import the page store from SvelteKit and create a reactive variable currentPath that holds the current page path.
-In the <a> element, we use a ternary expression to conditionally apply the active-item class if the current path matches the item's path.
+In the `<a>` element, we use a ternary expression to conditionally apply the active-item class if the current path matches the item's path.
 Now, when a user is on a page that matches one of the items in the list, the corresponding list item will be styled with the active-item class.
