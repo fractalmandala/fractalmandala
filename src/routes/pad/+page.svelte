@@ -66,14 +66,21 @@
 
 .pagecontainer
 	padding-left: 64px
+	@media screen and (max-width: 1023px)
+		padding-left: 32px
+		padding-right: 32px
 
 .editor-wrapper
 	width: 60%
 	margin-top: 32px
 	margin-bottom: 16px
+	@media screen and (max-width: 1023px)
+		width: 100%
 
 .notesection
 	row-gap: 8px
 	width: 30%
+	@media screen and (max-width: 1023px)
+		width: 100%
 
 </style>

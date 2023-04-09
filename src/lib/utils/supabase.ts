@@ -13,6 +13,7 @@ export const allCodes = async() => {
 		.from('amrit-notes')
 		.select()
 		.eq('type','code')
+		.neq('tags','tests')
 		.order('id',{ascending: false})
 		if (error) throw new Error(error.message)
 	return data
@@ -23,6 +24,7 @@ export const allGenerals = async() => {
 		.from('amrit-notes')
 		.select()
 		.eq('type','general')
+		.neq('tags','tests')
 		.order('id',{ascending: false})
 		if (error) throw new Error(error.message)
 	return data
@@ -108,6 +110,7 @@ export async function allOthers()  {
 		.from('amrit-notes')
 		.select()
 		.or('type.eq.general,type.eq.bookmark,type.eq.task')
+		.neq('tags','tests')
 		.order('id',{ascending: false})
 		if (error) throw new Error(error.message)
 	return data
@@ -118,6 +121,7 @@ export async function allNotes() {
 		.from('amrit-notes')
 		.select()
 		.neq('type','quillnote')
+		.neq('tags','tests')
 		.order('id',{ascending: false})
 		if (error) throw new Error(error.message)
 	return data
@@ -239,4 +243,24 @@ export async function blogPosts(){
 	.order('id')
 	if (error) throw new Error(error.message)
 	return data
+}
+
+export async function searchResult(searchinput:any){
+	const { data, error } = await supabase
+		.from('amrit-notes')
+		.select()
+		.textSearch('fts', searchinput)
+		.order('id')
+		if (error) throw new Error(error.message)
+		return data
+}
+
+export async function fixedResult(searchword:any){
+	const { data, error } = await supabase
+		.from('amrit-notes')
+		.select()
+		.textSearch('fts', searchword)
+		.order('id')
+		if (error) throw new Error(error.message)
+		return data
 }

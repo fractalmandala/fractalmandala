@@ -2,9 +2,6 @@ body, html
 	margin: 0
 	box-sizing: border-box
 	font-family: 'Akshar', sans-serif
-	background-color: hsla(0,2%,2%,1)
-	background-image: radial-gradient(at 80% 80%, hsla(101,79%,9%,1) 0px, transparent 50%), radial-gradient(at 40% 0%, hsla(126,75%,7%,1) 0px, transparent 50%)
-	color: white
 
 a
 	text-decoration: none
@@ -49,3 +46,22 @@ a
 	transition: all 0.09s ease
 	&:hover
 		transform: scale(0.9)
+
+.neon.light
+	background-color: hsla(0,0%,100%,1)
+	background-image: radial-gradient(at 25% 23%, hsla(126,66%,45%,1) 0px, transparent 50%), radial-gradient(at 86% 61%, hsla(155,85%,36%,1) 0px, transparent 50%)
+	border: 1px solid #d7d7d7
+
+.doc-card, .snip-card
+	background: #171717
+	p
+		margin: 4px 0
+		text-transform: uppercase
+		color: white
+		font-size: 1.12rem
+		line-height: 1.1
+		font-weight: 400
+		&:hover
+			color: #10D56C
+	small
+		color: #474747
