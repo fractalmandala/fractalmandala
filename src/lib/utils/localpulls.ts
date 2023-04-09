@@ -78,3 +78,21 @@ export async function selectedTag(selecttag:any) {
   const filteredposts = allPosts.filter((post) => post.meta.tags.includes(selecttag))
   return filteredposts;
 }
+
+export async function allMandalas() {
+	const allPostFiles = import.meta.glob('/src/routes/mandala/*.md')
+	const iterablePostFiles = Object.entries(allPostFiles)
+	const allPosts = await Promise.all(
+		iterablePostFiles.map(async ([path, resolver]) => {
+			// @ts-ignore
+			const { metadata } = await resolver()
+			const postPath = path.slice(11,-3)
+			return {
+				meta: metadata,
+				path: postPath,
+			}
+		})
+	)
+	// @ts-ignore
+	return allPosts
+}

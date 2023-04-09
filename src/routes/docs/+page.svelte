@@ -291,7 +291,7 @@
 		text-transform: uppercase
 		padding: 4px
 		cursor: pointer
-		font-size: 14px
+		font-size: 12px
 		&:hover
 			background: #10D56C
 			color: white
@@ -315,6 +315,7 @@
 		flex-direction: row
 		height: 48px
 		align-items: center
+		justify-content: flex-start
 		padding: 64px 32px 0 32px
 	@media screen and (max-width: 1023px)
 		flex-direction: column
