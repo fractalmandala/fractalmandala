@@ -55,3 +55,26 @@ export async function docDocs() {
 	const featuredPosts = allPosts.filter((post) => post.meta.type === "documentation")
 	return featuredPosts
 }
+
+export async function selectedTag(selecttag:any) {
+	const allPostFiles = import.meta.glob('/src/routes/docs/*.md')
+	const iterablePostFiles = Object.entries(allPostFiles)
+	const allPosts = await Promise.all(
+		iterablePostFiles.map(async ([path, resolver]) => {
+			// @ts-ignore
+			const { metadata } = await resolver()
+			const postPath = path.slice(11,-3)
+			return {
+				meta: metadata,
+				path: postPath,
+			}
+		})
+	)
+
+  if (selecttag === '') {
+    return allPosts;
+  }
+	// @ts-ignore
+  const filteredposts = allPosts.filter((post) => post.meta.tags.includes(selecttag))
+  return filteredposts;
+}

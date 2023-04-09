@@ -1,6 +1,6 @@
 ---
 title: Split Words, or Text to Columns
-tags: sql
+tags: sql star
 type: code
 ---
 

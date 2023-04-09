@@ -1,5 +1,5 @@
 ---
-title: lenus
+title: lenis
 tags: scroll
 type: documentation
 ---

@@ -1,6 +1,6 @@
 ---
 title: SQL - trim columns
-tags: sql
+tags: sql star
 type: code
 ---
 

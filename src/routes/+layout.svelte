@@ -166,36 +166,36 @@
 		</div>
 		<div class="thelinks">
 			{#if showrest}
-			<div class="gotocodes" style="height: 16px; opacity: {appearance/300}">
+			<div class="gotocodes forsizing" style="height: 16px; opacity: {appearance/300}">
 				<a href="/codes" target="_self">
-				<svg width="16" height="16" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<svg width="20" height="20" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M16.1998 0.433105H1.47984C1.12584 0.433105 0.839844 0.719105 0.839844 1.07311V15.7931C0.839844 16.1471 1.12584 16.4331 1.47984 16.4331H16.1998C16.5538 16.4331 16.8398 16.1471 16.8398 15.7931V1.07311C16.8398 0.719105 16.5538 0.433105 16.1998 0.433105ZM8.86184 8.5551L5.02184 11.7751C4.91784 11.8631 4.75984 11.7891 4.75984 11.6531V10.3991C4.75984 10.3531 4.78184 10.3071 4.81784 10.2771L7.01384 8.43311L4.81784 6.58911C4.79946 6.57459 4.78467 6.55603 4.77461 6.53487C4.76455 6.51372 4.7595 6.49053 4.75984 6.46711V5.21311C4.75984 5.07711 4.91784 5.00311 5.02184 5.09111L8.86184 8.30911C8.93984 8.37311 8.93984 8.4911 8.86184 8.5551ZM12.9198 11.6531C12.9198 11.7411 12.8518 11.8131 12.7698 11.8131H9.06984C8.98784 11.8131 8.91984 11.7411 8.91984 11.6531V10.6931C8.91984 10.6051 8.98784 10.5331 9.06984 10.5331H12.7698C12.8518 10.5331 12.9198 10.6051 12.9198 10.6931V11.6531Z" fill="white"/>
 				</svg>
 				</a>
 			</div>
-			<div class="gotodocs" style="height: 16px; opacity: {appearance/300}">
+			<div class="gotodocs forsizing" style="height: 16px; opacity: {appearance/300}">
 				<a href="/docs" target="_self">
-				<svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<svg width="20" height="20" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M7.35714 0.346071V5.57143C7.35714 5.60932 7.37219 5.64565 7.39898 5.67244C7.42578 5.69923 7.46211 5.71429 7.5 5.71429H12.7254C12.7395 5.7143 12.7533 5.71013 12.765 5.7023C12.7768 5.69448 12.7859 5.68335 12.7914 5.67032C12.7968 5.65729 12.7982 5.64294 12.7955 5.62909C12.7928 5.61524 12.786 5.60251 12.7761 5.5925L7.47893 0.295357C7.46892 0.285407 7.45619 0.278645 7.44234 0.275925C7.42849 0.273205 7.41414 0.274649 7.40111 0.280075C7.38808 0.285501 7.37695 0.294665 7.36913 0.306411C7.3613 0.318156 7.35713 0.331957 7.35714 0.346071Z" fill="white"/>
 					<path d="M6.5 6.85714C6.42422 6.85714 6.35155 6.82704 6.29797 6.77346C6.24439 6.71988 6.21429 6.6472 6.21429 6.57143V0H0.928571C0.814907 0 0.705898 0.0451529 0.625526 0.125526C0.545153 0.205898 0.5 0.314907 0.5 0.428571V15.5714C0.5 15.6851 0.545153 15.7941 0.625526 15.8745C0.705898 15.9548 0.814907 16 0.928571 16H12.6429C12.7565 16 12.8655 15.9548 12.9459 15.8745C13.0263 15.7941 13.0714 15.6851 13.0714 15.5714V6.85714H6.5ZM10.2143 12.5714H3.35714V11.4286H10.2143V12.5714ZM10.2143 9.71429H3.35714V8.57143H10.2143V9.71429Z" fill="white"/>
 				</svg>
 				</a>
 			</div>
-			<div class="addnote" on:click={toggleInputNote} on:keydown={fauxfake} style="opacity: {appearance/300}">
-				<svg width="16" height="16" viewBox="0 0 35 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<div class="addnote forsizing" on:click={toggleInputNote} on:keydown={fauxfake} style="opacity: {appearance/300}">
+				<svg width="20" height="20" viewBox="0 0 35 34" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path id="iconpath" d="M20.5216 0.0751953L14.3867 0.075197L14.5262 13.8787L0.722656 13.7393V19.8742L14.5262 19.7348L14.3867 33.5383H20.5216L20.3822 19.7348L34.1857 19.8742V13.7393L20.3822 13.8787L20.5216 0.0751953Z" fill="#FFFFFF"/>
 				</svg>
 			</div>
-			<div class="openpad" style="opacity: {appearance/300}">
+			<div class="openpad forsizing" style="opacity: {appearance/300}">
 				<a href="/pad" target="_self">
-					<svg width="16" height="16" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<svg width="20" height="20" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M15.0605 0.658696L15.4946 1.09278C16.0927 1.69167 16.0022 2.75334 15.2908 3.46406L6.33907 12.4158L3.4388 13.4767C3.07461 13.6106 2.71998 13.437 2.64788 13.0904C2.62351 12.9647 2.63498 12.8347 2.68099 12.7152L3.76252 9.78993L12.6892 0.862495C13.4007 0.151774 14.4623 0.0598066 15.0605 0.658696ZM5.94839 1.54894C6.04501 1.54894 6.14068 1.56797 6.22995 1.60494C6.31921 1.64192 6.40032 1.69611 6.46864 1.76443C6.53696 1.83275 6.59115 1.91386 6.62813 2.00312C6.6651 2.09238 6.68413 2.18806 6.68413 2.28467C6.68413 2.38129 6.6651 2.47696 6.62813 2.56623C6.59115 2.65549 6.53696 2.7366 6.46864 2.80492C6.40032 2.87324 6.31921 2.92743 6.22995 2.96441C6.14068 3.00138 6.04501 3.02041 5.94839 3.02041H3.00545C2.61519 3.02041 2.24091 3.17544 1.96496 3.4514C1.689 3.72735 1.53397 4.10163 1.53397 4.49188V13.3207C1.53397 13.711 1.689 14.0853 1.96496 14.3612C2.24091 14.6372 2.61519 14.7922 3.00545 14.7922H11.8343C12.2245 14.7922 12.5988 14.6372 12.8748 14.3612C13.1507 14.0853 13.3058 13.711 13.3058 13.3207V10.3778C13.3058 10.1826 13.3833 9.99551 13.5213 9.85753C13.6592 9.71956 13.8464 9.64204 14.0415 9.64204C14.2366 9.64204 14.4238 9.71956 14.5617 9.85753C14.6997 9.99551 14.7772 10.1826 14.7772 10.3778V13.3207C14.7772 14.1012 14.4672 14.8498 13.9153 15.4017C13.3634 15.9536 12.6148 16.2637 11.8343 16.2637H3.00545C2.22493 16.2637 1.47638 15.9536 0.924469 15.4017C0.37256 14.8498 0.0625 14.1012 0.0625 13.3207V4.49188C0.0625 3.71137 0.37256 2.96282 0.924469 2.41091C1.47638 1.859 2.22493 1.54894 3.00545 1.54894H5.94839Z" fill="white"/>
 					</svg>
 				</a>
 			</div>
 			{/if}
-			<div class="opensearch" on:click={toggleSearchStart} on:keydown={fauxfake} style="opacity: {appearance/300}">
-				<svg id="searcher" width="16" height="16" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<div class="opensearch forsizing" on:click={toggleSearchStart} on:keydown={fauxfake} style="opacity: {appearance/300}">
+				<svg id="searcher" width="20" height="20" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M47.9482 41.7487L38.6014 32.4019C38.1795 31.98 37.6076 31.7456 37.0076 31.7456H35.4795C38.067 28.4362 39.6045 24.2737 39.6045 19.7456C39.6045 8.97373 30.8764 0.245605 20.1045 0.245605C9.33262 0.245605 0.604492 8.97373 0.604492 19.7456C0.604492 30.5175 9.33262 39.2456 20.1045 39.2456C24.6326 39.2456 28.7951 37.7081 32.1045 35.1206V36.6487C32.1045 37.2487 32.3389 37.8206 32.7607 38.2425L42.1076 47.5894C42.9889 48.4706 44.4139 48.4706 45.2857 47.5894L47.9389 44.9362C48.8201 44.055 48.8201 42.63 47.9482 41.7487ZM20.1045 31.7456C13.4764 31.7456 8.10449 26.3831 8.10449 19.7456C8.10449 13.1175 13.467 7.74561 20.1045 7.74561C26.7326 7.74561 32.1045 13.1081 32.1045 19.7456C32.1045 26.3737 26.742 31.7456 20.1045 31.7456Z" fill="#272727"/>
 				</svg>
 			</div>
@@ -290,6 +290,32 @@
 
 <style lang="sass">
 
+.forsizing
+	height: 20px
+	display: flex
+	flex-direction: row
+	align-items: center
+	justify-content: center
+	svg
+		object-fit: cover
+		height: 20px
+	@media screen and (max-width: 1023px)
+		svg
+			height: 16px
+
+.forsizing a
+	height: 20px
+	display: flex
+	flex-direction: row
+	align-items: center
+	justify-content: center
+	svg
+		object-fit: cover
+		height: 20px
+	@media screen and (max-width: 1023px)
+		svg
+			height: 16px
+
 .sidemodal
 	display: flex
 	flex-direction: column
@@ -332,7 +358,7 @@
 	left: 0
 	height: calc(100vh - 64px)
 	width: 100vw
-	backdrop-filter: blur(30px)
+	background: #171717
 	z-index: 1000
 	.notes
 		align-items: center
@@ -383,7 +409,6 @@
 	align-items: center
 	gap: 24px
 	.addnote
-		height: 16px
 		cursor: pointer
 		svg path
 			fill: white
@@ -391,7 +416,6 @@
 			svg path
 				fill: #10D56C
 	.openpad
-		height: 16px
 		cursor: pointer
 		svg path
 			fill: white
@@ -399,7 +423,6 @@
 			svg path
 				fill: #10D56C
 	.opensearch
-		height: 16px
 		cursor: pointer
 		svg path
 			fill: white
@@ -407,7 +430,6 @@
 			svg path
 				fill: #10D56C
 	.gotodocs a
-		height: 16px
 		cursor: pointer
 		svg path
 			fill: white
@@ -415,7 +437,6 @@
 			svg path
 				fill: #10D56C
 	.gotocodes a
-		height: 16px
 		cursor: pointer
 		svg path
 			fill: white

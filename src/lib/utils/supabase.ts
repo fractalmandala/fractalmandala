@@ -19,6 +19,18 @@ export const allCodes = async() => {
 	return data
 }
 
+export const filteredCode = async(language:any) => {
+	const { data, error } = await supabase
+		.from('amrit-notes')
+		.select()
+		.eq('type','code')
+		.eq('lang',language)
+		.neq('tags','tests')
+		.order('id',{ascending: false})
+		if (error) throw new Error(error.message)
+	return data
+}
+
 export const allGenerals = async() => {
 	const { data, error } = await supabase
 		.from('amrit-notes')
@@ -260,6 +272,16 @@ export async function fixedResult(searchword:any){
 		.from('amrit-notes')
 		.select()
 		.textSearch('fts', searchword)
+		.order('id')
+		if (error) throw new Error(error.message)
+		return data
+}
+
+export async function tableTags(selectag:any){
+	const { data, error } = await supabase
+		.from('amrit-notes')
+		.select()
+		.textSearch('tags', selectag)
 		.order('id')
 		if (error) throw new Error(error.message)
 		return data
