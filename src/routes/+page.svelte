@@ -76,7 +76,8 @@
 		<div class="gridof6">
 			{#each notes as item, i}
 				<div class="boxc" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: i * 20, x: 0, y: -48}}>
-				<p>
+				<small style="text-transform: uppercase; color: #10D56C; font-size: 10px">{item.type}</small>
+				<p style="padding-top: 4px">
 					<a href="/notes/{item.id}">
 						{item.title}
 					</a>
@@ -221,18 +222,21 @@
 
 p
 	margin: 4px 0
-	text-transform: uppercase
+	text-transform: capitalize
 	color: white
-	font-size: 1.12rem
+	font-size: 1rem
 	line-height: 1.1
 	font-weight: 400
 	&:hover
 		color: #10D56C
+	@media screen and (max-width: 1023px)
+		font-size: 16px
 
 small
 	color: #474747
 
 .pagecontainer
+	min-width: 100vw
 	.boxr
 		justify-content: flex-start
 		border-bottom: 1px solid #272727
@@ -258,6 +262,10 @@ small
 	@media screen and (max-width: 1023px)
 		.boxr
 			justify-content: center
+			flex-wrap: wrap
+			row-gap: 2px
+			h5
+				font-size: 15px
 
 .gridof6
 	display: grid
@@ -300,7 +308,7 @@ small
 		gap: 8px 8px
 		.boxc
 			border: 1px solid #272727
-			padding: 8px
+			padding: 0px
 			transition: 0.35s ease
 			&:hover
 				padding: 0
@@ -314,7 +322,7 @@ small
 #imagebox
 	height: 144px
 	@media screen and (max-width: 1023px)
-		height: 120px
+		height: 88px
 
 .modallightbox
 	display: flex

@@ -169,6 +169,7 @@
 .typetype
 	color: #10D56c
 	text-transform: uppercase
+	font-size: 12px
 
 .snip-card
 	.boxr
@@ -182,6 +183,7 @@
 		box-shadow: 4px 8px 14px #000000
 	small
 		margin: 0
+
 
 .pagecontainer
 	display: grid

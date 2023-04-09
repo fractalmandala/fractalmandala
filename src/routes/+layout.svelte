@@ -26,6 +26,7 @@
 	let showResults = false
 	let loadingStore = false;
 	let inputNote:boolean = false
+	let linksonmobile:boolean = true
 
 	let title:string 
 	let type:string
@@ -47,7 +48,7 @@
 		mobileViewEnable = true
 	}
 
-	$: if ( y <= 100 ) {
+	$: if ( y <= 20 ) {
 		appearance = 50
 	} else {
 		appearance = y
@@ -55,12 +56,18 @@
 
 	$: if ( screenWidth <= 1023 ) {
 		showrest = !startsearch
+		linksonmobile = true
 	} else {
 		showrest = true
+		linksonmobile = false
 	}
 
 	function toggleSearchStart(){
 		startsearch = !startsearch
+	}
+	
+	function toggleLinka(){
+		linksonmobile = !linksonmobile
 	}
 
 	const searchWord = async() => {
@@ -133,15 +140,15 @@
 <svelte:window bind:scrollY={y} bind:innerWidth={screenWidth}/>
 
 <svelte:head>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
-<link href="https://fonts.googleapis.com/css2?family=Akshar:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css2?family=Spline+Sans+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Spline+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </svelte:head>
 
 <div class="themer" class:light={light}>
-	<div class="theheader">
-		<div style="display: flex; flex-direction: row; gap: 16px; height: 22px">
-		<div class="thelogo">
+	<div class="theheader" style="background: rgba(23,23,23,{y/200})">
+		<div style="display: flex; flex-direction: row; gap: 16px; height: 22px; justify-content: flex-end">
+			<div class="thelogo">
 			<a href="/" target="_self">
 			<svg id="manda" width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: rotate({y/4}deg)">
 			<path fill-rule="evenodd" clip-rule="evenodd" d="M9.99995 4.25C10.4142 4.25 10.75 4.58579 10.75 5V10.567L15.6249 13.3815C15.9836 13.5886 16.1065 14.0473 15.8994 14.406C15.6923 14.7648 15.2336 14.8877 14.8749 14.6806L9.99995 11.866L5.125 14.6806C4.76628 14.8877 4.30759 14.7648 4.10048 14.406C3.89337 14.0473 4.01628 13.5886 4.375 13.3815L9.24995 10.567V5C9.24995 4.58579 9.58574 4.25 9.99995 4.25Z" fill="white"/>
@@ -159,12 +166,12 @@
 			<path fill-rule="evenodd" clip-rule="evenodd" d="M10 1.75C9.30966 1.75 8.75 2.30965 8.75 3C8.75 3.69034 9.30961 4.25 9.99995 4.25C10.6903 4.25 11.25 3.69034 11.25 3C11.25 2.30965 10.6903 1.75 10 1.75ZM7.25 3C7.25 1.48121 8.48124 0.25 10 0.25C11.5188 0.25 12.75 1.48121 12.75 3C12.75 4.51876 11.5188 5.75 10 5.75C8.48124 5.75 7.25 4.51876 7.25 3Z" fill="white"/>
 			</svg>
 			</a>
+			</div>
+			<div class="thetextlogo" style="opacity: {appearance/300}">
+				<LogoFM></LogoFM>
+			</div>
 		</div>
-		<div class="thetextlogo" style="opacity: {appearance/300}">
-			<LogoFM></LogoFM>
-		</div>
-		</div>
-		<div class="thelinks">
+		<div class="thelinks" in:fly={{ duration: 300, x: 150, y: 0}} out:fly={{ duration: 300, x: 150, y: 0}}>
 			{#if showrest}
 			<div class="gotocodes forsizing" style="height: 16px; opacity: {appearance/300}">
 				<a href="/codes" target="_self">
@@ -217,11 +224,9 @@
 			{/if}
 		</div>
 	</div>
-	{#key pathnamekey}
-		<div in:fly={{ delay: 400, duration: 500, x: 0, y: -800, easing: quintOut}} out:fly={{ delay: 0, duration: 250, x: 0, y: -800, easing: quintOut}}>
-			<slot></slot>
-		</div>
-	{/key}
+	<div style="padding-top: 64px; min-height: 100vh">
+		<slot></slot>
+	</div>
 	<div class="foot">
 		<p on:click={toggleTheme} on:keydown={fauxfake}>Light Mode</p>
 		<div class="rightside">
@@ -243,6 +248,7 @@
 		</div>
 	</div>
 </div>
+
 {#if inputNote}
 <div class="modaltextinput" in:fly={{ delay: 50, duration: 400, x: 0, y: -900}} out:fly={{ duration: 50, x: 0, y: -900}}>
 	<div class="boxc notes">
@@ -289,6 +295,10 @@
 
 
 <style lang="sass">
+
+.thetextlogo
+	@media screen and (max-width: 1023px)
+		display: none
 
 .forsizing
 	height: 20px
@@ -377,6 +387,9 @@
 		.notes
 			.notesection
 				width: 90%
+				textarea
+					height: 100px
+
 
 .theheader
 	display: flex
@@ -386,10 +399,13 @@
 	padding: 0 16px
 	align-items: center
 	justify-content: space-between
-	position: sticky
+	position: fixed
+	margin-bottom: 64px
+	left: 0
 	top: 0
 	z-index: 999
 	backdrop-filter: blur(20px)
+	width: 100vw
 	&:hover
 		.thelogo
 			animation: rotation 4s infinite
@@ -456,8 +472,12 @@
 
 .themer
 	background-color: hsla(0,2%,2%,1)
-	background-image: radial-gradient(at 80% 80%, hsla(101,79%,9%,1) 0px, transparent 50%), radial-gradient(at 40% 0%, hsla(126,75%,7%,1) 0px, transparent 50%)
+	background-image: radial-gradient(at 80% 80%, hsla(101,3%,2%,1) 0px, transparent 50%), radial-gradient(at 40% 0%, hsla(126,75%,7%,1) 0px, transparent 50%)
 	color: white
+	box-sizing: border-box
+	overflow-x: hidden
+	display: flex
+	flex-direction: column
 
 .themer.light
 	background: white

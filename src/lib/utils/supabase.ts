@@ -63,11 +63,12 @@ export const LangFiltered = async(lang: any) => {
 }
 
 
-export const CodesFiltered = async(code: any) => {
+export const CodesFiltered = async(lang: any) => {
 	const { data, error } = await supabase
 		.from('amrit-notes')
 		.select()
-		.eq('type',code)
+		.eq('type','code')
+		.eq('lang',lang)
 		.order('id',{ascending: false})
 		if (error) throw new Error(error.message)
 	return data

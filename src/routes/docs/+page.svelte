@@ -286,11 +286,12 @@
 		margin-bottom: 16px
 
 .toptray
+	gap: 2px
 	.afilter
 		text-transform: uppercase
-		padding: 4px 8px
+		padding: 4px
 		cursor: pointer
-		font-size: 15px
+		font-size: 14px
 		&:hover
 			background: #10D56C
 			color: white
@@ -342,7 +343,7 @@
 		gap: 32px 32px
 		.doc-card
 			border: 1px solid #272727
-			padding: 16px
+			padding: 8px
 	@media screen and (max-width: 1023px)
 		grid-template-columns: 1fr
 		grid-template-areas: "."

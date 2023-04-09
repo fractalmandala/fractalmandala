@@ -1,7 +1,7 @@
 body, html
 	margin: 0
 	box-sizing: border-box
-	font-family: 'Akshar', sans-serif
+	font-family: 'Spline Sans', sans-serif
 
 a
 	text-decoration: none
@@ -28,11 +28,10 @@ a
 	box-sizing: border-box
 	display: flex
 	flex-direction: column
-	min-height: 100vh
 	@media screen and (min-width: 1024px)	
 		padding: 40px
 	@media screen and (max-width: 1023px)
-		padding: 20px
+		padding: 24px 32px
 
 .neon
 	background-color: hsla(280,6%,3%,1)
@@ -56,9 +55,9 @@ a
 	background: #171717
 	p
 		margin: 4px 0
-		text-transform: uppercase
+		text-transform: capitalize
 		color: white
-		font-size: 1.12rem
+		font-size: 1rem
 		line-height: 1.1
 		font-weight: 400
 		&:hover
@@ -73,3 +72,21 @@ a
 		font-weight: 400
 		letter-spacing: 3px
 		font-size: 12px
+	@media screen and (max-width: 1023px)
+		p
+			font-size: 16px
+		small
+			font-size: 12px
+
+.popup
+	p
+		margin: 0
+		font-size: 12px
+		text-transform: capitalize
+		cursor: pointer
+		background: #171717
+		color: #474747
+		padding: 4px 8px
+		border-bottom: 1px solid #272727
+		&:hover
+			color: #10D56C
