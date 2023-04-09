@@ -137,6 +137,22 @@ a
 		font-family: 'Spline Sans', sans-serif
 		font-weight: 600
 		text-transform: uppercase
+		text-align: center
+	h3
+		font-family: 'Spline Sans Mono', monospace
+		font-weight: 600
+		font-size: 2.8vw
+		margin: 64px 0 24px -16px
+		color: #10C56D
+		position: relative
+		&::after
+			position: absolute
+			top: 0
+			right: 0
+			height: 1px
+			width: 16%
+			background: #272727
+			content: ''
 	p
 		line-height: 1.8
 		font-weight: 400
@@ -157,7 +173,7 @@ a
 		padding: 32px
 		background: #171717
 		margin-left: 0
-		margin-bottom: 32px
+		margin-bottom: 80px
 		margin-top: 40px
 		line-height: 1.8
 		position: relative
@@ -189,6 +205,23 @@ a
 			height: 100%
 			z-index: -1
 			border-radius: 4px
+
+.blogformatting
+	pre
+		margin-top: 40px
+		margin-bottom: 40px
+		box-shadow: -2px -4px 12px #010101
+		
+
+.callout
+	color: #676767
+	font-family: 'Spline Sans Mono', monospace
+	font-size: 14px
+	border: 1px solid #272727
+	padding: 8px 16px
+	border-radius: 4px
+	margin-bottom: 24px
+	width: 80%
 
 @keyframes theglowing
 	0%

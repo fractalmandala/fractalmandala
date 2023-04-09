@@ -4,7 +4,7 @@
 
 </script>
 
-<div class="pagecontainer">
+<div class="pagecontainer x1">
 	<div class="blogformatting">
 		<h1>
 			{data.title}
@@ -23,8 +23,8 @@ h1
 
 .padjust
 	@media screen and (min-width: 1024px)
-		padding-left: 15vw
-		padding-right: 25vw
+		padding-left: 21vw
+		padding-right: 21vw
 		padding-top: 64px
 
 </style>

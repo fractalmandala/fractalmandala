@@ -11,7 +11,7 @@
 code[class*="language-"],
 pre[class*="language-"] {
 	color: #474747; /* fg1 / fg */
-	font-family: 'Spline Sans Mono', monospace;
+	font-family: 'JetBrains Mono', monospace;
 	text-align: left;
 	word-spacing: normal;
 	word-break: normal;
@@ -23,7 +23,7 @@ pre[class*="language-"] {
 	-moz-hyphens: none;
 	-ms-hyphens: none;
 	hyphens: none;
-	font-size: 12px;
+	font-size: 14px;
 }
 
 pre[class*="language-"]::-moz-selection,

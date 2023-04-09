@@ -3,6 +3,7 @@
   color: #10C56D;
 	line-height: 1.5;
 	font-family: 'JetBrains Mono', monospace;
+	tab-size: 1;
 }
 
 .hljs-attr,
