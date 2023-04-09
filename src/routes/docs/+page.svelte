@@ -330,6 +330,7 @@
 .doc-card
 	transition: all 0.23s ease
 	height: max-content
+	border-radius: 4px
 	&:hover
 		box-shadow: 4px 8px 14px #000000
 
@@ -341,7 +342,7 @@
 	@media screen and (min-width: 1024px)
 		grid-template-columns: 1fr 1fr 1fr 1fr
 		grid-template-areas: ". . . ."
-		gap: 32px 32px
+		gap: 16px
 		.doc-card
 			border: 1px solid #272727
 			padding: 8px

@@ -75,7 +75,7 @@
 		{#if notes && notes.length > 0}
 		<div class="gridof6">
 			{#each notes as item, i}
-				<div class="boxc" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: i * 20, x: 0, y: -48}}>
+				<div class="boxc" in:fly={{ duration: 300, delay: i * 15, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}}>
 				<small style="text-transform: uppercase; color: #10D56C; font-size: 10px">{item.type}</small>
 				<p style="padding-top: 4px">
 					<a href="/notes/{item.id}">
@@ -92,7 +92,7 @@
 		{#if codes && codes.length > 0}
 			<div class="gridof6">
 			{#each codes as item, i}
-				<div class="boxc" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: i * 20, x: 0, y: -48}}>
+				<div class="boxc" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}}>
 				<p>
 					<a href="/notes/{item.id}">
 						{item.title}
@@ -108,7 +108,7 @@
 		{#if gens && gens.length > 0}
 			<div class="gridof6">
 			{#each gens as item, i}
-				<div class="boxc" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: i * 20, x: 0, y: -48}}>
+				<div class="boxc" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}}>
 				<p>
 					<a href="/notes/{item.id}">
 						{item.title}
@@ -124,7 +124,7 @@
 		{#if chtml && chtml.length > 0}
 			<div class="gridof6">
 			{#each chtml as item, i}
-				<div class="boxc" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: i * 20, x: 0, y: -48}}>
+				<div class="boxc" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}}>
 				<p>
 					<a href="/notes/{item.id}">
 						{item.title}
@@ -140,7 +140,7 @@
 		{#if cjs && cjs.length > 0}
 			<div class="gridof6">
 			{#each cjs as item, i}
-				<div class="boxc" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: i * 20, x: 0, y: -48}}>
+				<div class="boxc" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}}>
 				<p>
 					<a href="/notes/{item.id}">
 						{item.title}
@@ -156,7 +156,7 @@
 		{#if ccss && ccss.length > 0}
 			<div class="gridof6">
 			{#each ccss as item, i}
-				<div class="boxc" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: i * 20, x: 0, y: -48}}>
+				<div class="boxc" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}}>
 				<p>
 					<a href="/notes/{item.id}">
 						{item.title}
@@ -172,7 +172,7 @@
 		{#if docs && docs.length > 0}
 			<div class="gridof6">
 			{#each docs as item, i}
-				<div class="boxc" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: i * 20, x: 0, y: -48}}>
+				<div class="boxc" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}}>
 				<p>
 					<a href="{item.path}">
 						{item.meta.title}
@@ -188,7 +188,7 @@
 		{#if quills && quills.length > 0}
 			<div class="gridof6">
 			{#each quills as item, i}
-				<div class="boxc" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: i * 20, x: 0, y: -48}}>
+				<div class="boxc" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}}>
 				<p>
 					<a href="/blog/{item.id}">
 						{item.title}
@@ -204,7 +204,7 @@
 		{#if images && images.length > 0}
 			<div class="gridof8">
 			{#each images as item, i}
-				<div id="imagebox" class="boxc" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: i * 20, x: 0, y: -48}} on:click={() => toggleLightbox(i)} on:keydown={toggleFaux}>
+				<div id="imagebox" class="boxc" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}} on:click={() => toggleLightbox(i)} on:keydown={toggleFaux}>
 					<img src="{item.link}" alt={item.id}/>
 					{#if lightbox[i]}
 						<div class="modallightbox" in:scale={{ delay: 50}} out:scale={{ duration: 50, delay: 0}}>
@@ -273,17 +273,21 @@ small
 	grid-template-rows: auto
 	.boxc
 		background: #171717
+		cursor: pointer
+		border-radius: 4px
+		&:hover
+			box-shadow: 3px 5px 8px rgba(0,0,0,0.7)
 	@media screen and (min-width: 1024px)
 		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr
 		grid-template-areas: ". . . . . ."
-		gap: 16px 24px
+		gap: 16px
 		.boxc
 			border: 1px solid #272727
 			padding: 8px
 	@media screen and (max-width: 1023px)
 		grid-template-columns: 1fr 1fr
 		grid-template-areas: ". ."
-		gap: 16px 24px
+		gap: 16px
 		.boxc
 			border: 1px solid #272727
 			padding: 8px

@@ -281,7 +281,7 @@
 	<div class="foot">
 		<p on:click={toggleTheme} on:keydown={fauxfake}>Light Mode</p>
 		<div class="rightside">
-			<small>2023 | Amritanshu Pandey</small>
+			<small><a href="/" target="_self">2023 | Amritanshu Pandey</a></small>
 			<div class="twittericon" style="height: 16px">
 				<a href="https://twitter.com/saamaanyafreaky" target="_blank" rel="noreferrer">
 					<svg width="21" height="16" viewBox="0 0 21 17" fill="none" xmlns="http://www.w3.org/2000/svg">

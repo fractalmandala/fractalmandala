@@ -193,7 +193,7 @@
 	@media screen and (min-width: 1024px)
 		grid-template-columns: 1fr 1fr 1fr 1fr
 		grid-template-areas: ". . . ."
-		gap: 32px 32px
+		gap: 16px
 		.snip-card
 			border: 1px solid #272727
 			padding: 16px
@@ -204,5 +204,8 @@
 		.snip-card
 			border: 1px solid #272727
 			padding: 8px 16px
+
+.snip-card
+	border-radius: 4px
 
 </style>
