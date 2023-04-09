@@ -230,6 +230,16 @@ export async function MidjourneyImages(){
 	return data
 }
 
+export async function MidjourneyTagged(tag:any){
+	const { data, error } = await supabase
+	.from('amrit-gallery')
+	.select()
+	.eq('tag',tag)
+	.order('id', {ascending: false})
+	if (error) throw new Error(error.message)
+	return data
+}
+
 export async function MidjourneyLight(id: any){
 	const { data, error } = await supabase
 	.from('amrit-gallery')

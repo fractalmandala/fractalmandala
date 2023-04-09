@@ -2,7 +2,7 @@
 
 	import { onMount } from 'svelte'
 	import { crossfade, fly, scale } from 'svelte/transition'
-	import { allNotes, allCodes, allOthers, CodeCSS, CodeJS, CodeHTML, quillNotes, MidjourneyImages, MidjourneyLight } from '$lib/utils/supabase'
+	import { allNotes, allCodes, allOthers, CodeCSS, CodeJS, CodeHTML, quillNotes, MidjourneyImages, MidjourneyTagged } from '$lib/utils/supabase'
 	import { allDocs } from '$lib/utils/localpulls'
 	
 	let notes:any
@@ -15,11 +15,31 @@
 	let images:any
 	let quills:any
 	let faux:boolean = false
-	let lightboxx:any
+	let allimagesbool:boolean = true
+	let imageTag:any = ''
+	let taggedimages:any
 	let lightbox:boolean[] = Array(400).fill(false)
-	let imagenumber:number 
+	let imagetaginput:boolean[] = Array(1000).fill(false)
 	let area:boolean[] = Array(9).fill(false)
 	area[1] = true
+
+	function toggleAllBool(){
+		allimagesbool = !allimagesbool
+	}
+
+	function setnewFilter(newFilter:any){
+		imageTag = newFilter
+		if ( allimagesbool === true ) {
+			allimagesbool = false
+		}
+	}
+
+	$: if (imageTag) {
+			(async() => {
+				taggedimages = await MidjourneyTagged(imageTag)
+			})()
+		}
+
 
 	function toggleArea(index:number) {
 		area[index] = !area[index]
@@ -57,6 +77,7 @@
 		docs = await allDocs()
 		quills = await quillNotes()
 		images = await MidjourneyImages()
+		taggedimages = await MidjourneyTagged(imageTag)
 	})
 </script>
 <div class="pagecontainer">
@@ -201,13 +222,39 @@
 		{/if}
 	{/if}
 	{#if area[9]}
+		<div class="imagefilters">
+			<div on:click={toggleAllBool} on:keydown={toggleFaux}>All</div>
+			<div on:click={() => setnewFilter('abstract')} on:keydown={toggleFaux}>Abstract</div>
+			<div on:click={() => setnewFilter('culture aesthetic')} on:keydown={toggleFaux}>Culture Aesthetic</div>
+			<div on:click={() => setnewFilter('dharmascapes')} on:keydown={toggleFaux}>Dharmascapes</div>
+			<div on:click={() => setnewFilter('mandalas')} on:keydown={toggleFaux}>Maṇḍalas</div>
+			<div on:click={() => setnewFilter('misc')} on:keydown={toggleFaux}>Misc</div>
+			<div on:click={() => setnewFilter('sci-fi')} on:keydown={toggleFaux}>Sci-fi</div>
+			<div on:click={() => setnewFilter('the once was')} on:keydown={toggleFaux}>The Once Was</div>
+		</div>
+		{#if allimagesbool}
 		{#if images && images.length > 0}
 			<div class="gridof8">
 			{#each images as item, i}
-				<div id="imagebox" class="boxc" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}} on:click={() => toggleLightbox(i)} on:keydown={toggleFaux}>
-					<img src="{item.link}" alt={item.id}/>
+				<div id="imagebox" class="boxc" in:fly={{ duration: 100, delay: i * 10, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}}>
+					<img src="{item.link}" alt={item.id} on:click={() => toggleLightbox(i)} on:keydown={toggleFaux}/>
 					{#if lightbox[i]}
-						<div class="modallightbox" in:scale={{ delay: 50}} out:scale={{ duration: 50, delay: 0}}>
+						<div class="modallightbox" in:scale={{ delay: 50}} out:scale={{ duration: 50, delay: 0}} on:click={() => toggleLightbox(i)} on:keydown={toggleFaux}>
+							<img src="{item.link}" alt={item.id}/>
+						</div>
+					{/if}
+				</div>
+			{/each}
+			</div>
+		{/if}		
+		{:else}
+		{#if taggedimages && taggedimages.length > 0}
+			<div class="gridof8">
+			{#each taggedimages as item, i}
+				<div id="imagebox" class="boxc" in:fly={{ duration: 100, delay: i * 10, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}}>
+					<img src="{item.link}" alt={item.id} on:click={() => toggleLightbox(i)} on:keydown={toggleFaux}/>
+					{#if lightbox[i]}
+						<div class="modallightbox" in:scale={{ delay: 50}} out:scale={{ duration: 50, delay: 0}} on:click={() => toggleLightbox(i)} on:keydown={toggleFaux}>
 							<img src="{item.link}" alt={item.id}/>
 						</div>
 					{/if}
@@ -215,10 +262,35 @@
 			{/each}
 			</div>
 		{/if}
+		{/if}
 	{/if}
 </div>
 
 <style lang="sass">
+
+.imagefilters
+	display: flex
+	flex-direction: row
+	gap: 16px
+	padding-left: 16px
+	margin-bottom: 24px
+	div
+		text-transform: uppercase
+		font-size: 14px
+		color: #676767
+		padding: 6px
+		transition: var(--snap)
+		border: 1px solid transparent
+		cursor: pointer
+		&:hover
+			background: #070707
+			color: white
+			border: 1px solid white
+
+
+#imagebox
+	position: relative
+
 
 p
 	margin: 4px 0
@@ -247,7 +319,7 @@ small
 		h5
 			font-weight: 400
 			text-transform: uppercase
-			font-size: 16px
+			font-size: 12px
 			margin: 4px 0
 			padding: 4px 8px
 			cursor: pointer
@@ -301,8 +373,7 @@ small
 		grid-template-areas: ". . . . . . . ."
 		gap: 16px 16px
 		.boxc
-			border: 1px solid #272727
-			padding: 8px
+			padding: 0
 			transition: 0.35s ease
 			&:hover
 				padding: 0
