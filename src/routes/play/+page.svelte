@@ -5,6 +5,7 @@
 	import type { ChatCompletionRequestMessage } from 'openai'
 	import { SSE } from 'sse.js'
 
+	let y:number
 	let query: string = ''
 	let answer: string = ''
 	let loading: boolean = false
@@ -69,6 +70,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Spline+Sans+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Spline+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </svelte:head>
+<svelte:window bind:scrollY={y}/>
 
 <Header></Header>
 
@@ -92,12 +94,44 @@
 			<button type="submit"> Send </button>
 		</form>
 	</div>
+	<img class="img1" src="https://rnfvzaelmwbbvfbsppir.supabase.co/storage/v1/object/public/brhatwebsite/10mandala/ai.png" alt="ai1"/>
+	<img class="img2" src="https://rnfvzaelmwbbvfbsppir.supabase.co/storage/v1/object/public/brhatwebsite/10mandala/ai2.png" alt="ai2" style="transform: translateY({-y/2}px) translateX({-y/2}px); opacity: {y/400}"/>
 </div>
 
 <style lang="sass">
 
+.img1
+	object-fit: cover
+	width: 300px
+	height: 300px
+	position: absolute
+	top: 0
+	left: 0
+	opacity: 0.3
+	filter: saturate(0.5)
+	z-index: 0
+	@media screen and (max-width: 1023px)
+		top: 128px
+
+.boxc
+	z-index: 1
+
+.img2
+	object-fit: cover
+	width: 360px
+	height: 360px
+	position: absolute
+	bottom: 64px
+	right: 64px
+	@media screen and (max-width: 1023px)
+		width: 128px
+		height: 128px
+
+	
+
 .x0
 	min-height: 100vh
+	position: relative
 	@media screen and (min-width: 1024px)
 		padding-left: 24vw
 		padding-right: 24vw

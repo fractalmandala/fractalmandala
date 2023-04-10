@@ -3,23 +3,6 @@
 	import type { ChatCompletionRequestMessageRoleEnum } from 'openai'
 	export let type: ChatCompletionRequestMessageRoleEnum
 	export let message: string
-	import supabase from '$lib/utils/supabase'
-
-	export async function inputChat(){
-		try {
-			const { data, error } = await supabase
-			.from('amrit-chatswithgpt')
-			.insert({ who: who, what: what })
-			if (error) throw new Error(error.message)
-			who = ''
-			what = ''
-		} finally {
-			console.log('submitted')
-		}
-	}
-
-	let who:string
-	let what:string
 
 </script>
 
