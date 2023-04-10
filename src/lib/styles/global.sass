@@ -238,3 +238,25 @@ a
 	-webkit-text-fill-color: transparent
 
 
+.pgcnt
+	font-size: 15px
+	font-weight: 400
+	text-transform: uppercase
+	margin: 4px 0
+	padding: 4px 8px
+	cursor: pointer
+	transition: 0.13s ease
+	color: #474747
+	&:hover
+		color: #10D56C
+		transform: translateY(-4px)
+	@media screen and (max-width: 1023px)
+		font-size: 21px
+		border-bottom: 1px solid #272727
+
+.pgcnt.selectedarea
+	color: #10D56C
+	&:hover
+		background: #272727
+		color: white
+

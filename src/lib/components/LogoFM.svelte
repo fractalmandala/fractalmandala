@@ -45,9 +45,7 @@
 svg
 	object-fit: contain
 	margin-top: 4px
-	height: 22px
-	width: 200px
-	@media screen and (max-width: 1023px)
-		width: 144px
+	height: 32px
+	width: 240px
 
 </style>

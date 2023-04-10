@@ -1,6 +1,7 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte'
+	import Header from '$lib/components/Header.svelte'
 	import { crossfade, fly, scale } from 'svelte/transition'
 	import { allNotes, allCodes, allOthers, CodeCSS, CodeJS, CodeHTML, quillNotes, MidjourneyImages, MidjourneyTagged } from '$lib/utils/supabase'
 	import { allDocs } from '$lib/utils/localpulls'
@@ -80,18 +81,19 @@
 		taggedimages = await MidjourneyTagged(imageTag)
 	})
 </script>
+
+<Header>
+		<h5 class="pgcnt" on:click={() => toggleArea(1)} on:keydown={toggleFaux} class:selectedarea={area[1]}>all</h5>
+		<h5 class="pgcnt" on:click={() => toggleArea(2)} on:keydown={toggleFaux}>code</h5>
+		<h5 class="pgcnt" on:click={() => toggleArea(3)} on:keydown={toggleFaux}>general</h5>
+		<h5 class="pgcnt" on:click={() => toggleArea(4)} on:keydown={toggleFaux}>html</h5>
+		<h5 class="pgcnt" on:click={() => toggleArea(5)} on:keydown={toggleFaux}>js</h5>
+		<h5 class="pgcnt" on:click={() => toggleArea(6)} on:keydown={toggleFaux}>styling</h5>
+		<h5 class="pgcnt" on:click={() => toggleArea(7)} on:keydown={toggleFaux}>docs</h5>
+		<h5 class="pgcnt" on:click={() => toggleArea(8)} on:keydown={toggleFaux}>quills</h5>
+		<h5 class="pgcnt" on:click={() => toggleArea(9)} on:keydown={toggleFaux}>gallery</h5>
+</Header>
 <div class="pagecontainer">
-	<div class="boxr">
-		<h5 on:click={() => toggleArea(1)} on:keydown={toggleFaux} class:selectedarea={area[1]}>all</h5>
-		<h5 on:click={() => toggleArea(2)} on:keydown={toggleFaux}>code</h5>
-		<h5 on:click={() => toggleArea(3)} on:keydown={toggleFaux}>general</h5>
-		<h5 on:click={() => toggleArea(4)} on:keydown={toggleFaux}>html</h5>
-		<h5 on:click={() => toggleArea(5)} on:keydown={toggleFaux}>js</h5>
-		<h5 on:click={() => toggleArea(6)} on:keydown={toggleFaux}>styling</h5>
-		<h5 on:click={() => toggleArea(7)} on:keydown={toggleFaux}>docs</h5>
-		<h5 on:click={() => toggleArea(8)} on:keydown={toggleFaux}>quills</h5>
-		<h5 on:click={() => toggleArea(9)} on:keydown={toggleFaux}>gallery</h5>
-	</div>
 	{#if area[1]}
 		{#if notes && notes.length > 0}
 		<div class="gridof6">
@@ -309,35 +311,6 @@ small
 
 .pagecontainer
 	min-width: 100vw
-	.boxr
-		justify-content: flex-start
-		border-bottom: 1px solid #272727
-		margin-bottom: 32px
-		padding-left: 16px
-		padding-right: 16px
-		row-gap: 32px
-		h5
-			font-weight: 400
-			text-transform: uppercase
-			font-size: 12px
-			margin: 4px 0
-			padding: 4px 8px
-			cursor: pointer
-			&:hover
-				background: #10D56C
-				color: white
-		h5.selectedarea
-			color: #10D56C
-			&:hover
-				background: #272727
-				color: white
-	@media screen and (max-width: 1023px)
-		.boxr
-			justify-content: center
-			flex-wrap: wrap
-			row-gap: 2px
-			h5
-				font-size: 15px
 
 .gridof6
 	display: grid
