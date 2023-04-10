@@ -2,6 +2,7 @@
 
 	import { onMount } from 'svelte'
 	import { allMandalas } from '$lib/utils/localpulls'
+	import BigCard from '$lib/components/BigCard.svelte'
 	import { page } from '$app/stores'
 
 	let pageurl:any	
@@ -32,14 +33,17 @@
 				<li><a href="https://sveltelegos.com/" target="_blank" rel="noreferrer">Svelte Legos</a></li>
 				<li><a href="https://prismjs.com/" target="_blank" rel="noreferrer">Prism JS</a></li>
 </div>
-<div class="pagecontainer x2">
+<div class="gridof3 x2">
 	{#if mands && mands.length > 0}
 		{#each mands as item}
-			<h5>
+			<BigCard>
+				<h5 slot="title">
 				<a href={item.path} target="_self">
 					{item.meta.title}
 				</a>
-			</h5>
+				</h5>
+				<p slot="tags">{item.meta.tags}</p>
+			</BigCard>
 		{/each}
 	{/if}
 </div>
@@ -71,11 +75,18 @@
 			background: #64F540
 			background: linear-gradient(to right, #64F540 0%, #11E876 50%, #07E859 100%)
 
-.x2
-	h5
-		font-size: 21px
-		font-weight: 400
-		font-family: 'Spline Sans', sans-serif
+
+.gridof3
+	display: grid
+	grid-auto-flow: row
+	grid-template-rows: auto
+	padding-bottom: 64px
+	@media screen and (min-width: 1024px)
+		grid-template-columns: 1fr 1fr 1fr
+		grid-template-areas: ". . ."
+		padding-left: 21vw
+		padding-right: 21vw
+		gap: 24px
 
 @keyframes vanishing
 	0%
@@ -83,8 +94,6 @@
 	100%
 		width: 0
 			
-
-
 
 .pagecontainer
 	width: 100%
@@ -104,8 +113,8 @@
 		padding: 0
 		margin-left: 32px
 	@media screen and (min-width: 1024px)
-		padding-left: 16vw
-		padding-right: 24vw
+		padding-left: 21vw
+		padding-right: 21vw
 	@media screen and (max-width: 1023px)
 		p
 			font-size: 14px

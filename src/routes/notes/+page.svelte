@@ -19,6 +19,8 @@
 	let type:string = 'quillnote'
 	let tags:string
 	let lang:any
+	let note:any
+	let codesnippet:any
 	let codes:any
 	let fake:boolean = false
 	let codeContents:any
@@ -76,9 +78,10 @@
 			<input type="text" placeholder="lang" bind:value={lang}/>
 			<input type="text" placeholder="type" bind:value={type}/>
 		</div>
-	</div>
-	<div class="editor-wrapper">
-		<div bind:this={editor}/>
+		<div class="boxc areas">
+			<textarea bind:value={note}/>
+			<textarea bind:value={codesnippet}/>
+		</div>
 	</div>
 		<button class="neon" on:click={inputNote}>Submit</button>
 	</div>
@@ -86,6 +89,12 @@
 
 <style lang="sass">
 
+.areas
+	textarea
+		border: 1px solid #e7e7e7
+		height: 120px
+		margin-top: 8px
+		margin-bottom: 8px
 
 .pagecontainer
 	min-height: 100vh
@@ -97,9 +106,6 @@
 		padding-left: 32px
 		padding-right: 32px
 
-.editor-wrapper
-	margin-top: 32px
-	margin-bottom: 16px
 
 
 .whitewrapper

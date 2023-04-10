@@ -123,9 +123,8 @@
 			duration: 1.2,
 			orientation: 'vertical',
 			gestureOrientation: 'vertical',
-			smooth: true,
 			wheelMultiplier: 0.7,
-			smoothWheel: false,
+			smoothWheel: true,
 			touchMultiplier: 1,
 			infinite: false,
 		})

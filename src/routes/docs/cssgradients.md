@@ -1,6 +1,6 @@
 ---
 title: css gradient backgrounds
-tags: gradients
+tags: gradients saved
 type: code
 ---
 

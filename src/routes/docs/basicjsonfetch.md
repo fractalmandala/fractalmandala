@@ -1,6 +1,6 @@
 ---
 title: basic fetch from json
-tags: json
+tags: fetches
 type: code
 ---
 

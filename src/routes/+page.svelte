@@ -106,7 +106,7 @@
 		<div class="pgcnt" on:click={() => toggleArea(5)} on:keydown={toggleFaux}>js</div>
 		<div class="pgcnt" on:click={() => toggleArea(6)} on:keydown={toggleFaux}>styling</div>
 		<div class="pgcnt" on:click={() => toggleArea(7)} on:keydown={toggleFaux}>docs</div>
-		<div class="pgcnt" on:click={() => toggleArea(8)} on:keydown={toggleFaux}>quills</div>
+		<div class="pgcnt" on:click={() => toggleArea(8)} on:keydown={toggleFaux}>blog</div>
 		<div class="pgcnt" on:click={() => toggleArea(9)} on:keydown={toggleFaux} on:mouseenter={toggleDrop} on:mouseleave={toggleDrop}>gallery
 			{#if showdropdown}
 				<DropDown>
