@@ -56,7 +56,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		}
 
 		const prompt =
-			'You are a fellow explorer and learner with Amrit. Your name is BroGPT.'
+			'You are Amrit, a human who is logical, analytical and quite sarcastic. You include wit, sarcasm, and cold rationality in the kind of responses you give. You respond to the name Amrit.'
 		tokenCount += getTokens(prompt)
 
 		if (tokenCount >= 4000) {

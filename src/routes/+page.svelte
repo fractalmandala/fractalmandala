@@ -2,7 +2,6 @@
 
 	import { onMount } from 'svelte'
 	import Header from '$lib/components/Header.svelte'
-	import DropDown from '$lib/components/DropDown.svelte'
 	import TinyCard from '$lib/components/TinyCard.svelte'
 	import TinyCard2 from '$lib/components/TinyCard.svelte'
 	import TinyCard3 from '$lib/components/TinyCard.svelte'
@@ -10,7 +9,6 @@
 	import TinyCard5 from '$lib/components/TinyCard.svelte'
 	import TinyCard6 from '$lib/components/TinyCard.svelte'
 	import TinyCard7 from '$lib/components/TinyCard.svelte'
-	import TinyCard8 from '$lib/components/TinyCard.svelte'
 	import { crossfade, fly, scale } from 'svelte/transition'
 	import { allNotes, allCodes, allOthers, CodeCSS, CodeJS, CodeHTML, quillNotes, MidjourneyImages, MidjourneyTagged } from '$lib/utils/supabase'
 	import { allDocs } from '$lib/utils/localpulls'
@@ -29,16 +27,18 @@
 	let imageTag:any = ''
 	let taggedimages:any
 	let lightbox:boolean[] = Array(400).fill(false)
-	let imagetaginput:boolean[] = Array(1000).fill(false)
 	let area:boolean[] = Array(9).fill(false)
 	area[1] = true
 	let showdropdown:boolean = false
+	let showdropdowncode:boolean = false
 
 	function toggleDrop(){
 		showdropdown = !showdropdown
 	}
 
-
+	function toggleDropCode(){
+		showdropdowncode = !showdropdowncode
+	}
 
 	function toggleAllBool(){
 		allimagesbool = !allimagesbool
@@ -104,27 +104,37 @@
 </svelte:head>
 
 <Header>
-		<div class="pgcnt" on:click={() => toggleArea(1)} on:keydown={toggleFaux} class:selectedarea={area[1]}>all</div>
-		<div class="pgcnt" on:click={() => toggleArea(2)} on:keydown={toggleFaux}>code</div>
-		<div class="pgcnt" on:click={() => toggleArea(3)} on:keydown={toggleFaux}>general</div>
-		<div class="pgcnt" on:click={() => toggleArea(4)} on:keydown={toggleFaux}>html</div>
-		<div class="pgcnt" on:click={() => toggleArea(5)} on:keydown={toggleFaux}>js</div>
-		<div class="pgcnt" on:click={() => toggleArea(6)} on:keydown={toggleFaux}>styling</div>
-		<div class="pgcnt" on:click={() => toggleArea(7)} on:keydown={toggleFaux}>docs</div>
-		<div class="pgcnt" on:click={() => toggleArea(8)} on:keydown={toggleFaux}>blog</div>
+		<div class="pgcnt" on:click={() => toggleArea(2)} on:keydown={toggleFaux} on:mouseenter={toggleDropCode} on:mouseleave={toggleDropCode}>code
+				{#if showdropdowncode}
+				<div class="holder3">
+					<div class="dropdownitem" style="color: white" on:click={() => toggleArea(1)} on:keydown={toggleFaux} in:fly={{ delay: 25}}>All</div>
+					<div class="dropdownitem" style="color: white" on:click={() => toggleArea(5)} on:keydown={toggleFaux} in:fly={{ delay: 50}}>JS</div>
+					<div class="dropdownitem" style="color: white" on:click={() => toggleArea(4)} on:keydown={toggleFaux} in:fly={{ delay: 75}}>HTML</div>
+					<div class="dropdownitem" style="color: white" on:click={() => toggleArea(3)} on:keydown={toggleFaux} in:fly={{ delay: 80}}>GENERAL</div>
+					<div class="dropdownitem" style="color: white" on:click={() => toggleArea(6)} on:keydown={toggleFaux} in:fly={{ delay: 100}}>CSS</div>
+					<div class="dropdownitem" style="color: white" on:click={() => toggleArea(7)} on:keydown={toggleFaux} in:fly={{ delay: 125}}>SQL</div>
+				</div>
+				{/if}
+		</div>
+		<div class="pgcnt">
+			<a href="/pad" target="_self">
+			NOTE</a>
+		</div>
 		<div class="pgcnt" on:click={() => toggleArea(9)} on:keydown={toggleFaux} on:mouseenter={toggleDrop} on:mouseleave={toggleDrop}>gallery
-			{#if showdropdown}
-				<DropDown>
-					<div class="dropdownitem" style="color: white" on:click={toggleAllBool} on:keydown={toggleFaux}>All</div>
-					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('abstract')} on:keydown={toggleFaux}>Abstract</div>
-					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('culture aesthetic')} on:keydown={toggleFaux}>Culture Aesthetic</div>
-					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('dharmascapes')} on:keydown={toggleFaux}>Dharmascapes</div>
-					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('mandalas')} on:keydown={toggleFaux}>Maṇḍalas</div>
-					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('misc')} on:keydown={toggleFaux}>Misc</div>
-					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('sci-fi')} on:keydown={toggleFaux}>Sci-fi</div>
-					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('the once was')} on:keydown={toggleFaux}>The Once Was</div>
-				</DropDown>
-			{/if}
+			
+				{#if showdropdown}
+				<div class="holder">
+					<div class="dropdownitem" style="color: white" on:click={toggleAllBool} on:keydown={toggleFaux} in:fly={{ delay: 25}}>All</div>
+					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('abstract')} on:keydown={toggleFaux} in:fly={{ delay: 50}}>Abstract</div>
+					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('culture aesthetic')} on:keydown={toggleFaux} in:fly={{ delay: 75}}>Culture Aesthetic</div>
+					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('dharmascapes')} on:keydown={toggleFaux} in:fly={{ delay: 100}}>Dharmascapes</div>
+					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('mandalas')} on:keydown={toggleFaux} in:fly={{ delay: 125}}>Maṇḍalas</div>
+					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('misc')} on:keydown={toggleFaux} in:fly={{ delay: 150}}>Misc</div>
+					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('sci-fi')} on:keydown={toggleFaux} in:fly={{ delay: 175}}>Sci-fi</div>
+					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('the once was')} on:keydown={toggleFaux} in:fly={{ delay: 200}}>The Once Was</div>
+				</div>
+				{/if}
+
 		</div>
 </Header>
 
@@ -333,6 +343,40 @@
 
 <style lang="sass">
 
+.dropdownitem
+	text-align: center
+	background: #171717
+	width: 100%
+	align-items: center
+	justify-content: center
+	border-bottom: 1px solid #272727
+	text-transform: capitalize
+	&:hover
+		background: #10D56C
+
+.pgcnt
+	position: relative
+
+.holder
+	position: absolute
+	width: auto
+	display: flex
+	flex-direction: column
+	align-items: center
+	top: 0px
+	padding-top: 40px
+	left: 0
+
+
+.holder3
+	position: absolute
+	width: max-content
+	display: flex
+	flex-direction: column
+	align-items: center
+	top: 0
+	padding-top: 40px
+	right: 0
 
 
 #imagebox

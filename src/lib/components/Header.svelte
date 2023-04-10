@@ -149,22 +149,18 @@ $: {
 		</div>
 		<div class="midlinks" class:slideleft={slidingleft} class:slideright={slidingright}>
 			<div class="leftballs">
-			<a href="/pad" on:mouseenter={toggleleft} on:mouseleave={toggleleft}>
-				<div id="ibl">
+				<div id="ibl" on:mouseenter={toggleleft} on:mouseleave={toggleleft}>
 						<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: translateX({-y/8}px) rotate({y/2}deg)">
 							<path class="gogreen" fill-rule="evenodd" clip-rule="evenodd" d="M1.19249e-07 10C1.52179e-07 12.7615 1.11935 15.2615 2.9289 17.0711C4.73855 18.8807 7.23855 20 10 20C12.7614 20 15.2614 18.8807 17.0711 17.0711C18.8807 15.2615 20 12.7615 20 10C20 7.2386 18.8807 4.7386 17.0711 2.92894C15.2614 1.11929 12.7614 8.63194e-08 10 1.19249e-07C7.23855 1.52179e-07 4.73855 1.11929 2.9289 2.92894C1.11935 4.7386 8.63194e-08 7.2386 1.19249e-07 10Z" fill="#272727"/>
 							<path class="gogrey" fill-rule="evenodd" clip-rule="evenodd" d="M5.58057 4.51991C5.87347 4.8128 5.87348 5.28767 5.58059 5.58057C4.44877 6.71243 3.75 8.27391 3.75 10C3.75 11.7261 4.44877 13.2876 5.58059 14.4194C5.87348 14.7123 5.87347 15.1872 5.58057 15.4801C5.28767 15.773 4.8128 15.773 4.51991 15.4801C3.11833 14.0784 2.25 12.1399 2.25 10C2.25 7.86009 3.11832 5.92157 4.51991 4.51993C4.8128 4.22703 5.28767 4.22702 5.58057 4.51991Z" fill="#10D56C"/>
 						</svg>
 				</div>
-			</a>
-			<a href="/notes" on:mouseenter={toggleUp} on:mouseleave={toggleUp}> 
-				<div id="ibu">
+				<div id="ibu" on:mouseenter={toggleUp} on:mouseleave={toggleUp}>
 				<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: translateX({-y/15}px) rotate({-y/2}deg)">
 					<path class="gogreen" fill-rule="evenodd" clip-rule="evenodd" d="M10 8.74228e-07C7.23855 1.11564e-06 4.73855 1.11935 2.9289 2.9289C1.11935 4.73855 -1.11564e-06 7.23855 -8.74228e-07 10C-6.32819e-07 12.7614 1.11935 15.2614 2.9289 17.0711C4.73855 18.8807 7.23855 20 10 20C12.7614 20 15.2614 18.8807 17.0711 17.0711C18.8807 15.2614 20 12.7614 20 10C20 7.23855 18.8807 4.73855 17.0711 2.9289C15.2614 1.11935 12.7614 6.32819e-07 10 8.74228e-07Z" fill="#272727"/>
 					<path class="gogrey" fill-rule="evenodd" clip-rule="evenodd" d="M15.4801 5.58057C15.1872 5.87347 14.7123 5.87348 14.4194 5.58059C13.2876 4.44877 11.7261 3.75 10 3.75C8.27391 3.75 6.71243 4.44877 5.58057 5.58059C5.28767 5.87348 4.81279 5.87347 4.51991 5.58057C4.22702 5.28767 4.22703 4.8128 4.51993 4.51991C5.92157 3.11833 7.86009 2.25 10 2.25C12.1399 2.25 14.0784 3.11833 15.4801 4.51991C15.773 4.8128 15.773 5.28767 15.4801 5.58057Z" fill="#10D56C"/>
 				</svg>
 				</div>
-			</a>
 			</div>
 				{#if expandedMenu}
 					<div class="istherealslot" in:fly={{ duration: 800, x: 0, y: -800, easing: quintOut}} out:fly={{ duration: 600, x: 0, y: -800, easing: quintIn}} on:click={toggleMenu} on:keydown={fakefaux}>
@@ -172,14 +168,12 @@ $: {
 				</div>
 			{/if}
 			<div class="rightballs">
-				<a href="/docs" on:mouseenter={toggleBot} on:mouseleave={toggleBot}>
-					<div id="ibr">
+					<div id="ibr" on:mouseenter={toggleBot} on:mouseleave={toggleBot}>
 						<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: translateX({y/15}px) rotate({y/2}deg)">
 						<path class="gogreen" fill-rule="evenodd" clip-rule="evenodd" d="M10 20C12.7615 20 15.2615 18.8807 17.0711 17.0711C18.8807 15.2615 20 12.7615 20 10C20 7.2386 18.8807 4.7386 17.0711 2.92894C15.2615 1.11929 12.7615 0 10 0C7.2386 0 4.7386 1.11929 2.92894 2.92894C1.11929 4.7386 0 7.2386 0 10C0 12.7615 1.11929 15.2615 2.92894 17.0711C4.7386 18.8807 7.2386 20 10 20Z" fill="#272727"/>
 						<path class="gogrey" fill-rule="evenodd" clip-rule="evenodd" d="M4.51991 14.4194C4.8128 14.1265 5.28767 14.1265 5.58057 14.4194C6.71243 15.5512 8.27391 16.25 10 16.25C11.7261 16.25 13.2876 15.5512 14.4194 14.4194C14.7123 14.1265 15.1872 14.1265 15.4801 14.4194C15.773 14.7123 15.773 15.1872 15.4801 15.4801C14.0784 16.8817 12.1399 17.75 10 17.75C7.86009 17.75 5.92157 16.8817 4.51993 15.4801C4.22703 15.1872 4.22702 14.7123 4.51991 14.4194Z" fill="#10D56C"/>
 						</svg>
 					</div>
-				</a>
 			<div id="ibd" on:mouseenter={toggleLast} on:mouseleave={toggleLast} on:click={toggleSearch} on:keydown={fakefaux}>
 				<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: translateX({y/8}px) rotate({-y/2}deg)">
 					<path class="gogreen" fill-rule="evenodd" clip-rule="evenodd" d="M20 10C20 7.23855 18.8806 4.73855 17.0711 2.9289C15.2614 1.11935 12.7614 -5.57821e-07 10 -4.37114e-07C7.2386 -3.16409e-07 4.7386 1.11935 2.92893 2.9289C1.11929 4.73855 -5.57821e-07 7.23855 -4.37114e-07 10C-3.16409e-07 12.7614 1.11929 15.2614 2.92893 17.0711C4.7386 18.8807 7.2386 20 10 20C12.7615 20 15.2615 18.8807 17.0711 17.0711C18.8807 15.2614 20 12.7614 20 10Z" fill="#272727"/>
@@ -395,8 +389,6 @@ $: {
 	@media screen and (max-width: 1023px)
 		gap: 40px
 
-.leftballs a
-	height: 20px
 
 #ibl, #ibu, #ibr, #ibd
 	height: 20px

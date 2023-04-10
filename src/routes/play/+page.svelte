@@ -95,7 +95,7 @@
 </svelte:head>
 <svelte:window bind:scrollY={y}/>
 
-<Header></Header>
+
 
 <div class="pagecontainer x0">
 	<div class="boxc">
