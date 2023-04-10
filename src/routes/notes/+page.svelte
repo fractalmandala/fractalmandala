@@ -4,28 +4,13 @@
 	import Header from '$lib/components/Header.svelte'
 	import { page } from '$app/stores'
 	import supabase from '$lib/utils/supabase'
-	import '$lib/styles/snow.css'
-	let editor: HTMLDivElement
-	let quill: {on: (arg0: string,arg1: () => void) => void; root: {innerHTML: any;};}
 	let noteContent: any
-	export let toolbarOptions = [
-		[{ header: 1 }, { header: 2 }, {header: 3}, {header: 4}, "blockquote", "link", "image", "video", "code"],
-		["bold", "italic", "underline", "strike"],
-		[{ list: "ordered" }, { list: "ordered" }],
-		[{ align: [] }],
-		["clean"]
-	];
 	let title:string 
-	let type:string = 'quillnote'
+	let type:string = 'quillcode'
 	let tags:string
 	let lang:any
 	let note:any
 	let codesnippet:any
-	let codes:any
-	let fake:boolean = false
-	let codeContents:any
-	let confirmDelete:boolean = false
-	let theid:any
 	let area:boolean[] = Array(9).fill(false)
 	area[1] = true
 	let url:any
@@ -51,21 +36,15 @@
 
 
 	onMount(async() => {
-		confirmDelete = false
 		url = $page.url.pathname
-		const { default: Quill } = await import('quill')
-		quill = new Quill(editor, {
-			modules: {
-				toolbar: toolbarOptions
-			},
-			theme: 'snow',
-		})
-    quill.on("text-change", () => {
-      noteContent = quill.root.innerHTML;
-    });
 	})
 
 </script>
+
+<svelte:head>
+<title>The Fractal Maṇḍala</title>
+<meta name="description" content="tech, dev, design, dharma"/>
+</svelte:head>
 
 <Header>
 </Header>
@@ -92,16 +71,18 @@
 .areas
 	textarea
 		border: 1px solid #e7e7e7
-		height: 120px
+		height: 160px
 		margin-top: 8px
 		margin-bottom: 8px
+	@media screen and (max-width: 1023px)
+		height: 480px
 
 .pagecontainer
 	min-height: 100vh
 	width: 100%
 	@media screen and (min-width: 1024px)
-		padding-left: 21vw
-		padding-right: 21vw
+		padding-left: 24vw
+		padding-right: 24vw
 	@media screen and (max-width: 1023px)
 		padding-left: 32px
 		padding-right: 32px

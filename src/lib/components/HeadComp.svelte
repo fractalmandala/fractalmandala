@@ -2,6 +2,7 @@
 	<slot></slot>
 </title>
 
+
 <style lang="sass">
 
 title

@@ -16,6 +16,10 @@
 
 </script>
 
+<svelte:head>
+	<title>Sveltekit and More - Fractal Maṇḍala Blog</title>
+</svelte:head>
+
 
 <div class="mandpand">
 <div class="x1">

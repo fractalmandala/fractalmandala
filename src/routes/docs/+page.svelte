@@ -264,6 +264,11 @@
 	&:hover
 		background: #10D56C
 		color: white
+	@media screen and (max-width: 1023px)
+		font-size: 20px
+		text-align: center
+		justify-content: center
+		color: white
 
 .svgfilter
 	padding: 4px 16px
@@ -288,9 +293,11 @@
 		grid-template-columns: 1fr 1fr 1fr 1fr 1fr
 		grid-template-areas: ". . . . ."
 		gap: 24px
+		padding: 32px
 	@media screen and (max-width: 1023px)
 		grid-template-columns: 1fr 1fr
 		grid-template-areas: ". ."
 		gap: 16px
+		padding: 16px
 
 </style>

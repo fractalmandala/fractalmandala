@@ -135,9 +135,8 @@
 </script>
 
 <svelte:head>
-	<HeadComp>
-		FM | {titular}
-	</HeadComp>
+<title>{data.title} - {data.type} - The Fractal Maṇḍala</title>
+<meta name="description" content="{data.tags}"/>
 </svelte:head>
 
 <Header>

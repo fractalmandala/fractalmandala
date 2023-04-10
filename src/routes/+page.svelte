@@ -98,6 +98,11 @@
 	})
 </script>
 
+<svelte:head>
+<title>The Fractal Maṇḍala</title>
+<meta name="description" content="tech, dev, design, dharma"/>
+</svelte:head>
+
 <Header>
 		<div class="pgcnt" on:click={() => toggleArea(1)} on:keydown={toggleFaux} class:selectedarea={area[1]}>all</div>
 		<div class="pgcnt" on:click={() => toggleArea(2)} on:keydown={toggleFaux}>code</div>

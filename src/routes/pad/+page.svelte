@@ -60,6 +60,11 @@
 
 </script>
 
+<svelte:head>
+<title>The Fractal Maṇḍala</title>
+<meta name="description" content="tech, dev, design, dharma"/>
+</svelte:head>
+
 <Header>
 </Header>
 <div class="pagecontainer">

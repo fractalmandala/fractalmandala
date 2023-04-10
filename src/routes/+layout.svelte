@@ -2,9 +2,9 @@
 
 	import { onMount } from 'svelte'
 	import Lenis from '@studio-freight/lenis'
-	import { get, writable } from 'svelte/store'
 	import { page } from '$app/stores'
 	import '$lib/styles/global.sass'
+
 
 	let light:boolean = false
 	let y:number
@@ -81,6 +81,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Spline+Sans+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Spline+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </svelte:head>
 
+
 <div class="themer" class:light={light}>
 	<div class="bodybody" style="min-height: 100vh">
 		<slot></slot>
@@ -110,6 +111,8 @@
 
 
 <style lang="sass">
+
+
 
 .foot
 	display: flex

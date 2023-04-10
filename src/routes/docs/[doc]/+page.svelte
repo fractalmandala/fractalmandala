@@ -344,7 +344,7 @@ h1
 	@media screen and (min-width: 1024px)
 		grid-template-columns: 1fr 1fr 1fr
 		grid-template-areas: ". . ."
-		gap: 16px 32px
+		gap: 16px 24px
 		align-items: start
 		align-content: start
 	@media screen and (max-width: 1023px)

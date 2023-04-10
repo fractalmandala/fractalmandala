@@ -4,6 +4,11 @@
 
 </script>
 
+<svelte:head>
+<title>{data.title} - Fractal Maṇḍala Blog</title>
+<meta name="description" content="{data.tags}"/>
+</svelte:head>
+
 <div class="mandpand">
 	<div class="blogformatting">
 		<h1>
