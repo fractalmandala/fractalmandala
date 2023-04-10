@@ -16,8 +16,9 @@
 		["clean"]
 	];
 	let title:string 
-	let type:string = 'quillnote'
+	let type:string
 	let tags:string
+	let counting:number
 	let lang:any
 	let confirmDelete:boolean = false
 	let area:boolean[] = Array(9).fill(false)
@@ -29,12 +30,13 @@
 		try {
 			const { data, error } = await supabase
 			.from('amrit-notes')
-			.insert({ title: title, type: type, lang: lang, tags: tags, note: noteContent})
+			.insert({ title: title, type: type, counting: counting, lang: lang, tags: tags, note: noteContent})
 			if (error) throw new Error(error.message)
 			title = ''
 			type = ''
 			lang = ''
 			tags = ''
+			counting = 0
 		} finally {
 			alert('submitted')
 		}
@@ -68,6 +70,7 @@
 			<input type="text" placeholder="tags" bind:value={tags}/>
 			<input type="text" placeholder="lang" bind:value={lang}/>
 			<input type="text" placeholder="type" bind:value={type}/>
+			<input type="number" placeholder="counting" bind:value={counting}/>
 		</div>
 	</div>
 	<div class="editor-wrapper">

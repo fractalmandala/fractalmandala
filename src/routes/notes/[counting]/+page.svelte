@@ -34,6 +34,7 @@
 		showdropdown = !showdropdown
 	}
 
+
 	let notes:any
 	let codes2:any
 	let gens:any
@@ -181,10 +182,25 @@
 	<div class="gridof2">
 		<div class="columnleft">
 			{#if data.note && data.note.length > 0}
-				<div class="notebox">
-					<p class="notepara">{data.note}</p>
-				</div>
+				{#if data.type && data.type.length > 0}
+					{#if data.type === 'quillcode'}
+						<div class="notebox">
+							<div class="notepara">
+								<pre>
+									<code class="language-{data.lang}">
+									{data.note}
+									</code>
+								</pre>
+							</div>
+						</div>
+					{:else}
+						<div class="notebox">
+							<p class="notepara">{data.note}</p>
+						</div>
+					{/if}
+				{/if}
 			{/if}
+			{#if data.codesnippet && data.codesnippet.length > 0}
 			<div class="surroundcode">
 				<div id="stripp" class="boxr" style="background: #000000; height: 24px; justify-content: space-between; padding-left: 8px; padding-right: 8px">
 					<div style="font-size: 12px; color: #10D56C">{data.lang}</div>
@@ -196,6 +212,7 @@
 					</code>
 				</pre>
 				</div>
+			{/if}
 			</div>
 		<div class="columnright" class:secondcolumnright={area[9]}>
 			{#if area[1]}
@@ -367,6 +384,14 @@
 </div>
 
 <style lang="sass">
+
+.notepara
+	color: white
+
+.notepara
+	pre
+		white-space: pre-line
+
 
 #copy
 	color: #474747
