@@ -1,6 +1,8 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte'
+	import TinyCard from '$lib/components/TinyCard.svelte'
+	import Header from '$lib/components/Header.svelte'
 	import { formentries } from '$lib/utils/supabase'
 
 	let entries:any
@@ -11,14 +13,22 @@
 	
 </script>
 
+
+<Header></Header>
 <div class="pagecontainer">
 	{#if entries && entries.length > 0}
-		{#each entries as item}
-			<div class="boxc">
-				<h5>{item.fullname}</h5>
-				<p>{item.emailid}</p>
-				<p>{item.phone}</p>
-			</div>
+		{#each entries as item, i}
+			<TinyCard i={i}>
+				<p slot="title">
+					{item.fullname}
+				</p>
+				<small class="tinycardcat" slot="category">
+					{item.emailid}
+				</small>
+				<small style="font-size: 10px; color: #676767; text-transform: uppercase" slot="tags">
+					{item.phone}
+				</small>
+			</TinyCard>
 		{/each}
 	{/if}
 </div>
@@ -26,16 +36,17 @@
 <style lang="sass">
 
 
-.boxc
-	padding-bottom: 16px
-	border-bottom: 1px solid #272727
-	margin-bottom: 16px
-	h5, p
-		margin: 0
-	h5
-		font-size: 20px
-		font-weight: 400
-	p
-		font-size: 16px
+.pagecontainer
+	display: grid
+	grid-auto-flow: row
+	grid-template-rows: auto
+	@media screen and (min-width: 1024px)
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr
+		grid-template-areas: ". . . . ."
+		gap: 24px
+	@media screen and (max-width: 1023px)
+		grid-template-columns: 1fr
+		grid-template-areas: "."
+		gap: 16px
 
 </style>
