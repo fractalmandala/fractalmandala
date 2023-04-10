@@ -127,6 +127,7 @@
 			{/if}
 		</div>
 </Header>
+
 <div class="pagecontainer">
 	{#if area[1]}
 		{#if notes && notes.length > 0}
@@ -331,6 +332,8 @@
 </div>
 
 <style lang="sass">
+
+
 
 #imagebox
 	position: relative
