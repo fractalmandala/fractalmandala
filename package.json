@@ -43,6 +43,7 @@
 		"sse": "^0.0.8",
 		"sse.js": "^0.6.1",
 		"svelte-legos": "^0.1.9",
-		"svelte-swipe": "^1.9.2"
+		"svelte-swipe": "^1.9.2",
+		"textify.js": "^2.4.3"
 	}
 }

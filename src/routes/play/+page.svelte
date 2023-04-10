@@ -1,9 +1,11 @@
 <script lang="ts">
 
 	import Header from '$lib/components/Header.svelte'
+	import { onMount } from 'svelte'
 	import ChatMessage from '$lib/components/ChatMessage.svelte'
 	import type { ChatCompletionRequestMessage } from 'openai'
 	import { SSE } from 'sse.js'
+	import Animations from 'textify.js'
 
 	let y:number
 	let query: string = ''
@@ -63,6 +65,27 @@
 		answer = ''
 		console.error(err)
 	}
+
+	onMount(() => {
+		const { Textify, TextifyTitle } = Animations
+		new Textify({
+			duration: 2000,
+			stagger: 200,
+			fade: false,
+			reveal: true,
+			threshold: 0.7,
+			once: false
+		}),
+		new Textify({
+			selector: ".thisclass",
+			duration: 7000,
+			stagger: 3000,
+			fade: false,
+			reveal: true,
+			threshold: 0.7,
+			once: false
+		})
+	})
 </script>
 
 <svelte:head>
@@ -76,7 +99,7 @@
 
 <div class="pagecontainer x0">
 	<div class="boxc">
-		<ChatMessage type="assistant" message="Yo! I'm broGPT. Whatcha wanna know?" />
+			<ChatMessage type="assistant" message="yooo bro whatsup! I'm broGPT, whaddaya wanna know?" />	
 			{#each chatMessages as message}
 				<ChatMessage type={message.role} message={message.content} />
 			{/each}
@@ -95,7 +118,6 @@
 		</form>
 	</div>
 	<img class="img1" src="https://rnfvzaelmwbbvfbsppir.supabase.co/storage/v1/object/public/brhatwebsite/10mandala/ai.png" alt="ai1"/>
-	<img class="img2" src="https://rnfvzaelmwbbvfbsppir.supabase.co/storage/v1/object/public/brhatwebsite/10mandala/ai2.png" alt="ai2" style="transform: translateY({-y/2}px) translateX({-y/2}px); opacity: {y/400}"/>
 </div>
 
 <style lang="sass">
@@ -111,23 +133,8 @@
 	filter: saturate(0.5)
 	z-index: 0
 	@media screen and (max-width: 1023px)
-		top: 128px
+		display: none
 
-.boxc
-	z-index: 1
-
-.img2
-	object-fit: cover
-	width: 360px
-	height: 360px
-	position: absolute
-	bottom: 64px
-	right: 64px
-	@media screen and (max-width: 1023px)
-		width: 128px
-		height: 128px
-
-	
 
 .x0
 	min-height: 100vh
@@ -140,6 +147,7 @@
 	width: 100%
 	box-shadow: -3px -5px 8px rgba(0,0,0,0.7)
 	transition: all 0.15s ease
+	margin-top: 32px
 	&:hover
 		box-shadow: -3px -5px 8px rgba(0,0,0,0.0)
 	form
@@ -177,9 +185,10 @@
 			border-radius: 4px
 			margin: 0 auto
 			z-index: -1
-			background: linear-gradient(89deg, rgba(16,213,108,0.2), rgba(40,170,53,0.4))
+			background: linear-gradient(89deg, rgba(16,213,108,0.6), rgba(40,10,53,0.1))
 			background-size: 400% 400%
-			animation: theglowing 8s ease infinite
+			animation: theglowing 5s ease infinite
+			background-position: 100% 0%
 			filter: blur(30px)
 		&::after
 			position: absolute
@@ -193,18 +202,8 @@
 			z-index: -1
 			border-radius: 4px
 		&:hover
-			overflow: hidden
 			&::after
-				background: rgba(0,0,0,0.2)
-
-
-@keyframes theglowing
-	0%
-		background-position: 0% 50%
-	50%
-		background-position: 100% 50%
-	100%
-		background-position: 0% 50%
+				background: rgba(0,0,0,0)
 
 
 </style>
