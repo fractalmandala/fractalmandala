@@ -214,7 +214,7 @@
 	<div class="afilter" on:click={() => tagChosen('typography')} on:keydown={fakefaux} in:fly={{ delay: 400, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter19}>typography</div>
 </Header>
 
-<div class="pagecontainer">
+<div class="x22">
 	{#if showposts && showposts.length > 0}
 		{#each showposts as item, i}
 			<TinyCard i={i}>
@@ -279,7 +279,7 @@
 	border: 1px solid #272727
 
 
-.pagecontainer
+.x22
 	display: grid
 	grid-auto-flow: row
 	grid-template-rows: auto

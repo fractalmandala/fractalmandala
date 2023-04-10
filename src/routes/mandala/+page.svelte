@@ -17,16 +17,17 @@
 </script>
 
 
-<div class="pagecontainer">
-	<p>
-		A simple blog to document a non-programmer bootstrapping himself into web-dev. <span class="special">My stack:</span>
-	</p>
-	<p>
-		- backend at <a href="https://supabase.com/" target="_blank" rel="noreferrer">Supabase</a><br>
-		- framework: <a href="https://kit.svelte.dev/" target="_blank" rel="noreferrer">Sveltekit</a><br>
-		- deployed at <a href="https://vercel.com/home" target="_blank" rel="noreferrer">Vercel</a><br>
-		- also mounted:
-	</p>
+<div class="mandpand">
+<div class="x1">
+		<p>
+			A simple blog to document a non-programmer bootstrapping himself into web-dev. <span class="special">My stack:</span>
+		</p>
+		<p>
+			- backend at <a href="https://supabase.com/" target="_blank" rel="noreferrer">Supabase</a><br>
+			- framework: <a href="https://kit.svelte.dev/" target="_blank" rel="noreferrer">Sveltekit</a><br>
+			- deployed at <a href="https://vercel.com/home" target="_blank" rel="noreferrer">Vercel</a><br>
+			- also mounted:
+		</p>
 				<li><a href="https://lenis.studiofreight.com/" target="_blank" rel="noreferrer">Lenis</a></li>
 				<li><a href="https://greensock.com/gsap/" target="_blank" rel="noreferrer">GSAP</a></li>
 				<li><a href="https://mdsvex.pngwn.io/" target="_blank" rel="noreferrer">MDSvex</a></li>
@@ -34,6 +35,10 @@
 				<li><a href="https://github.com/DaveKeehl/svelte-reveal" target="_blank" rel="noreferrer">Svelte Reveal</a></li>
 				<li><a href="https://sveltelegos.com/" target="_blank" rel="noreferrer">Svelte Legos</a></li>
 				<li><a href="https://prismjs.com/" target="_blank" rel="noreferrer">Prism JS</a></li>
+		<p>
+			On the left, browse/search through an unorganized assortment of code snippets, setup guides and troubleshooting pointers. Read on below for posts and detailed guides.
+		</p>
+	
 </div>
 <div class="gridof3 x2">
 	{#if mands && mands.length > 0}
@@ -49,10 +54,17 @@
 		{/each}
 	{/if}
 </div>
+</div>
 
 <style lang="sass">
 
-.pagecontainer 
+.mandpand
+	box-sizing: border-box
+	@media screen and (min-width: 1024px)
+		padding-left: 64px
+		padding-right: 64px !important
+
+.x1
 	border-bottom: 1px solid #272727
 	p .special
 		background: #64F540
@@ -87,15 +99,11 @@
 	@media screen and (min-width: 1024px)
 		grid-template-columns: 1fr 1fr 1fr
 		grid-template-areas: ". . ."
-		padding-left: 21vw
-		padding-right: 21vw
 		gap: 24px
 		margin-top: 64px
 	@media screen and (max-width: 1023px)
 		grid-template-columns: 1fr 1fr
 		grid-template-areas: ". ."
-		padding-left: 16px
-		padding-right: 16px
 		gap: 16px
 		margin-top: 32px
 		
@@ -107,7 +115,7 @@
 		width: 0
 			
 
-.pagecontainer
+.x1
 	margin-left: 0
 	margin-right: 0
 	p
@@ -123,15 +131,14 @@
 		list-style-type: none
 		padding: 0
 		margin-left: 32px
-	@media screen and (min-width: 1024px)
-		margin-left: 21vw
-		margin-right: 21vw
 	@media screen and (max-width: 1023px)
 		padding: 16px
 		margin-left: 0
 		margin-right: 0
 		p
 			font-size: 14px
+
+
 
 
 </style>
