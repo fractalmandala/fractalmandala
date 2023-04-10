@@ -2,6 +2,14 @@
 
 	import { onMount } from 'svelte'
 	import Header from '$lib/components/Header.svelte'
+	import TinyCard from '$lib/components/TinyCard.svelte'
+	import TinyCard2 from '$lib/components/TinyCard.svelte'
+	import TinyCard3 from '$lib/components/TinyCard.svelte'
+	import TinyCard4 from '$lib/components/TinyCard.svelte'
+	import TinyCard5 from '$lib/components/TinyCard.svelte'
+	import TinyCard6 from '$lib/components/TinyCard.svelte'
+	import TinyCard7 from '$lib/components/TinyCard.svelte'
+	import TinyCard8 from '$lib/components/TinyCard.svelte'
 	import { crossfade, fly, scale } from 'svelte/transition'
 	import { allNotes, allCodes, allOthers, CodeCSS, CodeJS, CodeHTML, quillNotes, MidjourneyImages, MidjourneyTagged } from '$lib/utils/supabase'
 	import { allDocs } from '$lib/utils/localpulls'
@@ -98,15 +106,20 @@
 		{#if notes && notes.length > 0}
 		<div class="gridof6">
 			{#each notes as item, i}
-				<div class="boxc" in:fly={{ duration: 300, delay: i * 15, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}}>
-				<small style="text-transform: uppercase; color: #10D56C; font-size: 10px">{item.type}</small>
-				<p style="padding-top: 4px">
-					<a href="/notes/{item.id}">
-						{item.title}
-					</a>
-				</p>
-				<small>{item.tags}</small>
-				</div>
+				<TinyCard>
+					<small class="tinycardcat" slot="category">{item.type}</small>
+					<p slot="title">
+						<a href="/notes/{item.id}" target="_self">
+							{item.title}
+						</a>
+					</p>
+						<small style="font-size: 10px; color: #676767; text-transform: uppercase" slot="lang">
+							{#if item.lang && item.lang.length > 0}
+								{item.lang}
+							{/if}
+						</small>	
+					<small style="font-size: 10px; color: #676767;" slot="tags">{item.tags}</small>
+				</TinyCard>
 			{/each}
 		</div>
 		{/if}
@@ -115,14 +128,20 @@
 		{#if codes && codes.length > 0}
 			<div class="gridof6">
 			{#each codes as item, i}
-				<div class="boxc" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}}>
-				<p>
-					<a href="/notes/{item.id}">
-						{item.title}
-					</a>
-				</p>
-				<small>{item.tags}</small>
-				</div>
+				<TinyCard2>
+					<small class="tinycardcat" slot="category">{item.type}</small>
+					<p slot="title">
+						<a href="/notes/{item.id}" target="_self">
+							{item.title}
+						</a>
+					</p>
+						<small style="font-size: 10px; color: #676767; text-transform: uppercase" slot="lang">
+							{#if item.lang && item.lang.length > 0}
+								{item.lang}
+							{/if}
+						</small>	
+					<small style="font-size: 10px; color: #676767;" slot="tags">{item.tags}</small>
+				</TinyCard2>
 			{/each}
 			</div>
 		{/if}
@@ -131,14 +150,20 @@
 		{#if gens && gens.length > 0}
 			<div class="gridof6">
 			{#each gens as item, i}
-				<div class="boxc" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}}>
-				<p>
-					<a href="/notes/{item.id}">
-						{item.title}
-					</a>
-				</p>
-				<small>{item.tags}</small>
-				</div>
+				<TinyCard3>
+					<small class="tinycardcat" slot="category">{item.type}</small>
+					<p slot="title">
+						<a href="/notes/{item.id}" target="_self">
+							{item.title}
+						</a>
+					</p>
+						<small style="font-size: 10px; color: #676767; text-transform: uppercase" slot="lang">
+							{#if item.lang && item.lang.length > 0}
+								{item.lang}
+							{/if}
+						</small>	
+					<small style="font-size: 10px; color: #676767;" slot="tags">{item.tags}</small>
+				</TinyCard3>
 			{/each}
 			</div>
 		{/if}
@@ -147,14 +172,20 @@
 		{#if chtml && chtml.length > 0}
 			<div class="gridof6">
 			{#each chtml as item, i}
-				<div class="boxc" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}}>
-				<p>
-					<a href="/notes/{item.id}">
-						{item.title}
-					</a>
-				</p>
-				<small>{item.tags}</small>
-				</div>
+				<TinyCard4>
+					<small class="tinycardcat" slot="category">{item.type}</small>
+					<p slot="title">
+						<a href="/notes/{item.id}" target="_self">
+							{item.title}
+						</a>
+					</p>
+						<small style="font-size: 10px; color: #676767; text-transform: uppercase" slot="lang">
+							{#if item.lang && item.lang.length > 0}
+								{item.lang}
+							{/if}
+						</small>	
+					<small style="font-size: 10px; color: #676767;" slot="tags">{item.tags}</small>
+				</TinyCard4>			
 			{/each}
 			</div>
 		{/if}
@@ -163,14 +194,20 @@
 		{#if cjs && cjs.length > 0}
 			<div class="gridof6">
 			{#each cjs as item, i}
-				<div class="boxc" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}}>
-				<p>
-					<a href="/notes/{item.id}">
-						{item.title}
-					</a>
-				</p>
-				<small>{item.tags}</small>
-				</div>
+				<TinyCard5>
+					<small class="tinycardcat" slot="category">{item.type}</small>
+					<p slot="title">
+						<a href="/notes/{item.id}" target="_self">
+							{item.title}
+						</a>
+					</p>
+						<small style="font-size: 10px; color: #676767; text-transform: uppercase" slot="lang">
+							{#if item.lang && item.lang.length > 0}
+								{item.lang}
+							{/if}
+						</small>	
+					<small style="font-size: 10px; color: #676767;" slot="tags">{item.tags}</small>
+				</TinyCard5>
 			{/each}
 			</div>
 		{/if}
@@ -179,14 +216,20 @@
 		{#if ccss && ccss.length > 0}
 			<div class="gridof6">
 			{#each ccss as item, i}
-				<div class="boxc" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}}>
-				<p>
-					<a href="/notes/{item.id}">
-						{item.title}
-					</a>
-				</p>
-				<small>{item.tags}</small>
-				</div>
+				<TinyCard6>
+					<small class="tinycardcat" slot="category">{item.type}</small>
+					<p slot="title">
+						<a href="/notes/{item.id}" target="_self">
+							{item.title}
+						</a>
+					</p>
+						<small style="font-size: 10px; color: #676767; text-transform: uppercase" slot="lang">
+							{#if item.lang && item.lang.length > 0}
+								{item.lang}
+							{/if}
+						</small>	
+					<small style="font-size: 10px; color: #676767;" slot="tags">{item.tags}</small>
+				</TinyCard6>
 			{/each}
 			</div>
 		{/if}
@@ -195,14 +238,15 @@
 		{#if docs && docs.length > 0}
 			<div class="gridof6">
 			{#each docs as item, i}
-				<div class="boxc" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}}>
-				<p>
-					<a href="{item.path}">
-						{item.meta.title}
-					</a>
-				</p>
-				<small>{item.tags}</small>
-				</div>
+				<TinyCard7>
+					<small class="tinycardcat" slot="category">{item.meta.type}</small>
+					<p slot="title">
+						<a href="{item.path}" target="_self">
+							{item.meta.title}
+						</a>
+					</p>
+					<small style="font-size: 10px; color: #676767;" slot="tags">{item.meta.tags}</small>
+				</TinyCard7>
 			{/each}
 			</div>
 		{/if}
@@ -298,16 +342,7 @@ p
 	margin: 4px 0
 	text-transform: capitalize
 	color: white
-	font-size: 1rem
-	line-height: 1.1
 	font-weight: 400
-	&:hover
-		color: #10D56C
-	@media screen and (max-width: 1023px)
-		font-size: 16px
-
-small
-	color: #474747
 
 .pagecontainer
 	min-width: 100vw
@@ -323,15 +358,15 @@ small
 		&:hover
 			box-shadow: 3px 5px 8px rgba(0,0,0,0.7)
 	@media screen and (min-width: 1024px)
-		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr
-		grid-template-areas: ". . . . . ."
-		gap: 16px
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr
+		grid-template-areas: ". . . . ."
+		gap: 24px
 		.boxc
 			border: 1px solid #272727
 			padding: 8px
 	@media screen and (max-width: 1023px)
-		grid-template-columns: 1fr 1fr
-		grid-template-areas: ". ."
+		grid-template-columns: 1fr 1fr 1fr
+		grid-template-areas: ". . ."
 		gap: 16px
 		.boxc
 			border: 1px solid #272727

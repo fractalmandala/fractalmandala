@@ -28,7 +28,11 @@
 	}
 
 	function toggleMenu(){
-		expandedMenu = !expandedMenu
+		if ( thewidth <= 1023 ) {
+			expandedMenu = !expandedMenu
+		} else {
+			expandedMenu = true
+		}
 	}
 
 	function toggleleft(){
@@ -232,6 +236,7 @@
 	padding-left: 40px
 	padding-right: 40px
 	transition: 0.34s ease
+	z-index: 999
 
 .hiddenheader
 	transform: translateY(-56px)
@@ -308,16 +313,6 @@
 		padding-top: 32px
 		border: 1px solid #272727
 
-.istherealslot.expanded
-	@media screen and (max-width: 1023px)
-		display: flex
-		position: absolute
-		top: 40px
-		margin: auto
-		left: -300%
-		min-width: 280px
-		background: #171717
-		z-index: 999
 
 .istheslot svg
 	@media screen and (min-width: 1024px)
