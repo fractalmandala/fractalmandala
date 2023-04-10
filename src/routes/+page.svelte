@@ -2,6 +2,7 @@
 
 	import { onMount } from 'svelte'
 	import Header from '$lib/components/Header.svelte'
+	import DropDown from '$lib/components/DropDown.svelte'
 	import TinyCard from '$lib/components/TinyCard.svelte'
 	import TinyCard2 from '$lib/components/TinyCard.svelte'
 	import TinyCard3 from '$lib/components/TinyCard.svelte'
@@ -31,6 +32,13 @@
 	let imagetaginput:boolean[] = Array(1000).fill(false)
 	let area:boolean[] = Array(9).fill(false)
 	area[1] = true
+	let showdropdown:boolean = false
+
+	function toggleDrop(){
+		showdropdown = !showdropdown
+	}
+
+
 
 	function toggleAllBool(){
 		allimagesbool = !allimagesbool
@@ -91,22 +99,35 @@
 </script>
 
 <Header>
-		<h5 class="pgcnt" on:click={() => toggleArea(1)} on:keydown={toggleFaux} class:selectedarea={area[1]}>all</h5>
-		<h5 class="pgcnt" on:click={() => toggleArea(2)} on:keydown={toggleFaux}>code</h5>
-		<h5 class="pgcnt" on:click={() => toggleArea(3)} on:keydown={toggleFaux}>general</h5>
-		<h5 class="pgcnt" on:click={() => toggleArea(4)} on:keydown={toggleFaux}>html</h5>
-		<h5 class="pgcnt" on:click={() => toggleArea(5)} on:keydown={toggleFaux}>js</h5>
-		<h5 class="pgcnt" on:click={() => toggleArea(6)} on:keydown={toggleFaux}>styling</h5>
-		<h5 class="pgcnt" on:click={() => toggleArea(7)} on:keydown={toggleFaux}>docs</h5>
-		<h5 class="pgcnt" on:click={() => toggleArea(8)} on:keydown={toggleFaux}>quills</h5>
-		<h5 class="pgcnt" on:click={() => toggleArea(9)} on:keydown={toggleFaux}>gallery</h5>
+		<div class="pgcnt" on:click={() => toggleArea(1)} on:keydown={toggleFaux} class:selectedarea={area[1]}>all</div>
+		<div class="pgcnt" on:click={() => toggleArea(2)} on:keydown={toggleFaux}>code</div>
+		<div class="pgcnt" on:click={() => toggleArea(3)} on:keydown={toggleFaux}>general</div>
+		<div class="pgcnt" on:click={() => toggleArea(4)} on:keydown={toggleFaux}>html</div>
+		<div class="pgcnt" on:click={() => toggleArea(5)} on:keydown={toggleFaux}>js</div>
+		<div class="pgcnt" on:click={() => toggleArea(6)} on:keydown={toggleFaux}>styling</div>
+		<div class="pgcnt" on:click={() => toggleArea(7)} on:keydown={toggleFaux}>docs</div>
+		<div class="pgcnt" on:click={() => toggleArea(8)} on:keydown={toggleFaux}>quills</div>
+		<div class="pgcnt" on:click={() => toggleArea(9)} on:keydown={toggleFaux} on:mouseenter={toggleDrop} on:mouseleave={toggleDrop}>gallery
+			{#if showdropdown}
+				<DropDown>
+					<div class="dropdownitem" style="color: white" on:click={toggleAllBool} on:keydown={toggleFaux}>All</div>
+					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('abstract')} on:keydown={toggleFaux}>Abstract</div>
+					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('culture aesthetic')} on:keydown={toggleFaux}>Culture Aesthetic</div>
+					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('dharmascapes')} on:keydown={toggleFaux}>Dharmascapes</div>
+					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('mandalas')} on:keydown={toggleFaux}>Maṇḍalas</div>
+					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('misc')} on:keydown={toggleFaux}>Misc</div>
+					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('sci-fi')} on:keydown={toggleFaux}>Sci-fi</div>
+					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('the once was')} on:keydown={toggleFaux}>The Once Was</div>
+				</DropDown>
+			{/if}
+		</div>
 </Header>
 <div class="pagecontainer">
 	{#if area[1]}
 		{#if notes && notes.length > 0}
 		<div class="gridof6">
 			{#each notes as item, i}
-				<TinyCard>
+				<TinyCard i={i}>
 					<small class="tinycardcat" slot="category">{item.type}</small>
 					<p slot="title">
 						<a href="/notes/{item.id}" target="_self">
@@ -128,7 +149,7 @@
 		{#if codes && codes.length > 0}
 			<div class="gridof6">
 			{#each codes as item, i}
-				<TinyCard2>
+				<TinyCard2 i={i}>
 					<small class="tinycardcat" slot="category">{item.type}</small>
 					<p slot="title">
 						<a href="/notes/{item.id}" target="_self">
@@ -150,7 +171,7 @@
 		{#if gens && gens.length > 0}
 			<div class="gridof6">
 			{#each gens as item, i}
-				<TinyCard3>
+				<TinyCard3 i={i}>
 					<small class="tinycardcat" slot="category">{item.type}</small>
 					<p slot="title">
 						<a href="/notes/{item.id}" target="_self">
@@ -172,7 +193,7 @@
 		{#if chtml && chtml.length > 0}
 			<div class="gridof6">
 			{#each chtml as item, i}
-				<TinyCard4>
+				<TinyCard4 i={i}>
 					<small class="tinycardcat" slot="category">{item.type}</small>
 					<p slot="title">
 						<a href="/notes/{item.id}" target="_self">
@@ -194,7 +215,7 @@
 		{#if cjs && cjs.length > 0}
 			<div class="gridof6">
 			{#each cjs as item, i}
-				<TinyCard5>
+				<TinyCard5 i={i}>
 					<small class="tinycardcat" slot="category">{item.type}</small>
 					<p slot="title">
 						<a href="/notes/{item.id}" target="_self">
@@ -216,7 +237,7 @@
 		{#if ccss && ccss.length > 0}
 			<div class="gridof6">
 			{#each ccss as item, i}
-				<TinyCard6>
+				<TinyCard6 i={i}>
 					<small class="tinycardcat" slot="category">{item.type}</small>
 					<p slot="title">
 						<a href="/notes/{item.id}" target="_self">
@@ -238,7 +259,7 @@
 		{#if docs && docs.length > 0}
 			<div class="gridof6">
 			{#each docs as item, i}
-				<TinyCard7>
+				<TinyCard7 i={i}>
 					<small class="tinycardcat" slot="category">{item.meta.type}</small>
 					<p slot="title">
 						<a href="{item.path}" target="_self">
@@ -269,14 +290,6 @@
 	{/if}
 	{#if area[9]}
 		<div class="imagefilters">
-			<div on:click={toggleAllBool} on:keydown={toggleFaux}>All</div>
-			<div on:click={() => setnewFilter('abstract')} on:keydown={toggleFaux}>Abstract</div>
-			<div on:click={() => setnewFilter('culture aesthetic')} on:keydown={toggleFaux}>Culture Aesthetic</div>
-			<div on:click={() => setnewFilter('dharmascapes')} on:keydown={toggleFaux}>Dharmascapes</div>
-			<div on:click={() => setnewFilter('mandalas')} on:keydown={toggleFaux}>Maṇḍalas</div>
-			<div on:click={() => setnewFilter('misc')} on:keydown={toggleFaux}>Misc</div>
-			<div on:click={() => setnewFilter('sci-fi')} on:keydown={toggleFaux}>Sci-fi</div>
-			<div on:click={() => setnewFilter('the once was')} on:keydown={toggleFaux}>The Once Was</div>
 		</div>
 		{#if allimagesbool}
 		{#if images && images.length > 0}
@@ -314,25 +327,6 @@
 
 <style lang="sass">
 
-.imagefilters
-	display: flex
-	flex-direction: row
-	gap: 16px
-	padding-left: 16px
-	margin-bottom: 24px
-	div
-		text-transform: uppercase
-		font-size: 14px
-		color: #676767
-		padding: 6px
-		transition: var(--snap)
-		border: 1px solid transparent
-		cursor: pointer
-		&:hover
-			background: #070707
-			color: white
-			border: 1px solid white
-
 
 #imagebox
 	position: relative
@@ -351,26 +345,15 @@ p
 	display: grid
 	grid-auto-flow: row
 	grid-template-rows: auto
-	.boxc
-		background: #171717
-		cursor: pointer
-		border-radius: 4px
-		&:hover
-			box-shadow: 3px 5px 8px rgba(0,0,0,0.7)
 	@media screen and (min-width: 1024px)
 		grid-template-columns: 1fr 1fr 1fr 1fr 1fr
 		grid-template-areas: ". . . . ."
 		gap: 24px
-		.boxc
-			border: 1px solid #272727
-			padding: 8px
 	@media screen and (max-width: 1023px)
 		grid-template-columns: 1fr 1fr 1fr
 		grid-template-areas: ". . ."
 		gap: 16px
-		.boxc
-			border: 1px solid #272727
-			padding: 8px
+
 
 .gridof8
 	display: grid

@@ -2,26 +2,36 @@
 	
 	import { onMount } from 'svelte'
 	import Header from '$lib/components/Header.svelte'
+	import DropDown from '$lib/components/DropDown.svelte'
+	import TinyCard from '$lib/components/TinyCard.svelte'
+	import TinyCard2 from '$lib/components/TinyCard.svelte'
+	import TinyCard3 from '$lib/components/TinyCard.svelte'
+	import TinyCard4 from '$lib/components/TinyCard.svelte'
+	import TinyCard5 from '$lib/components/TinyCard.svelte'
+	import TinyCard6 from '$lib/components/TinyCard.svelte'
+	import TinyCard7 from '$lib/components/TinyCard.svelte'
 	import { allNotes, allCodes, allOthers, CodeCSS, CodeJS, quillNotes, MidjourneyImages, MidjourneyTagged } from '$lib/utils/supabase'
 	import { allDocs } from '$lib/utils/localpulls'
 	import { alertAction } from 'svelte-legos'
-	import Prism from 'prismjs'
-	import '$lib/styles/prism.css'
-	import supabase from '$lib/utils/supabase'
+	import hljs from 'highlight.js'
+	import '$lib/styles/highlight.css'
 	import { CodeHTML, CodesFiltered } from '$lib/utils/supabase'
-	import PopupHTML from '$lib/components/PopupHTML.svelte'
-	import { fly } from 'svelte/transition'
 	export let data
 	let lang:any = data.lang
 	let codes:any
-	let showothers:boolean = false
 	let fake:boolean = false
 	let codeContents:any
-	let deletionID:any
 	let confirmDelete:boolean = false
 	let theid:any
 	let area:boolean[] = Array(9).fill(false)
 	area[1] = true
+	let allimagesbool:boolean = true
+	let lightbox:boolean[] = Array(400).fill(false)
+	let showdropdown:boolean = false
+
+	function toggleDrop(){
+		showdropdown = !showdropdown
+	}
 
 	let notes:any
 	let codes2:any
@@ -32,24 +42,9 @@
 	let docs:any
 	let images:any
 	let quills:any
-	let faux:boolean = false
-	let allimagesbool:boolean = true
 	let imageTag:any = ''
 	let taggedimages:any
-	let lightbox:boolean[] = Array(400).fill(false)
 
-	function onClose(){
-		confirmDelete = false
-	}
-
-	function onOk(){
-		confirmDelete = true
-	}
-
-
-	function toggleShow(){
-		showothers = !showothers
-	}
 
 	function fauxfake(){
 		fake = !fake
@@ -63,6 +58,33 @@
 			}
 		}
 	}
+
+	function toggleAllBool(){
+		allimagesbool = !allimagesbool
+	}
+
+	function setnewFilter(newFilter:any){
+		imageTag = newFilter
+		if ( allimagesbool === true ) {
+			allimagesbool = false
+		}
+	}
+
+	$: if (imageTag) {
+			(async() => {
+				taggedimages = await MidjourneyTagged(imageTag)
+			})()
+		}
+
+	function toggleLightbox(index:number){
+		lightbox[index] = !lightbox[index]
+		for ( let i = 0; i < lightbox.length; i ++ ) {
+			if ( i !== index && lightbox[i] === true ) {
+				lightbox[i] = false
+			}
+		}
+	}
+
 
 
 	onMount(async() => {
@@ -80,22 +102,36 @@
 		quills = await quillNotes()
 		images = await MidjourneyImages()
 		taggedimages = await MidjourneyTagged(imageTag)
-		Prism.highlightAll();
+		hljs.highlightAll()
 	})
 </script>
 
 
 
 <Header>
-		<h5 class="pgcnt" on:click={() => toggleArea(1)} on:keydown={fauxfake} class:selectedarea={area[1]}>all</h5>
-		<h5 class="pgcnt" on:click={() => toggleArea(2)} on:keydown={fauxfake}>code</h5>
-		<h5 class="pgcnt" on:click={() => toggleArea(3)} on:keydown={fauxfake}>general</h5>
-		<h5 class="pgcnt" on:click={() => toggleArea(4)} on:keydown={fauxfake}>html</h5>
-		<h5 class="pgcnt" on:click={() => toggleArea(5)} on:keydown={fauxfake}>js</h5>
-		<h5 class="pgcnt" on:click={() => toggleArea(6)} on:keydown={fauxfake}>styling</h5>
-		<h5 class="pgcnt" on:click={() => toggleArea(7)} on:keydown={fauxfake}>docs</h5>
-		<h5 class="pgcnt" on:click={() => toggleArea(8)} on:keydown={fauxfake}>quills</h5>
-		<h5 class="pgcnt" on:click={() => toggleArea(9)} on:keydown={fauxfake}>gallery</h5>
+		<div class="pgcnt" on:click={() => toggleArea(1)} on:keydown={fauxfake} class:selectedarea={area[1]}>all</div>
+		<div class="pgcnt" on:click={() => toggleArea(2)} on:keydown={fauxfake}>code</div>
+		<div class="pgcnt" on:click={() => toggleArea(3)} on:keydown={fauxfake}>general</div>
+		<div class="pgcnt" on:click={() => toggleArea(4)} on:keydown={fauxfake}>html</div>
+		<div class="pgcnt" on:click={() => toggleArea(5)} on:keydown={fauxfake}>js</div>
+		<div class="pgcnt" on:click={() => toggleArea(6)} on:keydown={fauxfake}>styling</div>
+		<div class="pgcnt" on:click={() => toggleArea(7)} on:keydown={fauxfake}>docs</div>
+		<div class="pgcnt" on:click={() => toggleArea(8)} on:keydown={fauxfake}>quills</div>
+		<div class="pgcnt" on:click={() => toggleArea(9)} on:keydown={fauxfake} on:mouseenter={toggleDrop} on:mouseleave={toggleDrop}>gallery
+			{#if showdropdown}
+				<DropDown>
+					<div class="dropdownitem" style="color: white" on:click={toggleAllBool} on:keydown={fauxfake}>All</div>
+					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('abstract')} on:keydown={fauxfake}>Abstract</div>
+					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('culture aesthetic')} on:keydown={fauxfake}>Culture Aesthetic</div>
+					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('dharmascapes')} on:keydown={fauxfake}>Dharmascapes</div>
+					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('mandalas')} on:keydown={fauxfake}>Maṇḍalas</div>
+					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('misc')} on:keydown={fauxfake}>Misc</div>
+					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('sci-fi')} on:keydown={fauxfake}>Sci-fi</div>
+					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('the once was')} on:keydown={fauxfake}>The Once Was</div>
+				</DropDown>
+			{/if}
+
+		</div>
 </Header>
 <div class="pagecontainer x00">
 	<div class="metaoptions">
@@ -117,9 +153,11 @@
 	<div class="gridof2">
 		<div class="columnleft">
 			{#if data.note && data.note.length > 0}
-				<p class="notepara">{data.note}</p>
+				<div class="notebox">
+					<p class="notepara">{data.note}</p>
+				</div>
 			{/if}
-				<div class="surroundcode">
+			<div class="surroundcode">
 				<pre>
 					<code class="language-{data.lang}" bind:this={codeContents}>
 						{data.codesnippet}
@@ -127,159 +165,192 @@
 				</pre>
 				</div>
 			</div>
-		<div class="columnright">
+		<div class="columnright" class:secondcolumnright={area[9]}>
 			{#if area[1]}
-				{#if notes && notes.length > 0}
-					{#each notes as item, i}
-						<div class="boxc type1" in:fly={{ duration: 300, delay: i * 15, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}}>
-								<p style="padding-top: 4px; padding-bottom: 8px">
-									<a href="/notes/{item.id}">
-										{item.title}
-									</a>
-								</p>
-							<small style="font-size: 10px; color: #575757">{item.tags}</small>
-						</div>
-					{/each}
-				{/if}
+			{#if notes && notes.length > 0}
+				{#each notes as item, i}
+					<TinyCard i={i}>
+						<small class="tinycardcat" slot="category">{item.type}</small>
+						<p slot="title">
+							<a href="/notes/{item.id}" target="_self">
+								{item.title}
+							</a>
+						</p>
+							<small style="font-size: 10px; color: #676767; text-transform: uppercase" slot="lang">
+								{#if item.lang && item.lang.length > 0}
+									{item.lang}
+								{/if}
+							</small>	
+						<small style="font-size: 10px; color: #676767;" slot="tags">{item.tags}</small>
+					</TinyCard>
+				{/each}
+			{/if}
 			{/if}
 			{#if area[2]}
-				{#if codes && codes.length > 0}
+			{#if codes && codes.length > 0}
 				{#each codes as item, i}
-				<div class="type1 boxc" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}}>
-				<p>
-					<a href="/notes/{item.id}">
-						{item.title}
-					</a>
-				</p>
-				<small>{item.tags}</small>
+					<TinyCard2 i={i}>
+					<small class="tinycardcat" slot="category">{item.type}</small>
+					<p slot="title">
+						<a href="/notes/{item.id}" target="_self">
+							{item.title}
+						</a>
+					</p>
+						<small style="font-size: 10px; color: #676767; text-transform: uppercase" slot="lang">
+							{#if item.lang && item.lang.length > 0}
+								{item.lang}
+							{/if}
+						</small>	
+					<small style="font-size: 10px; color: #676767;" slot="tags">{item.tags}</small>
+					</TinyCard2>
+				{/each}
+			{/if}
+			{/if}
+			{#if area[3]}
+			{#if gens && gens.length > 0}
+				{#each gens as item, i}
+					<TinyCard3 i={i}>
+						<small class="tinycardcat" slot="category">{item.type}</small>
+							<p slot="title">
+								<a href="/notes/{item.id}" target="_self">
+									{item.title}
+								</a>
+							</p>
+								<small style="font-size: 10px; color: #676767; text-transform: uppercase" slot="lang">
+									{#if item.lang && item.lang.length > 0}
+										{item.lang}
+									{/if}
+								</small>	
+						<small style="font-size: 10px; color: #676767;" slot="tags">{item.tags}</small>
+					</TinyCard3>
+				{/each}
+			{/if}
+			{/if}
+			{#if area[4]}
+			{#if chtml && chtml.length > 0}
+			{#each chtml as item, i}
+				<TinyCard4 i={i}>
+					<small class="tinycardcat" slot="category">{item.type}</small>
+					<p slot="title">
+						<a href="/notes/{item.id}" target="_self">
+							{item.title}
+						</a>
+					</p>
+						<small style="font-size: 10px; color: #676767; text-transform: uppercase" slot="lang">
+							{#if item.lang && item.lang.length > 0}
+								{item.lang}
+							{/if}
+						</small>	
+					<small style="font-size: 10px; color: #676767;" slot="tags">{item.tags}</small>
+				</TinyCard4>			
+			{/each}
+			{/if}
+			{/if}
+			{#if area[5]}
+			{#if cjs && cjs.length > 0}
+			{#each cjs as item, i}
+				<TinyCard5 i={i}>
+					<small class="tinycardcat" slot="category">{item.type}</small>
+					<p slot="title">
+						<a href="/notes/{item.id}" target="_self">
+							{item.title}
+						</a>
+					</p>
+						<small style="font-size: 10px; color: #676767; text-transform: uppercase" slot="lang">
+							{#if item.lang && item.lang.length > 0}
+								{item.lang}
+							{/if}
+						</small>	
+					<small style="font-size: 10px; color: #676767;" slot="tags">{item.tags}</small>
+				</TinyCard5>
+			{/each}
+			{/if}
+			{/if}
+			{#if area[6]}
+			{#if ccss && ccss.length > 0}
+			{#each ccss as item, i}
+				<TinyCard6 i={i}>
+					<small class="tinycardcat" slot="category">{item.type}</small>
+					<p slot="title">
+						<a href="/notes/{item.id}" target="_self">
+							{item.title}
+						</a>
+					</p>
+						<small style="font-size: 10px; color: #676767; text-transform: uppercase" slot="lang">
+							{#if item.lang && item.lang.length > 0}
+								{item.lang}
+							{/if}
+						</small>	
+					<small style="font-size: 10px; color: #676767;" slot="tags">{item.tags}</small>
+				</TinyCard6>
+			{/each}
+			{/if}
+			{/if}
+			{#if area[7]}
+			{#if docs && docs.length > 0}
+				{#each docs as item, i}
+					<TinyCard7 i={i}>
+					<small class="tinycardcat" slot="category">{item.meta.type}</small>
+					<p slot="title">
+						<a href="{item.path}" target="_self">
+							{item.meta.title}
+						</a>
+					</p>
+					<small style="font-size: 10px; color: #676767;" slot="tags">{item.meta.tags}</small>
+					</TinyCard7>
+				{/each}
+			{/if}
+			{/if}
+			{#if area[9]}
+				{#if allimagesbool}
+				{#if images && images.length > 0}
+				{#each images as item, i}
+					<div id="imagebox" class="boxc">
+					<img src="{item.link}" alt={item.id} on:click={() => toggleLightbox(i)} on:keydown={fauxfake}/>
+					{#if lightbox[i]}
+						<div class="modallightbox" on:click={() => toggleLightbox(i)} on:keydown={fauxfake}>
+							<img src="{item.link}" alt={item.id}/>
+						</div>
+					{/if}
+					</div>
+				{/each}
+				{/if}		
+				{:else}
+				{#if taggedimages && taggedimages.length > 0}
+				{#each taggedimages as item, i}
+				<div id="imagebox" class="boxc">
+					<img src="{item.link}" alt={item.id} on:click={() => toggleLightbox(i)} on:keydown={fauxfake}/>
+					{#if lightbox[i]}
+						<div class="modallightbox" on:click={() => toggleLightbox(i)} on:keydown={fauxfake}>
+							<img src="{item.link}" alt={item.id}/>
+						</div>
+					{/if}
 				</div>
 				{/each}
-				{/if}
 			{/if}
-	{#if area[3]}
-		{#if gens && gens.length > 0}
-
-			{#each gens as item, i}
-				<div class="boxc type1" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}}>
-				<p>
-					<a href="/notes/{item.id}">
-						{item.title}
-					</a>
-				</p>
-				<small>{item.tags}</small>
-				</div>
-			{/each}
-
-		{/if}
-	{/if}
-	{#if area[4]}
-		{#if chtml && chtml.length > 0}
-
-			{#each chtml as item, i}
-				<div class="boxc type1" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}}>
-				<p>
-					<a href="/notes/{item.id}">
-						{item.title}
-					</a>
-				</p>
-				<small>{item.tags}</small>
-				</div>
-			{/each}
-
-		{/if}
-	{/if}
-	{#if area[5]}
-		{#if cjs && cjs.length > 0}
-
-			{#each cjs as item, i}
-				<div class="boxc type1" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}}>
-				<p>
-					<a href="/notes/{item.id}">
-						{item.title}
-					</a>
-				</p>
-				<small>{item.tags}</small>
-				</div>
-			{/each}
-
-		{/if}
-	{/if}
-	{#if area[6]}
-		{#if ccss && ccss.length > 0}
-
-			{#each ccss as item, i}
-				<div class="boxc type1" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}}>
-				<p>
-					<a href="/notes/{item.id}">
-						{item.title}
-					</a>
-				</p>
-				<small>{item.tags}</small>
-				</div>
-			{/each}
-
-		{/if}
-	{/if}
-	{#if area[7]}
-		{#if docs && docs.length > 0}
-
-			{#each docs as item, i}
-				<div class="boxc type1" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}}>
-				<p>
-					<a href="{item.path}">
-						{item.meta.title}
-					</a>
-				</p>
-				<small>{item.tags}</small>
-				</div>
-			{/each}
-
-		{/if}
-	{/if}
-	{#if area[8]}
-		{#if quills && quills.length > 0}
-
-			{#each quills as item, i}
-				<div class="boxc type1" in:fly={{ duration: 300, delay: i * 50, x: 0, y: 48}} out:fly={{ duration: 100, delay: 0, x: 0, y: -48}}>
-				<p>
-					<a href="/blog/{item.id}">
-						{item.title}
-					</a>
-				</p>
-				<small>{item.tags}</small>
-				</div>
-			{/each}
-
-		{/if}
-	{/if}
+			{/if}
+			{/if}		
 		</div>
 	</div>
 </div>
 
 <style lang="sass">
 
-.type1
-	background-color: hsla(0,2%,2%,1)
-	background-image: radial-gradient(at 80% 80%, hsla(101,3%,2%,1) 0px, transparent 50%), radial-gradient(at 40% 0%, hsla(126,75%,7%,1) 0px, transparent 50%)
+#imagebox
+	img
+		object-fit: cover
+		height: 100%
+		width: 100%
+
+#imagebox
+	height: 144px
+	@media screen and (max-width: 1023px)
+		height: 88px
+
+.columnleft
 	display: flex
 	flex-direction: column
-	text-align: right
-	padding: 8px
-	border: 1px solid #272727
-	transition: var(--snap)
-	cursor: pointer
-	opacity: 0.5
-	transform-origin: center center
-	p
-		font-family: 'Spline Sans', sans-serif
-		text-transform: capitalize
-		font-size: 12px
-		color: white
-	&:hover
-		opacity: 1
-		border: 1px solid #10D56C
-		transform: scale(1.1)
-
+	row-gap: 32px
 
 .columnright
 	display: grid
@@ -288,9 +359,19 @@
 	@media screen and (min-width: 1024px)
 		grid-template-columns: 1fr 1fr 1fr
 		grid-template-areas: ". . ."
-		gap: 16px 16px
+		gap: 16px 32px
 		align-items: start
 		align-content: start
+	@media screen and (max-width: 1023px)
+		grid-template-columns: 1fr 1fr 1fr
+		grid-template-areas: ". . ."
+		gap: 16px
+		padding-top: 32px
+
+.columnright.secondcolumnright
+	@media screen and (min-width: 1024px)
+		grid-template-columns: 1fr 1fr 1fr 1fr
+		grid-template-areas: ". . . ."
 
 .metadelete
 	cursor: pointer
@@ -310,8 +391,22 @@
 	margin-bottom: 8px
 
 .surroundcode
+	padding: 24px
+	border: 1px solid #272727
+	border-radius: 4px
+	box-shadow: 3px 5px 18px rgba(0,0,0,0.7), -3px -5px 12px rgba(0,0,0,0.3)
+	transition: all 1s
+	background: #141414
+	&:hover
+		animation: tinydance 1s cubic-bezier(0.000, 0.760, 0.645, 1.650) forwards
 	pre
 		white-space: pre-line
+
+@keyframes tinydance
+	0%
+		box-shadow: 3px 5px 18px rgba(0,0,0,0.7), -3px -5px 12px rgba(0,0,0,0.3)
+	100%
+		box-shadow: 3px 5px 18px rgba(0,0,0,0.7) inset, -3px -5px 12px rgba(0,0,0,0.3) inset
 
 .notepara
 	line-height: 1.8

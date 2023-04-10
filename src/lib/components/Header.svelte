@@ -77,7 +77,9 @@
 
 <div class="headerouter" class:hiddenheader={isInvisible}>
 	<div class="topcol">
-		<LogoFM></LogoFM>
+		<a href="/" target="_self">
+			<LogoFM></LogoFM>
+		</a>
 	</div>
 	<div class="botcol">
 		<div class="lefticon" style="transform: rotate({y/4}deg)">
@@ -147,6 +149,9 @@
 				<MandalaIcon2></MandalaIcon2>
 			</a>
 		</div>
+	</div>
+	<div class="optionalslot">
+		<slot name="option"></slot>
 	</div>
 </div>
 
