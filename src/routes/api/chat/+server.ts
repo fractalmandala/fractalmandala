@@ -3,9 +3,7 @@ import type { CreateChatCompletionRequest, ChatCompletionRequestMessage } from '
 import type { RequestHandler } from './$types'
 import { getTokens } from '$lib/utils/tokenizer'
 import { json } from '@sveltejs/kit'
-import adapter from '@sveltejs/adapter-auto';
 
-/** @type {import('@sveltejs/kit').Config} */
 export const config = {
 	runtime: 'edge'
 }
