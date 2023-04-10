@@ -289,8 +289,8 @@
 		grid-template-areas: ". . . . ."
 		gap: 24px
 	@media screen and (max-width: 1023px)
-		grid-template-columns: 1fr 1fr 1fr
-		grid-template-areas: ". . ."
+		grid-template-columns: 1fr 1fr
+		grid-template-areas: ". ."
 		gap: 16px
 
 </style>

@@ -19,11 +19,7 @@
 	let type:string = 'quillnote'
 	let tags:string
 	let lang:any
-	let codes:any
-	let fake:boolean = false
-	let codeContents:any
 	let confirmDelete:boolean = false
-	let theid:any
 	let area:boolean[] = Array(9).fill(false)
 	area[1] = true
 	let url:any
@@ -43,9 +39,6 @@
 			alert('submitted')
 		}
 	}
-
-
-
 
 
 	onMount(async() => {

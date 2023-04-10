@@ -2,6 +2,7 @@
 	
 	import { onMount } from 'svelte'
 	import Header from '$lib/components/Header.svelte'
+	import HeadComp from '$lib/components/HeadComp.svelte'
 	import DropDown from '$lib/components/DropDown.svelte'
 	import TinyCard from '$lib/components/TinyCard.svelte'
 	import TinyCard2 from '$lib/components/TinyCard.svelte'
@@ -12,7 +13,6 @@
 	import TinyCard7 from '$lib/components/TinyCard.svelte'
 	import { allNotes, allCodes, allOthers, CodeCSS, CodeJS, quillNotes, MidjourneyImages, MidjourneyTagged } from '$lib/utils/supabase'
 	import { allDocs } from '$lib/utils/localpulls'
-	import { alertAction } from 'svelte-legos'
 	import hljs from 'highlight.js'
 	import '$lib/styles/highlight.css'
 	import { CodeHTML, CodesFiltered } from '$lib/utils/supabase'
@@ -28,6 +28,7 @@
 	let allimagesbool:boolean = true
 	let lightbox:boolean[] = Array(400).fill(false)
 	let showdropdown:boolean = false
+	let titular:any
 
 	function toggleDrop(){
 		showdropdown = !showdropdown
@@ -44,6 +45,8 @@
 	let quills:any
 	let imageTag:any = ''
 	let taggedimages:any
+	let nextid:any
+	let previd:any
 
 
 	function fauxfake(){
@@ -85,13 +88,38 @@
 		}
 	}
 
+	function copyToClipboard(){
+		const range = document.createRange();
+		range.selectNodeContents(codeContents)
+		const selection = window.getSelection()
+  	if (selection) {
+    	selection.removeAllRanges();
+    	selection.addRange(range);
+
+    	try {
+      	document.execCommand('copy');
+      	alert('Code snippet copied to clipboard');
+    	} catch (err) {
+      	alert('Failed to copy code snippet');
+    	}
+
+   		selection.removeAllRanges();
+ 		} else {
+    	alert('Failed to copy code snippet');
+  	}
+	}
+
 
 
 	onMount(async() => {
+		hljs.highlightAll()
 		confirmDelete = false
 		lang = data.lang
+		titular = data.title
 		codes = await CodesFiltered(lang)
 		theid = data.id
+		nextid = data.counting + 1
+		previd = data.counting - 1
 		notes = await allNotes()
 		codes2 = await allCodes()
 		gens = await allOthers()
@@ -102,11 +130,14 @@
 		quills = await quillNotes()
 		images = await MidjourneyImages()
 		taggedimages = await MidjourneyTagged(imageTag)
-		hljs.highlightAll()
 	})
 </script>
 
-
+<svelte:head>
+	<HeadComp>
+		FM | {titular}
+	</HeadComp>
+</svelte:head>
 
 <Header>
 		<div class="pgcnt" on:click={() => toggleArea(1)} on:keydown={fauxfake} class:selectedarea={area[1]}>all</div>
@@ -134,22 +165,19 @@
 		</div>
 </Header>
 <div class="pagecontainer x00">
-	<div class="metaoptions">
-		<div class="metadelete"
-			use:alertAction={{
-					title: 'This will delete the note!',
-					description: 'Are you sure? Click OK to Delete.',
-				}}
-			>
-			<svg width="29" height="24" viewBox="0 0 29 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path id="gowhite" d="M8.43243 8.43235H22.7027V16.2161H8.43243V8.43235Z" fill="#fe4a49"/>
-				<path id="gored" d="M8.21598 0.407227H26.9814C27.3254 0.407227 27.6554 0.543906 27.8987 0.787196C28.142 1.03049 28.2787 1.36046 28.2787 1.70452V22.4613C28.2787 22.8053 28.142 23.1353 27.8987 23.3786C27.6554 23.6219 27.3254 23.7586 26.9814 23.7586H8.21598C8.00245 23.7586 7.79222 23.7059 7.60394 23.6052C7.41565 23.5045 7.25513 23.3589 7.13663 23.1813L0.21814 12.8029C0.0759057 12.5897 0 12.3392 0 12.0829C0 11.8266 0.0759057 11.5761 0.21814 11.3629L7.13663 0.984524C7.25513 0.806903 7.41565 0.661279 7.60394 0.560574C7.79222 0.459868 8.00245 0.407195 8.21598 0.407227ZM20.4949 10.7856H11.4138V13.3802H20.4949V10.7856Z" fill="#474747"/>
-			</svg>
+	<div class="boxr">
+		<div class="boxr nav">
+			<a href="/notes/{previd}" target="_self">
+				<img src="https://rnfvzaelmwbbvfbsppir.supabase.co/storage/v1/object/public/brhatwebsite/08icons/chevleft.png" alt="left"/>
+			</a>
+			<a href="/notes/{nextid}" target="_self">
+				<img src="https://rnfvzaelmwbbvfbsppir.supabase.co/storage/v1/object/public/brhatwebsite/08icons/chevright.png" alt="right"/>
+			</a>
 		</div>
+		<h1>
+			{data.title}
+		</h1>
 	</div>
-	<h1>
-		{data.title}
-	</h1>
 	<div class="gridof2">
 		<div class="columnleft">
 			{#if data.note && data.note.length > 0}
@@ -158,6 +186,10 @@
 				</div>
 			{/if}
 			<div class="surroundcode">
+				<div id="stripp" class="boxr" style="background: #000000; height: 24px; justify-content: space-between; padding-left: 8px; padding-right: 8px">
+					<div style="font-size: 12px; color: #10D56C">{data.lang}</div>
+					<div id="copy" style="font-size: 12px; cursor: pointer;" on:click={copyToClipboard} on:keydown={fauxfake}>COPY</div>
+				</div>
 				<pre>
 					<code class="language-{data.lang}" bind:this={codeContents}>
 						{data.codesnippet}
@@ -172,7 +204,7 @@
 					<TinyCard i={i}>
 						<small class="tinycardcat" slot="category">{item.type}</small>
 						<p slot="title">
-							<a href="/notes/{item.id}" target="_self">
+							<a href="/notes/{item.counting}" target="_self">
 								{item.title}
 							</a>
 						</p>
@@ -192,7 +224,7 @@
 					<TinyCard2 i={i}>
 					<small class="tinycardcat" slot="category">{item.type}</small>
 					<p slot="title">
-						<a href="/notes/{item.id}" target="_self">
+						<a href="/notes/{item.counting}" target="_self">
 							{item.title}
 						</a>
 					</p>
@@ -212,7 +244,7 @@
 					<TinyCard3 i={i}>
 						<small class="tinycardcat" slot="category">{item.type}</small>
 							<p slot="title">
-								<a href="/notes/{item.id}" target="_self">
+								<a href="/notes/{item.counting}" target="_self">
 									{item.title}
 								</a>
 							</p>
@@ -232,7 +264,7 @@
 				<TinyCard4 i={i}>
 					<small class="tinycardcat" slot="category">{item.type}</small>
 					<p slot="title">
-						<a href="/notes/{item.id}" target="_self">
+						<a href="/notes/{item.counting}" target="_self">
 							{item.title}
 						</a>
 					</p>
@@ -252,7 +284,7 @@
 				<TinyCard5 i={i}>
 					<small class="tinycardcat" slot="category">{item.type}</small>
 					<p slot="title">
-						<a href="/notes/{item.id}" target="_self">
+						<a href="/notes/{item.counting}" target="_self">
 							{item.title}
 						</a>
 					</p>
@@ -272,7 +304,7 @@
 				<TinyCard6 i={i}>
 					<small class="tinycardcat" slot="category">{item.type}</small>
 					<p slot="title">
-						<a href="/notes/{item.id}" target="_self">
+						<a href="/notes/{item.counting}" target="_self">
 							{item.title}
 						</a>
 					</p>
@@ -336,6 +368,15 @@
 
 <style lang="sass">
 
+#copy
+	color: #474747
+	&:hover
+		color: white
+
+#stripp
+	@media screen and (max-width: 1023px)
+		flex-direction: row
+
 #imagebox
 	img
 		object-fit: cover
@@ -363,8 +404,8 @@
 		align-items: start
 		align-content: start
 	@media screen and (max-width: 1023px)
-		grid-template-columns: 1fr 1fr 1fr
-		grid-template-areas: ". . ."
+		grid-template-columns: 1fr
+		grid-template-areas: "."
 		gap: 16px
 		padding-top: 32px
 
@@ -372,17 +413,6 @@
 	@media screen and (min-width: 1024px)
 		grid-template-columns: 1fr 1fr 1fr 1fr
 		grid-template-areas: ". . . ."
-
-.metadelete
-	cursor: pointer
-	svg
-		object-fit: contain
-		height: 15px
-	&:hover
-		#gored
-			fill: #fe4a49
-		#gowhite
-			fill: white
 		
 
 .metaoptions
@@ -418,5 +448,44 @@ h1
 	border-bottom: 1px solid #313131
 	padding-bottom: 12px
 	font-weight: 600
+	color: white
+	@media screen and (max-width: 1023px)
+		font-size: 21px
+		text-align: center
+		margin-bottom: 16px
+
+.x00
+	.boxr
+		align-items: center
+		justify-content: flex-start
+		padding-left: 0
+		margin-left: 0
+		@media screen and (max-width: 1023px)
+			flex-direction: column
+
+.nav
+	margin-right: 24px
+	height: 28px
+	padding-bottom: 8px
+	gap: 12px
+	img
+		object-fit: contain
+		height: 20px
+		filter: saturate(0.01)
+		opacity: 0.5
+		cursor: pointer
+		&:hover
+			filter: saturate(1)
+			opacity: 1
+	@media screen and (max-width: 1023px)
+		width: 100%
+		flex-direction: row
+		margin: 0
+
+.nav.boxr
+	@media screen and (max-width: 1023px)
+		flex-direction: row
+		justify-content: center
+		
 
 </style>

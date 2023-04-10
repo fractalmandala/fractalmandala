@@ -1,11 +1,10 @@
 import supabase from '$lib/utils/supabase'
 
-export async function load({ params }: { params: { id: number } }){
+export async function load({ params }: { params: { counting: number } }){
 	const { data, error } = await supabase
 	.from('amrit-notes')
 	.select()
-	.neq('type','quillnote')
-	.eq('id',`${params.id}`)
+	.eq('counting',`${params.counting}`)
 	.single()
 	if (error) throw new Error(error.message)
 	return data

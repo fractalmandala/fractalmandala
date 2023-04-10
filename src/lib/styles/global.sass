@@ -33,7 +33,7 @@ a
 	@media screen and (min-width: 1024px)	
 		padding: 40px
 	@media screen and (max-width: 1023px)
-		padding: 24px
+		padding: 24px 16px
 
 .neon
 	background-color: hsla(280,6%,3%,1)
@@ -139,6 +139,7 @@ a
 		font-weight: 600
 		text-transform: uppercase
 		text-align: center
+		color: white
 	h3
 		font-family: 'Spline Sans Mono', monospace
 		font-weight: 600
@@ -160,9 +161,11 @@ a
 		font-size: 1rem
 		font-family: 'Spline Sans Mono', monospace
 		margin: 0 0 20px 0
+		color: white
 	ol, ol li
 		line-height: 1.5
 		font-family: 'Spline Sans Mono', monospace
+		color: white
 	ol li
 		margin-bottom: 20px
 	h6
@@ -180,6 +183,7 @@ a
 		position: relative
 		backdrop-filter: blur(20px)
 		z-index: 3
+		color: white
 		&::before
 			position: absolute
 			top: 0
@@ -206,12 +210,20 @@ a
 			height: 100%
 			z-index: -1
 			border-radius: 4px
+	@media screen and (max-width: 1023px)
+		p, ul li, ol li
+			font-size: 14px
+		h6
+			font-size: 16px
+		h3
+			font-size: 32px
 
 .blogformatting
 	pre
 		margin-top: 40px
 		margin-bottom: 40px
-		box-shadow: -2px -4px 12px #010101
+		background: #171717
+		padding: 24px
 		
 
 .callout
@@ -254,7 +266,7 @@ a
 		transform: translateY(-4px)
 	@media screen and (max-width: 1023px)
 		font-size: 21px
-		border-bottom: 1px solid #272727
+		color: white
 
 .pgcnt.selectedarea
 	color: #10D56C
@@ -287,7 +299,7 @@ a
 			color: white
 	@media screen and (max-width: 1023px)
 		p
-			font-size: 14px
+			font-size: 16px
 
 
 .pgcnt
@@ -298,13 +310,14 @@ a
 		justify-content: flex-end
 		height: 32px
 		font-size: 16px
-		background: #171717
 		padding: 12px 24px
 		z-index: 999
-		border-bottom: 1px solid #373737
 		&:hover
-			background: #10D56C !important
-
+			background: #10D56C
+		@media screen and (max-width: 1023px)
+			text-align: center
+			width: 100%
+			justify-content: center
 
 .notebox
 	background: #171717
@@ -317,20 +330,37 @@ a
 		color: #575757
 
 #docsinside
+	p
+		padding-left: 0
+		margin-left: 0
+		white-space: pre-line
+
+#docsinside
+	background: #171717
+	border: 1px solid #272727
+	box-shadow: 3px 5px 8px rgba(0,0,0,0.7)
+	padding: 32px
+	&:hover
+		box-shadow: 0px 0px 0px rgba(0,0,0,0)
 	pre
-		background: #101010
-		border: 1px solid #272727
-		padding: 16px
-		border-radius: 4px
-		box-shadow: 3px 5px 8px rgba(0,0,0,0.7)
 		overflow-x: scroll
+		border-top: 1px solid #272727
+		border-bottom: 1px solid #272727
+		padding: 16px 0
+		border-radius: 4px
+		padding: 16px
+		background: #121212
+		box-shadow: 3px 5px 8px rgba(0,0,0,0.5) inset, -3px -2px 5px rgba(0,0,0,0.4) inset
 		&:hover
-			box-shadow: 0px 0px 0px rgba(0,0,0,0)
+			box-shadow: 3px 5px 8px rgba(0,0,0,0) inset, -3px -2px 5px rgba(0,0,0,0) inset
 	@media screen and (max-width: 1023px)
+		padding: 16px
 		pre
-			width: 88%
-			margin-left: 6%
-			padding: 16px
+			margin: 0
+			background: #171717
+			box-shadow: none
+			&:hover
+				box-shadow: none
 
 pre
 	overflow-x: auto
@@ -343,13 +373,49 @@ pre
 	word-break: break-word
 		
 #docsinside
-	p
+	p, ul li, ol li
 		font-family: 'Spline Sans', sans-serif
 		font-size: 15px
-		color: #575757
+		color: white
 		line-height: 1.8
 
 .bigcard
 	h5
 		font-size: 20px
 		font-family: 'JetBrains Mono', monospace
+		margin: 0
+	p
+		margin: 0
+		color: #10D56C
+	@media screen and (max-width: 1023px)
+		h5
+			font-size: 16px
+
+.bigcard
+	transition: 0.3s cubic-bezier(0.430, 0.580, 0.000, 1.140)
+	h5
+		transform: translateY(12px)
+		transition: all 0.3s cubic-bezier(0.430, 0.580, 0.000, 1.140)
+		color: #878787
+	p
+		transition: 0.3s cubic-bezier(0.430, 0.580, 0.000, 1.140)
+		transform: translateY(80px)
+		opacity: 0
+	&:hover
+		overflow: hidden
+		h5
+			transform: translateY(0px)
+			color: white
+		p
+			animation: aajaaaja 0.5s cubic-bezier(0.430, 0.580, 0.000, 1.140) forwards
+
+@keyframes aajaaaja
+	0%
+		transform: translateY(80px)
+		opacity: 0
+	50%
+		transform: translateY(0px)
+		opacity: 0
+	100%
+		transform: translateY(0px)
+		opacity: 1

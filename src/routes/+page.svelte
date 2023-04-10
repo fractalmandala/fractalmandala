@@ -130,7 +130,7 @@
 				<TinyCard i={i}>
 					<small class="tinycardcat" slot="category">{item.type}</small>
 					<p slot="title">
-						<a href="/notes/{item.id}" target="_self">
+						<a href="/notes/{item.counting}" target="_self">
 							{item.title}
 						</a>
 					</p>
@@ -152,7 +152,7 @@
 				<TinyCard2 i={i}>
 					<small class="tinycardcat" slot="category">{item.type}</small>
 					<p slot="title">
-						<a href="/notes/{item.id}" target="_self">
+						<a href="/notes/{item.counting}" target="_self">
 							{item.title}
 						</a>
 					</p>
@@ -174,7 +174,7 @@
 				<TinyCard3 i={i}>
 					<small class="tinycardcat" slot="category">{item.type}</small>
 					<p slot="title">
-						<a href="/notes/{item.id}" target="_self">
+						<a href="/notes/{item.counting}" target="_self">
 							{item.title}
 						</a>
 					</p>
@@ -196,7 +196,7 @@
 				<TinyCard4 i={i}>
 					<small class="tinycardcat" slot="category">{item.type}</small>
 					<p slot="title">
-						<a href="/notes/{item.id}" target="_self">
+						<a href="/notes/{item.counting}" target="_self">
 							{item.title}
 						</a>
 					</p>
@@ -218,7 +218,7 @@
 				<TinyCard5 i={i}>
 					<small class="tinycardcat" slot="category">{item.type}</small>
 					<p slot="title">
-						<a href="/notes/{item.id}" target="_self">
+						<a href="/notes/{item.counting}" target="_self">
 							{item.title}
 						</a>
 					</p>
@@ -240,7 +240,7 @@
 				<TinyCard6 i={i}>
 					<small class="tinycardcat" slot="category">{item.type}</small>
 					<p slot="title">
-						<a href="/notes/{item.id}" target="_self">
+						<a href="/notes/{item.counting}" target="_self">
 							{item.title}
 						</a>
 					</p>
@@ -327,10 +327,8 @@
 
 <style lang="sass">
 
-
 #imagebox
 	position: relative
-
 
 p
 	margin: 4px 0
@@ -350,8 +348,8 @@ p
 		grid-template-areas: ". . . . ."
 		gap: 24px
 	@media screen and (max-width: 1023px)
-		grid-template-columns: 1fr 1fr 1fr
-		grid-template-areas: ". . ."
+		grid-template-columns: 1fr
+		grid-template-areas: "."
 		gap: 16px
 
 

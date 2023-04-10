@@ -10,9 +10,9 @@
 <div class="tinycard" in:scale={{delay: 50*i}} out:scale={{ delay: 10*i}}>
 			<slot name="category"></slot>
 			<slot name="title"></slot>
-			<div class="moremeta">
-		<slot name="lang"></slot>
-		<slot name="tags"></slot>
+	<div class="moremeta">
+			<slot name="lang"></slot>
+			<slot name="tags"></slot>
 	</div>
 </div>
 
@@ -64,7 +64,8 @@
 		flex-direction: row
 		gap: 8px
 	@media screen and (max-width: 1023px)
-		flex-direction: column
+		flex-direction: row
+		gap: 16px
 
 
 </style>

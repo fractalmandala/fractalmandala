@@ -1,6 +1,7 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte'
+	import Header from '$lib/components/Header.svelte'
 	import { allMandalas } from '$lib/utils/localpulls'
 	import BigCard from '$lib/components/BigCard.svelte'
 	import { page } from '$app/stores'
@@ -14,6 +15,7 @@
 	})
 
 </script>
+
 
 <div class="pagecontainer">
 	<p>
@@ -35,7 +37,7 @@
 </div>
 <div class="gridof3 x2">
 	{#if mands && mands.length > 0}
-		{#each mands as item}
+		{#each mands as item, i}
 			<BigCard>
 				<h5 slot="title">
 				<a href={item.path} target="_self">
@@ -51,6 +53,7 @@
 <style lang="sass">
 
 .pagecontainer 
+	border-bottom: 1px solid #272727
 	p .special
 		background: #64F540
 		background: linear-gradient(to right, #64F540 0%, #11E876 50%, #07E859 100%)
@@ -87,6 +90,15 @@
 		padding-left: 21vw
 		padding-right: 21vw
 		gap: 24px
+		margin-top: 64px
+	@media screen and (max-width: 1023px)
+		grid-template-columns: 1fr 1fr
+		grid-template-areas: ". ."
+		padding-left: 16px
+		padding-right: 16px
+		gap: 16px
+		margin-top: 32px
+		
 
 @keyframes vanishing
 	0%
@@ -96,9 +108,8 @@
 			
 
 .pagecontainer
-	width: 100%
-	padding-left: 32px
-	padding-right: 32px
+	margin-left: 0
+	margin-right: 0
 	p
 		font-family: 'JetBrains Mono', monospace
 		font-size: 16px
@@ -113,9 +124,12 @@
 		padding: 0
 		margin-left: 32px
 	@media screen and (min-width: 1024px)
-		padding-left: 21vw
-		padding-right: 21vw
+		margin-left: 21vw
+		margin-right: 21vw
 	@media screen and (max-width: 1023px)
+		padding: 16px
+		margin-left: 0
+		margin-right: 0
 		p
 			font-size: 14px
 

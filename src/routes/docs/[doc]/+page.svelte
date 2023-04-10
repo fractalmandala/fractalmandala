@@ -18,9 +18,7 @@
 	export let data
 	let codes:any
 	let fake:boolean = false
-	let codeContents:any
 	let confirmDelete:boolean = false
-	let theid:any
 	let area:boolean[] = Array(9).fill(false)
 	area[1] = true
 	let allimagesbool:boolean = true
@@ -84,6 +82,7 @@
 	}
 
 	onMount(async() => {
+		hljs.highlightAll()
 		confirmDelete = false
 		codes = await CodesFiltered(lang)
 		notes = await allNotes()
@@ -96,7 +95,6 @@
 		quills = await quillNotes()
 		images = await MidjourneyImages()
 		taggedimages = await MidjourneyTagged(imageTag)
-		hljs.highlightAll()
 	})
 
 </script>
@@ -131,7 +129,6 @@
 	</h1>
 	<div class="gridof2">
 		<div class="columnleft">
-			<h6>{data.type} <span> | </span> {data.tags}</h6>
 			<div class="boxc" id="docsinside">
 				<svelte:component this={data.content}/>
 			</div>	
@@ -307,6 +304,9 @@
 
 <style lang="sass">
 
+#docsinside
+	border-radius: 4px
+
 h1
 	text-transform: uppercase
 	margin: 0
@@ -314,13 +314,11 @@ h1
 	border-bottom: 1px solid #313131
 	padding-bottom: 12px
 	font-weight: 600
-
-h6
-	margin: 12px 0 16px 0
-	text-transform: uppercase
-	color: #10C56D
-	font-size: 16px
-	font-weight: 400
+	color: white
+	@media screen and (max-width: 1023px)
+		font-size: 21px
+		text-align: center
+		margin-bottom: 16px
 
 
 #imagebox
@@ -334,29 +332,10 @@ h6
 	@media screen and (max-width: 1023px)
 		height: 88px
 
-.gridof2
-	@media screen and (min-width: 1024px)
-		grid-template-columns: 64% 36%
-		grid-template-areas: "columnleft columnright"
-		column-gap: 0
-		padding-top: 32px
-	@media screen and (max-width: 1023px)
-		grid-template-columns: 1fr
-		grid-template-areas: "columnleft" "columnright"
-		row-gap: 0
-
 .columnleft
 	display: flex
 	flex-direction: column
 	row-gap: 32px
-	background: #171717
-	border: 1px solid #272727
-	border-radius: 4px
-	padding: 64px
-	box-shadow: 3px 5px 18px rgba(0,0,0,0.7) inset, -3px -5px 12px rgba(0,0,0,0.3) inset
-	@media screen and (max-width: 1023px)
-		padding: 0 0 24px 0
-		align-items: center
 
 .columnright
 	display: grid
@@ -368,11 +347,9 @@ h6
 		gap: 16px 32px
 		align-items: start
 		align-content: start
-		margin-left: 32px
-		padding-top: 0
 	@media screen and (max-width: 1023px)
-		grid-template-columns: 1fr 1fr 1fr
-		grid-template-areas: ". . ."
+		grid-template-columns: 1fr
+		grid-template-areas: "."
 		gap: 16px
 		padding-top: 32px
 
@@ -380,5 +357,6 @@ h6
 	@media screen and (min-width: 1024px)
 		grid-template-columns: 1fr 1fr 1fr 1fr
 		grid-template-areas: ". . . ."
+
 
 </style>

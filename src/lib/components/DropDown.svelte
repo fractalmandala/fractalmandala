@@ -15,6 +15,11 @@
 	top: 0px
 	padding-top: 48px
 	right: 0
+	@media screen and (max-width: 1023px)
+		left: 0
+		width: 100%
+		text-align: center
+
 	
 
 </style>

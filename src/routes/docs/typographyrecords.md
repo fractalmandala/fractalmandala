@@ -5,7 +5,7 @@ tags: typography
 ---
 
 > .pad-a at 900px+
-```sass
+```css
 p
 	font-size: 1rem
 	letter-spacing: 0.2px
@@ -26,32 +26,4 @@ h1
 	font-size: 8rem
 	letter-spacing: -3px
 	margin: 0
-```
-
-> pad-a at 575px-
-```sass
-
-```
-
-> the-title inside pad-a
-```sass
-h2
-    font-weight: 600
-    margin-top: 0
-    text-transform: uppercase
-    @media screen and (min-width: 900px)
-        font-size: 4rem
-        margin-bottom: 24px
-    @media screen and (max-width: 899px)
-        font-size: 3.2rem
-        padding: 16px 0
-        margin-bottom: 24px
-    @media screen and (max-width: 767px)
-        font-size: 3rem
-        padding: 16px 0
-        margin-bottom: 24px
-    @media screen and (max-width: 575px)
-        font-size: 2.4rem
-        padding: 16px 0 0 0
-        margin-bottom: 24px
 ```
