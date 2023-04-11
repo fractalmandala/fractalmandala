@@ -1,7 +1,10 @@
 <script lang="ts">
 
 	import { scale } from 'svelte/transition'
+	import { flip } from 'svelte/animate'
+	import { quintOut } from 'svelte/easing'
 	export let i:any
+	let items:any
 
 </script>
 
@@ -15,6 +18,7 @@
 			<slot name="tags"></slot>
 	</div>
 </div>
+
 
 
 <style lang="sass">

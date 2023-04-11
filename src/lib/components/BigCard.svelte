@@ -35,7 +35,7 @@
 		animation: rainbow 60s ease infinite
 	&::after
 		position: absolute
-		background: rgba(0,0,0,0.8)
+		background: rgba(0,0,0,0)
 		backdrop-filter: blur(10px)
 		content: ''
 		top: 0

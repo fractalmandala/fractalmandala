@@ -297,3 +297,12 @@ export async function tableTags(selectag:any){
 		if (error) throw new Error(error.message)
 		return data
 }
+
+	export async function searcher(inputer:any){
+		const { data, error } = await supabase
+		.from('amrit-notes')
+		.select()
+		.textSearch('fts',inputer)
+		if (error) throw new Error(error.message)
+		data
+	}	

@@ -20,7 +20,7 @@
 		try {
 			const { data, error } = await supabase
 			.from('amrit-notes')
-			.insert({ title: title, type: type, lang: lang, tags: tags, note: noteContent})
+			.insert({ title: title, type: type, lang: lang, tags: tags, note: note})
 			if (error) throw new Error(error.message)
 			title = ''
 			type = ''
@@ -49,12 +49,12 @@
 <Header>
 </Header>
 <div class="pagecontainer">
-	<div class="whitewrapper">
 	<div class="boxc notes">
 		<div class="notesection boxr">
 			<input type="text" placeholder="title" bind:value={title}/>
 			<input type="text" placeholder="tags" bind:value={tags}/>
 			<input type="text" placeholder="lang" bind:value={lang}/>
+			<input type="text" placeholder="lang" bind:value={url}/>
 			<input type="text" placeholder="type" bind:value={type}/>
 		</div>
 		<div class="boxc areas">
@@ -62,20 +62,10 @@
 			<textarea bind:value={codesnippet}/>
 		</div>
 	</div>
-		<button class="neon" on:click={inputNote}>Submit</button>
-	</div>
+		<button class="glowing" on:click={inputNote}>Submit</button>
 </div>
 
 <style lang="sass">
-
-.areas
-	textarea
-		border: 1px solid #e7e7e7
-		height: 160px
-		margin-top: 8px
-		margin-bottom: 8px
-	@media screen and (max-width: 1023px)
-		height: 480px
 
 .pagecontainer
 	min-height: 100vh
@@ -88,21 +78,32 @@
 		padding-right: 32px
 
 
-
-.whitewrapper
-	background: white
-	padding: 64px
-	border-radius: 4px
-	@media screen and (max-width: 1023px)
-		padding: 8px
-
 .notesection
 	row-gap: 8px
 	justify-content: space-between
+	gap: 16px
 	input[type=text]
 		width: 24%
-		border: 1px solid #e7e7e7
+		border: 1px solid #272727
+		background: #171717
+		padding: 8px
+		border-radius: 4px
+		outline: none
+		color: white
 	@media screen and (max-width: 1023px)
 		width: 100%
+
+.areas
+	margin-top: 16px
+	textarea
+		margin-bottom: 16px
+		background: #171717
+		height: 160px
+		outline: never
+		border: 1px solid #313131
+		
+
+.glowing
+	padding: 12px
 
 </style>

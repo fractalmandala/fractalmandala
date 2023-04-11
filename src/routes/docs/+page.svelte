@@ -233,7 +233,7 @@
 			<TinyCard i={i}>
 				<small class="tinycardcat" slot="category">{item.type}</small>
 				<p slot="title">
-					<a href="/notes/{item.id}" target="_self">
+					<a href="/notes/{item.counting}" target="_self">
 						{item.title}
 					</a>
 				</p>

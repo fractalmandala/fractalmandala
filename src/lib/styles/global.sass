@@ -5,6 +5,9 @@ body, html
 	background-color: hsla(0,2%,2%,1)
 	background-image: radial-gradient(at 80% 80%, hsla(101,3%,2%,1) 0px, transparent 50%), radial-gradient(at 40% 0%, hsla(126,75%,7%,1) 0px, transparent 50%)
 
+p, .mandpand p
+	font-family: 'Spline Sans', sans-serif
+
 a
 	text-decoration: none
 	color: inherit
@@ -16,6 +19,7 @@ a
 
 *
 	box-sizing: border-box
+	--cubea: cubic-bezier(1.000, -0.105, 1.000, 0.410)
 
 .boxr
 	display: flex
@@ -109,7 +113,7 @@ a
 
 .columnright
 	p
-		font-family: 'JetBrains Mono', monospace
+		font-family: 'Spline Sans', sans-serif
 		margin: 0
 		text-align: right
 		text-transform: uppercase
@@ -141,11 +145,11 @@ a
 		text-align: center
 		color: white
 	h3
-		font-family: 'Spline Sans Mono', monospace
+		font-family: 'Spline Sans', sans-serif
 		font-weight: 600
 		font-size: 2.8vw
 		margin: 64px 0 24px -16px
-		color: #10C56D
+		color: #474747
 		position: relative
 		&::after
 			position: absolute
@@ -159,17 +163,17 @@ a
 		line-height: 1.8
 		font-weight: 400
 		font-size: 1rem
-		font-family: 'Spline Sans Mono', monospace
+		font-family: 'Spline Sans', sans-serif
 		margin: 0 0 20px 0
 		color: white
 	ol, ol li
 		line-height: 1.5
-		font-family: 'Spline Sans Mono', monospace
+		font-family: 'Spline Sans', sans-serif
 		color: white
 	ol li
 		margin-bottom: 20px
 	h6
-		font-family: 'Spline Sans Mono', monospace
+		font-family: 'Spline Sans', sans-serif
 		font-size: 16px
 		font-weight: 400
 		border: 1px solid #474747
@@ -228,21 +232,13 @@ a
 
 .callout
 	color: #676767
-	font-family: 'Spline Sans Mono', monospace
+	font-family: 'Spline Sans', sans-serif
 	font-size: 14px
 	border: 1px solid #272727
 	padding: 8px 16px
 	border-radius: 4px
 	margin-bottom: 24px
 	width: 80%
-
-@keyframes theglowing
-	0%
-		background-position: 0% 50%
-	50%
-		background-position: 100% 50%
-	100%
-		background-position: 0% 50%
 
 .special
 	background: #90F022
@@ -380,7 +376,7 @@ pre
 .bigcard
 	h5
 		font-size: 20px
-		font-family: 'JetBrains Mono', monospace
+		font-family: 'Spline Sans', sans-serif
 		margin: 0
 	p
 		margin: 0
@@ -394,7 +390,7 @@ pre
 	h5
 		transform: translateY(12px)
 		transition: all 0.3s cubic-bezier(0.430, 0.580, 0.000, 1.140)
-		color: #878787
+		color: white
 	p
 		transition: 0.3s cubic-bezier(0.430, 0.580, 0.000, 1.140)
 		transform: translateY(80px)
@@ -417,3 +413,56 @@ pre
 	100%
 		transform: translateY(0px)
 		opacity: 1
+
+@keyframes theglowing
+	0%
+		background-position: 0% 50%
+	33%
+		background-position: 50% 100%
+	66%
+		background-position: 100% 50%
+	100%
+		background-position: 50% 0%
+
+.glowing
+	width: 128px
+	color: white
+	cursor: pointer
+	border-radius: 4px
+	background: #171717
+	position: relative
+	backdrop-filter: blur(20px)
+	border: 1px solid #272727
+	z-index: 3
+	color: white
+	transition: all 0.32s ease
+	&::before
+		position: absolute
+		top: 0
+		left: 0
+		right: 0
+		content: ''
+		width: 100%
+		height: 100%
+		border-radius: 4px
+		margin: 0 auto
+		z-index: -1
+		background: linear-gradient(89deg, rgba(16,213,108,1), rgba(40,10,53,1))
+		background-size: 400% 400%
+		animation: theglowing 5s ease infinite
+		background-position: 100% 100%
+		filter: blur(30px)
+	&::after
+		position: absolute
+		background: #171717
+		backdrop-filter: blur(10px)
+		content: ''
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
+		z-index: -1
+		border-radius: 4px
+	&:hover
+		&::after
+			background: rgba(0,0,0,0)

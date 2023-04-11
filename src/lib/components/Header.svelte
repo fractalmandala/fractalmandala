@@ -1,23 +1,25 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte'
-	import { scale, fly } from 'svelte/transition'
-	import { quintIn, quintOut } from 'svelte/easing' 
-	import { page } from '$app/stores'
+	import { get, writable } from 'svelte/store'
+	import Searcher from '$lib/components/Searcher.svelte'
 	import supabase from '$lib/utils/supabase'
+	const searchStore = writable('')
+	let searchinput
+	const resultsStore = writable([])
+	let showResults = false
+	let loadingStore = false;
+	import { scale, fly } from 'svelte/transition'
+	import { elasticIn, elasticOut, backIn, backOut} from 'svelte/easing' 
+	import { page } from '$app/stores'
+	import { searcher } from '$lib/utils/supabase'
 	import LogoFM from '$lib/components/LogoFM.svelte'
 	import MandalaIcon from '$lib/components/MandalaIcon.svelte'
 	import MandalaIcon2 from '$lib/components/MandalaIcon.svelte'
-	let inputter:any
-
-	async function searcher(inputter:any){
-		const { data, error } = await supabase
-		.from('amrit-notes')
-		.select()
-		.textSearch('fts',inputter)
-		if (error) throw new Error(error.message)
-		searchresults = data
-	}
+	let bringFinder:boolean = false
+	let expansionofheader:boolean = false
+	let results:any
+	let inputer:any
 
 	let y:number
 	let isInvisible:boolean = false
@@ -37,22 +39,23 @@
 	let makesdisappear:boolean
 	let slidingleft:boolean = false
 	let slidingright:boolean = false
-	
 
-	function toggleSearch(){
-		clicksearch = !clicksearch
+	function toggleSearcher(){
+		bringFinder = !bringFinder
+	}
+	
+	function closeSearch(){
+		if ( showResults === true ) {
+			showResults = false
+		}
 	}
 
 	function fakefaux(){
 		fake = !fake
 	}
 
-	function toggleMenu(){
-		if ( thewidth <= 1023 ) {
-			expandedMenu = !expandedMenu
-		} else {
-			expandedMenu = true
-		}
+	function headerExpansion(){
+		expansionofheader = !expansionofheader
 	}
 
 	function toggleleft(){
@@ -90,12 +93,6 @@ $: {
 	}
 
 
-	$: if (clicksearch === true) {
-		(async() => {
-			searchresults = await searcher(inputter)
-		})()
-	}
-
 	$: if ( thewidth <= 1023 ) {
 		makesdisappear = true
 	} else {
@@ -110,8 +107,27 @@ $: {
 		slidingright = !slidingright
 	}
 
+	const searchWord = async() => {
+	loadingStore = true
+	showResults = true
+	const searchTerm = get(searchStore)
+	let results: any[] = []
+	const { data, error } = await supabase
+		.from('amrit-notes')
+		.select()
+		.textSearch('fts', searchTerm)
+		.order('id')
+		if (error) throw new Error(error.message)
+		results = results.concat(data)
+	// @ts-ignore
+	resultsStore.set(data)
+	loadingStore = false
+	input.value = ''
+}
 
-	onMount(() => {
+
+
+	onMount(async() => {
 		height = document.body.scrollHeight
 		url = $page.url.pathname
 		if ( thewidth <= 1023 ) {
@@ -125,9 +141,27 @@ $: {
 
 <svelte:window bind:scrollY={y} bind:innerWidth={thewidth}/>
 
-<div class="headerouter" class:hiddenheader={isInvisible}>
-	<div class="topcol" on:click={toggleMenu} on:keydown={fakefaux}>
+<div class="headerouter" class:hiddenheader={isInvisible} class:grownheader={expansionofheader}>
+	<div class="topcol">
+		{#if bringFinder}
+				<div class="searcherinput" in:fly={{ duration: 900, delay: 200, x: 0, y: 64, easing: elasticOut}} out:fly={{ duration: 200, x: 0, y: -64, easing: elasticOut}}>
+					<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={toggleSearcher} on:keydown={fakefaux}>
+						<path fill-rule="evenodd" clip-rule="evenodd" d="M0.25 11C0.25 5.06294 5.06294 0.25 11 0.25C16.9371 0.25 21.75 5.06294 21.75 11C21.75 16.9371 16.9371 21.75 11 21.75C5.06294 21.75 0.25 16.9371 0.25 11ZM11 1.75C5.89136 1.75 1.75 5.89136 1.75 11C1.75 16.1086 5.89136 20.25 11 20.25C16.1086 20.25 20.25 16.1086 20.25 11C20.25 5.89136 16.1086 1.75 11 1.75Z" fill="#474747"/>
+						<path d="M11 21C16.5229 21 21 16.5229 21 11C21 5.47715 16.5229 1 11 1C5.47715 1 1 5.47715 1 11C1 16.5229 5.47715 21 11 21Z" fill="#474747"/>
+						<path fill-rule="evenodd" clip-rule="evenodd" d="M0.25 11C0.25 5.06294 5.06294 0.25 11 0.25C16.9371 0.25 21.75 5.06294 21.75 11C21.75 16.9371 16.9371 21.75 11 21.75C5.06294 21.75 0.25 16.9371 0.25 11ZM11 1.75C5.89136 1.75 1.75 5.89136 1.75 11C1.75 16.1086 5.89136 20.25 11 20.25C16.1086 20.25 20.25 16.1086 20.25 11C20.25 5.89136 16.1086 1.75 11 1.75Z" fill="#474747"/>
+						<path id="greenpath" fill-rule="evenodd" clip-rule="evenodd" d="M10.4697 7.46967C10.7626 7.17678 11.2374 7.17678 11.5303 7.46967L16.0303 11.9697C16.3232 12.2626 16.3232 12.7374 16.0303 13.0303C15.7374 13.3232 15.2626 13.3232 14.9697 13.0303L11 9.0607L7.03033 13.0303C6.73744 13.3232 6.26256 13.3232 5.96967 13.0303C5.67678 12.7374 5.67678 12.2626 5.96967 11.9697L10.4697 7.46967Z" fill="#FFFBFF"/>
+					</svg>
+					<input type="text"
+						bind:this={searchinput}
+						on:input={(e) => searchStore.set(e.target.value)} 
+						/>
+					<button class="glowing" on:click={searchWord}>FIND</button>
+				</div>
+		{:else}
+			<div class="trans" in:fly={{ duration: 900, delay: 200, x: 0, y: 64, easing: elasticOut}} out:fly={{ duration: 200, x: 0, y: -64, easing: elasticOut}} on:click={toggleSearcher} on:keydown={fakefaux}>
 			<LogoFM></LogoFM>
+			</div>
+		{/if}
 	</div>
 	<div class="botcol">
 		<div class="lefticon" on:mouseenter={toggleLefter} on:mouseleave={toggleLefter} class:slideright={slidingright}>
@@ -147,7 +181,7 @@ $: {
 			</div>
 			{/if}
 		</div>
-		<div class="midlinks" class:slideleft={slidingleft} class:slideright={slidingright}>
+		<div class="midlinks" class:slideleft={slidingleft} class:slideright={slidingright} on:click={headerExpansion} on:keydown={fakefaux}>
 			<div class="leftballs">
 				<div id="ibl" on:mouseenter={toggleleft} on:mouseleave={toggleleft}>
 						<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: translateX({-y/8}px) rotate({y/2}deg)">
@@ -156,17 +190,12 @@ $: {
 						</svg>
 				</div>
 				<div id="ibu" on:mouseenter={toggleUp} on:mouseleave={toggleUp}>
-				<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: translateX({-y/15}px) rotate({-y/2}deg)">
+					<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: translateX({-y/15}px) rotate({-y/2}deg)">
 					<path class="gogreen" fill-rule="evenodd" clip-rule="evenodd" d="M10 8.74228e-07C7.23855 1.11564e-06 4.73855 1.11935 2.9289 2.9289C1.11935 4.73855 -1.11564e-06 7.23855 -8.74228e-07 10C-6.32819e-07 12.7614 1.11935 15.2614 2.9289 17.0711C4.73855 18.8807 7.23855 20 10 20C12.7614 20 15.2614 18.8807 17.0711 17.0711C18.8807 15.2614 20 12.7614 20 10C20 7.23855 18.8807 4.73855 17.0711 2.9289C15.2614 1.11935 12.7614 6.32819e-07 10 8.74228e-07Z" fill="#272727"/>
 					<path class="gogrey" fill-rule="evenodd" clip-rule="evenodd" d="M15.4801 5.58057C15.1872 5.87347 14.7123 5.87348 14.4194 5.58059C13.2876 4.44877 11.7261 3.75 10 3.75C8.27391 3.75 6.71243 4.44877 5.58057 5.58059C5.28767 5.87348 4.81279 5.87347 4.51991 5.58057C4.22702 5.28767 4.22703 4.8128 4.51993 4.51991C5.92157 3.11833 7.86009 2.25 10 2.25C12.1399 2.25 14.0784 3.11833 15.4801 4.51991C15.773 4.8128 15.773 5.28767 15.4801 5.58057Z" fill="#10D56C"/>
-				</svg>
+					</svg>
 				</div>
 			</div>
-				{#if expandedMenu}
-					<div class="istherealslot" in:fly={{ duration: 800, x: 0, y: -800, easing: quintOut}} out:fly={{ duration: 600, x: 0, y: -800, easing: quintIn}} on:click={toggleMenu} on:keydown={fakefaux}>
-					<slot></slot>
-				</div>
-			{/if}
 			<div class="rightballs">
 					<div id="ibr" on:mouseenter={toggleBot} on:mouseleave={toggleBot}>
 						<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: translateX({y/15}px) rotate({y/2}deg)">
@@ -174,19 +203,13 @@ $: {
 						<path class="gogrey" fill-rule="evenodd" clip-rule="evenodd" d="M4.51991 14.4194C4.8128 14.1265 5.28767 14.1265 5.58057 14.4194C6.71243 15.5512 8.27391 16.25 10 16.25C11.7261 16.25 13.2876 15.5512 14.4194 14.4194C14.7123 14.1265 15.1872 14.1265 15.4801 14.4194C15.773 14.7123 15.773 15.1872 15.4801 15.4801C14.0784 16.8817 12.1399 17.75 10 17.75C7.86009 17.75 5.92157 16.8817 4.51993 15.4801C4.22703 15.1872 4.22702 14.7123 4.51991 14.4194Z" fill="#10D56C"/>
 						</svg>
 					</div>
-			<div id="ibd" on:mouseenter={toggleLast} on:mouseleave={toggleLast} on:click={toggleSearch} on:keydown={fakefaux}>
-				<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: translateX({y/8}px) rotate({-y/2}deg)">
+				<div id="ibd" on:mouseenter={toggleLast} on:mouseleave={toggleLast}>
+					<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: translateX({y/8}px) rotate({-y/2}deg)">
 					<path class="gogreen" fill-rule="evenodd" clip-rule="evenodd" d="M20 10C20 7.23855 18.8806 4.73855 17.0711 2.9289C15.2614 1.11935 12.7614 -5.57821e-07 10 -4.37114e-07C7.2386 -3.16409e-07 4.7386 1.11935 2.92893 2.9289C1.11929 4.73855 -5.57821e-07 7.23855 -4.37114e-07 10C-3.16409e-07 12.7614 1.11929 15.2614 2.92893 17.0711C4.7386 18.8807 7.2386 20 10 20C12.7615 20 15.2615 18.8807 17.0711 17.0711C18.8807 15.2614 20 12.7614 20 10Z" fill="#272727"/>
 					<path class="gogrey" fill-rule="evenodd" clip-rule="evenodd" d="M14.4194 15.4801C14.1265 15.1872 14.1265 14.7123 14.4194 14.4194C15.5512 13.2876 16.25 11.7261 16.25 10C16.25 8.27391 15.5512 6.71243 14.4194 5.58057C14.1265 5.28767 14.1265 4.8128 14.4194 4.51991C14.7123 4.22702 15.1872 4.22703 15.4801 4.51993C16.8817 5.92157 17.75 7.86009 17.75 10C17.75 12.1399 16.8817 14.0784 15.4801 15.4801C15.1872 15.773 14.7123 15.773 14.4194 15.4801Z" fill="#10D56C"/>
-				</svg>
-		</div>
-			{#if clicksearch}
-				<div class="searchinputarea" in:fly={{ duration: 400, y: -48, x: 0}} out:fly={{ duration: 200}}>
-					<input type="text" bind:value={inputter}/>
-					<button class="searchbutton" on:click={() => searcher(inputter)}>GO</button>
+					</svg>
 				</div>
-			{/if}
-		</div>
+			</div>
 		</div>
 		<div class="righticon" class:slideleft={slidingleft} on:mouseenter={togglerighter} on:mouseleave={togglerighter}>
 			{#if slidingright}
@@ -218,13 +241,97 @@ $: {
 			{/if}
 			{/if}
 	</div>
-	<div class="optionalslot">
-		<slot name="option"></slot>
-	</div>
+	{#if expansionofheader}
+		<div class="newmenu">
+			<div class="menutray">
+			<p><a href="/play" target="_self">broGPT</a></p>
+			<p><a href="/notes" target="_self">Note</a></p>
+			<p><a href="/docs" target="_self">Docs</a></p>
+			</div>
+		</div>
+	{/if}
+			{#if loadingStore}
+			<p>Loading...</p>
+			{/if}
+			{#if showResults}
+				{#if $resultsStore.length>0}
+				<div class="resultstray" on:click={closeSearch} on:keydown={fakefaux}>
+					{#each $resultsStore as item, i}
+						<p in:fly={{ duration: 200, delay: i*100, x: 128}}><a href="/notes/{item.counting}">{item.title}</a></p>
+					{/each}
+				</div>
+				{/if}
+			{/if}
+	
 </div>
 
 
+
 <style lang="sass">
+
+.searcherinput svg
+	&:hover
+		path
+			fill: #FFFFFF
+		#greenpath
+			fill: #10C56D
+
+.menutray
+	display: flex
+	flex-direction: row
+	column-gap: 24px
+	margin-top: 32px
+	p
+		color: white
+
+.resultstray
+	display: flex
+	flex-direction: column
+	background: #171717
+	z-index: 999
+	height: 100vh
+	position: fixed
+	top: 0
+	left: 0
+	width: 100%
+	height: 100vh
+	padding: 32px
+	p
+		margin: 0 0 8px 0
+		padding: 0
+		color: white
+		text-transform: uppercase
+		text-align: center
+		font-size: 20px
+		&:hover
+			color: #10C56D	
+	@media screen and (min-width: 1024px)
+		align-items: center
+		row-gap: 4px
+		padding-top: 120px
+
+.searcherinput
+	display: flex
+	flex-direction: row
+	gap: 16px
+
+.newmenu
+	height: 0
+	width: 100%
+	transition-delay: 1s
+	display: flex
+	flex-direction: column
+	align-items: center
+	justify-content: center
+	gap: 0
+	>p
+		color: white
+		padding-top: 32px
+		font-size: 14px
+		color: #878787
+		text-align: center
+		&:hover
+			color: #10C56D
 
 #righttexters
 	color: white
@@ -245,23 +352,17 @@ $: {
 	0%
 		transform: translateX(0px)
 		opacity: 1
-	50%
+	100%
 		transform: translateX(-64px)
 		opacity: 0
-	100%
-		transform: translateX(0px)
-		opacity: 1
 
 @keyframes slowingright
 	0%
 		transform: translateX(0px)
 		opacity: 1
-	50%
+	100%
 		transform: translateX(64px)
 		opacity: 0
-	100%
-		transform: translateX(0px)
-		opacity: 1
 
 .righticon
 	div
@@ -346,33 +447,6 @@ $: {
 		&:hover
 			color: #10D56C
 
-.searchinputarea
-	input
-		border: 1px solid #272727
-	.searchbutton
-		font-weight: bold
-		text-transform: uppercase
-		font-size: 12px
-		color: white
-		background: #10D56C
-		border: 1px solid #10D56C
-	@media screen and (max-width: 1023px)
-		position: absolute
-		display: flex
-		flex-direction: row
-		top: 56px
-		left: 0
-		width: 100%
-		height: 56px
-		justify-content: center
-		column-gap: 16px
-		input
-			width: 75%
-			height: 24px
-		.searchbutton
-			width: 20%
-			height: 24px
-
 #ibl svg, #ibu svg, #ibr svg, #ibd svg
 	object-fit: contain
 	height: 20px
@@ -438,9 +512,14 @@ $: {
 	padding-right: 40px
 	transition: 0.34s ease
 	z-index: 999
+	overflow-y: hidden
 	@media screen and (max-width: 1023px)
 		padding-left: 16px
 		padding-right: 16px
+
+.grownheader.headerouter
+	height: 200px	
+	transition: 0.34s ease
 
 .hiddenheader
 	transform: translateY(-56px)
@@ -504,24 +583,6 @@ $: {
 		flex-direction: row
 		gap: 40px
 
-
-.istherealslot
-	display: flex
-	transition: 0.3s ease
-	@media screen and (min-width: 1024px)
-		flex-direction: row
-		display: flex
-	@media screen and (max-width: 1023px)
-		flex-direction: column
-		position: absolute
-		top: 56px
-		left: 0
-		width: 100%
-		background-color: hsla(0,2%,2%,1)
-		background-image: radial-gradient(at 80% 80%, hsla(101,3%,2%,1) 0px, transparent 50%), radial-gradient(at 40% 0%, hsla(126,75%,7%,1) 0px, transparent 50%)
-		height: calc(100vh - 56px)
-		text-align: center
-		padding-top: 32px
 
 .botcol
 	position: relative

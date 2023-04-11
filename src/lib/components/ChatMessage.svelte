@@ -1,8 +1,35 @@
 <script lang="ts">
 
+
+	import { onMount } from 'svelte'
+	import supabase from '$lib/utils/supabase'
+	let sampler:any
 	import type { ChatCompletionRequestMessageRoleEnum } from 'openai'
 	export let type: ChatCompletionRequestMessageRoleEnum
 	export let message: string
+	let fake:boolean = false
+
+	function fauxfake(){
+		fake = !fake
+	}
+
+	 async function submitResponse() {
+    try {
+      const { error } = await supabase
+        .from('amrit-chatswithgpt')
+        .insert({ who: 'broGPT', what: message })
+      if (error) {
+        throw new Error(error.message)
+      }
+      console.log('submitted')
+    } catch (e) {
+      console.error('Error inserting into Supabase:', e)
+    }
+  }
+
+	onMount(async() => {
+		sampler = message
+	})
 
 </script>
 
@@ -13,7 +40,9 @@
 	<div class="chat-bubble {type === 'user' ? 'Me' : 'broGPT'}">
 		{message}
 	</div>
+	<button on:click={submitResponse} on:keydown={fauxfake}>Submit</button>
 </div>
+
 
 <style lang="sass">
 

@@ -123,12 +123,12 @@
 	margin-left: 0
 	margin-right: 0
 	p
-		font-family: 'JetBrains Mono', monospace
+		font-family: 'Spline Sans', sans-serif
 		font-size: 16px
 		color: #FFFFFF
 		line-height: 2
 	li
-		font-family: 'JetBrains Mono', monospace
+		font-family: 'Spline Sans', sans-serif
 		font-size: 14px
 		color: #FFFFFF
 		line-height: 1.5

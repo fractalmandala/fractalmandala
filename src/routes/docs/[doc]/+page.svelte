@@ -140,7 +140,7 @@
 					<TinyCard i={i}>
 						<small class="tinycardcat" slot="category">{item.type}</small>
 						<p slot="title">
-							<a href="/notes/{item.id}" target="_self">
+							<a href="/notes/{item.counting}" target="_self">
 								{item.title}
 							</a>
 						</p>
@@ -160,7 +160,7 @@
 					<TinyCard2 i={i}>
 					<small class="tinycardcat" slot="category">{item.type}</small>
 					<p slot="title">
-						<a href="/notes/{item.id}" target="_self">
+						<a href="/notes/{item.counting}" target="_self">
 							{item.title}
 						</a>
 					</p>
@@ -180,7 +180,7 @@
 					<TinyCard3 i={i}>
 						<small class="tinycardcat" slot="category">{item.type}</small>
 							<p slot="title">
-								<a href="/notes/{item.id}" target="_self">
+								<a href="/notes/{item.counting}" target="_self">
 									{item.title}
 								</a>
 							</p>
@@ -200,7 +200,7 @@
 				<TinyCard4 i={i}>
 					<small class="tinycardcat" slot="category">{item.type}</small>
 					<p slot="title">
-						<a href="/notes/{item.id}" target="_self">
+						<a href="/notes/{item.counting}" target="_self">
 							{item.title}
 						</a>
 					</p>
@@ -220,7 +220,7 @@
 				<TinyCard5 i={i}>
 					<small class="tinycardcat" slot="category">{item.type}</small>
 					<p slot="title">
-						<a href="/notes/{item.id}" target="_self">
+						<a href="/notes/{item.counting}" target="_self">
 							{item.title}
 						</a>
 					</p>
@@ -240,7 +240,7 @@
 				<TinyCard6 i={i}>
 					<small class="tinycardcat" slot="category">{item.type}</small>
 					<p slot="title">
-						<a href="/notes/{item.id}" target="_self">
+						<a href="/notes/{item.counting}" target="_self">
 							{item.title}
 						</a>
 					</p>

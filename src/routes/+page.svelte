@@ -1,6 +1,8 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte'
+	import { flip } from 'svelte/animate'
+	import { quintOut } from 'svelte/easing'
 	import Header from '$lib/components/Header.svelte'
 	import TinyCard from '$lib/components/TinyCard.svelte'
 	import TinyCard2 from '$lib/components/TinyCard.svelte'
@@ -12,6 +14,11 @@
 	import { crossfade, fly, scale } from 'svelte/transition'
 	import { allNotes, allCodes, allOthers, CodeCSS, CodeJS, CodeHTML, quillNotes, MidjourneyImages, MidjourneyTagged } from '$lib/utils/supabase'
 	import { allDocs } from '$lib/utils/localpulls'
+	let grownupbot:boolean = false
+
+	function clickedtogrow(){
+		grownupbot = !grownupbot	
+	}
 	
 	let notes:any
 	let codes:any

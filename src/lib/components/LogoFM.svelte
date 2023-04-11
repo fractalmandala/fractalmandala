@@ -47,5 +47,6 @@ svg
 	margin-top: 4px
 	height: 32px
 	width: 240px
+	transition: all 0.7s var(--cubea)
 
 </style>

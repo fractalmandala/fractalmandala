@@ -2,6 +2,9 @@
 
 	import { onMount } from 'svelte' 
 	import Header from '$lib/components/Header.svelte'
+	import { toast } from 'svoast'
+	import hljs from 'highlight.js'
+	import '$lib/styles/highlight.css'
 	import { page } from '$app/stores'
 	import supabase from '$lib/utils/supabase'
 	import '$lib/styles/snow.css'
@@ -9,7 +12,7 @@
 	let quill: {on: (arg0: string,arg1: () => void) => void; root: {innerHTML: any;};}
 	let noteContent: any
 	export let toolbarOptions = [
-		[{ header: 1 }, { header: 2 }, {header: 3}, {header: 4}, "blockquote", "link", "image", "video", "code"],
+		[{ header: 1 }, { header: 2 }, {header: 3}, {header: 4}, "paragraph", "blockquote", "link", "image", "video", "code"],
 		["bold", "italic", "underline", "strike"],
 		[{ list: "ordered" }, { list: "ordered" }],
 		[{ align: [] }],
@@ -20,11 +23,15 @@
 	let tags:string
 	let counting:number
 	let lang:any
-	let confirmDelete:boolean = false
+	let codesnippet:any
 	let area:boolean[] = Array(9).fill(false)
 	area[1] = true
 	let url:any
+	let fake:boolean = false
 
+	function fauxfake(){
+		fake = !fake
+	}
 
 	export async function inputNote(){
 		try {
@@ -38,13 +45,13 @@
 			tags = ''
 			counting = 0
 		} finally {
-			alert('submitted')
+			alert('Successfully submitted!')
 		}
 	}
 
 
 	onMount(async() => {
-		confirmDelete = false
+		hljs.highlightAll()
 		url = $page.url.pathname
 		const { default: Quill } = await import('quill')
 		quill = new Quill(editor, {
@@ -68,7 +75,6 @@
 <Header>
 </Header>
 <div class="pagecontainer">
-	<div class="whitewrapper">
 	<div class="boxc notes">
 		<div class="notesection boxr">
 			<input type="text" placeholder="title" bind:value={title}/>
@@ -76,46 +82,67 @@
 			<input type="text" placeholder="lang" bind:value={lang}/>
 			<input type="text" placeholder="type" bind:value={type}/>
 			<input type="number" placeholder="counting" bind:value={counting}/>
+			<textarea class="hljs" bind:value={codesnippet}/>
+			<button class="glowing">Submit</button>
 		</div>
 	</div>
 	<div class="editor-wrapper">
 		<div bind:this={editor}/>
 	</div>
-		<button class="neon" on:click={inputNote}>Submit</button>
-	</div>
 </div>
 
 <style lang="sass">
 
+.glowing
+	padding: 16px
+
 
 .pagecontainer
+	display: grid
+	grid-auto-flow: row
+	grid-template-rows: auto
 	min-height: 100vh
 	width: 100%
 	@media screen and (min-width: 1024px)
-		padding-left: 21vw
-		padding-right: 21vw
+		grid-template-columns: 240px 1fr
+		grid-template-areas: "notes editor"
+		padding-left: 20vw
+		padding-right: 20vw
+		gap: 0 40px
+		.notes
+			grid-area: notes
+		.editor-wrapper
+			grid-area: editor
+			height: 100%
 	@media screen and (max-width: 1023px)
 		padding-left: 32px
 		padding-right: 32px
 
 .editor-wrapper
-	margin-top: 32px
 	margin-bottom: 16px
-
-
-.whitewrapper
-	background: white
-	padding: 64px
-	border-radius: 4px
-	@media screen and (max-width: 1023px)
-		padding: 8px
 
 .notesection
 	row-gap: 8px
 	justify-content: space-between
-	input[type=text]
-		width: 24%
-		border: 1px solid #e7e7e7
+	flex-wrap: wrap
+	input[type=text], input[type=number]
+		background: #171717
+		width: 100%
+		border: 1px solid #272727
+		padding: 8px
+		outline: none
+		color: white
+		box-shadow: -4px 10px 8px rgba(0,0,0,0.7)
+		cursor: pointer
+	textarea
+		background: #171717
+		outline: none
+		width: 100%
+		border-radius: 4px
+		border: 1px solid #272727
+		height: 200px
+		&:hover
+			box-shadow: 0px 0px 0px rgba(0,0,0,0)
 	@media screen and (max-width: 1023px)
 		width: 100%
 

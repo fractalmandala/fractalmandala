@@ -244,11 +244,41 @@
 	</div>
 	<div class="blogsection">
 		<slot></slot>
+		<div class="bottomend">
+			<p style="color: #10D56C">NEXT:</p>
+			<h5>
+				<a href="/mandala/generalutilities">
+					Simple Toggle in Sveltekit
+				</a>
+			</h5>
+		</div>
 	</div>
 </div>
 
 
 <style lang="sass">
+
+.bottomend
+	h5
+		font-size: 20px
+		margin: 0
+		color: #878787
+		&:hover
+			color: white
+	p
+		font-size: 12px
+		margin: 0
+	text-align: right
+
+.bottomend
+	height: 80px
+	width: 100%
+	border-top: 1px solid #272727
+	display: flex
+	flex-direction: row
+	align-items: center
+	justify-content: flex-end
+	column-gap: 8px
 
 .try
 	display: flex
@@ -261,6 +291,7 @@
 	box-sizing: border-box
 	width: 100vw
 	overflow-x: hidden
+	height: 100%
 	@media screen and (min-width: 1024px)
 		display: grid
 		grid-auto-flow: row
