@@ -3,6 +3,7 @@
 	import Header from '$lib/components/Header.svelte'
 	import supabase from '$lib/utils/supabase'
 	import { onMount } from 'svelte'
+	import { chatswithGPT } from '$lib/utils/supabase'
 	import ChatMessage from '$lib/components/ChatMessage.svelte'
 	import type { ChatCompletionRequestMessage } from 'openai'
 	import { SSE } from 'sse.js'
@@ -15,6 +16,8 @@
 	let chatMessages: ChatCompletionRequestMessage[] = []
 	let scrollToDiv: HTMLDivElement
 	let userprompt:any
+	let supachats:any 
+	let limit:number = 6
 
 
 	function scrollToBottom() {
@@ -65,12 +68,35 @@
 		scrollToBottom()
 	}
 
+	$: if (submittance) {
+		submitAnswer()	
+	}
+
+
+	async function submitAnswer(){
+		try {
+			const { error } = await supabase
+      .from('amrit-chatswithgpt')
+      .insert({ prompt: userprompt, response: submittance })
+      if (error) {
+        throw new Error(error.message)
+      }
+      console.log('submitted')
+    } catch (e) {
+      console.error('Error inserting into Supabase:', e)
+    }
+	}
+
 	function handleError<T>(err: T) {
 		loading = false
 		query = ''
 		answer = ''
 		console.error(err)
 	}
+
+	onMount(async() => {
+		supachats = await chatswithGPT()
+	})
 
 </script>
 
@@ -87,7 +113,20 @@
 <Header></Header>
 <div class="radiationonly">
 <div class="pagecontainer x0">
-	<div class="selectionsarea"></div>
+	<div class="selectionsarea">
+		{#if supachats && supachats.length > 0}
+			{#each supachats as item}
+				<a href="/play/{item.id}" target="_self">
+				<div class="sidebox sideuser">
+					<p>{item.prompt.slice(0,100)}</p>
+				</div>
+				<div class="sidebox sidegpt">
+					<p>{item.response.slice(0,100)}</p>
+				</div>
+				</a>
+			{/each}
+		{/if}
+	</div>
 	<div class="gptarea">
 			<ChatMessage type="assistant" message="yooo bro whatsup! I'm broGPT, whaddaya wanna know?" />	
 			{#each chatMessages as message}
@@ -112,6 +151,27 @@
 
 <style lang="sass">
 
+.sidebox
+	width: 100%
+	overflow: hidden
+	padding-bottom: 4px
+
+.sideuser
+	text-align: left
+	p
+		text-transform: capitalize
+		color: #878787
+		font-size: 12px
+
+.sidegpt
+	border-bottom: 1px solid #272727
+	margin-bottom: 8px
+	padding-bottom: 8px
+	p
+		text-transform: capitalize
+		color: white
+		font-size: 14px
+
 .gptarea
 	backdrop-filter: blur(20px)
 	background: rgba(0,0,0,0.2)
@@ -125,6 +185,7 @@
 		flex-direction: column
 		justify-content: flex-start
 		row-gap: 0
+
 
 
 .x0
@@ -141,9 +202,17 @@
 		gap: 0 0px
 		padding-left: 0
 		padding-right: 0
+		.selectionsarea
+			padding-top: 2vw
+			padding-left: 2vw
+			padding-right: 2vw
+			display: flex
+			flex-direction: column
+			row-gap: 0px
 
 .selectionsarea
 	border-right: 1px solid #272727
+	grid-area: selectionsarea
 
 .ofform
 	width: 100%

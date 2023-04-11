@@ -306,3 +306,13 @@ export async function tableTags(selectag:any){
 		if (error) throw new Error(error.message)
 		data
 	}	
+
+	export async function chatswithGPT(){
+		const { data, error } = await supabase
+		.from('amrit-chatswithgpt')
+		.select()
+		.order('id',{ascending: false})
+		.limit(8)
+		if (error) throw new Error(error.message)
+		return data
+	}
