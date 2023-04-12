@@ -1,7 +1,6 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte' 
-	import Header from '$lib/components/Header.svelte'
 	import { page } from '$app/stores'
 	import supabase from '$lib/utils/supabase'
 	let noteContent: any
@@ -46,8 +45,6 @@
 <meta name="description" content="tech, dev, design, dharma"/>
 </svelte:head>
 
-<Header>
-</Header>
 <div class="pagecontainer">
 	<div class="boxc notes">
 		<div class="notesection boxr">

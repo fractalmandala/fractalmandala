@@ -113,7 +113,6 @@ pre
 .commbody.user, .commbody.broGPT
 	color: white
 	font-family: 'Spline Sans', sans-serif
-	text-transform: capitalize
 
 .commbody.broGPT
 	font-size: 16px

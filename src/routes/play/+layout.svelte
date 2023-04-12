@@ -1,7 +1,7 @@
 <script lang="ts">
 
 
-	import Header from '$lib/components/Header.svelte'
+
 	import '$lib/styles/syntax.sass'
 	import hljs from 'highlight.js'
 	import '$lib/styles/highlight.css'	
@@ -108,7 +108,7 @@
 </script>
 
 
-<Header></Header>
+
 <div class="radiationonly">
 <div class="pagecontainer x0">
 	<div class="selectionsarea">

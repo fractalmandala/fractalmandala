@@ -1,13 +1,11 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte'
-	import Header from '$lib/components/Header.svelte'
 	import ChatMessage from '$lib/components/ChatMessage.svelte'
 	import hljs from 'highlight.js'
 	import '$lib/styles/highlight.css'	
 	import type { ChatCompletionRequestMessage } from 'openai'
 	import { SSE } from 'sse.js'
-	import ViewCard from '$lib/components/ViewCard.svelte'
 	import TinyCard from '$lib/components/TinyCard.svelte'
 	import TinyCard2 from '$lib/components/TinyCard.svelte'
 	import TinyCard3 from '$lib/components/TinyCard.svelte'
@@ -56,6 +54,11 @@
 	let single:any
 	let galleryView:boolean = false
 	let postsview:boolean = false
+	let openSidebar:boolean = false
+
+	function toggleOpenSidebar(){
+		openSidebar = !openSidebar
+	}
 
 	function showGallery(){
 		galleryView = !galleryView
@@ -171,6 +174,9 @@
 				area[i] = false
 			}
 		}
+		if ( openSidebar === false ) {
+			openSidebar = true
+		}
 	}
 
 
@@ -212,13 +218,12 @@
 <meta name="description" content="tech, dev, design, dharma"/>
 </svelte:head>
 
-<Header>
-</Header>
 
-<div class="pagedoublegrid">
-	<div class="pagesidebar">
+
+<div class="pagedoublegrid" class:expanded={openSidebar}>
+	<div class="pagesidebar" class:expanded={openSidebar}>
 		<div class="searcharea">
-			<input type="text" bind:this={searchinput} on:input={(e) => searchStore.set(e.target.value)}>
+			<input type="text" bind:this={searchinput} on:input={(e) => {if(e && e.target) {searchStore.set(e.target.value)}}}>
 			<button on:click={searchWord} on:keydown={toggleFaux} on:click={() => toggleArea(5)}>Find</button>
 		</div>
 		<div class="optionsarea">
@@ -374,7 +379,6 @@
 .pagedoublegrid
 	display: grid
 	grid-auto-flow: row
-	grid-template-rows: auto
 	.pagesidebar
 		grid-area: pagesidebar
 	.pagemainpage
@@ -382,6 +386,7 @@
 	@media screen and (min-width: 1024px)
 		grid-template-columns: 320px 1fr
 		grid-template-areas: "pagesidebar pagemainpage"
+		grid-template-rows: auto
 		gap: 0 48px
 		.pagesidebar
 			padding-left: 40px
@@ -395,6 +400,33 @@
 				padding-right: 240px
 				padding-bottom: 48px
 				border-bottom: 1px solid #272727
+	@media screen and (max-width: 1023px)
+		grid-template-columns: 1fr
+		grid-template-rows: 64px auto
+		grid-template-areas: "pagesidebar" "pagemainpage"
+		.pagesidebar
+			padding-left: 32px
+			padding-right: 32px
+			padding-top: 4px
+			padding-bottom: 4px
+			overflow-x: hidden
+		.pagesidebar.expanded
+			height: 100%
+		.pagemainpage
+			padding: 32px
+			width: 100%
+			.inviewarea
+				padding: 0 0 24px 0
+				width: 100%
+				border-bottom: 1px solid #272727
+
+.pagedoublegrid.expanded
+	@media screen and (max-width: 1023px)
+		grid-template-columns: 1fr
+		grid-template-rows: auto auto
+		grid-template-areas: "pagesidebar" "pagemainpage"
+
+
 
 .pagesidebar
 	display: flex
@@ -453,19 +485,21 @@
 .ofform
 	width: 100%
 	transition: all 0.15s ease
-	margin-top: 32px
+	margin-top: 8px
 	form
 		display: flex
 		flex-direction: row
 		gap: 16px
 	form input
-		width: 600px
 		height: 64px
 		border: 1px solid #272727
 		color: white
 		padding: 16px
 		background: #171717
 		outline: none
+		width: 100%
+		@media screen and (min-width: 1024px)
+			width: 600px
 
 .singleimage
 	display: flex
@@ -479,16 +513,11 @@
 .galleryarea
 	overflow-x: hidden
 	width: 100%
-	border: 1px solid #272727
-	padding: 32px
 	border-radius: 4px
 	margin-top: 32px
 	.carousel
 		display: grid
 		grid-auto-flow: column
-		grid-template-columns: 1fr 1fr 1fr 1fr
-		grid-template-rows: 1fr 1fr
-		grid-template-areas: ". . . ." ". . . ."
 		overflow-x: scroll
 		width: 100%
 		white-space: nowrap
@@ -498,6 +527,25 @@
 			flex-shrink: 0
 	.carousel::-webkit-scrollbar
 		height: 0px
+	@media screen and (min-width: 1024px)
+		padding: 32px
+		border: 1px solid #272727
+		.carousel
+			grid-template-columns: 1fr 1fr 1fr 1fr
+			grid-template-rows: 1fr 1fr
+			grid-template-areas: ". . . ." ". . . ."
+	@media screen and (max-width: 1023px)
+		width: calc(100% - 64px)
+		overflow-x: hidden
+		.carousel
+			grid-template-columns: 1fr 1fr 1fr
+			grid-template-rows: 1fr 1fr
+			grid-template-areas: ". . ." ". . ."
+			overflow-x: scroll
+			white-space: nowrap
+			.singleimage
+				width: 128px
+				height: 128px
 
 .postsarea
 	display: grid
@@ -507,6 +555,10 @@
 	@media screen and (min-width: 1024px)
 		grid-template-columns: 1fr 1fr 1fr
 		grid-template-areas: ". . ."
+		gap: 16px 16px
+	@media screen and (max-width: 1023px)
+		grid-template-columns: 1fr 1fr
+		grid-template-areas: ". ."
 		gap: 16px 16px
 
 </style>

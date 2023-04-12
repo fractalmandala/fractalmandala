@@ -1,7 +1,7 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte'
-	import Header from '$lib/components/Header.svelte'
+
 	import hljs from 'highlight.js'
 	import { allDocs, selectedTag } from '$lib/utils/localpulls'
 	import { tableTags } from '$lib/utils/supabase'
@@ -181,33 +181,6 @@
 
 </script>
 
-<Header>
-	<div class="try">
-	{#if showAll}
-	<div class="afilter" on:click={() => tagChosen('sveltecode')} on:keydown={fakefaux} in:fly={{ delay: 40, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter1}>Sveltecode</div>
-	<div class="afilter" on:click={() => tagChosen('scroll')} on:keydown={fakefaux} in:fly={{ delay: 60, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter2}>scroll</div>
-	<div class="afilter" on:click={() => tagChosen('supabase')} on:keydown={fakefaux} in:fly={{ delay: 80, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter3}>supabase</div>
-	<div class="afilter" on:click={() => tagChosen('setup')} on:keydown={fakefaux} in:fly={{ delay: 100, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter4}>setups</div>
-	<div class="afilter" on:click={() => tagChosen('animation')} on:keydown={fakefaux} in:fly={{ delay: 120, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter5}>animations</div>
-	<div class="afilter" on:click={() => tagChosen('gpt')} on:keydown={fakefaux} in:fly={{ delay: 140, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter6}>gpt</div>
-	<div class="afilter" on:click={() => tagChosen('fetch')} on:keydown={fakefaux} in:fly={{ delay: 160, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter7}>fetch</div>
-	{/if}
-	<div class="svgfilter" on:click={() => tagChosen('star')} on:keydown={fakefaux} in:fly={{ delay: 20, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} on:click={toggleShowAll}>
-		<svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<path d="M10.5508 16.4301L16.7308 20.3564L15.0908 12.9564L20.5508 7.9775L13.3608 7.33539L10.5508 0.356445L7.74078 7.33539L0.550781 7.9775L6.01078 12.9564L4.37078 20.3564L10.5508 16.4301Z" fill="#10D56C"/>
-		</svg>
-	</div>
-	{#if showAll}
-	<div class="afilter" on:click={() => tagChosen('error')} on:keydown={fakefaux} in:fly={{ delay: 180, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter8}>errors</div>
-	<div class="afilter" on:click={() => tagChosen('template')} on:keydown={fakefaux} in:fly={{ delay: 200, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter9}>templates</div>
-	<div class="afilter" on:click={() => tagChosen('auth')} on:keydown={fakefaux} in:fly={{ delay: 240, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter11}>Auth</div>
-	<div class="afilter" on:click={() => tagChosen('typescript')} on:keydown={fakefaux} in:fly={{ delay: 300, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter14}>Typescript</div>
-	<div class="afilter" on:click={() => tagChosen('saved')} on:keydown={fakefaux} in:fly={{ delay: 320, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter15}>Saved</div>
-	<div class="afilter" on:click={() => tagChosen('conllu')} on:keydown={fakefaux} in:fly={{ delay: 340, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter16}>conllu</div>
-	<div class="afilter" on:click={() => tagChosen('typography')} on:keydown={fakefaux} in:fly={{ delay: 400, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter19}>typography</div>
-	{/if}
-	</div>
-</Header>
 <div class="pagecontainer">
 	<div class="sidehelp">
 	{#if showposts && showposts.length > 0}

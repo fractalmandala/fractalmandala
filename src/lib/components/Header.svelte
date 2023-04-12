@@ -8,33 +8,25 @@
 	const resultsStore = writable([])
 	let showResults = false
 	let loadingStore = false;
-	import { scale, fly } from 'svelte/transition'
-	import { elasticIn, elasticOut, backIn, backOut} from 'svelte/easing' 
+	import { fly } from 'svelte/transition'
+	import { elasticOut } from 'svelte/easing' 
 	import { page } from '$app/stores'
 	import LogoFM from '$lib/components/LogoFM.svelte'
 	import MandalaIcon from '$lib/components/MandalaIcon.svelte'
 	import MandalaIcon2 from '$lib/components/MandalaIcon.svelte'
 	let bringFinder:boolean = false
-	let expansionofheader:boolean = false
 
 	let y:number
 	let isInvisible:boolean = false
 	let height:number
 	let thewidth:number
 	let latestScrollY:number
-	let leftball:boolean = false
-	let topball:boolean = false
-	let botball:boolean = false
-	let rightball:boolean = false
-	let expandedMenu:boolean
 	let fake:boolean = false
 	let url:any
 	let shouldbeshown:boolean = true
 	let clicksearch:boolean = false
 	let searchresults:any
 	let makesdisappear:boolean
-	let slidingleft:boolean = false
-	let slidingright:boolean = false
 
 	function toggleSearcher(){
 		bringFinder = !bringFinder
@@ -48,16 +40,6 @@
 
 	function fakefaux(){
 		fake = !fake
-	}
-
-	function headerExpansion(){
-		expansionofheader = !expansionofheader
-	}
-
-	function closeHeader(){
-		if ( expansionofheader === true ) {
-			expansionofheader = false
-		}
 	}
 
 $: {
@@ -85,14 +67,6 @@ $: {
 		makesdisappear = false
 	}
 
-	function toggleLefter(){
-		slidingleft = !slidingleft
-	}
-
-	function togglerighter(){
-		slidingright = !slidingright
-	}
-
 	const searchWord = async() => {
 	loadingStore = true
 	showResults = true
@@ -110,28 +84,18 @@ $: {
 	loadingStore = false
 	input.value = ''
 }
-
-	function expandWithArrowKey(){
-		if (Event.key === 'ArrowDown') {
-			expansionofheader = true
-		}
-	}
+	
 
 	onMount(async() => {
 		height = document.body.scrollHeight
 		url = $page.url.pathname
-		if ( thewidth <= 1023 ) {
-		expandedMenu = false
-		} else {
-			expandedMenu = true
-		}
 	})
 
 </script>
 
 <svelte:window bind:scrollY={y} bind:innerWidth={thewidth}/>
 
-<div class="headerouter" class:hiddenheader={isInvisible} class:grownheader={expansionofheader} on:keydown={expandWithArrowKey} on:mouseleave={closeHeader}>
+<div class="headerouter" class:hiddenheader={isInvisible}>
 	<div class="topcol">
 		{#if bringFinder}
 				<div class="searcherinput" in:fly={{ duration: 900, delay: 200, x: 0, y: 64, easing: elasticOut}} out:fly={{ duration: 200, x: 0, y: -64, easing: elasticOut}}>
@@ -154,24 +118,12 @@ $: {
 		{/if}
 	</div>
 	<div class="botcol">
-		<div class="lefticon" on:mouseenter={toggleLefter} on:mouseleave={toggleLefter}>
+		<div class="lefticon">
 			<a href="/" target="_self" style="transform: rotate({y/4}deg)">
 				<MandalaIcon></MandalaIcon>
 			</a>
-			{#if slidingleft}
-			<div style="flex-direction: row; display: flex">
-				<div class="separated1">f</div>
-				<div class="separated2" style="margin-left: 2px">r</div>
-				<div class="separated3" style="margin-left: 4px">a</div>
-				<div class="separated4" style="margin-left: 6px">c</div>
-				<div class="separated5" style="margin-left: 8px">t</div>
-				<div class="separated6" style="margin-left: 10px">a</div>
-				<div class="separated7" style="margin-left: 12px">l</div>
-				<div class="separated8" style="margin-left: 14px">s</div>
-			</div>
-			{/if}
 		</div>
-		<div class="midlinks" on:mouseenter={headerExpansion} on:keydown={fakefaux}>
+		<div class="midlinks">
 			<div class="leftballs">
 				<div id="ibl">
 						<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: translateX({-y/8}px) rotate({y/2}deg)">
@@ -201,18 +153,7 @@ $: {
 				</div>
 			</div>
 		</div>
-		<div class="righticon" on:mouseenter={togglerighter} on:mouseleave={togglerighter}>
-			{#if slidingright}
-			<div style="flex-direction: row; display: flex" id="righttexters">
-				<div class="separated7" style="margin-right: 12px">m</div>
-				<div class="separated6" style="margin-right: 10px">a</div>
-				<div class="separated5" style="margin-right: 8px">ṇ</div>
-				<div class="separated4" style="margin-right: 6px">ḍ</div>
-				<div class="separated3" style="margin-right: 4px">a</div>
-				<div class="separated2" style="margin-right: 2px">l</div>
-				<div class="separated1">a</div>
-			</div>
-			{/if}
+		<div class="righticon">
 			<a href="/mandala" target="_self" style="transform: rotate({-y/4}deg)">
 				<MandalaIcon2></MandalaIcon2>
 			</a>
@@ -231,17 +172,8 @@ $: {
 			{/if}
 			{/if}
 	</div>
-	{#if expansionofheader}
-		<div class="newmenu" on:mouseleave={headerExpansion} >
-			<div class="menutray">
-			<p><a href="/play" target="_self">broGPT</a></p>
-			<p><a href="/notes" target="_self">Note</a></p>
-			<p><a href="/docs" target="_self">Docs</a></p>
-			</div>
-		</div>
-	{/if}
-			{#if loadingStore}
-			<p>Loading...</p>
+	{#if loadingStore}
+		<p>Loading...</p>
 			{/if}
 			{#if showResults}
 				{#if $resultsStore.length>0}
@@ -259,6 +191,11 @@ $: {
 
 <style lang="sass">
 
+#thesvg
+	width: 100%
+	height: 100%
+	margin: -8px
+
 .searcherinput svg
 	&:hover
 		path
@@ -266,13 +203,6 @@ $: {
 		#greenpath
 			fill: #10C56D
 
-.menutray
-	display: flex
-	flex-direction: row
-	column-gap: 24px
-	margin-top: 32px
-	p
-		color: white
 
 .resultstray
 	display: flex
@@ -280,7 +210,7 @@ $: {
 	background: #171717
 	z-index: 999
 	height: 100vh
-	position: fixed
+	position: absolute
 	top: 0
 	left: 0
 	width: 100%
@@ -304,96 +234,6 @@ $: {
 	display: flex
 	flex-direction: row
 	gap: 16px
-
-.newmenu
-	height: 0
-	width: 100%
-	transition-delay: 1s
-	display: flex
-	flex-direction: column
-	align-items: center
-	justify-content: center
-	gap: 0
-
-#righttexters
-	color: white
-
-.midlinks.slideleft
-	animation: slowingleft 4s ease forwards
-
-.righticon.slideleft
-	animation: slowingleft 4s ease forwards
-
-.midlinks.slideright
-	animation: slowingright 4s ease forwards
-
-.lefticon.slideright
-	animation: slowingright 4s ease forwards
-
-@keyframes slowingleft
-	0%
-		transform: translateX(0px)
-		opacity: 1
-	100%
-		transform: translateX(-64px)
-		opacity: 0
-
-@keyframes slowingright
-	0%
-		transform: translateX(0px)
-		opacity: 1
-	100%
-		transform: translateX(64px)
-		opacity: 0
-
-.righticon
-	div
-		color: white
-	&:hover
-		.separated1
-			animation: flashes 0.1s ease forwards, eighttogreen 0.2s ease 0.7s forwards
-		.separated2
-			animation: flashes 0.1s ease 0.1s forwards,  eighttogreen 0.2s ease 0.7s forwards
-		.separated3
-			animation: flashes 0.1s ease 0.2s forwards,  eighttogreen 0.2s ease 0.7s forwards
-		.separated4
-			animation: flashes 0.1s ease 0.3s forwards,  eighttogreen 0.2s ease 0.7s forwards
-		.separated5
-			animation: flashes 0.1s ease 0.4s forwards,  eighttogreen 0.2s ease 0.7s forwards
-		.separated6
-			animation: flashes 0.1s ease 0.5s forwards,  eighttogreen 0.2s ease 0.7s forwards
-		.separated7
-			animation: flashes 0.1s ease 0.6s forwards,  eighttogreen 0.2s ease 0.7s forwards
-
-.lefticon
-	div
-		color: white
-	&:hover
-		.separated1
-			animation: flashes 0.1s ease forwards, eighttogreen 0.2s ease 0.7s forwards
-		.separated2
-			animation: flashes 0.1s ease 0.1s forwards,  eighttogreen 0.2s ease 0.7s forwards
-		.separated3
-			animation: flashes 0.1s ease 0.2s forwards,  eighttogreen 0.2s ease 0.7s forwards
-		.separated4
-			animation: flashes 0.1s ease 0.3s forwards,  eighttogreen 0.2s ease 0.7s forwards
-		.separated5
-			animation: flashes 0.1s ease 0.4s forwards,  eighttogreen 0.2s ease 0.7s forwards
-		.separated6
-			animation: flashes 0.1s ease 0.5s forwards,  eighttogreen 0.2s ease 0.7s forwards
-		.separated7
-			animation: flashes 0.1s ease 0.6s forwards,  eighttogreen 0.2s ease 0.7s forwards
-		.separated8
-			animation: flashes 0.1s ease 0.7s forwards,  eighttogreen 0.2s ease 0.7s forwards
-
-.separated1, .separated2, .separated3, .separated4, .separated5, .separated6, .separated7, .separated8
-	opacity: 0
-
-.lefticon a
-	margin-right: 16px
-
-.righticon a
-	margin-left: 16px
 
 @keyframes eighttogreen
 	0%
@@ -499,9 +339,6 @@ $: {
 		padding-left: 16px
 		padding-right: 16px
 
-.grownheader.headerouter
-	height: 200px	
-	transition: 0.34s ease
 
 .hiddenheader
 	transform: translateY(-56px)

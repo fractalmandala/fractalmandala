@@ -1,6 +1,7 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte'
+	import Header from '$lib/components/Header.svelte'
 	import Lenis from '@studio-freight/lenis'
 	import { page } from '$app/stores'
 	import '$lib/styles/global.sass'
@@ -82,7 +83,11 @@
 </svelte:head>
 
 
-<div class="themer" class:light={light}>
+
+<div class="themer">
+
+	<Header>
+	</Header>
 	<div class="bodybody" style="min-height: 100vh">
 		<slot></slot>
 	</div>
@@ -237,5 +242,9 @@
 	box-sizing: border-box
 	width: 100vw
 	overflow-x: hidden
+	position: relative
+	display: flex
+	flex-direction: column
+	height: 100%
 
 </style>

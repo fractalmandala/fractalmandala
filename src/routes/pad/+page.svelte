@@ -1,7 +1,6 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte' 
-	import Header from '$lib/components/Header.svelte'
 	import { toast } from 'svoast'
 	import hljs from 'highlight.js'
 	import '$lib/styles/highlight.css'
@@ -72,8 +71,7 @@
 <meta name="description" content="tech, dev, design, dharma"/>
 </svelte:head>
 
-<Header>
-</Header>
+
 <div class="pagecontainer">
 	<div class="boxc notes">
 		<div class="notesection boxr">

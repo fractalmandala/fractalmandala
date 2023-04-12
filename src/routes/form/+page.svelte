@@ -2,7 +2,6 @@
 
 	import { onMount } from 'svelte'
 	import TinyCard from '$lib/components/TinyCard.svelte'
-	import Header from '$lib/components/Header.svelte'
 	import { formentries } from '$lib/utils/supabase'
 
 	let entries:any
@@ -14,11 +13,11 @@
 </script>
 
 
-<Header></Header>
+
 <div class="pagecontainer">
 	{#if entries && entries.length > 0}
 		{#each entries as item, i}
-			<TinyCard i={i}>
+			<TinyCard i={i} linkvar="/form">
 				<p slot="title">
 					{item.fullname}
 				</p>
