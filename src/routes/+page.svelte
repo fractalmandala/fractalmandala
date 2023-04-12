@@ -117,6 +117,13 @@
 		submitAnswer()	
 	}
 
+	function handleKeyDownInput(e:any){
+		if (e.shiftkey && e.key === 'enter') {
+			e.preventDefault(),
+			query += '\n'
+		}
+	}
+
 	async function submitAnswer(){
 		try {
 			const { error } = await supabase
@@ -316,6 +323,27 @@
 		</div>
 	</div>
 	<div class="pagemainpage">
+		<div class="introarea">
+		<p>
+			A simple blog to document a non-programmer bootstrapping himself into web-dev. <span class="special">My stack:</span>
+		</p>
+		<p>
+			- backend at <a href="https://supabase.com/" target="_blank" rel="noreferrer">Supabase</a><br>
+			- framework: <a href="https://kit.svelte.dev/" target="_blank" rel="noreferrer">Sveltekit</a><br>
+			- deployed at <a href="https://vercel.com/home" target="_blank" rel="noreferrer">Vercel</a><br>
+			- also mounted:
+		</p>
+				<li><a href="https://lenis.studiofreight.com/" target="_blank" rel="noreferrer">Lenis</a></li>
+				<li><a href="https://greensock.com/gsap/" target="_blank" rel="noreferrer">GSAP</a></li>
+				<li><a href="https://mdsvex.pngwn.io/" target="_blank" rel="noreferrer">MDSvex</a></li>
+				<li><a href="https://github.com/SharifClick/svelte-swipe" target="_blank" rel="noreferrer">Svelte Swipe</a></li>
+				<li><a href="https://github.com/DaveKeehl/svelte-reveal" target="_blank" rel="noreferrer">Svelte Reveal</a></li>
+				<li><a href="https://sveltelegos.com/" target="_blank" rel="noreferrer">Svelte Legos</a></li>
+				<li><a href="https://prismjs.com/" target="_blank" rel="noreferrer">Prism JS</a></li>
+		<p>
+			On the left, browse/search through an unorganized assortment of code snippets, setup guides and troubleshooting pointers. Play with broGPT, my AI pal, below.
+		</p>
+		</div>
 			<div class="inviewarea">
 				<ChatMessage type="assistant" message="Namaste. How may I help you?" />	
 					{#each chatMessages as message}
@@ -328,9 +356,11 @@
 						<ChatMessage type="assistant" message="Loading.." />
 					{/if}
 					<div class="boxc ofform">
-						<form on:submit|preventDefault={() => handleSubmit()}>
-							<input type="text" bind:value={query} />
-							<button class="glowing" type="submit"> Send </button>
+						<form on:submit|preventDefault>
+							<input type="text" bind:value={query}
+								on:keydown={handleKeyDownInput}
+								/>
+							<button class="glowing" type="submit" on:click={() => handleSubmit()} on:keydown={handleKeyDownInput}> Send </button>
 						</form>
 					</div>
 			</div>
@@ -376,6 +406,50 @@
 
 <style lang="sass">
 
+.introarea
+	p .special
+		background: #64F540
+		background: linear-gradient(to right, #64F540 0%, #11E876 50%, #07E859 100%)
+		-webkit-background-clip: text
+		-webkit-text-fill-color: transparent
+	a
+		position: relative
+		&:hover
+			background: #64F540
+			background: linear-gradient(to right, #64F540 0%, #11E876 50%, #07E859 100%)
+			-webkit-background-clip: text
+			-webkit-text-fill-color: transparent
+			&::after
+				animation: vanishing 0.08s ease forwards
+		&::after
+			position: absolute
+			bottom: 0
+			left: 0
+			height: 1px
+			width: 100%
+			content: ''
+			background: #64F540
+			background: linear-gradient(to right, #64F540 0%, #11E876 50%, #07E859 100%)
+	p
+		font-family: 'Spline Sans', sans-serif
+		font-size: 16px
+		color: #FFFFFF
+		line-height: 2
+	li
+		font-family: 'Spline Sans', sans-serif
+		font-size: 14px
+		color: #FFFFFF
+		line-height: 1.5
+		list-style-type: none
+		padding: 0
+		margin-left: 32px
+	@media screen and (max-width: 1023px)
+		padding: 16px
+		margin-left: 0
+		margin-right: 0
+		p
+			font-size: 14px
+
 .pagedoublegrid
 	display: grid
 	grid-auto-flow: row
@@ -399,6 +473,11 @@
 			.inviewarea
 				padding-right: 240px
 				padding-bottom: 48px
+				padding-top: 24px
+				border-bottom: 1px solid #272727
+			.introarea
+				padding-right: 240px
+				padding-bottom: 24px
 				border-bottom: 1px solid #272727
 	@media screen and (max-width: 1023px)
 		grid-template-columns: 1fr
@@ -415,7 +494,7 @@
 		.pagemainpage
 			padding: 32px
 			width: 100%
-			.inviewarea
+			.inviewarea, .introarea
 				padding: 0 0 24px 0
 				width: 100%
 				border-bottom: 1px solid #272727
