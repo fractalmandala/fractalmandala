@@ -2,6 +2,7 @@
 
 
 	import Header from '$lib/components/Header.svelte'
+	import '$lib/styles/syntax.sass'
 	import hljs from 'highlight.js'
 	import '$lib/styles/highlight.css'	
 	import supabase from '$lib/utils/supabase'
@@ -17,18 +18,18 @@
 	let answer: string = ''
 	let loading: boolean = false
 	let chatMessages: ChatCompletionRequestMessage[] = []
-	let scrollToDiv: HTMLDivElement
 	let userprompt:any
 	let supachats:any 
 	let limit:number = 6
 
-
-
-	function scrollToBottom() {
-		setTimeout(function () {
-			scrollToDiv.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' })
-		}, 100)
+	function increaseLimit(){
+		limit = limit + 4;
+		(async() => {
+			supachats = await chatswithGPT(limit)
+		})()
 	}
+
+
 
 	const handleSubmit = async () => {
 		loading = true
@@ -47,7 +48,6 @@
 		eventSource.addEventListener('error', handleError)
 
 		eventSource.addEventListener('message', (e: {data: string;}) => {
-			scrollToBottom()
 			try {
 				loading = false
 				if (e.data === '[DONE]') {
@@ -69,13 +69,11 @@
 			}
 		})
 		eventSource.stream()
-		scrollToBottom()
 	}
 
 	$: if (submittance) {
 		submitAnswer()	
 	}
-
 
 	async function submitAnswer(){
 		try {
@@ -98,9 +96,13 @@
 		console.error(err)
 	}
 
+	function fauxfake(){
+		fake = !fake
+	}
+
 	onMount(async() => {
 		hljs.highlightAll()	
-		supachats = await chatswithGPT()
+		supachats = await chatswithGPT(limit)
 	})
 
 </script>
@@ -116,14 +118,16 @@
 				<div class="sidebox sideuser">
 					<p>{item.prompt.slice(0,100)}</p>
 				</div>
-				<div class="sidebox sidegpt">
-					<p>{item.response.slice(0,100)}</p>
-				</div>
 				</a>
 			{/each}
 		{/if}
+		<button class="glowing" on:click={increaseLimit} on:keydown={fauxfake}>Load More</button>
 	</div>
 	<div class="gptarea">
+		<div class="chatdisplay">
+		<slot></slot>
+		</div>
+		<div>
 			<ChatMessage type="assistant" message="Namaste. How may I help you?" />	
 			{#each chatMessages as message}
 				<ChatMessage type={message.role} message={message.content} />
@@ -134,14 +138,13 @@
 			{#if loading}
 				<ChatMessage type="assistant" message="Loading.." />
 			{/if}
-		<div class="" bind:this={scrollToDiv} />
-		<div class="boxc ofform">
-		<form on:submit|preventDefault={() => handleSubmit()}>
-			<input type="text" bind:value={query} />
-			<button class="glowing" type="submit"> Send </button>
-		</form>
+			<div class="boxc ofform">
+				<form on:submit|preventDefault={() => handleSubmit()}>
+					<input type="text" bind:value={query} />
+					<button class="glowing" type="submit"> Send </button>
+				</form>
+			</div>
 		</div>
-		<slot></slot>
 	</div>
 </div>
 </div>
@@ -160,15 +163,6 @@
 		color: #878787
 		font-size: 12px
 
-.sidegpt
-	border-bottom: 1px solid #272727
-	margin-bottom: 8px
-	padding-bottom: 8px
-	p
-		text-transform: capitalize
-		color: white
-		font-size: 14px
-
 .gptarea
 	backdrop-filter: blur(20px)
 	background: rgba(0,0,0,0.2)
@@ -176,14 +170,12 @@
 	@media screen and (min-width: 1024px)
 		padding-right: 6vw
 		padding-left: 6vw
-		padding-top: 6vw
+		padding-top: 2vw
 		padding-bottom: 6vw
 		display: flex
 		flex-direction: column
 		justify-content: flex-start
-		row-gap: 0
-
-
+		row-gap: 16px
 
 .x0
 	min-height: 100vh
@@ -194,7 +186,7 @@
 	@media screen and (min-width: 1024px)
 		padding-top: 0
 		padding-bottom: 0
-		grid-template-columns: 400px 1fr
+		grid-template-columns: 320px 1fr
 		grid-template-areas: "selectionsarea gptarea"
 		gap: 0 0px
 		padding-left: 0
@@ -210,6 +202,10 @@
 .selectionsarea
 	border-right: 1px solid #272727
 	grid-area: selectionsarea
+	a
+		&:hover
+			p
+				color: #10C56D
 
 .ofform
 	width: 100%

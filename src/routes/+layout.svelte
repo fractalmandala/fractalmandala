@@ -233,4 +233,9 @@
 .bodybody
 	padding-top: 120px
 
+.themer
+	box-sizing: border-box
+	width: 100vw
+	overflow-x: hidden
+
 </style>

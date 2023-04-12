@@ -1,6 +1,14 @@
+<script lang="ts">
+
+export let linkvar:any
+
+</script>
+
 <div class="bigcard">
+	<a href={linkvar} target="_self">
 	<slot name="title"></slot>
 	<slot name="tags"></slot>
+	</a>
 </div>
 
 <style lang="sass">

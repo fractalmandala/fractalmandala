@@ -1,92 +1,25 @@
 <script lang="ts">
 	
 	import { onMount } from 'svelte'
-	import Header from '$lib/components/Header.svelte'
-	import HeadComp from '$lib/components/HeadComp.svelte'
-	import DropDown from '$lib/components/DropDown.svelte'
-	import TinyCard from '$lib/components/TinyCard.svelte'
-	import TinyCard2 from '$lib/components/TinyCard.svelte'
-	import TinyCard3 from '$lib/components/TinyCard.svelte'
-	import TinyCard4 from '$lib/components/TinyCard.svelte'
-	import TinyCard5 from '$lib/components/TinyCard.svelte'
-	import TinyCard6 from '$lib/components/TinyCard.svelte'
-	import TinyCard7 from '$lib/components/TinyCard.svelte'
-	import { allNotes, allCodes, allOthers, CodeCSS, CodeJS, quillNotes, MidjourneyImages, MidjourneyTagged } from '$lib/utils/supabase'
-	import { allDocs } from '$lib/utils/localpulls'
 	import hljs from 'highlight.js'
 	import '$lib/styles/highlight.css'
-	import { CodeHTML, CodesFiltered } from '$lib/utils/supabase'
-	export let data
-	let lang:any = data.lang
-	let codes:any
+	let lang:any
+
 	let fake:boolean = false
 	let codeContents:any
-	let confirmDelete:boolean = false
+
 	let theid:any
-	let area:boolean[] = Array(9).fill(false)
-	area[1] = true
-	let allimagesbool:boolean = true
-	let lightbox:boolean[] = Array(400).fill(false)
-	let showdropdown:boolean = false
+
+
 	let titular:any
 
-	function toggleDrop(){
-		showdropdown = !showdropdown
-	}
 
-
-	let notes:any
-	let codes2:any
-	let gens:any
-	let ccss:any
-	let cjs:any
-	let chtml:any
-	let docs:any
-	let images:any
-	let quills:any
-	let imageTag:any = ''
-	let taggedimages:any
 	let nextid:any
 	let previd:any
 
 
 	function fauxfake(){
 		fake = !fake
-	}
-
-	function toggleArea(index:number) {
-		area[index] = !area[index]
-		for ( let i = 0; i < area.length; i ++ ) {
-			if ( i !== index && area[i] === true ) {
-				area[i] = false
-			}
-		}
-	}
-
-	function toggleAllBool(){
-		allimagesbool = !allimagesbool
-	}
-
-	function setnewFilter(newFilter:any){
-		imageTag = newFilter
-		if ( allimagesbool === true ) {
-			allimagesbool = false
-		}
-	}
-
-	$: if (imageTag) {
-			(async() => {
-				taggedimages = await MidjourneyTagged(imageTag)
-			})()
-		}
-
-	function toggleLightbox(index:number){
-		lightbox[index] = !lightbox[index]
-		for ( let i = 0; i < lightbox.length; i ++ ) {
-			if ( i !== index && lightbox[i] === true ) {
-				lightbox[i] = false
-			}
-		}
 	}
 
 	function copyToClipboard(){
@@ -110,27 +43,16 @@
   	}
 	}
 
-
+	export let data
 
 	onMount(async() => {
 		hljs.highlightAll()
-		confirmDelete = false
 		lang = data.lang
 		titular = data.title
-		codes = await CodesFiltered(lang)
 		theid = data.id
 		nextid = data.counting + 1
 		previd = data.counting - 1
-		notes = await allNotes()
-		codes2 = await allCodes()
-		gens = await allOthers()
-		ccss = await CodeCSS()
-		cjs = await CodeJS()
-		chtml = await CodeHTML()
-		docs = await allDocs()
-		quills = await quillNotes()
-		images = await MidjourneyImages()
-		taggedimages = await MidjourneyTagged(imageTag)
+		lang = data.lang
 	})
 </script>
 
@@ -139,31 +61,7 @@
 <meta name="description" content="{data.tags}"/>
 </svelte:head>
 
-<Header>
-		<div class="pgcnt" on:click={() => toggleArea(1)} on:keydown={fauxfake} class:selectedarea={area[1]}>all</div>
-		<div class="pgcnt" on:click={() => toggleArea(2)} on:keydown={fauxfake}>code</div>
-		<div class="pgcnt" on:click={() => toggleArea(3)} on:keydown={fauxfake}>general</div>
-		<div class="pgcnt" on:click={() => toggleArea(4)} on:keydown={fauxfake}>html</div>
-		<div class="pgcnt" on:click={() => toggleArea(5)} on:keydown={fauxfake}>js</div>
-		<div class="pgcnt" on:click={() => toggleArea(6)} on:keydown={fauxfake}>styling</div>
-		<div class="pgcnt" on:click={() => toggleArea(7)} on:keydown={fauxfake}>docs</div>
-		<div class="pgcnt" on:click={() => toggleArea(8)} on:keydown={fauxfake}>quills</div>
-		<div class="pgcnt" on:click={() => toggleArea(9)} on:keydown={fauxfake} on:mouseenter={toggleDrop} on:mouseleave={toggleDrop}>gallery
-			{#if showdropdown}
-				<DropDown>
-					<div class="dropdownitem" style="color: white" on:click={toggleAllBool} on:keydown={fauxfake}>All</div>
-					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('abstract')} on:keydown={fauxfake}>Abstract</div>
-					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('culture aesthetic')} on:keydown={fauxfake}>Culture Aesthetic</div>
-					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('dharmascapes')} on:keydown={fauxfake}>Dharmascapes</div>
-					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('mandalas')} on:keydown={fauxfake}>Maṇḍalas</div>
-					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('misc')} on:keydown={fauxfake}>Misc</div>
-					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('sci-fi')} on:keydown={fauxfake}>Sci-fi</div>
-					<div class="dropdownitem" style="color: white" on:click={() => setnewFilter('the once was')} on:keydown={fauxfake}>The Once Was</div>
-				</DropDown>
-			{/if}
 
-		</div>
-</Header>
 <div class="pagecontainer x00">
 	<div class="boxr">
 		<div class="boxr nav">
@@ -174,211 +72,46 @@
 				<img src="https://rnfvzaelmwbbvfbsppir.supabase.co/storage/v1/object/public/brhatwebsite/08icons/chevright.png" alt="right"/>
 			</a>
 		</div>
-		<h1>
+		<h2>
 			{data.title}
-		</h1>
+		</h2>
 	</div>
-	<div class="gridof2">
-		<div class="columnleft">
-			{#if data.note && data.note.length > 0}
-				{#if data.type && data.type.length > 0}
-					{#if data.type === 'quillcode'}
-						<div class="notebox">
-							<div class="notepara">
-								<pre>
-									<code class="language-{data.lang}">
-									{data.note}
-									</code>
-								</pre>
-							</div>
+	<h6>
+		{data.type} | {data.tags}
+	</h6>
+	<div class="columnleft">
+		{#if data.note && data.note.length > 0}
+			{#if data.type && data.type.length > 0}
+				{#if data.type === 'quillcode'}
+					<div class="notebox">
+						<div class="notepara">
+							<pre>
+								<code class="language-{data.lang}">
+								{data.note}
+								</code>
+							</pre>
 						</div>
-					{:else}
-						<div class="notebox">
-							<p class="notepara">{data.note}</p>
-						</div>
-					{/if}
+					</div>
+				{:else}
+					<div class="notebox">
+						<p class="notepara">{data.note}</p>
+					</div>
 				{/if}
 			{/if}
-			{#if data.codesnippet && data.codesnippet.length > 0}
-			<div class="surroundcode">
-				<div id="stripp" class="boxr" style="background: #000000; height: 24px; justify-content: space-between; padding-left: 8px; padding-right: 8px">
-					<div style="font-size: 12px; color: #10D56C">{data.lang}</div>
-					<div id="copy" style="font-size: 12px; cursor: pointer;" on:click={copyToClipboard} on:keydown={fauxfake}>COPY</div>
-				</div>
-				<pre>
-					<code class="language-{data.lang}" bind:this={codeContents}>
-						{data.codesnippet}
-					</code>
-				</pre>
-				</div>
-			{/if}
+		{/if}
+		{#if data.codesnippet && data.codesnippet.length > 0}
+		<div class="surroundcode">
+			<div id="stripp" class="boxr" style="background: #000000; height: 24px; justify-content: space-between; padding-left: 8px; padding-right: 8px">
+				<div style="font-size: 12px; color: #10D56C">{data.lang}</div>
+				<div id="copy" style="font-size: 12px; cursor: pointer;" on:click={copyToClipboard} on:keydown={fauxfake}>COPY</div>
 			</div>
-		<div class="columnright" class:secondcolumnright={area[9]}>
-			{#if area[1]}
-			{#if notes && notes.length > 0}
-				{#each notes as item, i}
-					<TinyCard i={i}>
-						<small class="tinycardcat" slot="category">{item.type}</small>
-						<p slot="title">
-							<a href="/notes/{item.counting}" target="_self">
-								{item.title}
-							</a>
-						</p>
-							<small style="font-size: 10px; color: #676767; text-transform: uppercase" slot="lang">
-								{#if item.lang && item.lang.length > 0}
-									{item.lang}
-								{/if}
-							</small>	
-						<small style="font-size: 10px; color: #676767;" slot="tags">{item.tags}</small>
-					</TinyCard>
-				{/each}
-			{/if}
-			{/if}
-			{#if area[2]}
-			{#if codes && codes.length > 0}
-				{#each codes as item, i}
-					<TinyCard2 i={i}>
-					<small class="tinycardcat" slot="category">{item.type}</small>
-					<p slot="title">
-						<a href="/notes/{item.counting}" target="_self">
-							{item.title}
-						</a>
-					</p>
-						<small style="font-size: 10px; color: #676767; text-transform: uppercase" slot="lang">
-							{#if item.lang && item.lang.length > 0}
-								{item.lang}
-							{/if}
-						</small>	
-					<small style="font-size: 10px; color: #676767;" slot="tags">{item.tags}</small>
-					</TinyCard2>
-				{/each}
-			{/if}
-			{/if}
-			{#if area[3]}
-			{#if gens && gens.length > 0}
-				{#each gens as item, i}
-					<TinyCard3 i={i}>
-						<small class="tinycardcat" slot="category">{item.type}</small>
-							<p slot="title">
-								<a href="/notes/{item.counting}" target="_self">
-									{item.title}
-								</a>
-							</p>
-								<small style="font-size: 10px; color: #676767; text-transform: uppercase" slot="lang">
-									{#if item.lang && item.lang.length > 0}
-										{item.lang}
-									{/if}
-								</small>	
-						<small style="font-size: 10px; color: #676767;" slot="tags">{item.tags}</small>
-					</TinyCard3>
-				{/each}
-			{/if}
-			{/if}
-			{#if area[4]}
-			{#if chtml && chtml.length > 0}
-			{#each chtml as item, i}
-				<TinyCard4 i={i}>
-					<small class="tinycardcat" slot="category">{item.type}</small>
-					<p slot="title">
-						<a href="/notes/{item.counting}" target="_self">
-							{item.title}
-						</a>
-					</p>
-						<small style="font-size: 10px; color: #676767; text-transform: uppercase" slot="lang">
-							{#if item.lang && item.lang.length > 0}
-								{item.lang}
-							{/if}
-						</small>	
-					<small style="font-size: 10px; color: #676767;" slot="tags">{item.tags}</small>
-				</TinyCard4>			
-			{/each}
-			{/if}
-			{/if}
-			{#if area[5]}
-			{#if cjs && cjs.length > 0}
-			{#each cjs as item, i}
-				<TinyCard5 i={i}>
-					<small class="tinycardcat" slot="category">{item.type}</small>
-					<p slot="title">
-						<a href="/notes/{item.counting}" target="_self">
-							{item.title}
-						</a>
-					</p>
-						<small style="font-size: 10px; color: #676767; text-transform: uppercase" slot="lang">
-							{#if item.lang && item.lang.length > 0}
-								{item.lang}
-							{/if}
-						</small>	
-					<small style="font-size: 10px; color: #676767;" slot="tags">{item.tags}</small>
-				</TinyCard5>
-			{/each}
-			{/if}
-			{/if}
-			{#if area[6]}
-			{#if ccss && ccss.length > 0}
-			{#each ccss as item, i}
-				<TinyCard6 i={i}>
-					<small class="tinycardcat" slot="category">{item.type}</small>
-					<p slot="title">
-						<a href="/notes/{item.counting}" target="_self">
-							{item.title}
-						</a>
-					</p>
-						<small style="font-size: 10px; color: #676767; text-transform: uppercase" slot="lang">
-							{#if item.lang && item.lang.length > 0}
-								{item.lang}
-							{/if}
-						</small>	
-					<small style="font-size: 10px; color: #676767;" slot="tags">{item.tags}</small>
-				</TinyCard6>
-			{/each}
-			{/if}
-			{/if}
-			{#if area[7]}
-			{#if docs && docs.length > 0}
-				{#each docs as item, i}
-					<TinyCard7 i={i}>
-					<small class="tinycardcat" slot="category">{item.meta.type}</small>
-					<p slot="title">
-						<a href="{item.path}" target="_self">
-							{item.meta.title}
-						</a>
-					</p>
-					<small style="font-size: 10px; color: #676767;" slot="tags">{item.meta.tags}</small>
-					</TinyCard7>
-				{/each}
-			{/if}
-			{/if}
-			{#if area[9]}
-				{#if allimagesbool}
-				{#if images && images.length > 0}
-				{#each images as item, i}
-					<div id="imagebox" class="boxc">
-					<img src="{item.link}" alt={item.id} on:click={() => toggleLightbox(i)} on:keydown={fauxfake}/>
-					{#if lightbox[i]}
-						<div class="modallightbox" on:click={() => toggleLightbox(i)} on:keydown={fauxfake}>
-							<img src="{item.link}" alt={item.id}/>
-						</div>
-					{/if}
-					</div>
-				{/each}
-				{/if}		
-				{:else}
-				{#if taggedimages && taggedimages.length > 0}
-				{#each taggedimages as item, i}
-				<div id="imagebox" class="boxc">
-					<img src="{item.link}" alt={item.id} on:click={() => toggleLightbox(i)} on:keydown={fauxfake}/>
-					{#if lightbox[i]}
-						<div class="modallightbox" on:click={() => toggleLightbox(i)} on:keydown={fauxfake}>
-							<img src="{item.link}" alt={item.id}/>
-						</div>
-					{/if}
-				</div>
-				{/each}
-			{/if}
-			{/if}
-			{/if}		
-		</div>
+			<pre>
+				<code class="language-{data.lang}" bind:this={codeContents}>
+					{data.codesnippet}
+				</code>
+			</pre>
+			</div>
+		{/if}
 	</div>
 </div>
 
@@ -401,43 +134,13 @@
 	@media screen and (max-width: 1023px)
 		flex-direction: row
 
-#imagebox
-	img
-		object-fit: cover
-		height: 100%
-		width: 100%
-
-#imagebox
-	height: 144px
-	@media screen and (max-width: 1023px)
-		height: 88px
-
 .columnleft
 	display: flex
 	flex-direction: column
 	row-gap: 32px
-
-.columnright
-	display: grid
-	grid-template-row: auto
-	grid-auto-flow: row
+	padding-top: 32px
 	@media screen and (min-width: 1024px)
-		grid-template-columns: 1fr 1fr 1fr
-		grid-template-areas: ". . ."
-		gap: 16px 32px
-		align-items: start
-		align-content: start
-	@media screen and (max-width: 1023px)
-		grid-template-columns: 1fr
-		grid-template-areas: "."
-		gap: 16px
-		padding-top: 32px
-
-.columnright.secondcolumnright
-	@media screen and (min-width: 1024px)
-		grid-template-columns: 1fr 1fr 1fr 1fr
-		grid-template-areas: ". . . ."
-		
+		width: 80%
 
 .metaoptions
 	display: none
@@ -465,20 +168,29 @@
 .notepara
 	line-height: 1.8
 
-h1
+h2
 	text-transform: uppercase
 	margin: 0
 	font-family: 'Spline Sans', sans-serif
-	border-bottom: 1px solid #313131
 	padding-bottom: 12px
 	font-weight: 600
 	color: white
+	font-size: 40px
 	@media screen and (max-width: 1023px)
 		font-size: 21px
 		text-align: center
 		margin-bottom: 16px
 
 .x00
+	padding: 0
+	row-gap: 0
+	h6
+		margin: 0
+		padding-left: 72px
+		font-weight: 400
+		text-transform: uppercase
+		color: #474747
+		padding-bottom: 8px
 	.boxr
 		align-items: center
 		justify-content: flex-start

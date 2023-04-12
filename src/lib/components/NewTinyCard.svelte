@@ -3,21 +3,18 @@
 	import { scale } from 'svelte/transition'
 
 	export let i:any
-	export let linkvar:any
 
 </script>
 
 
 
 <div class="tinycard" in:scale={{delay: 50*i}} out:scale={{ delay: 10*i}}>
-	<a href={linkvar} target="_self">
 			<slot name="category"></slot>
 			<slot name="title"></slot>
 	<div class="moremeta">
 			<slot name="lang"></slot>
 			<slot name="tags"></slot>
 	</div>
-	</a>
 </div>
 
 

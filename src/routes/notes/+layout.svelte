@@ -1,24 +1,21 @@
 <script lang="ts">
 
-	import { onMount } from 'svelte'
 	import Header from '$lib/components/Header.svelte'
-	import ChatMessage from '$lib/components/ChatMessage.svelte'
+	import { onMount } from 'svelte'
 	import hljs from 'highlight.js'
 	import '$lib/styles/highlight.css'	
 	import type { ChatCompletionRequestMessage } from 'openai'
 	import { SSE } from 'sse.js'
-	import ViewCard from '$lib/components/ViewCard.svelte'
 	import TinyCard from '$lib/components/TinyCard.svelte'
 	import TinyCard2 from '$lib/components/TinyCard.svelte'
 	import TinyCard3 from '$lib/components/TinyCard.svelte'
 	import TinyCard4 from '$lib/components/TinyCard.svelte'
 	import TinyCard5 from '$lib/components/TinyCard.svelte'
-	import BigCard from '$lib/components/BigCard.svelte'
 	import TinyCard7 from '$lib/components/TinyCard.svelte'
 	import { get, writable } from 'svelte/store'
 	import supabase from '$lib/utils/supabase'
 	import { allNotes, allCodes, noCodes, allOthers, CodeCSS, CodeJS, CodeHTML, quillNotes, MidjourneyImages, MidjourneyTagged, chatsGPT, onlyStarred, singleNote } from '$lib/utils/supabase'
-	import { allDocs, allMandalas } from '$lib/utils/localpulls'
+	import { allDocs } from '$lib/utils/localpulls'
 	let submittance:any
 	let query: string = ''
 	let answer: string = ''
@@ -41,7 +38,6 @@
 	let images:any
 	let quills:any
 	let chats:any
-	let posts:any
 	let nocodas:any
 	let stars:any
 	let faux:boolean = false
@@ -54,86 +50,6 @@
 	inView[1] = true
 	let title:any
 	let single:any
-	let galleryView:boolean = false
-	let postsview:boolean = false
-
-	function showGallery(){
-		galleryView = !galleryView
-		if ( postsview === true) {
-			postsview = false
-		}
-	}
-
-	function showPosts(){
-		postsview = !postsview
-		if ( galleryView === true ) {
-			galleryView = false
-		}
-	}
-
-	const handleSubmit = async () => {
-		loading = true
-		chatMessages = [...chatMessages, { role: 'user', content: query }]
-		userprompt = query
-		const eventSource = new SSE('/api/chat', {
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			payload: JSON.stringify({ messages: chatMessages })
-		})
-
-		query = ''
-
-		eventSource.addEventListener('error', handleError)
-
-		eventSource.addEventListener('message', (e: {data: string;}) => {
-			try {
-				loading = false
-				if (e.data === '[DONE]') {
-					chatMessages = [...chatMessages, { role: 'assistant', content: answer }]
-					console.log(answer)
-					submittance = answer
-					answer = ''
-					return
-				}
-
-				const completionResponse = JSON.parse(e.data)
-				const [{ delta }] = completionResponse.choices
-
-				if (delta.content) {
-					answer = (answer ?? '') + delta.content
-				}
-			} catch (err) {
-				handleError(err)
-			}
-		})
-		eventSource.stream()
-	}
-
-	$: if (submittance) {
-		submitAnswer()	
-	}
-
-	async function submitAnswer(){
-		try {
-			const { error } = await supabase
-      .from('amrit-chatswithgpt')
-      .insert({ prompt: userprompt, response: submittance })
-      if (error) {
-        throw new Error(error.message)
-      }
-      console.log('submitted')
-    } catch (e) {
-      console.error('Error inserting into Supabase:', e)
-    }
-	}
-
-	function handleError<T>(err: T) {
-		loading = false
-		query = ''
-		answer = ''
-		console.error(err)
-	}
 
 	const searchWord = async() => {
 	loadingStore = true
@@ -173,16 +89,6 @@
 		}
 	}
 
-
-	function toggleLightbox(index:number){
-		lightbox[index] = !lightbox[index]
-		for ( let i = 0; i < lightbox.length; i ++ ) {
-			if ( i !== index && lightbox[i] === true ) {
-				lightbox[i] = false
-			}
-		}
-	}
-
 	function toggleFaux(){
 		faux = !faux
 	}
@@ -199,18 +105,14 @@
 		docs = await allDocs()
 		quills = await quillNotes()
 		images = await MidjourneyImages()
-		posts = await allMandalas()
 		chats = await chatsGPT()
 		nocodas = await noCodes()
 		taggedimages = await MidjourneyTagged(imageTag)
 		single = await singleNote(title)
 	})
-</script>
 
-<svelte:head>
-<title>The Fractal Maṇḍala</title>
-<meta name="description" content="tech, dev, design, dharma"/>
-</svelte:head>
+
+</script>
 
 <Header>
 </Header>
@@ -311,63 +213,10 @@
 		</div>
 	</div>
 	<div class="pagemainpage">
-			<div class="inviewarea">
-				<ChatMessage type="assistant" message="Namaste. How may I help you?" />	
-					{#each chatMessages as message}
-						<ChatMessage type={message.role} message={message.content} />
-					{/each}
-					{#if answer}
-						<ChatMessage type="assistant" message={answer}/>
-					{/if}
-					{#if loading}
-						<ChatMessage type="assistant" message="Loading.." />
-					{/if}
-					<div class="boxc ofform">
-						<form on:submit|preventDefault={() => handleSubmit()}>
-							<input type="text" bind:value={query} />
-							<button class="glowing" type="submit"> Send </button>
-						</form>
-					</div>
-			</div>
-			{#if galleryView}
-				<div class="boxr" style="gap: 24px; margin-top: 32px">
-					<button class="glowing" on:click={showGallery} on:keydown={toggleFaux}>Close Gallery</button>
-					<button class="glowing" on:click={showPosts} on:keydown={toggleFaux}>View Posts</button>
-				</div>
-				<div class="galleryarea">
-				{#if images && images.length > 0}
-					<div class="carousel">
-					{#each images as item}
-						<div class="singleimage">
-							<img src="https://wganhlzrylmkvvaoalco.supabase.co/storage/v1/object/public/images/batch1/{item.link.slice(90,100)}" alt={item.id}>
-						</div>
-					{/each}
-					</div>
-				{/if}
-				</div>
-				{:else if postsview}
-				<div class="boxr" style="gap: 24px; margin-top: 32px">
-					<button class="glowing" on:click={showGallery} on:keydown={toggleFaux}>Close Gallery</button>
-					<button class="glowing" on:click={showPosts} on:keydown={toggleFaux}>Close Posts</button>
-				</div>
-				<div class="postsarea">
-				{#if posts && posts.length > 0}
-					{#each posts as item}
-						<BigCard linkvar={item.path}>
-							<h5 slot="title">{item.meta.title}</h5>
-							<p slot="tags">{item.meta.type} - {item.meta.tags}</p>
-						</BigCard>
-					{/each}
-				{/if}
-				</div>					
-				{:else}	
-				<div class="boxr" style="gap: 24px; margin-top: 32px">
-					<button class="glowing" on:click={showGallery} on:keydown={toggleFaux}>View Gallery</button>
-					<button class="glowing" on:click={showPosts} on:keydown={toggleFaux}>View Posts</button>
-				</div>
-			{/if}
+		<slot></slot>
 	</div>
 </div>
+
 
 <style lang="sass">
 
@@ -390,11 +239,6 @@
 			padding-bottom: 32px
 		.pagemainpage
 			padding: 32px 32px 32px 32px
-			width: calc(100vw - 360px)
-			.inviewarea
-				padding-right: 240px
-				padding-bottom: 48px
-				border-bottom: 1px solid #272727
 
 .pagesidebar
 	display: flex
@@ -450,63 +294,4 @@
 	flex-direction: column
 	row-gap: 16px
 	
-.ofform
-	width: 100%
-	transition: all 0.15s ease
-	margin-top: 32px
-	form
-		display: flex
-		flex-direction: row
-		gap: 16px
-	form input
-		width: 600px
-		height: 64px
-		border: 1px solid #272727
-		color: white
-		padding: 16px
-		background: #171717
-		outline: none
-
-.singleimage
-	display: flex
-	flex-direction: column
-	height: 200px
-	img
-		object-fit: cover
-		height: 100%
-		width: 100%
-
-.galleryarea
-	overflow-x: hidden
-	width: 100%
-	border: 1px solid #272727
-	padding: 32px
-	border-radius: 4px
-	margin-top: 32px
-	.carousel
-		display: grid
-		grid-auto-flow: column
-		grid-template-columns: 1fr 1fr 1fr 1fr
-		grid-template-rows: 1fr 1fr
-		grid-template-areas: ". . . ." ". . . ."
-		overflow-x: scroll
-		width: 100%
-		white-space: nowrap
-		gap: 16px 16px
-		.singleimage
-			width: 200px
-			flex-shrink: 0
-	.carousel::-webkit-scrollbar
-		height: 0px
-
-.postsarea
-	display: grid
-	grid-auto-flow: row
-	grid-template-rows: auto
-	margin-top: 32px
-	@media screen and (min-width: 1024px)
-		grid-template-columns: 1fr 1fr 1fr
-		grid-template-areas: ". . ."
-		gap: 16px 16px
-
 </style>

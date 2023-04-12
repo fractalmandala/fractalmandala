@@ -47,7 +47,7 @@
 <div class="gridof3 x2">
 	{#if mands && mands.length > 0}
 		{#each mands as item, i}
-			<BigCard>
+			<BigCard linkvar={item.path}>
 				<h5 slot="title">
 				<a href={item.path} target="_self">
 					{item.meta.title}

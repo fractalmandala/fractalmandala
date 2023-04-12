@@ -19,6 +19,26 @@ export const allCodes = async() => {
 	return data
 }
 
+export const noCodes = async() => {
+	const { data, error } = await supabase
+		.from('amrit-notes')
+		.select()
+		.neq('type','code')
+		.order('id',{ascending: false})
+		if (error) throw new Error(error.message)
+	return data
+}
+
+export const onlyStarred = async() => {
+	const { data, error } = await supabase
+		.from('amrit-notes')
+		.select()
+		.eq('star', true)
+		.order('id',{ascending: false})
+		if (error) throw new Error(error.message)
+	return data
+}
+
 export const filteredCode = async(language:any) => {
 	const { data, error } = await supabase
 		.from('amrit-notes')
@@ -307,12 +327,31 @@ export async function tableTags(selectag:any){
 		data
 	}	
 
-	export async function chatswithGPT(){
+	export async function chatswithGPT(limit:number){
 		const { data, error } = await supabase
 		.from('amrit-chatswithgpt')
 		.select()
 		.order('id',{ascending: false})
-		.limit(8)
+		.limit(limit)
 		if (error) throw new Error(error.message)
 		return data
 	}
+
+	export async function chatsGPT(){
+		const { data, error } = await supabase
+		.from('amrit-chatswithgpt')
+		.select()
+		.order('id',{ascending: false})
+		if (error) throw new Error(error.message)
+		return data
+	}
+
+export async function singleNote(title:any){
+	const { data, error } = await supabase
+	.from('amrit-notes')
+	.select()
+	.eq('title',title)
+	.limit(1)
+	if (error) throw new Error(error.message)
+	return data
+}
