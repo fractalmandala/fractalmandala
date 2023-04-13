@@ -1,14 +1,14 @@
 <script lang="ts">
 
   import { page } from '$app/stores';
-	import { backIn, expoInOut, backOut } from 'svelte/easing'
+	import { quintIn, expoInOut, quintOut } from 'svelte/easing'
   import { fly } from 'svelte/transition';
 
 </script>
 
 
 {#key $page.url}
-	<div in:fly={{ delay: 300, duration: 500, x: 900, easing: expoInOut }} out:fly={{ duration: 300, delay: 0, x: -900, easing: backOut }}>
+	<div in:fly={{ delay: 200, duration: 600, y: 600, opacity: 0, easing: quintOut }} out:fly={{ duration: 200, delay: 0, y: -600, opacity: 0, easing: quintIn }}>
 		<slot></slot>
 	</div>
 {/key}

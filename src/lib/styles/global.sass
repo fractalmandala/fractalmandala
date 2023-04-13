@@ -5,12 +5,36 @@ body, html
 	font-family: 'Spline Sans', sans-serif
 	background-color: hsla(0,2%,2%,1)
 	background-image: radial-gradient(at 80% 80%, hsla(101,3%,2%,1) 0px, transparent 50%), radial-gradient(at 40% 0%, hsla(126,75%,7%,1) 0px, transparent 50%)
+	background-size: 800% 400%
 
 p, .mandpand p
 	font-family: 'Spline Sans', sans-serif
 
 .mandpand h3
 	color: white
+
+.gridwork
+	display: grid
+	grid-auto-flow: row
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr
+	grid-template-rows: 1fr
+	grid-template-areas: ". . . . . . . . . . . ."
+	position: fixed
+	width: 100vw
+	height: 100vh
+	top: 0
+	left: 0
+	z-index: 9000
+	column-gap: 16px
+	padding: 0 48px
+	opacity: 0.1
+	pointer-events: none
+	.bogg
+		border: 1px solid white
+		height: 100vh
+
+.gridwork.xx
+	display: none
 
 a
 	text-decoration: none
@@ -24,6 +48,7 @@ a
 *
 	box-sizing: border-box
 	--cubea: cubic-bezier(1.000, -0.105, 1.000, 0.410)
+	--purp: #500652
 
 .boxr
 	display: flex
@@ -382,7 +407,7 @@ pre
 
 .bigcard
 	h5
-		font-size: 18px
+		font-size: 20px
 		font-family: 'Spline Sans', sans-serif
 		margin: 0
 		font-weight: 500
@@ -401,10 +426,14 @@ pre
 		transform: translateY(12px)
 		transition: all 0.3s cubic-bezier(0.430, 0.580, 0.000, 1.140)
 		color: white
+		text-transform: capitalize
 	p
 		transition: 0.3s cubic-bezier(0.430, 0.580, 0.000, 1.140)
 		transform: translateY(80px)
 		opacity: 0
+		text-transform: capitalize
+	small
+		text-transform: uppercase
 	&:hover
 		overflow: hidden
 		h5
@@ -573,3 +602,60 @@ pre
 				width: 100%
 				height: 100%
 
+
+.trans a
+	.mot
+		.mot-1
+			transition: all 0.3s ease
+			transition-delay: 0.04s
+		.mot-2
+			transition: all 0.3s ease
+			transition-delay: 0.08s
+		.mot-3
+			transition: all 0.3s ease
+			transition-delay: 0.12s
+		.mot-4
+			transition: all 0.3s ease
+			transition-delay: 0.16s
+		.mot-5
+			transition: all 0.3s ease
+			transition-delay: 0.2s
+		.mot-6
+			transition: all 0.3s ease
+			transition-delay: 0.24s
+
+
+.trans a
+	&:hover
+		.mot-1, .mot-3, .mot-5
+			fill: #10D56C
+		.mot-2, .mot-4, .mot-6
+			fill: var(--purp)
+		.mot
+			animation: therotation 4s ease infinite
+
+@keyframes therotation
+	0%
+		transform: rotate(0deg)
+	100%
+		transform: rotate(720deg)
+				
+
+.postsarea
+	display: grid
+	grid-auto-flow: row
+	grid-template-rows: auto
+	margin-top: 32px
+	@media screen and (min-width: 1024px)
+		grid-template-columns: 1fr 1fr 1fr 1fr
+		grid-template-areas: ". . . ."
+		gap: 16px 16px
+		height: 240px
+	@media screen and (max-width: 1023px)
+		grid-template-columns: 1fr 1fr
+		grid-template-areas: ". ."
+		gap: 0px 16px
+		padding-bottom: 0px
+		height: 348px
+		padding-left: 16px
+		padding-right: 16px

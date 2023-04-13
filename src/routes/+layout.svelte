@@ -87,10 +87,10 @@
 		pageurl = $page.url.pathname
 		pageurlcut = pageurl.substr(0,8)
 		const lenis = new Lenis({
-			duration: 0.8,
+			duration: 1.2,
 			orientation: 'vertical',
 			gestureOrientation: 'vertical',
-			wheelMultiplier: 0.5,
+			wheelMultiplier: 0.8,
 			smoothWheel: true,
 			touchMultiplier: 1,
 			infinite: false,
@@ -122,19 +122,27 @@
 </svelte:head>
 
 
+<div class="gridwork xx">
+	<div class="bogg"></div>
+	<div class="bogg"></div>
+	<div class="bogg"></div>
+	<div class="bogg"></div>
+	<div class="bogg"></div>
+	<div class="bogg"></div>
+	<div class="bogg"></div>
+	<div class="bogg"></div>
+	<div class="bogg"></div>
+	<div class="bogg"></div>
+	<div class="bogg"></div>
+	<div class="bogg"></div>
+</div>
 
 <div class="themer">
 	<Header>
 	</Header>
 	<TransitionPage>
-			<div class="pagedoublegrid">
-				<div class="pagesidebar" class:hiddensidebar={isInvisible}>
-					<StandardSidebar></StandardSidebar>
-				</div>
-				<div class="pagemainpage">
-					<slot></slot>
-				</div>
-			</div>
+		<div class="pagedoublegrid">
+			<slot></slot>
 			<div class="galleryarea">
 				{#if images && images.length > 0}
 					<div class="carousel">
@@ -146,14 +154,13 @@
 						</div>
 				{/if}
 			</div>
+		</div>
 	</TransitionPage>
 	<div class="foot">
 		<div class="animatedicon">
-			<a href="/play" target="_self">
 			<div class="one"></div>
 			<div class="two"></div>
 			<div class="three"></div>
-			</a>
 		</div>
 		<div class="rightside">
 			<div class="boxr" style="gap: 16px">
@@ -201,7 +208,7 @@
 
 <style lang="sass">
 
-.animatedicon a
+.animatedicon
 	display: grid
 	grid-auto-flow: row
 	grid-template-columns: 1fr 1fr 1fr
@@ -341,48 +348,20 @@
 	display: grid
 	grid-auto-flow: row
 	min-height: calc(100vh - 120px)
-	.pagesidebar
-		grid-area: pagesidebar
-	.pagemainpage
-		grid-area: pagemainpage
 	@media screen and (min-width: 1024px)
-		grid-template-columns: 320px 1fr
-		grid-template-areas: "pagesidebar pagemainpage"
+		grid-template-columns: 1fr
+		grid-template-areas: "."
 		grid-template-rows: auto
-		gap: 0 48px
+		gap: 0
 		padding-top: 120px
-		.pagesidebar
-			padding-left: 40px
-			padding-right: 16px
-			padding-top: 32px
-			padding-bottom: 32px
-		.pagemainpage
-			padding: 32px 32px 32px 32px
-			width: calc(100vw - 360px)
+		padding-left: 48px
+		padding-right: 48px
 	@media screen and (max-width: 1023px)
 		grid-template-columns: 1fr
-		grid-template-rows: 64px auto
-		grid-template-areas: "pagesidebar" "pagemainpage"
+		grid-template-rows: auto
+		grid-template-areas: "."
 		padding-top: 0px
 		height: 100%
-		.pagesidebar
-			display: none
-		.pagemainpage
-			padding: 16px
-			width: 100%
-			height: 100%
-
-
-.pagesidebar
-	display: flex
-	flex-direction: column
-
-.pagesidebar.hiddensidebar
-	transform: translateY(-56px)
-
-.pagemainpage
-	display: flex
-	flex-direction: column
 
 .galleryarea
 	overflow-x: hidden
@@ -390,6 +369,8 @@
 	width: 100%
 	border-radius: 4px
 	margin-top: 32px
+	margin-bottom: 32px
+	pointer-events: auto
 	.carousel
 		display: grid
 		grid-auto-flow: column
@@ -398,13 +379,13 @@
 		width: 100%
 		white-space: nowrap
 		gap: 16px 16px
+		touch-action: pan-x
 		.singleimage
-			width: 200px
+			width: calc(25vw - 36px)
 			flex-shrink: 0
 	.carousel::-webkit-scrollbar
 		height: 0px
 	@media screen and (min-width: 1024px)
-		padding: 32px
 		.carousel
 			grid-template-columns: 1fr 1fr 1fr 1fr
 			grid-template-rows: 1fr 1fr
@@ -412,18 +393,18 @@
 	@media screen and (max-width: 1023px)
 		width: 100%
 		overflow-x: hidden
-		padding-left: 32px
-		padding-right: 32px
+		padding-left: 16px
+		padding-right: 16px
 		padding-bottom: 32px
 		.carousel
-			grid-template-columns: 1fr 1fr 1fr
+			grid-template-columns: 1fr 1fr 1fr 1fr
 			grid-template-rows: 1fr 1fr
-			grid-template-areas: ". . ." ". . ."
+			grid-template-areas: ". . . ." ". . . ."
 			overflow-x: scroll
 			white-space: nowrap
 			.singleimage
-				width: 88px
-				height: 88px
+				width: 104px
+				height: 104px
 
 .singleimage
 	display: flex

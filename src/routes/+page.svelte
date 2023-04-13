@@ -185,38 +185,8 @@
 
 
 <div class="introarea">
-	<p>
-		A simple blog to document a non-programmer bootstrapping himself into web-dev. <span class="special">My stack:</span>
-	</p>
-	<p>
-		- backend at <a href="https://supabase.com/" target="_blank" rel="noreferrer">Supabase</a><br>
-		- framework: <a href="https://kit.svelte.dev/" target="_blank" rel="noreferrer">Sveltekit</a><br>
-		- deployed at <a href="https://vercel.com/home" target="_blank" rel="noreferrer">Vercel</a><br>
-		- also mounted:
-	</p>
-	<li><a href="https://lenis.studiofreight.com/" target="_blank" rel="noreferrer">Lenis</a></li>
-	<li><a href="https://greensock.com/gsap/" target="_blank" rel="noreferrer">GSAP</a></li>
-	<li><a href="https://mdsvex.pngwn.io/" target="_blank" rel="noreferrer">MDSvex</a></li>
-	<li><a href="https://github.com/SharifClick/svelte-swipe" target="_blank" rel="noreferrer">Svelte Swipe</a></li>
-	<li><a href="https://github.com/DaveKeehl/svelte-reveal" target="_blank" rel="noreferrer">Svelte Reveal</a></li>
-	<li><a href="https://sveltelegos.com/" target="_blank" rel="noreferrer">Svelte Legos</a></li>
-	<li><a href="https://prismjs.com/" target="_blank" rel="noreferrer">Prism JS</a></li>
-	<p>
-		On the left, browse/search through an unorganized assortment of code snippets, setup guides and troubleshooting pointers. Play with broGPT, my AI pal, below.
-	</p>
-</div>
-<div class="postsarea">
-	{#if posts && posts.length > 0}
-		{#each posts as item}
-			<BigCard linkvar={item.path}>
-				<h5 slot="title">{item.meta.title}</h5>
-				<p slot="tags"><span style="text-transform: uppercase; color: #10C56D">{item.meta.type}</span> - {item.meta.tags}</p>
-			</BigCard>
-		{/each}
-	{/if}
-</div>	
-<div class="inviewarea">
-	<ChatMessage type="assistant" message="Namaste. How may I help you?" />	
+	<div class="inviewarea">
+		<ChatMessage type="assistant" message="Namaste. How may I help you?" />	
 		{#each chatMessages as message}
 			<ChatMessage type={message.role} message={message.content} />
 		{/each}
@@ -234,70 +204,115 @@
 				<button class="glowing" type="submit" on:click={() => handleSubmit()} on:keydown={handleKeyDownInput}> Send </button>
 			</form>
 		</div>
+	</div>
+	<div class="outview">
+		<p>
+			A simple blog to document a non-programmer bootstrapping himself into web-dev. <span class="special">My stack:</span>
+		</p>
+		<p>
+			- backend at <a href="https://supabase.com/" target="_blank" rel="noreferrer">Supabase</a><br>
+			- framework: <a href="https://kit.svelte.dev/" target="_blank" rel="noreferrer">Sveltekit</a><br>
+			- deployed at <a href="https://vercel.com/home" target="_blank" rel="noreferrer">Vercel</a><br>
+			- also mounted:
+		</p>
+			<li><a href="https://lenis.studiofreight.com/" target="_blank" rel="noreferrer">Lenis</a></li>
+			<li><a href="https://greensock.com/gsap/" target="_blank" rel="noreferrer">GSAP</a></li>
+			<li><a href="https://mdsvex.pngwn.io/" target="_blank" rel="noreferrer">MDSvex</a></li>
+			<li><a href="https://github.com/SharifClick/svelte-swipe" target="_blank" rel="noreferrer">Svelte Swipe</a></li>
+			<li><a href="https://github.com/DaveKeehl/svelte-reveal" target="_blank" rel="noreferrer">Svelte Reveal</a></li>
+			<li><a href="https://sveltelegos.com/" target="_blank" rel="noreferrer">Svelte Legos</a></li>
+			<li><a href="https://prismjs.com/" target="_blank" rel="noreferrer">Prism JS</a></li>
+		<p>
+			Browse/search through an unorganized assortment of code snippets, setup guides and troubleshooting pointers. Play with broGPT, my AI pal, below.
+		</p>
+	</div>
 </div>
+<div class="postsarea">
+	{#if posts && posts.length > 0}
+		{#each posts as item}
+			<BigCard linkvar={item.path}>
+				<h5 slot="title">{item.meta.title}</h5>
+				<p slot="tags"><span style="text-transform: uppercase; color: #10C56D">{item.meta.type}</span> - {item.meta.tags}</p>
+			</BigCard>
+		{/each}
+	{/if}
+</div>	
+
 
 <style lang="sass">
 
 .introarea
-	p .special
+	display: grid
+	grid-auto-flow: row
+	@media screen and (min-width: 1024px)
+		grid-template-columns: 1fr 1fr
+		grid-template-rows: auto
+		grid-template-areas: ". ."
+		gap: 0 0px
+		.inviewarea
+			padding-right: 104px
+		.outview
+			margin: 0
+			width: 100%
+	@media screen and (max-width: 1023px)
+		grid-template-columns: 1fr
+		grid-template-rows: auto auto
+		grid-template-areas: "outview" "inviewarea"
+		gap: 24px 0
+		padding-left: 16px
+		padding-right: 16px
+		padding-top: 96px
+		.outview
+			grid-area: outview
+	
+p .special
+	background: #64F540
+	background: linear-gradient(to right, #64F540 0%, #11E876 50%, #07E859 100%)
+	-webkit-background-clip: text
+	-webkit-text-fill-color: transparent
+a
+	position: relative
+	&:hover
 		background: #64F540
 		background: linear-gradient(to right, #64F540 0%, #11E876 50%, #07E859 100%)
 		-webkit-background-clip: text
 		-webkit-text-fill-color: transparent
-	a
-		position: relative
-		&:hover
-			background: #64F540
-			background: linear-gradient(to right, #64F540 0%, #11E876 50%, #07E859 100%)
-			-webkit-background-clip: text
-			-webkit-text-fill-color: transparent
-			&::after
-				animation: vanishing 0.08s ease forwards
 		&::after
-			position: absolute
-			bottom: 0
-			left: 0
-			height: 1px
-			width: 100%
-			content: ''
-			background: #64F540
-			background: linear-gradient(to right, #64F540 0%, #11E876 50%, #07E859 100%)
-	p
-		font-family: 'Spline Sans', sans-serif
-		font-size: 16px
-		color: #FFFFFF
-		line-height: 2
-	li
-		font-family: 'Spline Sans', sans-serif
-		font-size: 14px
-		color: #FFFFFF
-		line-height: 1.5
-		list-style-type: none
-		padding: 0
-		margin-left: 32px
-	@media screen and (min-width: 1024px)
-		padding-right: 240px
-		padding-bottom: 24px
-		border-bottom: 1px solid #272727
-	@media screen and (max-width: 1023px)
+			animation: vanishing 0.08s ease forwards
+	&::after
+		position: absolute
+		bottom: 0
+		left: 0
+		height: 1px
+		width: 100%
+		content: ''
+		background: #64F540
+		background: linear-gradient(to right, #64F540 0%, #11E876 50%, #07E859 100%)
+p
+	font-family: 'Spline Sans', sans-serif
+	font-size: 16px
+	color: #FFFFFF
+	line-height: 2
+li
+	font-family: 'Spline Sans', sans-serif
+	font-size: 14px
+	color: #FFFFFF
+	line-height: 1.5
+	list-style-type: none
+	padding: 0
+	margin-left: 32px
+
+@media screen and (max-width: 1023px)
+	p .special
 		padding: 16px
 		margin-left: 0
 		margin-right: 0
 		padding: 0 0 24px 0
 		width: 100%
 		border-bottom: 1px solid #272727
-		p
-			font-size: 14px
+	p
+		font-size: 14px
 
-.inviewarea
-	@media screen and (min-width: 1024px)
-		padding-right: 240px
-		padding-bottom: 48px
-		padding-top: 24px
-	@media screen and (max-width: 1023px)
-		padding: 0 0 24px 0
-		width: 100%
-		border-bottom: 1px solid #272727
 	
 .ofform
 	width: 100%
@@ -315,25 +330,5 @@
 		background: #171717
 		outline: none
 		width: 100%
-		@media screen and (min-width: 1024px)
-			width: 600px
-
-.postsarea
-	display: grid
-	grid-auto-flow: row
-	grid-template-rows: auto
-	margin-top: 32px
-	@media screen and (min-width: 1024px)
-		grid-template-columns: 1fr 1fr 1fr
-		grid-template-areas: ". . ."
-		gap: 16px 16px
-		height: 160px
-		padding-right: 120px
-	@media screen and (max-width: 1023px)
-		grid-template-columns: 1fr 1fr
-		grid-template-areas: ". ."
-		gap: 16px 16px
-		padding-bottom: 32px
-		height: 320px
 
 </style>

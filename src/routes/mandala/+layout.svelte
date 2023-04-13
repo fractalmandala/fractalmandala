@@ -24,28 +24,3 @@
 	{/if}
 </div>
 
-<style lang="sass">
-
-.postsarea
-	display: grid
-	grid-auto-flow: row
-	grid-template-rows: auto
-	margin-top: 32px
-	@media screen and (min-width: 1024px)
-		grid-template-columns: 1fr 1fr 1fr
-		grid-template-areas: ". . ."
-		gap: 16px 16px
-		height: 160px
-		padding-right: 120px
-		border-top: 1px solid white
-		padding-top: 32px
-	@media screen and (max-width: 1023px)
-		grid-template-columns: 1fr 1fr
-		grid-template-areas: ". ."
-		gap: 16px 16px
-		height: 320px
-		padding-bottom: 32px
-
-
-
-</style>

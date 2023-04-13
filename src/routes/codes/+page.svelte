@@ -1,30 +1,28 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte'
+	import { allCodes } from '$lib/utils/supabase'
 	import BigCard from '$lib/components/BigCard.svelte'
-	import { allDocs } from '$lib/utils/localpulls'
 
-	let docs:any
-	let viewport:number
+	let codas:any
 
 	onMount(async() => {
-		docs = await allDocs()
+		codas = await allCodes()
 	})
 
 </script>
 
-<svelte:window bind:innerWidth={viewport}/>
-
 
 <div class="postsarea">
-	{#if docs && docs.length > 0}
-		{#each docs as item, i}
-			<BigCard linkvar={item.path}>
-				<small class="tinycardcat" slot="category">{item.meta.type}</small>
-				<h5 slot="title" style="text-transform: capitalize">
-					{item.meta.title}
-				</h5>
-				<p style="font-size: 10px; color: #676767; text-transform: uppercase" slot="tags">{item.meta.tags}</p>
+	{#if codas && codas.length > 0}
+		{#each codas as item, i}
+			<BigCard linkvar="/codes/{item.counting}">
+				<small slot="category">{item.type}</small>
+				<h5 slot="title">{item.title}</h5>
+				<div slot="tags" class="boxr">
+					<p>{item.tags}</p>
+					<p>{item.lang}</p>
+				</div>
 			</BigCard>
 		{/each}
 	{/if}
