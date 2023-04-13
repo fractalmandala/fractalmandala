@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte'
 	import hljs from 'highlight.js'
 	import '$lib/styles/highlight.css'
+	import { Swipe, SwipeItem } from 'svelte-swipe'
 	import TinyCard from '$lib/components/TinyCard.svelte'
 	import TinyCard2 from '$lib/components/TinyCard.svelte'
 	import TinyCard3 from '$lib/components/TinyCard.svelte'
@@ -112,7 +113,15 @@
 
 </script>
 
-
+<div class="topimagebox" data-lenis-prevent>
+	{#if images && images.length > 0}
+		{#each images as item}
+			<div class="portrait">
+				<img src="https://wganhlzrylmkvvaoalco.supabase.co/storage/v1/object/public/images/batch1/{item.link.slice(90,100)}" alt={item.id}>
+			</div>
+		{/each}
+	{/if}
+</div>
 <div class="searcharea">
 	<input type="text" bind:this={searchinput} on:input={(e) => {if(e && e.target) {searchStore.set(e.target.value)}}}>
 	<button on:click={searchWord} on:keydown={toggleFaux} on:click={() => toggleArea(5)}>Find</button>
@@ -215,6 +224,29 @@
 
 
 <style lang="sass">
+
+.topimagebox
+	display: flex
+	flex-direction: row
+	height: 264px
+	position: relative
+	white-space: nowrap
+	overflow-x: scroll
+	gap: 8px
+	margin-bottom: 16px
+	
+.portrait
+	display: flex
+	flex-direction: column
+	width: 260px
+	height: 260px
+	flex-shrink: 0
+	border: 1px solid #FFFFFF
+	img
+		object-fit: cover
+		object-position: center center
+		width: 100%
+		height: 100%
 
 .optionsarea
 	display: flex
