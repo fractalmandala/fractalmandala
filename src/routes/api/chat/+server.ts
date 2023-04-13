@@ -65,8 +65,6 @@ export const POST: RequestHandler = async ({ request }) => {
 			throw new Error('Query too large')
 		}
 
-		 
-
 		const messages: ChatCompletionRequestMessage[] = [
 			{ role: 'system', content: prompt },
 			...reqMessages
