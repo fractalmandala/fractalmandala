@@ -46,15 +46,22 @@
 	showResults = true
 	const searchTerm = get(searchStore)
 	let results: any[] = []
-	const { data, error } = await supabase
+	const { data: dataone, error: errorone } = await supabase
 		.from('amrit-notes')
 		.select()
 		.textSearch('fts', searchTerm)
 		.order('id')
-		if (error) throw new Error(error.message)
-		results = results.concat(data)
+		if (errorone) throw new Error(errorone.message)
+		results = results.concat(dataone)
+	const { data: datatwo, error: errortwo } = await supabase
+		.from('amrit-chatswithgpt')
+		.select()
+		.textSearch('fts',searchTerm)
+		.order('id',{ascending: false})
+		if (errortwo) throw new Error(errortwo.message)
+		results = results.concat(datatwo)
 	// @ts-ignore
-	resultsStore.set(data)
+	resultsStore.set(results)
 	loadingStore = false
 	searchinput = ''
 }
@@ -117,7 +124,7 @@
 	<div class="option" on:click={() => toggleArea(3)} on:keydown={toggleFaux}>Chats</div>
 	<div class="option" on:click={() => toggleArea(4)} on:keydown={toggleFaux}>Other</div>
 </div>
-		<div class="resultsdisplay">
+<div class="resultsdisplay">
 			{#if area[1]}
 				{#if stars && stars.length > 0}
 					{#each stars as item, i}
@@ -173,11 +180,18 @@
 				{#if showResults}
 					{#if $resultsStore.length>0}
 						{#each $resultsStore as item, i}
-							<TinyCard5 i={i} linkvar="/notes/{item.counting}">
-								<p slot="title">{item.title}</p>
-								<small slot="lang" style="color: #10D56C; text-transform: uppercase">{item.type}</small>
-								<small slot="tags" style="color: #575757">{item.tags}</small>								
-							</TinyCard5>
+							{#if item.title && item.title.length > 0}
+								<TinyCard5 i={i} linkvar="/notes/{item.counting}">
+									<p slot="title">{item.title}</p>
+									<small slot="lang" style="color: #10D56C; text-transform: uppercase">{item.type}</small>
+									<small slot="tags" style="color: #575757">{item.tags}</small>								
+								</TinyCard5>
+							{:else if item.prompt && item.prompt.length > 0}
+								<TinyCard5 i={i} linkvar="/play/{item.id}">
+									<p slot="title">{item.prompt.slice(0,50)}</p>
+									<small slot="lang" style="color: #10D56C; text-transform: uppercase">GPT</small>							
+								</TinyCard5>
+							{/if}
 						{/each}
 					{/if}
 				{/if}
@@ -197,7 +211,7 @@
 					{/each}
 				{/if}
 			{/if}
-		</div>
+</div>
 
 
 <style lang="sass">

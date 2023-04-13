@@ -9,6 +9,8 @@
 	import '$lib/styles/global.sass'
 
 	let y:number
+	let isInvisible:boolean = false
+	let latestScrollY:number
 	let mobileView:boolean = false
 	let mobileViewEnable:boolean = true
 	let screenWidth:number
@@ -53,6 +55,16 @@
 		linksonmobile = false
 	}
 
+	$: {
+		if ( y > 100 && y > latestScrollY ) {
+			isInvisible = true
+		} else {
+			isInvisible = false
+		}
+
+		latestScrollY = y
+	}
+
 	onMount(() => {
 		pageurl = $page.url.pathname
 		pageurlcut = pageurl.substr(0,8)
@@ -89,7 +101,7 @@
 	</Header>
 	<TransitionPage>
 			<div class="pagedoublegrid" class:expanded={openSidebar}>
-				<div class="pagesidebar" class:expanded={openSidebar}>
+				<div class="pagesidebar" class:expanded={openSidebar} class:hiddensidebar={isInvisible}>
 					<StandardSidebar></StandardSidebar>
 				</div>
 				<div class="pagemainpage">
@@ -287,7 +299,7 @@
 		grid-template-columns: 1fr
 		grid-template-rows: 64px auto
 		grid-template-areas: "pagesidebar" "pagemainpage"
-		padding-top: 120px
+		padding-top: 64px
 		height: 100%
 		.pagesidebar
 			padding-left: 32px
@@ -295,11 +307,19 @@
 			padding-top: 4px
 			padding-bottom: 4px
 			overflow-x: hidden
+			position: fixed
+			top: 56px
+			height: 64px
+			width: 100%
+			backdrop-filter: blur(10px)
+			z-index: 999
+			transition: 0.34s ease
 		.pagesidebar.expanded
 			height: 100%
 		.pagemainpage
 			padding: 32px
 			width: 100%
+			height: 100%
 
 .pagedoublegrid.expanded
 	@media screen and (max-width: 1023px)
@@ -308,6 +328,13 @@
 		grid-template-areas: "pagesidebar" "pagemainpage"
 
 .pagesidebar
+	display: flex
+	flex-direction: column
+
+.pagesidebar.hiddensidebar
+	transform: translateY(-56px)
+
+.pagemainpage
 	display: flex
 	flex-direction: column
 

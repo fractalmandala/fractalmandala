@@ -1,6 +1,8 @@
 <script lang="ts">
 	//@ts-nocheck
 	import { onMount } from 'svelte'
+	import hljs from 'highlight.js'
+	import '$lib/styles/highlight.css'
 	import { clickToCopyAction } from 'svelte-legos'
 	import supabase from '$lib/utils/supabase'
 	import Toast from '$lib/components/Toast.svelte'
@@ -41,6 +43,7 @@
 	}
 
 	onMount(async() => {
+		hljs.highlightAll()
 		nextchat = data.id - 1
 		copymaterial = data.response
 		theid = data.id
@@ -151,7 +154,7 @@ pre
 .commbody.user, .commbody.broGPT
 	color: white
 	font-family: 'Spline Sans', sans-serif
-	text-transform: capitalize
+	text-transform: lowercase
 
 .commbody.broGPT
 	font-size: 14px

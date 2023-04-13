@@ -115,7 +115,8 @@ pre
 	font-family: 'Spline Sans', sans-serif
 
 .commbody.broGPT
-	font-size: 16px
+	font-size: 14px
+	text-transform: lowercase
 
 .commbody.user
 	text-align: right
