@@ -139,7 +139,7 @@
 					<div class="singletheme"><a href="/docs">Documentation</a></div>
 					<div class="singletheme"><a href="/codes">Codes</a></div>
 					<div class="singletheme"><a href="/play">GPT Chats</a></div>
-					<div class="singletheme"><a href="/gallery">Images</a></div>
+					<div class="singletheme"><a href="/images">Images</a></div>
 				</div>
 				{/if}
 			</div>

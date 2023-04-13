@@ -1,36 +1,35 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte'
-	import BigCard from '$lib/components/BigCard.svelte'
-	import { allDocs } from '$lib/utils/localpulls'
+	import { MidjourneyImages } from '$lib/utils/supabase'
 
-	let docs:any
-	let viewport:number
+	let images:any
 
 	onMount(async() => {
-		docs = await allDocs()
+		images = await MidjourneyImages()
 	})
 
 </script>
 
-<svelte:window bind:innerWidth={viewport}/>
-
-
 <div class="postsarea">
-	{#if docs && docs.length > 0}
-		{#each docs as item, i}
-			<BigCard linkvar={item.path}>
-				<small slot="category">{item.meta.type}</small>
-				<h5 slot="title" style="text-transform: capitalize">
-					{item.meta.title}
-				</h5>
-				<p slot="tags">{item.meta.tags}</p>
-			</BigCard>
+	{#if images && images.length > 0}
+		{#each images as item, i}
+			<div class="bigimagebox">
+				<a href="/images/{item.id}">
+				<img src="https://wganhlzrylmkvvaoalco.supabase.co/storage/v1/object/public/images/batch1/{item.link.slice(90,100)}" alt={item.id}>
+				</a>
+			</div>
 		{/each}
 	{/if}
 </div>
 
 <style lang="sass">
+
+.bigimagebox a
+	img
+		object-fit: cover
+		height: 100%
+		width: 100%
 
 .postsarea
 	display: grid

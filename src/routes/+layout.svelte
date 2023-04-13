@@ -360,7 +360,7 @@
 		grid-template-columns: 1fr
 		grid-template-rows: auto
 		grid-template-areas: "."
-		padding-top: 0px
+		padding-top: 56px
 		height: 100%
 
 .galleryarea
@@ -396,6 +396,7 @@
 		padding-left: 16px
 		padding-right: 16px
 		padding-bottom: 32px
+		padding-top: 32px
 		.carousel
 			grid-template-columns: 1fr 1fr 1fr 1fr
 			grid-template-rows: 1fr 1fr

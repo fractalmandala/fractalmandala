@@ -19,10 +19,7 @@
 			<BigCard linkvar="/codes/{item.counting}">
 				<small slot="category">{item.type}</small>
 				<h5 slot="title">{item.title}</h5>
-				<div slot="tags" class="boxr">
-					<p>{item.tags}</p>
-					<p>{item.lang}</p>
-				</div>
+				<p slot="tags">{item.tags} - {item.lang}</p>
 			</BigCard>
 		{/each}
 	{/if}
@@ -44,9 +41,9 @@
 	@media screen and (max-width: 1023px)
 		grid-template-columns: 1fr 1fr
 		grid-template-areas: ". ."
-		gap: 0px 16px
+		gap: 16px 16px
 		padding-bottom: 0px
-		height: 348px
+		height: 100%
 		padding-left: 16px
 		padding-right: 16px
 

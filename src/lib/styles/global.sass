@@ -413,9 +413,13 @@ pre
 		font-weight: 500
 	p
 		margin: 0
-		color: #474747
-		font-size: 12px
+		font-size: 14px
 		padding-top: 4px
+		transition: 0.3s cubic-bezier(0.430, 0.580, 0.000, 1.140)
+		transform: translateY(80px)
+		opacity: 0
+		text-transform: capitalize
+		color: #980789 !important
 	@media screen and (max-width: 1023px)
 		h5
 			font-size: 16px
@@ -427,15 +431,15 @@ pre
 		transition: all 0.3s cubic-bezier(0.430, 0.580, 0.000, 1.140)
 		color: white
 		text-transform: capitalize
-	p
-		transition: 0.3s cubic-bezier(0.430, 0.580, 0.000, 1.140)
-		transform: translateY(80px)
-		opacity: 0
-		text-transform: capitalize
 	small
 		text-transform: uppercase
+		opacity: 0
+		font-size: 12px
+		color: #10D56C
 	&:hover
 		overflow: hidden
+		small
+			opacity: 1
 		h5
 			transform: translateY(0px)
 			color: white
@@ -650,12 +654,12 @@ pre
 		grid-template-columns: 1fr 1fr 1fr 1fr
 		grid-template-areas: ". . . ."
 		gap: 16px 16px
-		height: 240px
+		min-height: 240px
 	@media screen and (max-width: 1023px)
 		grid-template-columns: 1fr 1fr
 		grid-template-areas: ". ."
-		gap: 0px 16px
+		gap: 16px 16px
 		padding-bottom: 0px
-		height: 348px
+		height: 100%
 		padding-left: 16px
 		padding-right: 16px
