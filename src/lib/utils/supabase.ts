@@ -246,6 +246,7 @@ export async function MidjourneyImages(){
 	.from('amrit-gallery')
 	.select()
 	.order('id', {ascending: false})
+	.limit(8)
 	if (error) throw new Error(error.message)
 	return data
 }
