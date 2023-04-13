@@ -34,6 +34,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@slidy/svelte": "^3.4.2",
 		"@studio-freight/lenis": "^1.0.6",
 		"@supabase/auth-helpers-sveltekit": "^0.9.3",
 		"@supabase/auth-ui-shared": "^0.1.3",

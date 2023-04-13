@@ -235,26 +235,6 @@
 			</form>
 		</div>
 </div>
-{#if galleryView}
-	<div class="boxr" style="gap: 24px; margin-top: 32px">
-		<button class="glowing" on:click={showGallery} on:keydown={toggleFaux}>Close Gallery</button>
-	</div>
-	<div class="galleryarea">
-	{#if images && images.length > 0}
-		<div class="carousel">
-		{#each images as item}
-			<div class="singleimage">
-				<img src="https://wganhlzrylmkvvaoalco.supabase.co/storage/v1/object/public/images/batch1/{item.link.slice(90,100)}" alt={item.id}>
-			</div>
-		{/each}
-		</div>
-	{/if}
-	</div>			
-	{:else}	
-	<div class="boxr" style="gap: 24px; margin-top: 32px">
-		<button class="glowing" on:click={showGallery} on:keydown={toggleFaux}>View Gallery</button>
-	</div>
-{/if}
 
 <style lang="sass">
 
@@ -337,52 +317,6 @@
 		width: 100%
 		@media screen and (min-width: 1024px)
 			width: 600px
-
-.singleimage
-	display: flex
-	flex-direction: column
-	height: 200px
-	img
-		object-fit: cover
-		height: 100%
-		width: 100%
-
-.galleryarea
-	overflow-x: hidden
-	width: 100%
-	border-radius: 4px
-	margin-top: 32px
-	.carousel
-		display: grid
-		grid-auto-flow: column
-		overflow-x: scroll
-		width: 100%
-		white-space: nowrap
-		gap: 16px 16px
-		.singleimage
-			width: 200px
-			flex-shrink: 0
-	.carousel::-webkit-scrollbar
-		height: 0px
-	@media screen and (min-width: 1024px)
-		padding: 32px
-		border: 1px solid #272727
-		.carousel
-			grid-template-columns: 1fr 1fr 1fr 1fr
-			grid-template-rows: 1fr 1fr
-			grid-template-areas: ". . . ." ". . . ."
-	@media screen and (max-width: 1023px)
-		width: calc(100% - 64px)
-		overflow-x: hidden
-		.carousel
-			grid-template-columns: 1fr 1fr 1fr
-			grid-template-rows: 1fr 1fr
-			grid-template-areas: ". . ." ". . ."
-			overflow-x: scroll
-			white-space: nowrap
-			.singleimage
-				width: 128px
-				height: 128px
 
 .postsarea
 	display: grid

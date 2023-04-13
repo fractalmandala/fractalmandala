@@ -225,7 +225,7 @@ a
 		h6
 			font-size: 16px
 		h3
-			font-size: 32px
+			font-size: 24px
 
 .blogformatting
 	pre
@@ -355,7 +355,7 @@ a
 		&:hover
 			box-shadow: 3px 5px 8px rgba(0,0,0,0) inset, -3px -2px 5px rgba(0,0,0,0) inset
 	@media screen and (max-width: 1023px)
-		padding: 16px
+		padding: 8px
 		pre
 			margin: 0
 			background: #171717
@@ -543,3 +543,33 @@ pre
 			align-items: center
 			row-gap: 16px
 			
+
+.topimagebox
+	display: flex
+	flex-flow: column
+	overflow: hidden
+	height: 264px
+	width: 264px
+	margin-bottom: 16px
+	.outerport
+		display: flex
+		flex-direction: row
+		flex-wrap: nowrap
+		overflow-x: scroll
+		height: 264px
+		width: 264px
+		scroll-snap-type: x mandatory
+		scroll-behavior: smooth
+		.innerport
+			display: flex
+			scroll-snap-align: start
+			flex-shrink: 0
+			height: 264px
+			width: 264px
+			transition: all 0.44s cubic-bezier(1.000, -0.010, 0.000, 1.005)
+			img
+				object-fit: cover
+				object-position: center center
+				width: 100%
+				height: 100%
+

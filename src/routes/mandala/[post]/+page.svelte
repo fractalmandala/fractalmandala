@@ -35,6 +35,10 @@
 	@media screen and (min-width: 1024px)
 		.blogpadding
 			padding-right: 240px
+	@media screen and (max-width: 1023px)
+		.blogpadding
+			padding-left: 16px
+			padding-right: 16px
 
 h1
 	border-bottom: 1px solid #272727

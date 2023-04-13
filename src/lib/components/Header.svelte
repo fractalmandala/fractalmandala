@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte'
 	import { get, writable } from 'svelte/store'
 	import supabase from '$lib/utils/supabase'
+	import StandardSidebar from '$lib/components/StandardSidebar.svelte'
 	const searchStore = writable('')
 	let searchinput
 	const resultsStore = writable([])
@@ -104,7 +105,7 @@ $: {
 			<a href="/">
 				<LogoFM></LogoFM>
 			</a>
-	</div>
+		</div>
 	</div>
 	<div class="botcol">
 		<div>
@@ -188,15 +189,14 @@ $: {
 					{#each $resultsStore as item, i}
 						<p in:fly={{ duration: 200, delay: i*100, x: 128}}><a href="/notes/{item.counting}">{item.title}</a></p>
 					{/each}
-				</div>
-				{/if}
-			{/if}
-	
+			</div>
+		{/if}
+	{/if}
 </div>
 
 
-
 <style lang="sass">
+
 
 .searcherinput svg
 	&:hover
@@ -353,7 +353,6 @@ $: {
 		padding-right: 16px
 		height: 56px
 
-
 .hiddenheader
 	transform: translateY(-56px)
 
@@ -375,6 +374,11 @@ $: {
 		content: ''
 		background: #10D56C
 		animation: greenstreak 30s ease infinite alternate-reverse
+	@media screen and (max-width: 1023px)
+		flex-direction: row
+		justify-content: space-between
+		align-items: center
+
 
 .botcol
 	display: flex

@@ -68,7 +68,7 @@ h2
 	color: white
 	font-size: 40px
 	@media screen and (max-width: 1023px)
-		font-size: 21px
+		font-size: 32px
 		text-align: center
 		margin-bottom: 16px
 
@@ -79,6 +79,10 @@ h2
 	padding-top: 32px
 	@media screen and (min-width: 1024px)
 		width: 80%
+	@media screen and (max-width: 1023px)
+		width: 100%
+		padding: 0
+		margin-top: 16px
 
 .x00
 	padding: 0
@@ -89,6 +93,9 @@ h2
 		text-transform: uppercase
 		color: #474747
 		padding-top: 8px
+		@media screen and (max-width: 1023px)
+			text-align: center
+	
 
 
 </style>

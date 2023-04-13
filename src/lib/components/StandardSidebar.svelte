@@ -3,7 +3,6 @@
 	import { onMount } from 'svelte'
 	import hljs from 'highlight.js'
 	import '$lib/styles/highlight.css'
-	import { Swipe, SwipeItem } from 'svelte-swipe'
 	import TinyCard from '$lib/components/TinyCard.svelte'
 	import TinyCard2 from '$lib/components/TinyCard.svelte'
 	import TinyCard3 from '$lib/components/TinyCard.svelte'
@@ -12,7 +11,7 @@
 	import TinyCard7 from '$lib/components/TinyCard.svelte'
 	import { get, writable } from 'svelte/store'
 	import supabase from '$lib/utils/supabase'
-	import { allNotes, allCodes, noCodes, allOthers, CodeCSS, CodeJS, CodeHTML, quillNotes, MidjourneyImages, MidjourneyTagged, chatsGPT, onlyStarred, singleNote } from '$lib/utils/supabase'
+	import { allNotes, allCodes, noCodes, allOthers, CodeCSS, CodeJS, CodeHTML, quillNotes, chatsGPT, onlyStarred, singleNote } from '$lib/utils/supabase'
 	import { allDocs, allMandalas } from '$lib/utils/localpulls'
 
 	const searchStore = writable('')
@@ -23,8 +22,6 @@
 	let faux:boolean = false
 	let area:boolean[] = Array(9).fill(false)
 	area[1] = true
-	let imageTag:any = ''
-	let taggedimages:any
 	let openSidebar:boolean = false
 	let title:any
 	let single:any
@@ -35,12 +32,13 @@
 	let cjs:any
 	let chtml:any
 	let docs:any
-	let images:any
 	let quills:any
 	let chats:any
 	let posts:any
 	let nocodas:any
 	let stars:any
+
+
 
 	const searchWord = async() => {
 	loadingStore = true
@@ -103,25 +101,16 @@
 		chtml = await CodeHTML()
 		docs = await allDocs()
 		quills = await quillNotes()
-		images = await MidjourneyImages()
 		posts = await allMandalas()
 		chats = await chatsGPT()
 		nocodas = await noCodes()
-		taggedimages = await MidjourneyTagged(imageTag)
 		single = await singleNote(title)
 	})
 
+
 </script>
 
-<div class="topimagebox" data-lenis-prevent>
-	{#if images && images.length > 0}
-		{#each images as item}
-			<div class="portrait">
-				<img src="https://wganhlzrylmkvvaoalco.supabase.co/storage/v1/object/public/images/batch1/{item.link.slice(90,100)}" alt={item.id}>
-			</div>
-		{/each}
-	{/if}
-</div>
+
 <div class="searcharea">
 	<input type="text" bind:this={searchinput} on:input={(e) => {if(e && e.target) {searchStore.set(e.target.value)}}}>
 	<button on:click={searchWord} on:keydown={toggleFaux} on:click={() => toggleArea(5)}>Find</button>
@@ -223,36 +212,14 @@
 </div>
 
 
-<style lang="sass">
 
-.topimagebox
-	display: flex
-	flex-direction: row
-	height: 264px
-	position: relative
-	white-space: nowrap
-	overflow-x: scroll
-	gap: 8px
-	margin-bottom: 16px
-	
-.portrait
-	display: flex
-	flex-direction: column
-	width: 260px
-	height: 260px
-	flex-shrink: 0
-	border: 1px solid #FFFFFF
-	img
-		object-fit: cover
-		object-position: center center
-		width: 100%
-		height: 100%
+<style lang="sass">
 
 .optionsarea
 	display: flex
 	flex-direction: row
 	column-gap: 16px
-	padding: 4px 8px
+	padding: 8px
 	text-align: center
 	justify-content: space-between
 	align-items: center
@@ -261,7 +228,7 @@
 	margin-bottom: 16px
 	cursor: pointer
 	.option
-		font-size: 12px
+		font-size: 14px
 		color: #676767
 		&:hover
 			color: white
@@ -282,6 +249,7 @@
 		padding-top: 4px
 		padding-bottom: 4px
 		cursor: pointer
+		text-transform: uppercase
 		&:hover
 			border: 1px solid white
 			color: white
@@ -292,6 +260,7 @@
 		background: #171717
 		border: 1px solid #272727
 		border-radius: 2px
+		padding: 8px
 
 .resultsdisplay
 	display: flex

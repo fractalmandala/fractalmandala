@@ -6,6 +6,7 @@
 	import Header from '$lib/components/Header.svelte'
 	import TransitionPage from '$lib/components/TransitionPage.svelte'
 	import StandardSidebar from '$lib/components/StandardSidebar.svelte'
+	import { MidjourneyImages } from '$lib/utils/supabase'
 	import Lenis from '@studio-freight/lenis'
 	import { page } from '$app/stores'
 	import '$lib/styles/global.sass'
@@ -23,11 +24,13 @@
 	let pageurlcut:any
 	let isModalOpen = false
 	let fake = false
+	let images:any
+	let expansionMax:boolean = false
 
 	let showrest:boolean = true
 	let mandalaview:boolean = true
 	let foralign:boolean = false
-	let openSidebar:boolean = false
+
 
 	function toggleModal(){
 		isModalOpen = !isModalOpen
@@ -79,7 +82,8 @@
 
 	$: ({ supabase, session } = data)
 
-	onMount(() => {
+	onMount(async() => {
+		images = await MidjourneyImages()
 		pageurl = $page.url.pathname
 		pageurlcut = pageurl.substr(0,8)
 		const lenis = new Lenis({
@@ -123,13 +127,24 @@
 	<Header>
 	</Header>
 	<TransitionPage>
-			<div class="pagedoublegrid" class:expanded={openSidebar}>
-				<div class="pagesidebar" class:expanded={openSidebar} class:hiddensidebar={isInvisible}>
+			<div class="pagedoublegrid">
+				<div class="pagesidebar" class:hiddensidebar={isInvisible}>
 					<StandardSidebar></StandardSidebar>
 				</div>
 				<div class="pagemainpage">
 					<slot></slot>
 				</div>
+			</div>
+			<div class="galleryarea">
+				{#if images && images.length > 0}
+					<div class="carousel">
+						{#each images as item}
+							<div class="singleimage">
+								<img src="https://wganhlzrylmkvvaoalco.supabase.co/storage/v1/object/public/images/batch1/{item.link.slice(90,100)}" alt={item.id}>
+							</div>
+						{/each}
+						</div>
+				{/if}
 			</div>
 	</TransitionPage>
 	<div class="foot">
@@ -348,33 +363,15 @@
 		grid-template-columns: 1fr
 		grid-template-rows: 64px auto
 		grid-template-areas: "pagesidebar" "pagemainpage"
-		padding-top: 64px
+		padding-top: 0px
 		height: 100%
 		.pagesidebar
-			padding-left: 32px
-			padding-right: 32px
-			padding-top: 4px
-			padding-bottom: 4px
-			overflow-x: hidden
-			position: fixed
-			top: 56px
-			height: 64px
-			width: 100%
-			backdrop-filter: blur(10px)
-			z-index: 999
-			transition: 0.34s ease
-		.pagesidebar.expanded
-			height: 100%
+			display: none
 		.pagemainpage
-			padding: 32px
+			padding: 16px
 			width: 100%
 			height: 100%
 
-.pagedoublegrid.expanded
-	@media screen and (max-width: 1023px)
-		grid-template-columns: 1fr
-		grid-template-rows: auto auto
-		grid-template-areas: "pagesidebar" "pagemainpage"
 
 .pagesidebar
 	display: flex
@@ -386,6 +383,56 @@
 .pagemainpage
 	display: flex
 	flex-direction: column
+
+.galleryarea
+	overflow-x: hidden
+	overflow-y: hidden
+	width: 100%
+	border-radius: 4px
+	margin-top: 32px
+	.carousel
+		display: grid
+		grid-auto-flow: column
+		overflow-x: scroll
+		overflow-y: hidden
+		width: 100%
+		white-space: nowrap
+		gap: 16px 16px
+		.singleimage
+			width: 200px
+			flex-shrink: 0
+	.carousel::-webkit-scrollbar
+		height: 0px
+	@media screen and (min-width: 1024px)
+		padding: 32px
+		.carousel
+			grid-template-columns: 1fr 1fr 1fr 1fr
+			grid-template-rows: 1fr 1fr
+			grid-template-areas: ". . . ." ". . . ."
+	@media screen and (max-width: 1023px)
+		width: 100%
+		overflow-x: hidden
+		padding-left: 32px
+		padding-right: 32px
+		padding-bottom: 32px
+		.carousel
+			grid-template-columns: 1fr 1fr 1fr
+			grid-template-rows: 1fr 1fr
+			grid-template-areas: ". . ." ". . ."
+			overflow-x: scroll
+			white-space: nowrap
+			.singleimage
+				width: 88px
+				height: 88px
+
+.singleimage
+	display: flex
+	flex-direction: column
+	height: 200px
+	img
+		object-fit: cover
+		height: 100%
+		width: 100%
 
 
 </style>
