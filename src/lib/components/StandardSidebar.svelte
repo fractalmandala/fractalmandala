@@ -1,5 +1,5 @@
 <script lang="ts">
-
+	//@ts-nocheck
 	import { onMount } from 'svelte'
 	import hljs from 'highlight.js'
 	import '$lib/styles/highlight.css'
