@@ -1,6 +1,13 @@
 <script lang="ts">
 
+	import { onMount } from 'svelte'
+	import hljs from 'highlight.js'
+	import '$lib/styles/highlight.css'
 	export let data
+
+	onMount(async() => {
+		hljs.highlightAll()
+	})
 
 </script>
 
@@ -24,20 +31,18 @@
 
 .mandpand
 	box-sizing: border-box
-	padding-bottom: 64px
+	padding-bottom: 0px
 	@media screen and (min-width: 1024px)
-		padding-left: 64px
-		padding-right: 64px !important
-
-.blogpadding
-	@media screen and (min-width: 1024px)
-		padding-left: 80px
-		padding-right: 120px
+		.blogpadding
+			padding-right: 240px
 
 h1
 	border-bottom: 1px solid #272727
 	padding-bottom: 16px
 	color: white
 	font-size: 48px
+	text-align: left
+	@media screen and (max-width: 1023px)
+		font-size: 36px
 
 </style>

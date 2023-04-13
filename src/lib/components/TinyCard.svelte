@@ -10,7 +10,7 @@
 
 
 <div class="tinycard" in:scale={{delay: 50*i}} out:scale={{ delay: 10*i}}>
-	<a href={linkvar} target="_self">
+	<a href={linkvar}>
 			<slot name="category"></slot>
 			<slot name="title"></slot>
 	<div class="moremeta">

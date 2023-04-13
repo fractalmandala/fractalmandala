@@ -192,32 +192,11 @@
 
 <svelte:window bind:innerWidth={viewport}/>
 
-<Header>
-	<div class="afilter" on:click={() => tagChosen('sveltecode')} on:keydown={fakefaux} in:fly={{ delay: 40, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter1}>Sveltecode</div>
-	<div class="afilter" on:click={() => tagChosen('scroll')} on:keydown={fakefaux} in:fly={{ delay: 60, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter2}>scroll</div>
-	<div class="afilter" on:click={() => tagChosen('supabase')} on:keydown={fakefaux} in:fly={{ delay: 80, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter3}>supabase</div>
-	<div class="afilter" on:click={() => tagChosen('setup')} on:keydown={fakefaux} in:fly={{ delay: 100, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter4}>setups</div>
-	<div class="afilter" on:click={() => tagChosen('animation')} on:keydown={fakefaux} in:fly={{ delay: 120, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter5}>animations</div>
-	<div class="afilter" on:click={() => tagChosen('gpt')} on:keydown={fakefaux} in:fly={{ delay: 140, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter6}>gpt</div>
-	<div class="afilter" on:click={() => tagChosen('fetch')} on:keydown={fakefaux} in:fly={{ delay: 160, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter7}>fetch</div>
-	<div class="svgfilter" on:click={() => tagChosen('star')} on:keydown={fakefaux} in:fly={{ delay: 20, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}}>
-		<svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<path d="M10.5508 16.4301L16.7308 20.3564L15.0908 12.9564L20.5508 7.9775L13.3608 7.33539L10.5508 0.356445L7.74078 7.33539L0.550781 7.9775L6.01078 12.9564L4.37078 20.3564L10.5508 16.4301Z" fill="#10D56C"/>
-		</svg>
-	</div>
-	<div class="afilter" on:click={() => tagChosen('error')} on:keydown={fakefaux} in:fly={{ delay: 180, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter8}>errors</div>
-	<div class="afilter" on:click={() => tagChosen('template')} on:keydown={fakefaux} in:fly={{ delay: 200, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter9}>templates</div>
-	<div class="afilter" on:click={() => tagChosen('auth')} on:keydown={fakefaux} in:fly={{ delay: 240, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter11}>Auth</div>
-	<div class="afilter" on:click={() => tagChosen('typescript')} on:keydown={fakefaux} in:fly={{ delay: 300, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter14}>Typescript</div>
-	<div class="afilter" on:click={() => tagChosen('saved')} on:keydown={fakefaux} in:fly={{ delay: 320, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter15}>Saved</div>
-	<div class="afilter" on:click={() => tagChosen('conllu')} on:keydown={fakefaux} in:fly={{ delay: 340, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter16}>conllu</div>
-	<div class="afilter" on:click={() => tagChosen('typography')} on:keydown={fakefaux} in:fly={{ delay: 400, x: -128, y: 0, duration: 200 }} out:fly={{ delay: 0, x: -128, y: 0, duration: 200}} class:forselectedfilter={forfilter19}>typography</div>
-</Header>
 
 <div class="x22">
 	{#if showposts && showposts.length > 0}
 		{#each showposts as item, i}
-			<TinyCard i={i}>
+			<TinyCard i={i} linkvar={item.path}>
 				<small class="tinycardcat" slot="category">{item.meta.type}</small>
 				<p slot="title">
 					<a href="{item.path}" target="_self">
@@ -230,7 +209,7 @@
 	{/if}
 	{#if tableposts && tableposts.length > 0}
 		{#each tableposts as item, i}
-			<TinyCard i={i}>
+			<TinyCard i={i} linkvar="/notes/{item.counting}">
 				<small class="tinycardcat" slot="category">{item.type}</small>
 				<p slot="title">
 					<a href="/notes/{item.counting}" target="_self">
@@ -249,40 +228,6 @@
 </div>
 
 <style lang="sass">
-
-
-
-.afilter
-	text-transform: uppercase
-	padding: 4px
-	cursor: pointer
-	font-size: 12px
-	display: flex
-	flex-direction: row
-	align-items: center
-	color: #474747
-	&:hover
-		background: #10D56C
-		color: white
-	@media screen and (max-width: 1023px)
-		font-size: 20px
-		text-align: center
-		justify-content: center
-		color: white
-
-.svgfilter
-	padding: 4px 16px
-	cursor: pointer
-	transform-origin: center center
-	&:hover
-		transform: scale(1.2)
-		svg path
-			fill: white
-
-.afilter.forselectedfilter
-	background: #171717
-	border: 1px solid #272727
-
 
 .x22
 	display: grid

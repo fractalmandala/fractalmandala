@@ -2,12 +2,12 @@
 
 	import { onMount } from 'svelte'
 	import Header from '$lib/components/Header.svelte'
+	import TransitionPage from '$lib/components/TransitionPage.svelte'
+	import StandardSidebar from '$lib/components/StandardSidebar.svelte'
 	import Lenis from '@studio-freight/lenis'
 	import { page } from '$app/stores'
 	import '$lib/styles/global.sass'
 
-
-	let light:boolean = false
 	let y:number
 	let mobileView:boolean = false
 	let mobileViewEnable:boolean = true
@@ -21,6 +21,7 @@
 	let showrest:boolean = true
 	let mandalaview:boolean = true
 	let foralign:boolean = false
+	let openSidebar:boolean = false
 
 	$: if ( pageurlcut === '/mandala') {
 		mandalaview = false
@@ -29,7 +30,6 @@
 		mandalaview = true
 		foralign = false
 	}
-
 
 	$: if ( screenWidth <= 1023 ) {
 		mobileView = true
@@ -57,10 +57,10 @@
 		pageurl = $page.url.pathname
 		pageurlcut = pageurl.substr(0,8)
 		const lenis = new Lenis({
-			duration: 1.2,
+			duration: 0.8,
 			orientation: 'vertical',
 			gestureOrientation: 'vertical',
-			wheelMultiplier: 0.7,
+			wheelMultiplier: 0.5,
 			smoothWheel: true,
 			touchMultiplier: 1,
 			infinite: false,
@@ -87,9 +87,16 @@
 <div class="themer">
 	<Header>
 	</Header>
-	<div class="bodybody" style="min-height: 100vh">
-		<slot></slot>
-	</div>
+	<TransitionPage>
+			<div class="pagedoublegrid" class:expanded={openSidebar}>
+				<div class="pagesidebar" class:expanded={openSidebar}>
+					<StandardSidebar></StandardSidebar>
+				</div>
+				<div class="pagemainpage">
+					<slot></slot>
+				</div>
+			</div>
+	</TransitionPage>
 	<div class="foot">
 		<div class="animatedicon">
 			<a href="/play" target="_self">
@@ -119,6 +126,7 @@
 		</div>
 	</div>
 </div>
+
 
 
 <style lang="sass">
@@ -234,9 +242,6 @@
 			fill: #10D56C
 
 
-.bodybody
-	padding-top: 120px
-
 .themer
 	box-sizing: border-box
 	width: 100vw
@@ -245,5 +250,66 @@
 	display: flex
 	flex-direction: column
 	height: 100%
+	background-color: hsla(0,0%,4%,1)
+	animation: radiation 30s ease infinite
+
+@keyframes radiation
+	0%
+		background-image: radial-gradient(at 100% 100%, hsla(143,89%,21%,0.3) 0px, transparent 50%), radial-gradient(at 80% 0%, hsla(180,2%,4%,0.1) 0px, transparent 5%), radial-gradient(at 82% 73%, hsla(206,89%,47%,0.1) 0px, transparent 50%), radial-gradient(at 31% 100%, hsla(306,89%,28%,0.1) 0px, transparent 50%)
+	50%
+		background-image: radial-gradient(at 100% 100%, hsla(143,89%,21%,0.6) 0px, transparent 50%), radial-gradient(at 80% 0%, hsla(180,2%,4%,0.1) 0px, transparent 5%), radial-gradient(at 82% 73%, hsla(206,89%,47%,0.1) 0px, transparent 50%), radial-gradient(at 31% 100%, hsla(306,89%,28%,0.1) 0px, transparent 50%)
+	100%
+		background-image: radial-gradient(at 100% 100%, hsla(143,89%,21%,0.3) 0px, transparent 50%), radial-gradient(at 80% 0%, hsla(180,2%,4%,0.1) 0px, transparent 5%), radial-gradient(at 82% 73%, hsla(206,89%,47%,0.1) 0px, transparent 50%), radial-gradient(at 31% 100%, hsla(306,89%,28%,0.1) 0px, transparent 50%)
+
+.pagedoublegrid
+	display: grid
+	grid-auto-flow: row
+	min-height: calc(100vh - 120px)
+	.pagesidebar
+		grid-area: pagesidebar
+	.pagemainpage
+		grid-area: pagemainpage
+	@media screen and (min-width: 1024px)
+		grid-template-columns: 320px 1fr
+		grid-template-areas: "pagesidebar pagemainpage"
+		grid-template-rows: auto
+		gap: 0 48px
+		padding-top: 120px
+		.pagesidebar
+			padding-left: 40px
+			padding-right: 16px
+			padding-top: 32px
+			padding-bottom: 32px
+		.pagemainpage
+			padding: 32px 32px 32px 32px
+			width: calc(100vw - 360px)
+	@media screen and (max-width: 1023px)
+		grid-template-columns: 1fr
+		grid-template-rows: 64px auto
+		grid-template-areas: "pagesidebar" "pagemainpage"
+		padding-top: 120px
+		height: 100%
+		.pagesidebar
+			padding-left: 32px
+			padding-right: 32px
+			padding-top: 4px
+			padding-bottom: 4px
+			overflow-x: hidden
+		.pagesidebar.expanded
+			height: 100%
+		.pagemainpage
+			padding: 32px
+			width: 100%
+
+.pagedoublegrid.expanded
+	@media screen and (max-width: 1023px)
+		grid-template-columns: 1fr
+		grid-template-rows: auto auto
+		grid-template-areas: "pagesidebar" "pagemainpage"
+
+.pagesidebar
+	display: flex
+	flex-direction: column
+
 
 </style>

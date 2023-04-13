@@ -101,11 +101,10 @@
 	grid-template-rows: auto
 	min-height: 100vh
 	width: 100%
+	padding: 0
 	@media screen and (min-width: 1024px)
-		grid-template-columns: 240px 1fr
-		grid-template-areas: "notes editor"
-		padding-left: 20vw
-		padding-right: 20vw
+		grid-template-columns: 1fr 240px
+		grid-template-areas: "editor notes"
 		gap: 0 40px
 		.notes
 			grid-area: notes

@@ -3,25 +3,24 @@
 	import { onMount } from 'svelte'
 	import hljs from 'highlight.js'
 	import '$lib/styles/highlight.css'
+	import supabase from '$lib/utils/supabase'
 	let lang:any
-
+	let editingOn:boolean = false
 	let fake:boolean = false
 	let codeContents:any
-
 	let theid:any
-
-
 	let titular:any
-
-
 	let nextid:any
 	let previd:any
-
+	let newTitle:any
+	let selectedField:any
 
 	function fauxfake(){
 		fake = !fake
 	}
-
+	function openEditing(){
+		editingOn = !editingOn
+	}
 	function copyToClipboard(){
 		const range = document.createRange();
 		range.selectNodeContents(codeContents)
@@ -41,6 +40,14 @@
  		} else {
     	alert('Failed to copy code snippet');
   	}
+	}
+
+	async function editDocument(){
+		const { error } = await supabase
+		.from('amrit-notes')
+		.update({selectedField: newTitle})
+		.eq('id',theid)
+		if (error) throw new Error(error.message)
 	}
 
 	export let data
@@ -63,6 +70,16 @@
 
 
 <div class="pagecontainer x00">
+	{#if editingOn}
+		<h5>Select Field to Edit:</h5>
+			<p>Title</p>
+			<p>Type</p>
+			<p>Tags</p>
+			<p>Note</p>
+			<p>Codesnippet</p>
+		<h5 on:click={openEditing} on:keydown={fauxfake}>EXIT</h5>
+	{:else}
+	<div style="text-align: right; padding-right: 120px; color: #fe4a49" on:click={openEditing} on:keydown={fauxfake}>EDIT</div>
 	<div class="boxr">
 		<div class="boxr nav">
 			<a href="/notes/{previd}" target="_self">
@@ -113,6 +130,7 @@
 			</div>
 		{/if}
 	</div>
+	{/if}
 </div>
 
 <style lang="sass">

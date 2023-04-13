@@ -6,13 +6,7 @@
 	import '$lib/styles/highlight.css'	
 	import type { ChatCompletionRequestMessage } from 'openai'
 	import { SSE } from 'sse.js'
-	import TinyCard from '$lib/components/TinyCard.svelte'
-	import TinyCard2 from '$lib/components/TinyCard.svelte'
-	import TinyCard3 from '$lib/components/TinyCard.svelte'
-	import TinyCard4 from '$lib/components/TinyCard.svelte'
-	import TinyCard5 from '$lib/components/TinyCard.svelte'
 	import BigCard from '$lib/components/BigCard.svelte'
-	import TinyCard7 from '$lib/components/TinyCard.svelte'
 	import { get, writable } from 'svelte/store'
 	import supabase from '$lib/utils/supabase'
 	import { allNotes, allCodes, noCodes, allOthers, CodeCSS, CodeJS, CodeHTML, quillNotes, MidjourneyImages, MidjourneyTagged, chatsGPT, onlyStarred, singleNote } from '$lib/utils/supabase'
@@ -56,21 +50,10 @@
 	let postsview:boolean = false
 	let openSidebar:boolean = false
 
-	function toggleOpenSidebar(){
-		openSidebar = !openSidebar
-	}
-
 	function showGallery(){
 		galleryView = !galleryView
 		if ( postsview === true) {
 			postsview = false
-		}
-	}
-
-	function showPosts(){
-		postsview = !postsview
-		if ( galleryView === true ) {
-			galleryView = false
 		}
 	}
 
@@ -169,32 +152,6 @@
 			})()
 		}
 
-	async function newID(newTitle:any){
-		title = newTitle
-		single = await singleNote(title)
-	} 
-
-	function toggleArea(index:number) {
-		area[index] = !area[index]
-		for ( let i = 0; i < area.length; i ++ ) {
-			if ( i !== index && area[i] === true ) {
-				area[i] = false
-			}
-		}
-		if ( openSidebar === false ) {
-			openSidebar = true
-		}
-	}
-
-
-	function toggleLightbox(index:number){
-		lightbox[index] = !lightbox[index]
-		for ( let i = 0; i < lightbox.length; i ++ ) {
-			if ( i !== index && lightbox[i] === true ) {
-				lightbox[i] = false
-			}
-		}
-	}
 
 	function toggleFaux(){
 		faux = !faux
@@ -227,182 +184,77 @@
 
 
 
-<div class="pagedoublegrid" class:expanded={openSidebar}>
-	<div class="pagesidebar" class:expanded={openSidebar}>
-		<div class="searcharea">
-			<input type="text" bind:this={searchinput} on:input={(e) => {if(e && e.target) {searchStore.set(e.target.value)}}}>
-			<button on:click={searchWord} on:keydown={toggleFaux} on:click={() => toggleArea(5)}>Find</button>
-		</div>
-		<div class="optionsarea">
-			<div class="option" on:click={() => toggleArea(1)} on:keydown={toggleFaux}>Star</div>			
-			<div class="option" on:click={() => toggleArea(6)} on:keydown={toggleFaux}>Code</div>
-			<div class="option" on:click={() => toggleArea(2)} on:keydown={toggleFaux}>Docs</div>
-			<div class="option" on:click={() => toggleArea(3)} on:keydown={toggleFaux}>Chats</div>
-			<div class="option" on:click={() => toggleArea(4)} on:keydown={toggleFaux}>Other</div>
-		</div>
-		<div class="resultsdisplay">
-			{#if area[1]}
-				{#if stars && stars.length > 0}
-					{#each stars as item, i}
-						<TinyCard7 i={i} linkvar="/notes/{item.counting}">
-							<p slot="title">
-								{item.title}
-							</p>
-							<small slot="lang" style="color: #10D56C; text-transform: uppercase">{item.lang}</small>
-							<small slot="tags" style="color: #575757">{item.tags}</small>
-						</TinyCard7>
-					{/each}
-				{/if}
-			{/if}
-			{#if area[2]}
-				{#if docs && docs.length > 0}
-					{#each docs as item, i}
-						<TinyCard2 i={i} linkvar="{item.path}">
-							<p slot="title">{item.meta.title}</p>
-							<small slot="lang" style="color: #10D56C; text-transform: uppercase">{item.meta.type}</small>
-							<small slot="tags" style="color: #575757">{item.meta.tags}</small>
-						</TinyCard2>
-					{/each}
-				{/if}
-			{/if}
-			{#if area[3]}
-				{#if chats && chats.length > 0}
-					{#each chats as item, i}
-						<TinyCard3 i={i} linkvar="/play/{item.id}">
-							<p slot="title">{item.prompt.slice(0,50)}</p>
-						</TinyCard3>
-					{/each}
-				{/if}
-			{/if}
-			{#if area[4]}
-				{#if nocodas && nocodas.length > 0}
-					{#each nocodas as item, i}
-						<TinyCard4 i={i} linkvar="/notes/{item.counting}">
-							<p slot="title">
-							<a href="/notes/{item.counting}" target="_self">
-								{item.title}
-							</a>
-							</p>
-							<small slot="lang" style="color: #10D56C; text-transform: uppercase">{item.type}</small>
-							<small slot="tags" style="color: #575757">{item.tags}</small>
-						</TinyCard4>
-					{/each}
-				{/if}
-			{/if}
-			{#if area[5]}
-				{#if loadingStore}
-				<p>Loading...</p>
-				{/if}
-				{#if showResults}
-					{#if $resultsStore.length>0}
-						{#each $resultsStore as item, i}
-							<TinyCard5 i={i} linkvar="/notes/{item.counting}">
-								<p slot="title">{item.title}</p>
-								<small slot="lang" style="color: #10D56C; text-transform: uppercase">{item.type}</small>
-								<small slot="tags" style="color: #575757">{item.tags}</small>								
-							</TinyCard5>
-						{/each}
-					{/if}
-				{/if}
-			{/if}
-			{#if area[6]}
-				{#if codes && codes.length > 0}
-					{#each codes as item, i}
-						<TinyCard i={i} linkvar="/notes/{item.counting}">
-							<p slot="title">
-							<a href="/notes/{item.counting}" target="_self">
-								{item.title}
-							</a>
-							</p>
-							<small slot="lang" style="color: #10D56C; text-transform: uppercase">{item.lang}</small>
-							<small slot="tags" style="color: #575757">{item.tags}</small>
-						</TinyCard>
-					{/each}
-				{/if}
-			{/if}
-		</div>
-	</div>
-	<div class="pagemainpage">
-		<div class="introarea">
-		<p>
-			A simple blog to document a non-programmer bootstrapping himself into web-dev. <span class="special">My stack:</span>
-		</p>
-		<p>
-			- backend at <a href="https://supabase.com/" target="_blank" rel="noreferrer">Supabase</a><br>
-			- framework: <a href="https://kit.svelte.dev/" target="_blank" rel="noreferrer">Sveltekit</a><br>
-			- deployed at <a href="https://vercel.com/home" target="_blank" rel="noreferrer">Vercel</a><br>
-			- also mounted:
-		</p>
-				<li><a href="https://lenis.studiofreight.com/" target="_blank" rel="noreferrer">Lenis</a></li>
-				<li><a href="https://greensock.com/gsap/" target="_blank" rel="noreferrer">GSAP</a></li>
-				<li><a href="https://mdsvex.pngwn.io/" target="_blank" rel="noreferrer">MDSvex</a></li>
-				<li><a href="https://github.com/SharifClick/svelte-swipe" target="_blank" rel="noreferrer">Svelte Swipe</a></li>
-				<li><a href="https://github.com/DaveKeehl/svelte-reveal" target="_blank" rel="noreferrer">Svelte Reveal</a></li>
-				<li><a href="https://sveltelegos.com/" target="_blank" rel="noreferrer">Svelte Legos</a></li>
-				<li><a href="https://prismjs.com/" target="_blank" rel="noreferrer">Prism JS</a></li>
-		<p>
-			On the left, browse/search through an unorganized assortment of code snippets, setup guides and troubleshooting pointers. Play with broGPT, my AI pal, below.
-		</p>
-		</div>
-			<div class="inviewarea">
-				<ChatMessage type="assistant" message="Namaste. How may I help you?" />	
-					{#each chatMessages as message}
-						<ChatMessage type={message.role} message={message.content} />
-					{/each}
-					{#if answer}
-						<ChatMessage type="assistant" message={answer}/>
-					{/if}
-					{#if loading}
-						<ChatMessage type="assistant" message="Loading.." />
-					{/if}
-					<div class="boxc ofform">
-						<form on:submit|preventDefault>
-							<input type="text" bind:value={query}
-								on:keydown={handleKeyDownInput}
-								/>
-							<button class="glowing" type="submit" on:click={() => handleSubmit()} on:keydown={handleKeyDownInput}> Send </button>
-						</form>
-					</div>
-			</div>
-			{#if galleryView}
-				<div class="boxr" style="gap: 24px; margin-top: 32px">
-					<button class="glowing" on:click={showGallery} on:keydown={toggleFaux}>Close Gallery</button>
-					<button class="glowing" on:click={showPosts} on:keydown={toggleFaux}>View Posts</button>
-				</div>
-				<div class="galleryarea">
-				{#if images && images.length > 0}
-					<div class="carousel">
-					{#each images as item}
-						<div class="singleimage">
-							<img src="https://wganhlzrylmkvvaoalco.supabase.co/storage/v1/object/public/images/batch1/{item.link.slice(90,100)}" alt={item.id}>
-						</div>
-					{/each}
-					</div>
-				{/if}
-				</div>
-				{:else if postsview}
-				<div class="boxr" style="gap: 24px; margin-top: 32px">
-					<button class="glowing" on:click={showGallery} on:keydown={toggleFaux}>Close Gallery</button>
-					<button class="glowing" on:click={showPosts} on:keydown={toggleFaux}>Close Posts</button>
-				</div>
-				<div class="postsarea">
-				{#if posts && posts.length > 0}
-					{#each posts as item}
-						<BigCard linkvar={item.path}>
-							<h5 slot="title">{item.meta.title}</h5>
-							<p slot="tags">{item.meta.type} - {item.meta.tags}</p>
-						</BigCard>
-					{/each}
-				{/if}
-				</div>					
-				{:else}	
-				<div class="boxr" style="gap: 24px; margin-top: 32px">
-					<button class="glowing" on:click={showGallery} on:keydown={toggleFaux}>View Gallery</button>
-					<button class="glowing" on:click={showPosts} on:keydown={toggleFaux}>View Posts</button>
-				</div>
-			{/if}
-	</div>
+<div class="introarea">
+	<p>
+		A simple blog to document a non-programmer bootstrapping himself into web-dev. <span class="special">My stack:</span>
+	</p>
+	<p>
+		- backend at <a href="https://supabase.com/" target="_blank" rel="noreferrer">Supabase</a><br>
+		- framework: <a href="https://kit.svelte.dev/" target="_blank" rel="noreferrer">Sveltekit</a><br>
+		- deployed at <a href="https://vercel.com/home" target="_blank" rel="noreferrer">Vercel</a><br>
+		- also mounted:
+	</p>
+	<li><a href="https://lenis.studiofreight.com/" target="_blank" rel="noreferrer">Lenis</a></li>
+	<li><a href="https://greensock.com/gsap/" target="_blank" rel="noreferrer">GSAP</a></li>
+	<li><a href="https://mdsvex.pngwn.io/" target="_blank" rel="noreferrer">MDSvex</a></li>
+	<li><a href="https://github.com/SharifClick/svelte-swipe" target="_blank" rel="noreferrer">Svelte Swipe</a></li>
+	<li><a href="https://github.com/DaveKeehl/svelte-reveal" target="_blank" rel="noreferrer">Svelte Reveal</a></li>
+	<li><a href="https://sveltelegos.com/" target="_blank" rel="noreferrer">Svelte Legos</a></li>
+	<li><a href="https://prismjs.com/" target="_blank" rel="noreferrer">Prism JS</a></li>
+	<p>
+		On the left, browse/search through an unorganized assortment of code snippets, setup guides and troubleshooting pointers. Play with broGPT, my AI pal, below.
+	</p>
 </div>
+<div class="postsarea">
+	{#if posts && posts.length > 0}
+		{#each posts as item}
+			<BigCard linkvar={item.path}>
+				<h5 slot="title">{item.meta.title}</h5>
+				<p slot="tags"><span style="text-transform: uppercase; color: #10C56D">{item.meta.type}</span> - {item.meta.tags}</p>
+			</BigCard>
+		{/each}
+	{/if}
+</div>	
+<div class="inviewarea">
+	<ChatMessage type="assistant" message="Namaste. How may I help you?" />	
+		{#each chatMessages as message}
+			<ChatMessage type={message.role} message={message.content} />
+		{/each}
+		{#if answer}
+			<ChatMessage type="assistant" message={answer}/>
+		{/if}
+		{#if loading}
+			<ChatMessage type="assistant" message="Loading.." />
+		{/if}
+		<div class="boxc ofform">
+			<form on:submit|preventDefault>
+				<input type="text" bind:value={query}
+					on:keydown={handleKeyDownInput}
+					/>
+				<button class="glowing" type="submit" on:click={() => handleSubmit()} on:keydown={handleKeyDownInput}> Send </button>
+			</form>
+		</div>
+</div>
+{#if galleryView}
+	<div class="boxr" style="gap: 24px; margin-top: 32px">
+		<button class="glowing" on:click={showGallery} on:keydown={toggleFaux}>Close Gallery</button>
+	</div>
+	<div class="galleryarea">
+	{#if images && images.length > 0}
+		<div class="carousel">
+		{#each images as item}
+			<div class="singleimage">
+				<img src="https://wganhlzrylmkvvaoalco.supabase.co/storage/v1/object/public/images/batch1/{item.link.slice(90,100)}" alt={item.id}>
+			</div>
+		{/each}
+		</div>
+	{/if}
+	</div>			
+	{:else}	
+	<div class="boxr" style="gap: 24px; margin-top: 32px">
+		<button class="glowing" on:click={showGallery} on:keydown={toggleFaux}>View Gallery</button>
+	</div>
+{/if}
 
 <style lang="sass">
 
@@ -443,123 +295,29 @@
 		list-style-type: none
 		padding: 0
 		margin-left: 32px
+	@media screen and (min-width: 1024px)
+		padding-right: 240px
+		padding-bottom: 24px
+		border-bottom: 1px solid #272727
 	@media screen and (max-width: 1023px)
 		padding: 16px
 		margin-left: 0
 		margin-right: 0
+		padding: 0 0 24px 0
+		width: 100%
+		border-bottom: 1px solid #272727
 		p
 			font-size: 14px
 
-.pagedoublegrid
-	display: grid
-	grid-auto-flow: row
-	.pagesidebar
-		grid-area: pagesidebar
-	.pagemainpage
-		grid-area: pagemainpage
+.inviewarea
 	@media screen and (min-width: 1024px)
-		grid-template-columns: 320px 1fr
-		grid-template-areas: "pagesidebar pagemainpage"
-		grid-template-rows: auto
-		gap: 0 48px
-		.pagesidebar
-			padding-left: 40px
-			padding-right: 16px
-			padding-top: 32px
-			padding-bottom: 32px
-		.pagemainpage
-			padding: 32px 32px 32px 32px
-			width: calc(100vw - 360px)
-			.inviewarea
-				padding-right: 240px
-				padding-bottom: 48px
-				padding-top: 24px
-				border-bottom: 1px solid #272727
-			.introarea
-				padding-right: 240px
-				padding-bottom: 24px
-				border-bottom: 1px solid #272727
+		padding-right: 240px
+		padding-bottom: 48px
+		padding-top: 24px
 	@media screen and (max-width: 1023px)
-		grid-template-columns: 1fr
-		grid-template-rows: 64px auto
-		grid-template-areas: "pagesidebar" "pagemainpage"
-		.pagesidebar
-			padding-left: 32px
-			padding-right: 32px
-			padding-top: 4px
-			padding-bottom: 4px
-			overflow-x: hidden
-		.pagesidebar.expanded
-			height: 100%
-		.pagemainpage
-			padding: 32px
-			width: 100%
-			.inviewarea, .introarea
-				padding: 0 0 24px 0
-				width: 100%
-				border-bottom: 1px solid #272727
-
-.pagedoublegrid.expanded
-	@media screen and (max-width: 1023px)
-		grid-template-columns: 1fr
-		grid-template-rows: auto auto
-		grid-template-areas: "pagesidebar" "pagemainpage"
-
-
-
-.pagesidebar
-	display: flex
-	flex-direction: column
-
-.optionsarea
-	display: flex
-	flex-direction: row
-	column-gap: 16px
-	padding: 4px 8px
-	text-align: center
-	justify-content: space-between
-	align-items: center
-	background: #171717
-	border: 1px solid #272727
-	margin-bottom: 16px
-	cursor: pointer
-	.option
-		font-size: 12px
-		color: #676767
-		&:hover
-			color: white
-
-
-.searcharea
-	display: flex
-	flex-direction: row
-	gap: 8px
-	margin-bottom: 8px
-	button
-		width: calc(25% - 8px)
-		background: #171717
-		border: 1px solid #272727
-		border-radius: 2px
-		color: #676767
-		font-size: 12px
-		padding-top: 4px
-		padding-bottom: 4px
-		cursor: pointer
-		&:hover
-			border: 1px solid white
-			color: white
-	input
-		width: 75%
-		outline: none
-		color: white
-		background: #171717
-		border: 1px solid #272727
-		border-radius: 2px
-
-.resultsdisplay
-	display: flex
-	flex-direction: column
-	row-gap: 16px
+		padding: 0 0 24px 0
+		width: 100%
+		border-bottom: 1px solid #272727
 	
 .ofform
 	width: 100%
@@ -635,9 +393,13 @@
 		grid-template-columns: 1fr 1fr 1fr
 		grid-template-areas: ". . ."
 		gap: 16px 16px
+		height: 160px
+		padding-right: 120px
 	@media screen and (max-width: 1023px)
 		grid-template-columns: 1fr 1fr
 		grid-template-areas: ". ."
 		gap: 16px 16px
+		padding-bottom: 32px
+		height: 320px
 
 </style>

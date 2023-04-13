@@ -5,7 +5,7 @@ export let linkvar:any
 </script>
 
 <div class="bigcard">
-	<a href={linkvar} target="_self">
+	<a href={linkvar}>
 	<slot name="title"></slot>
 	<slot name="tags"></slot>
 	</a>
@@ -25,6 +25,7 @@ export let linkvar:any
 	text-align: center
 	border-radius: 4px
 	transition: all 0.7s cubic-bezier(0.430, 0.580, 0.000, 1.140)
+	cursor: pointer
 	&::before
 		position: absolute
 		top: 0
@@ -43,7 +44,7 @@ export let linkvar:any
 		animation: rainbow 60s ease infinite
 	&::after
 		position: absolute
-		background: rgba(0,0,0,0)
+		background: rgba(0,0,0,0.8)
 		backdrop-filter: blur(10px)
 		content: ''
 		top: 0
@@ -56,7 +57,7 @@ export let linkvar:any
 	&:hover
 		border-radius: 0
 		backdrop-filter: 0
-		height: 220px
+		height: 144px
 		&::before
 			background: linear-gradient(89deg, rgba(16,213,108,0.5), rgba(40,170,53,0.2))
 			width: 100%
@@ -64,10 +65,10 @@ export let linkvar:any
 			background-size: 400% 100%
 			border-radius: 0
 		&::after
-			background: rgba(0,0,0,0.3)
+			background: rgba(0,0,0,1)
 			border-radius: 0
 	@media screen and (min-width: 1024px)
-		height: 200px
+		height: 120px
 		padding: 24px
 	@media screen and (max-width: 1023px)
 		height: 120px
