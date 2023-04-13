@@ -1,6 +1,9 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte' 
+	import { Auth } from '@supabase/auth-ui-svelte'
+	import { ThemeSupa } from '@supabase/auth-ui-shared'
+	import type { PageData } from './$types'
 	import { toast } from 'svoast'
 	import hljs from 'highlight.js'
 	import '$lib/styles/highlight.css'
@@ -25,7 +28,7 @@
 	let codesnippet:any
 	let area:boolean[] = Array(9).fill(false)
 	area[1] = true
-	let url:any
+	let urls:any
 	let fake:boolean = false
 
 	function fauxfake(){
@@ -51,7 +54,7 @@
 
 	onMount(async() => {
 		hljs.highlightAll()
-		url = $page.url.pathname
+		urls = $page.url.pathname
 		const { default: Quill } = await import('quill')
 		quill = new Quill(editor, {
 			modules: {
@@ -63,6 +66,7 @@
       noteContent = quill.root.innerHTML;
     });
 	})
+
 
 </script>
 
@@ -99,13 +103,13 @@
 	display: grid
 	grid-auto-flow: row
 	grid-template-rows: auto
-	min-height: 100vh
 	width: 100%
 	padding: 0
 	@media screen and (min-width: 1024px)
 		grid-template-columns: 1fr 240px
 		grid-template-areas: "editor notes"
 		gap: 0 40px
+		min-height: calc(100vh - 160px)
 		.notes
 			grid-area: notes
 		.editor-wrapper

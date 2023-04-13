@@ -1,9 +1,8 @@
 <script>
   import { page } from '$app/stores';
-	import Header from '$lib/components/Header.svelte'
 </script>
 
-<Header></Header>
+
 <div class="boxc">
 	<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdadldszvZBZvPN_41ObseVSCfGqJaa2ig2w&usqp=CAU" alt="error"/>
 	<h1>oops! no page here.</h1>
