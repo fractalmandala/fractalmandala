@@ -8,6 +8,7 @@
 	import '$lib/styles/highlight.css'
 	import type { ChatCompletionRequestMessage } from 'openai'
 	import { TagsFiltered } from '$lib/utils/supabase'
+	import { allMandalas } from '$lib/utils/localpulls'
 	import { SSE } from 'sse.js'
 	import Postal from '$lib/components/Postal.svelte'
 	import BigCard from '$lib/components/BigCard.svelte'
@@ -24,6 +25,7 @@
 	let codas:any
 	let fake = false
 	let gridalign = false
+	let posts:any
 	let expand:boolean[] = Array(20).fill(false)
 	let area:boolean[] = Array(9).fill(false)
 	area[1] = true
@@ -172,6 +174,7 @@
 	onMount(async() => {
 		hljs.highlightAll()	
 		codas = await TagsFiltered(tags)
+		posts = await allMandalas()
 		
 	})
 </script>
@@ -226,6 +229,22 @@
 				<button class="glowing" type="submit" on:click={() => handleSubmit()} on:keydown={handleKeyDownInput}> Send </button>
 			</form>
 		</div>
+</div>
+
+<div class="newgrid buffer wider bufferYb x00">
+	{#if posts && posts.length > 0}
+		{#each posts as item, i}
+			<div class="postal" on:click={() => togglePostItem(i)} on:keydown={fauxfake} class:opened={expand[i]} in:scale={{delay: 50*i, easing: backOut }} out:scale={{ delay: 10*i, easing: backIn }}>
+				<small>{item.meta.type}</small>
+				<h5>
+					<a href={item.path}>
+						{item.meta.title}
+					</a>
+				</h5>
+				<p>{item.meta.tags}</p>
+			</div>
+		{/each}
+	{/if}
 </div>
 
 <div class="thinstrip buffer wider">
@@ -333,6 +352,10 @@
 		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr
 		grid-template-rows: 1fr 1fr
 		gap: 16px 16px
+	@media screen and (max-width: 1023px)
+		grid-template-columns: 1fr 1fr 1fr 1fr
+		grid-template-rows: 1fr 1fr 1fr
+		gap: 8px 8px
 
 	
 p .special

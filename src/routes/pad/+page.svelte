@@ -86,7 +86,7 @@
 			<input type="text" placeholder="type" bind:value={type}/>
 			<input type="number" placeholder="counting" bind:value={counting}/>
 			<textarea class="hljs" bind:value={codesnippet}/>
-			<ButtonGlow --buttonwidth="128px">
+			<ButtonGlow --buttonwidth="128px" --this="var(--red)">
 				<div on:click={inputNote} on:keydown={inputNote}>
 					Submit
 				</div>
