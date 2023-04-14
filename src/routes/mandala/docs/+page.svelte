@@ -16,21 +16,25 @@
 <svelte:window bind:innerWidth={viewport}/>
 
 
-<div class="standardbloggrid buffer bufferYt bufferYb">
+<div class="newgrid wider buffer bufferYt bufferYb">
 	{#if docs && docs.length > 0}
 		{#each docs as item, i}
-			<Postal i={i} linkvar={item.path}>
-				<small slot="postalone">{item.meta.type}</small>
-				<h5 slot="postaltwo">{item.meta.title}</h5>
-				<p slot="postalthree">{item.meta.tags}</p>
-			</Postal>
+			<div class="postal">
+				<small>{item.meta.type}</small>
+				<h5>
+					<a href={item.path}>
+						{item.meta.title}
+					</a>
+				</h5>
+				<p>{item.meta.tags}</p>
+			</div>
 		{/each}
 	{/if}
 </div>
 
 <style lang="sass">
 
-.standardbloggrid
+.newgrid
 	background-color: hsla(0,0%,4%,1)
 	background-image: radial-gradient(at 23% 26%, hsla(231,93%,12%,0.44) 0px, transparent 50%), radial-gradient(at 76% 66%, hsla(337,77%,16%,0.27) 0px, transparent 50%)
 

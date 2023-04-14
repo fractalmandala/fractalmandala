@@ -2,6 +2,7 @@
 
 	import { onMount } from 'svelte'
 	import { MidjourneyImages } from '$lib/utils/supabase'
+	import { lazyLoadImageAction } from 'svelte-legos'
 
 	let images:any
 
@@ -15,8 +16,8 @@
 	{#if images && images.length > 0}
 		{#each images as item, i}
 			<div class="bigimagebox">
-				<a href="/images/{item.id}">
-				<img src="https://wganhlzrylmkvvaoalco.supabase.co/storage/v1/object/public/images/batch1/{item.link.slice(90,100)}" alt={item.id}>
+				<a href="/mandala/images/{item.id}">
+				<img use:lazyLoadImageAction src="https://wganhlzrylmkvvaoalco.supabase.co/storage/v1/object/public/images/batch1/{item.link.slice(90,100)}" data-src="https://wganhlzrylmkvvaoalco.supabase.co/storage/v1/object/public/images/batch1/{item.link.slice(90,100)}" alt={item.id}>
 				</a>
 			</div>
 		{/each}

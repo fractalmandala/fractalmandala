@@ -57,7 +57,7 @@
 </script>
 
 
-<div class="pagecontainer x00 buffer bufferYt bufferYb">
+<div class="pagecontainer wider x00 buffer bufferYt bufferYb">
 	<h1 class="prime" data-textify-title>
 		{data.title}
 	</h1>
@@ -83,10 +83,7 @@
 	flex-direction: column
 	row-gap: 32px
 	padding-top: 32px
-	@media screen and (min-width: 1024px)
-		width: 80%
 	@media screen and (max-width: 1023px)
-		width: 100%
 		padding: 0
 		margin-top: 32px
 

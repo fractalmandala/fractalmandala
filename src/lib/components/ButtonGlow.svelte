@@ -29,7 +29,7 @@
 		width: 100%
 		height: 100%
 		content: ''
-		background-color: hsla(140,80%,60%,0.5)
+		background-color: var(--this)
 		filter: blur(40px)
 		z-index: -1
 		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)

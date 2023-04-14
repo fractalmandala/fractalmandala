@@ -2,8 +2,6 @@
 
 	import { onMount } from 'svelte'
 	import { allCodes } from '$lib/utils/supabase'
-	import BigCard from '$lib/components/BigCard.svelte'
-	import Postal from '$lib/components/Postal.svelte'
 
 	let codas:any
 
@@ -14,21 +12,25 @@
 </script>
 
 
-<div class="standardbloggrid buffer bufferYt bufferYb">
+<div class="newgrid wider buffer bufferYt bufferYb">
 	{#if codas && codas.length > 0}
 		{#each codas as item, i}
-			<Postal i={i} linkvar="/codes/{item.counting}">
-				<small slot="postalone">{item.type}</small>
-				<h5 slot="postaltwo">{item.title}</h5>
-				<p slot="postalthree">{item.tags} | {item.lang}</p>
-			</Postal>
+			<div class="postal">
+				<small>{item.lang}</small>
+				<h5>
+					<a href="/mandala/codes/{item.counting}">
+					{item.title}
+					</a>
+				</h5>
+				<p>{item.tags}</p>
+			</div>
 		{/each}
 	{/if}
 </div>
 
 <style lang="sass">
 
-.standardbloggrid
+.newgrid
 	background-color: hsla(0,0%,4%,1)
 	background-image: radial-gradient(at 40% 20%, hsla(283,62%,9%,0.71) 0px, transparent 50%), radial-gradient(at 76% 83%, hsla(256,77%,16%,0.64) 0px, transparent 50%)
 

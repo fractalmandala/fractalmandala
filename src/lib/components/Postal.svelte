@@ -1,6 +1,13 @@
 <script lang="ts">
 
+	import { onMount } from 'svelte' 
 	import { slide } from 'svelte/transition'
+	import hljs from 'highlight.js'
+	import '$lib/styles/highlight.css'
+
+	onMount(async() => {
+		hljs.highlightAll()	
+	})
 
 	export let linkvar:any
 	export let i:any
@@ -24,54 +31,14 @@
 	flex-direction: column
 	position: relative
 	border: 1px solid #272727
-	backdrop-filter: blur(20px)
 	border-radius: 4px
-	transition: all 0.12s cubic-bezier(0.430, 0.580, 0.000, 1.140)
 	cursor: pointer
 	justify-content: space-between
 	align-items: stretch
-	overflow: hidden
-	&::before
-		position: absolute
-		border-radius: 4px
-		top: 0
-		left: 0
-		right: 0
-		content: ''
-		width: 50%
-		height: 80%
-		border-radius: 4px
-		margin: 0 auto
-		z-index: -1
-		background: linear-gradient(89deg, rgba(16,213,108,0.2), rgba(40,170,53,0.4))
-		background-size: 400% 100%
-		transition: 0.1s ease
-		filter: blur(60px)
-	&::after
-		position: absolute
-		border-radius: 4px
-		background: rgba(0,0,0,0.8)
-		backdrop-filter: blur(10px)
-		content: ''
-		top: 0
-		left: 0
-		width: 100%
-		height: 100%
-		z-index: -1
-		border-radius: 4px
-		animation: theglowing 8s cubic-bezier(0.430, 0.580, 0.000, 1.140) infinite
-	&:hover
-		border-radius: 4px
-		backdrop-filter: 0
-		&::before
-			background: linear-gradient(89deg, rgba(16,213,108,0.9), rgba(40,170,53,0.8))
-			width: 100%
-			height: 100%
-			background-size: 4% 10%
-			border-radius: 4px
-		&::after
-			background: rgba(0,0,0,1)
-			border-radius: 4px
+	transition: all 0.15s var(--cubed)
+	box-shadow: 4px 6px 12px #010101
+	background: rgba(0,0,0,1)
+	backdrop-filter: blur(3px)
 	@media screen and (min-width: 1024px)
 		min-height: 200px
 		padding: 32px 24px 24px 24px
@@ -80,27 +47,76 @@
 		min-height: 200px
 		justify-content: flex-start
 
-@keyframes theglowing
-	0%
-		background-position: 0% 50%
-		background: rgba(0,0,0,0.8)
-	50%
-		background-position: 100% 50%
-		background: rgba(0,0,0,0.6)
-	100%
-		background-position: 0% 50%
-		background: rgba(0,0,0,0.8)
+.postal
+	&::before
+		position: absolute
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
+		content: ''
+		background-color: hsla(140,80%,60%,0)
+		filter: blur(40px)
+		z-index: -1
+		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		background-size: 400% 400%	
+	&:hover
+		overflow: hidden
+		box-shadow: none
+		animation: flicker2 1s linear forwards
+		&::before
+			animation: flicker 1s linear forwards
 
-@keyframes rainbow
+@keyframes flicker
 	0%
-		background: linear-gradient(89deg, rgba(16,213,108,0.2), rgba(40,170,53,0.4))
-	25%
-		background: linear-gradient(89deg, rgba(146,255,176,0.2), rgba(157,255,79,0.4))
-	50%
-		background: linear-gradient(89deg, rgba(79,86,255,0.2), rgba(199,79,255,0.4))
-	75%
-		background: linear-gradient(89deg, rgba(255,79,154,0.2), rgba(255,79,79,0.4))
+		background-color: hsla(140,80%,60%,0)
+		filter: blur(40px)
+	41.99%
+		background-color: hsla(140,80%,60%,0.5)
+		filter: blur(40px)
+	42%
+		background-color: hsla(140,80%,60%,0)
+		filter: blur(40px)
+	43.1%
+		background-color: hsla(140,80%,60%,0.6)	
+		filter: blur(4px)
+	47.9%
+		background-color: hsla(140,80%,60%,0.5)
+		filter: blur(14px)
+	48%
+		background-color: hsla(140,80%,60%,0)
+		filter: blur(24px)
+	49%
+		background-color: hsla(140,80%,60%,0.5)
+		filter: blur(40px)
 	100%
-		background: linear-gradient(89deg, rgba(255,185,79,0.2), rgba(178,255,79,0.4))
+		background-color: hsla(140,80%,60%,0.5)
+		filter: blur(4px)
+
+@keyframes flicker2
+	0%
+		background-color: hsla(140,80%,60%,0)
+		overflow: hidden
+	41.99%
+		background-color: hsla(140,80%,60%,0.05)
+		overflow: hidden
+	42%
+		background-color: hsla(140,80%,60%,0)
+		overflow: hidden
+	43.1%
+		background-color: hsla(140,80%,60%,0.16)	
+		overflow: visible
+	47.9%
+		background-color: hsla(140,80%,60%,0.25)
+		overflow: visible
+	48%
+		background-color: hsla(140,80%,60%,0.35)
+		overflow: visible
+	49%
+		background-color: hsla(140,80%,60%,0.45)
+		overflow: visible
+	100%
+		background-color: hsla(140,80%,60%,0.5)
+		overflow: hidden
 
 </style>

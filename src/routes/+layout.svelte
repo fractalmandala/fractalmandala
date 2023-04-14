@@ -273,7 +273,7 @@
 .pagedoublegrid
 	display: grid
 	grid-auto-flow: row
-	min-height: calc(100vh - 120px)
+	min-height: calc(100vh - 80px)
 	@media screen and (min-width: 1024px)
 		grid-template-columns: 1fr
 		grid-template-areas: "."

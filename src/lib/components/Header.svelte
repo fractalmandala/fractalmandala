@@ -2,6 +2,7 @@
 
 	import { onMount } from 'svelte'
 	import { get, writable } from 'svelte/store'
+	import { clickOutsideAction } from 'svelte-legos'
 	import supabase from '$lib/utils/supabase'
 	const searchStore = writable('')
 	let searchinput
@@ -22,9 +23,14 @@
 	let breakPoint = true
 	let screenWidth:number
 	let expandedMenu = false
+	let hidden = false
 
 	function toggleMenu(){
 		expandedMenu = !expandedMenu
+	}
+
+	function handleClickOutside() {
+  	showResults = !showResults
 	}
 
 	function togglePagesOn(){
@@ -120,7 +126,7 @@
 
 <svelte:window bind:scrollY={y} bind:innerWidth={screenWidth}/>
 
-<div class="header" class:expanded={expandedMenu}>
+<div class="header" class:expanded={expandedMenu} class:showsearch={showResults}>
 	<div class="logo">
 		<a href="/">
 			<LogoFMMotif></LogoFMMotif>
@@ -147,18 +153,36 @@
 		</div>
 		<nav>
 			<div class="singletheme"><a href="/mandala">Posts</a></div>
-			<div class="singletheme"><a href="/docs">Docs</a></div>
-			<div class="singletheme"><a href="/codes">Codes</a></div>
-			<div class="singletheme"><a href="/play">GPT</a></div>
-			<div class="singletheme"><a href="/images">Images</a></div>
+			<div class="singletheme"><a href="/mandala/docs">Docs</a></div>
+			<div class="singletheme"><a href="/mandala/codes">Codes</a></div>
+			<div class="singletheme"><a href="/mandala/gpt">GPT</a></div>
+			<div class="singletheme"><a href="/mandala/images">Images</a></div>
 			<div class="singletheme"><a href="/pad">Pad</a></div>
 			<div class="singletheme"><a href="/play">Play</a></div>
 			<div class="singletheme"><a href="/form">Form</a></div>
 		</nav>
 	</div>
+	{#if showResults && $resultsStore.length>0}
+		<div class="searchresults modal" on:click={closeSearch} on:keydown={blankKey} use:clickOutsideAction on:clickoutside={handleClickOutside}>
+			{#each $resultsStore as item, i}
+					{#if item.title && item.type === 'code'}
+						<p in:fly={{ duration: 200, delay: i*20, x: 128}}><a href="/mandala/codes/{item.counting}">{item.title}</a><span style="color: #10D56C">{item.tags}</span></p>
+					{:else if item.prompt && item.prompt.length > 0}
+						<p in:fly={{ duration: 200, delay: i*20, x: 128}}><a href="/mandala/gpt/{item.id}">{item.prompt.slice(0,35)}</a></p>
+					{:else}		
+						<p in:fly={{ duration: 200, delay: i*20, x: 128}}><a href="/mandala/notes/{item.counting}">{item.title}</a><span style="color: #10D56C">{item.tags}</span></p>
+					{/if}
+			{/each}
+		</div>
+	{/if}
 </div>
 
 <style lang="sass">
+
+.searchresults
+	display: flex
+	flex-direction: column
+
 
 .header
 	display: grid
@@ -199,6 +223,7 @@
 					background: none
 					border: 1px solid #474747
 					border-radius: 16px
+					color: white
 			nav
 				width: calc(100% - 240px)
 		.mobileicon
@@ -254,6 +279,30 @@
 				margin-bottom: 16px
 				input
 					height: 32px
+
+.header.showsearch
+	@media screen and (min-width: 1024px)
+		.searchresults
+			top: 72px
+			width: 320px
+			height: calc(100vh - 72px)
+			overflow-y: scroll
+
+.searchresults
+	position: sticky
+	top: 72px
+	display: flex
+	flex-direction: column
+	align-self: end
+	justify-self: end
+	width: 320px
+	margin-left: calc(100vw - 320px)
+	height: calc(100vh - 72px)
+	overflow-y: scroll
+	p
+		margin: 0
+		&:hover
+			color: #10D56C
 			
 
 .mobileicon
@@ -281,6 +330,8 @@
 		border-radius: 4px
 		outline: none
 		border: none
+		color: white
+		padding-left: 16px
 	button
 		width: 32px
 		height: 32px

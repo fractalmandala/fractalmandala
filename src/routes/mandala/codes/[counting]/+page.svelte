@@ -173,7 +173,7 @@
 </svelte:head>
 
 
-<div class="pagecontainer x00 buffer bufferYt bufferYb">
+<div class="pagecontainer wider x00 buffer bufferYt bufferYb">
 	{#if editingOn}
 		<div class="editingsection">
 		<h5>Select Field to Edit:</h5>
@@ -227,11 +227,11 @@
 	<h1 class="prime" data-textify-title>
 		{data.title}
 	</h1>
-		<div style="text-align: right; padding-left: 24px; color: #fe4a49; cursor: pointer; font-size: 12px" on:click={openEditing} on:keydown={fauxfake}>EDIT</div>
 	</div>
 	<h6>
 		{data.type} | {data.tags}
 	</h6>
+	<div style="text-align: left; color: #fe4a49; cursor: pointer; font-size: 12px" on:click={openEditing} on:keydown={fauxfake}>EDIT</div>
 	<div class="columnleft">
 		{#if data.note && data.note.length > 0}
 			{#if data.type && data.type.length > 0}
@@ -293,10 +293,6 @@
 		background: #171717
 		border: 1px solid #272727
 		color: white
-		@media screen and (min-width: 1024px)
-			width: 60%
-		@media screen and (max-width: 1023px)
-			width: 100%
 
 .editingsection
 	display: flex
@@ -333,8 +329,6 @@
 	flex-direction: column
 	row-gap: 32px
 	padding-top: 32px
-	@media screen and (min-width: 1024px)
-		width: 80%
 
 .metaoptions
 	display: none

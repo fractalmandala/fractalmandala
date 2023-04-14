@@ -2,30 +2,55 @@
 
 	import { onMount } from 'svelte'
 	import ChatMessage from '$lib/components/ChatMessage.svelte'
-	import Prism from 'prismjs'
-	import '$lib/styles/prism.css'
+	import { scale } from 'svelte/transition'
+	import { backOut, backIn } from 'svelte/easing'
+	import hljs from 'highlight.js'
+	import '$lib/styles/highlight.css'
 	import type { ChatCompletionRequestMessage } from 'openai'
 	import { TagsFiltered } from '$lib/utils/supabase'
 	import { SSE } from 'sse.js'
 	import Postal from '$lib/components/Postal.svelte'
+	import BigCard from '$lib/components/BigCard.svelte'
 	import supabase from '$lib/utils/supabase'
 	let submittance:any
 	let query: string = ''
 	let answer: string = ''
+	let answerTitle: string = ''
 	let userprompt:any
 	let loading: boolean = false
 	let chatMessages: ChatCompletionRequestMessage[] = []
+	let chatTitle: ChatCompletionRequestMessage[] = []
 	let tags = 'star'
 	let codas:any
 	let fake = false
-
+	let gridalign = false
+	let expand:boolean[] = Array(20).fill(false)
 	let area:boolean[] = Array(9).fill(false)
 	area[1] = true
+	let allfalse = false
+
+	$: if ( expand.every(i => i === false )) {
+		allfalse = true
+	} else {
+		allfalse = false
+	}
 
 	function fauxfake(){
 		fake = !fake
 	}
 
+	function togglePostItem(index:number){
+		expand[index] = !expand[index]
+			for (let i = 0; i < expand.length; i++) {
+			if (i !== index && expand[i] === true) {
+			expand[i] = false;
+			}
+			if ( expand.every(i => i === false )) {
+				gridalign = false
+			} else
+				gridalign = true
+		}
+	}
 
 	const handleSubmit = async () => {
 		loading = true
@@ -37,8 +62,6 @@
 			},
 			payload: JSON.stringify({ messages: chatMessages })
 		})
-
-		query = ''
 
 		eventSource.addEventListener('error', handleError)
 
@@ -66,6 +89,42 @@
 		eventSource.stream()
 	}
 
+	const handleTitle = async () => {
+		chatTitle = [...chatMessages, { role: 'user', content: query }]
+		userprompt = query
+		const eventSource = new SSE('/api/title', {
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			payload: JSON.stringify({ messages: chatMessages })
+		})
+
+		query = ''
+
+		eventSource.addEventListener('error', handleError)
+
+		eventSource.addEventListener('message', (e: {data: string;}) => {
+			try {
+				loading = false
+				if (e.data === '[DONE]') {
+					chatTitle = [...chatMessages, { role: 'assistant', content: answerTitle }]
+					answerTitle = ''
+					return
+				}
+
+				const completionResponse = JSON.parse(e.data)
+				const [{ delta }] = completionResponse.choices
+
+				if (delta.content) {
+					answerTitle = (answerTitle ?? '') + delta.content
+				}
+			} catch (err) {
+				handleError(err)
+			}
+		})
+		eventSource.stream()
+	}
+
 	$: if (submittance) {
 		submitAnswer()	
 	}
@@ -85,6 +144,7 @@
       if (error) {
         throw new Error(error.message)
       }
+			handleTitle()
       console.log('submitted')
     } catch (e) {
       console.error('Error inserting into Supabase:', e)
@@ -110,8 +170,9 @@
 
 
 	onMount(async() => {
-		Prism.highlightAll()	
+		hljs.highlightAll()	
 		codas = await TagsFiltered(tags)
+		
 	})
 </script>
 
@@ -122,7 +183,7 @@
 
 
 
-<div class="introarea buffer bufferYt">
+<div class="introarea buffer wider bufferYt">
 	<p>
 		A simple blog to document a non-programmer bootstrapping himself into web-dev. <span class="special">My stack:</span>
 	</p>
@@ -145,7 +206,8 @@
 		Browse/search through an unorganized assortment of code snippets, setup guides and troubleshooting pointers. Play with broGPT, my AI pal, below.
 	</p>
 </div>
-<div class="inviewarea buffer bufferYb">
+<div class="inviewarea buffer wider bufferYb">
+	<h5>{answerTitle}</h5>
 	<ChatMessage type="assistant" message="Namaste. How may I help you?" />	
 		{#each chatMessages as message}
 			<ChatMessage type={message.role} message={message.content} />
@@ -158,7 +220,7 @@
 		{/if}
 		<div class="boxc ofform">
 			<form on:submit|preventDefault>
-				<input type="text" bind:value={query}
+				<textarea bind:value={query}
 					on:keydown={handleKeyDownInput}
 					/>
 				<button class="glowing" type="submit" on:click={() => handleSubmit()} on:keydown={handleKeyDownInput}> Send </button>
@@ -166,7 +228,7 @@
 		</div>
 </div>
 
-<div class="thinstrip">
+<div class="thinstrip buffer wider">
 	<div on:click={() => changeTag('star')} on:keydown={fauxfake} class="{ tags === 'star' ? 'currentTag' : ''}">Star</div>
 	<div on:click={() => changeTag('sveltecode')} on:keydown={fauxfake} class="{ tags === 'sveltecode' ? 'currentTag' : ''}">Sveltecode</div>
 	<div on:click={() => changeTag('scroll')} on:keydown={fauxfake} class="{ tags === 'scroll' ? 'currentTag' : ''}">Scroll</div>
@@ -179,19 +241,29 @@
 	<div on:click={() => changeTag('setup')} on:keydown={fauxfake} class="{ tags === 'setup' ? 'currentTag' : ''}">Setups</div>
 	<div on:click={() => changeTag('typography')} on:keydown={fauxfake} class="{ tags === 'typography' ? 'currentTag' : ''}">Typography</div>
 </div>
-<div class="standardbloggrid buffer bufferYb x00">
+<div class="newgrid buffer wider bufferYb x00" class:calibratedgrid={gridalign}>
 	{#if codas && codas.length > 0}
 		{#each codas as item, i}
-			<Postal i={i} linkvar="/codes/{item.counting}">
-				<small slot="postalone">{item.lang}</small>
-				<h5 slot="postaltwo">{item.title}</h5>
-				<p slot="postalthree">{item.tags}</p>
-				<pre slot="codes">
-					<code class="language-{item.lang}">
-						{item.codesnippet}
-					</code>
-				</pre>
-			</Postal>
+			<div class="postal" on:click={() => togglePostItem(i)} on:keydown={fauxfake} class:opened={expand[i]} in:scale={{delay: 50*i, easing: backOut }} out:scale={{ delay: 10*i, easing: backIn }}>
+					<small>{item.type}</small>
+					<h5>
+						{#if item.type.length > 0 && item.type === 'code'}
+						<a href="/mandala/codes/{item.counting}">
+						{item.title}
+						</a>
+						{:else}
+						<a href="/mandala/notes/{item.counting}">
+						{item.title}
+						</a>				
+						{/if}
+					</h5>
+					<p>{item.lang} - {item.tags}</p>
+					{#if expand[i]}
+						<BigCard language={item.lang}>
+							{item.codesnippet}
+						</BigCard>
+					{/if}
+			</div>
 		{/each}
 	{/if}
 </div>	
@@ -210,13 +282,16 @@
 		border-radius: 4px
 		cursor: pointer
 		transform-origin: center center
+		box-shadow: 4px 6px 12px #010101
+		overflow: hidden
+		background: #111111
 		color: #FFFFFF
 		transition: all 0.15s ease
-		box-shadow: none
 		font-size: 14px
 		padding: 4px 8px
 		position: relative
 		z-index: 1
+		text-align: center
 		&::before
 			position: absolute
 			top: 0
@@ -225,35 +300,39 @@
 			height: 100%
 			content: ''
 			z-index: -1
-			background-color: hsla(100,90%,5%,1)
+			background-color: hsla(100,90%,25%,1)
 			transition: all 0.05s ease
 			filter: blur(30px)
 			background-image: radial-gradient(at 17% 36%, hsla(148,97%,99%,1) 0px, transparent 1%), radial-gradient(at 80% 70%, hsla(125,87%,60%,1) 0px, transparent 50%)
 		&:hover
-			box-shadow: 4px 6px 12px #010101
-			overflow: hidden
-			background: #111111
+			overflow: visible
 			&::before
-				background-color: hsla(100,90%,25%,1)
+				background-color: hsla(100,90%,5%,1)
 				filter: blur(15px)
 	.currentTag
+		&:hover
+			overflow: visible
 		&::before
 			filter: blur(30px)
-			background-color: hsla(100,90%,95%,1)
-			background-image: radial-gradient(at 99% 90%, hsla(248,79%,99%,1) 0px, transparent 100%), radial-gradient(at 8% 7%, hsla(395,99%,90%,1) 0px, transparent 10%)
+			background-color: hsla(100,9%,9%,0.1)
+			background-image: radial-gradient(at 9% 90%, hsla(248,79%,99%,0.1) 0px, transparent 100%), radial-gradient(at 8% 7%, hsla(395,99%,90%,0.1) 0px, transparent 10%)
 		
 
 .thinstrip
 	.currentTag
-		background: #171717
+		background: var(--purp)
 		border: 1px solid #272727
+		box-shadow: none
+	div.currentTag
+		box-shadow: none
 
 .thinstrip
-	display: flex
+	display: grid
+	grid-auto-flow: row
 	@media screen and (min-width: 1024px)
-		flex-direction: row
-		justify-content: center
-		gap: 48px
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr
+		grid-template-rows: 1fr 1fr
+		gap: 16px 16px
 
 	
 p .special
@@ -261,7 +340,8 @@ p .special
 	background: linear-gradient(to right, #64F540 0%, #11E876 50%, #07E859 100%)
 	-webkit-background-clip: text
 	-webkit-text-fill-color: transparent
-a
+
+.introarea a
 	position: relative
 	&:hover
 		background: #64F540
@@ -279,7 +359,8 @@ a
 		content: ''
 		background: #64F540
 		background: linear-gradient(to right, #64F540 0%, #11E876 50%, #07E859 100%)
-p
+
+.introarea p
 	font-family: 'Spline Sans', sans-serif
 	font-size: 16px
 	color: #FFFFFF
@@ -313,7 +394,7 @@ li
 		display: flex
 		flex-direction: row
 		gap: 16px
-	form input
+	form textarea
 		height: 64px
 		border: 1px solid #272727
 		color: white
@@ -321,5 +402,9 @@ li
 		background: #171717
 		outline: none
 		width: 100%
+
+.inviewarea
+	h5
+		color: white
 
 </style>

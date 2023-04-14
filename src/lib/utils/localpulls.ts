@@ -1,6 +1,6 @@
 // all md docs inside route docs
 export async function allDocs() {
-	const allPostFiles = import.meta.glob('/src/routes/docs/*.md')
+	const allPostFiles = import.meta.glob('/src/routes/mandala/docs/*.md')
 	const iterablePostFiles = Object.entries(allPostFiles)
 	const allPosts = await Promise.all(
 		iterablePostFiles.map(async ([path, resolver]) => {
@@ -18,7 +18,7 @@ export async function allDocs() {
 }
 
 export async function docCodes() {
-	const allPostFiles = import.meta.glob('/src/routes/docs/*.md')
+	const allPostFiles = import.meta.glob('/src/routes/mandala/docs/*.md')
 	const iterablePostFiles = Object.entries(allPostFiles)
 	const allPosts = await Promise.all(
 		iterablePostFiles.map(async ([path, resolver]) => {
@@ -37,7 +37,7 @@ export async function docCodes() {
 }
 
 export async function docDocs() {
-	const allPostFiles = import.meta.glob('/src/routes/docs/*.md')
+	const allPostFiles = import.meta.glob('/src/routes/mandala/docs/*.md')
 	const iterablePostFiles = Object.entries(allPostFiles)
 	const allPosts = await Promise.all(
 		iterablePostFiles.map(async ([path, resolver]) => {
@@ -57,7 +57,7 @@ export async function docDocs() {
 }
 
 export async function selectedTag(selecttag:any) {
-	const allPostFiles = import.meta.glob('/src/routes/docs/*.md')
+	const allPostFiles = import.meta.glob('/src/routes/mandala/docs/*.md')
 	const iterablePostFiles = Object.entries(allPostFiles)
 	const allPosts = await Promise.all(
 		iterablePostFiles.map(async ([path, resolver]) => {

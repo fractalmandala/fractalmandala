@@ -2,6 +2,7 @@ import { VITE_OPENAI_API_KEY } from '$env/static/private'
 import type { CreateChatCompletionRequest, ChatCompletionRequestMessage } from 'openai'
 import type { RequestHandler } from './$types'
 import { getTokens } from '$lib/utils/tokenizer'
+import { respondToClient } from '$lib/utils/gptutils'
 import { json } from '@sveltejs/kit'
 
 export const config = {
@@ -25,6 +26,16 @@ export const POST: RequestHandler = async ({ request }) => {
 		if (!reqMessages) {
 			throw new Error('no messages provided')
 		}
+
+		const fixedMessages = [
+			// take system, first user and first assisstant message into account
+			...reqMessages.slice(0, 3),
+			{
+				role: 'user',
+				content:
+					"Suggest a short title for this chat, summarising its content. Take the 'system' message into account and the first prompt from me and your first answer. The title should not be longer than 100 chars. Answer with just the title. Don't use punctuation or special characters in the title."
+			} as ChatCompletionRequestMessage
+		];
 
 		let tokenCount = 0
 
@@ -70,7 +81,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
 		const chatRequestOpts: CreateChatCompletionRequest = {
 			model: 'gpt-3.5-turbo',
-			messages,
+			messages: fixedMessages,
 			temperature: 0.1,
 			stream: true
 		}
@@ -89,11 +100,9 @@ export const POST: RequestHandler = async ({ request }) => {
 			throw new Error(err.error.message)
 		}
 
-		return new Response(chatResponse.body, {
-			headers: {
-				'Content-Type': 'text/event-stream'
-			}
-		})
+		const result = await chatResponse.json()
+		const title = result.choices[0].message.content.replace(/(^['"])|(['"]$)/g, '').trim();
+		return respondToClient({ title });
 	} catch (err) {
 		console.error(err)
 		return json({ error: 'There was an error processing your request' }, { status: 500 })

@@ -13,6 +13,7 @@
 	let afterthis:number
 	let theid:any
 	let copymaterial: any
+	let styledText
 	let copySuccess:boolean = false
 	let fake = false
 	let deleteConfirmation:boolean = false
@@ -46,11 +47,14 @@
 		location.replace("/")		
 	}
 
+	const regex = /```([\s\S]*?)```/g;
+
 	onMount(async() => {
 		hljs.highlightAll()
 		nextchat = data.id - 1
 		afterthis = data.id + 1
 		copymaterial = data.response
+		styledText = data.response.replace(regex, '<pre>$1</pre>');
 		theid = data.id
 	})
 
@@ -58,7 +62,7 @@
 
 </script>
 
-<div class="boxofchat bufferYb bufferYt" on:click={closeCopySuccessMessage} on:keydown={fauxfake}>
+<div class="boxofchat wider buffer bufferYb bufferYt" on:click={closeCopySuccessMessage} on:keydown={fauxfake}>
 	<div class="agent user">
 		ID - {data.id}<br>
 		<p style="color: #fe4a49; margin-top: 4px; cursor: pointer" on:click={deleteWarning} on:keydown={fauxfake}>Delete</p>
@@ -69,11 +73,11 @@
 	<div class="agent broGPT">
 		GPT:
 	</div>
-	<pre class="commbody broGPT language-html">
-		{data.response}
-	</pre>	
+	<code class="commbody broGPT language-html">
+		{styledText}
+	</code>	
 	<div class="boxr" style="margin-top: 32px">
-		<ButtonGlow --buttonwidth="128px">
+		<ButtonGlow --buttonwidth="128px" --this="var(--orange)">
 			<div use:clickToCopyAction={copymaterial} on:copy-done={handleCopyDone}>
 				Copy
 					{#if copySuccess}
@@ -81,13 +85,13 @@
 					{/if}
 			</div>
 		</ButtonGlow>
-		<ButtonGlow2 --buttonwidth="128px">
-			<a href="/play/{nextchat}">
+		<ButtonGlow2 --buttonwidth="128px" --this="var(--orange)">
+			<a href="/mandala/gpt/{nextchat}">
 				Previous Chat
 			</a>
 		</ButtonGlow2>
-		<ButtonGlow3 --buttonwidth="128px">
-			<a href="/play/{afterthis}">
+		<ButtonGlow3 --buttonwidth="128px" --this="var(--orange)">
+			<a href="/mandala/gpt/{afterthis}">
 				Next Chat
 			</a>
 		</ButtonGlow3>
@@ -113,28 +117,12 @@
 .boxr
 	gap: 24px
 
-pre
-	overflow-x: auto
-	box-sizing: border-box
-	white-space: pre-line
-	word-wrap: break-word
-	word-break: break-word
-
-pre
-	margin: 4px 0 0 0
-	line-height: 1.6
-	color: white
-
 .boxofchat
 	border-radius: 4px
 	min-height: 100vh
 	background-color: hsla(0,1%,3%,1)
 	background-image: radial-gradient(at 13% 40%, hsla(346,91%,7%,0.8) 0px, transparent 50%), radial-gradient(at 83% 66%, hsla(11,75%,21%,0.3) 0px, transparent 50%)
-	@media screen and (min-width: 1024px)
-		padding-left: 24vw
-		padding-right: 24vw
-	@media screen and (max-width: 1023px)
-		padding: 80px 16px 32px 16px
+	padding-top: 80px
 
 .agent
 	font-size: 12px
@@ -151,24 +139,19 @@ pre
 .commbody.user, .commbody.broGPT
 	color: white
 	font-family: 'Spline Sans', sans-serif
-	text-transform: lowercase
 
 .commbody.broGPT
 	font-size: 14px
 	padding-top: 4px
-	width: 60%
 
 .commbody.user
 	text-align: right
 	color: #575757
 	font-size: 14px
 	white-space: normal
-	width: 60%
-	margin-left: 40%
 	border-bottom: 1px solid #272727
 	padding-bottom: 16px
 	padding-top: 4px
-
 
 .commbody
 	white-space: pre-line

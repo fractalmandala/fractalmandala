@@ -11,6 +11,12 @@
 		fake = !fake
 	}
 
+	const preTags = document.querySelectorAll('pre')
+
+	$: preTags.forEach(pre => {
+		 codeContents = pre.textContent
+	});
+
 	function copyToClipboard(){
 		const range = document.createRange();
 		range.selectNodeContents(codeContents)
@@ -61,7 +67,7 @@
 <meta name="description" content="{data.tags}"/>
 </svelte:head>
 
-<div class="pagecontainer x00 buffer bufferYt bufferYb">
+<div class="pagecontainer wider x00 buffer bufferYt bufferYb">
 	<h1 class="prime" data-textify-title>
 		{data.title}
 	</h1>
@@ -70,7 +76,7 @@
 	</h6>
 	<div class="columnleft">
 		<div class="boxc" id="docsinside">
-			<div id="copy" style="font-size: 12px; cursor: pointer;" on:click={copyToClipboard} on:keydown={fauxfake}>COPY</div>
+			<div id="copy" style="font-size: 12px; cursor: pointer; color: #10D56C" on:click={copyToClipboard} on:keydown={fauxfake}>COPY</div>
 			<svelte:component this={data.content} bind:this={codeContents}/>
 		</div>	
 	</div>
@@ -87,10 +93,7 @@
 	flex-direction: column
 	row-gap: 32px
 	padding-top: 32px
-	@media screen and (min-width: 1024px)
-		width: 80%
 	@media screen and (max-width: 1023px)
-		width: 100%
 		padding: 0
 		margin-top: 32px
 
