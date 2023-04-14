@@ -14,7 +14,7 @@
 
 
 
-<div class="pagecontainer">
+<div class="pagecontainer buffer bufferYt bufferYb">
 	{#if entries && entries.length > 0}
 		{#each entries as item, i}
 			<TinyCard i={i} linkvar="/form">

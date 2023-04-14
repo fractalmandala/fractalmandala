@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte'
 	import hljs from 'highlight.js'
 	import '$lib/styles/highlight.css'
-	export let data
+	import Animations from 'textify.js'
 	let codeContents:any
 	let fake:boolean = false
 
@@ -34,16 +34,34 @@
 
 	onMount(async() => {
 		hljs.highlightAll()
+		const { Textify, TextifyTitle } = Animations
+		new TextifyTitle({
+			duration: 1000,
+			stagger: 50,
+			once: false,
+			scale: 0,
+			fade: true,
+			fadeDuration: 500,
+			ease: "elasticInOut"
+		})
+		new Textify({
+			duration: 600,
+			stagger: 60,
+			once: false,
+			fade: true
+		})	
 	})
+
+	export let data
 
 </script>
 
 
-<div class="pagecontainer x00">
-	<h2>
+<div class="pagecontainer x00 buffer bufferYt bufferYb">
+	<h1 class="prime" data-textify-title>
 		{data.title}
-	</h2>
-	<h6>
+	</h1>
+	<h6 data-textify class="gr">
 		{data.type} | {data.tags}
 	</h6>
 	<div class="columnleft">
@@ -56,21 +74,9 @@
 
 <style lang="sass">
 
-#docsinside
-	border-radius: 4px
-
-h2
-	text-transform: uppercase
-	margin: 0
-	font-family: 'Spline Sans', sans-serif
-	padding-bottom: 12px
-	font-weight: 600
-	color: white
-	font-size: 40px
-	@media screen and (max-width: 1023px)
-		font-size: 32px
-		text-align: center
-		margin-bottom: 16px
+.x00
+	background-color: hsla(0,1%,3%,1)
+	background-image: radial-gradient(at 18% 82%, hsla(254,87%,7%,0.2) 0px, transparent 50%), radial-gradient(at 60% 0%, hsla(328,100%,12%,0.24) 0px, transparent 50%)
 
 .columnleft
 	display: flex
@@ -82,10 +88,9 @@ h2
 	@media screen and (max-width: 1023px)
 		width: 100%
 		padding: 0
-		margin-top: 16px
+		margin-top: 32px
 
 .x00
-	padding: 0
 	row-gap: 0
 	h6
 		margin: 0
@@ -93,8 +98,6 @@ h2
 		text-transform: uppercase
 		color: #474747
 		padding-top: 8px
-		@media screen and (max-width: 1023px)
-			text-align: center
 	
 
 

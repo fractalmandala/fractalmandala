@@ -599,8 +599,7 @@ h4
 </style>
 ```
 
-```sass
-
+```css
 h5
 	text-transform: uppercase
 	font-size: 1.44rem

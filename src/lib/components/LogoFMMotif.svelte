@@ -34,7 +34,7 @@ svg
 	height: 27px
 	margin-right: 12px
 	@media screen and (max-width: 1023px)
-		width: 26px
-		height: 26px
+		width: 32px
+		height: 32px
 
 </style>

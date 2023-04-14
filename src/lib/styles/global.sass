@@ -7,6 +7,12 @@ body, html
 body::-webkit-scrollbar-track
 	background: rgba(0,0,0,0)
 
+.height
+	@media screen and (min-width: 1024px)
+		min-height: calc(100vh - 112px)
+	@media screen and (max-width: 1023px)
+		min-height: 100vh
+
 .buffer
 	@media screen and (min-width: 1024px)
 		padding-left: 48px
@@ -17,10 +23,14 @@ body::-webkit-scrollbar-track
 
 .bufferYt
 	@media screen and (min-width: 1024px)
-		padding-top: 80px
+		padding-top: 96px
+	@media screen and (max-width: 1023px)
+		padding-top: 120px
 
 .bufferYb
 	@media screen and (min-width: 1024px)
+		padding-bottom: 64px
+	@media screen and (max-width: 1023px)
 		padding-bottom: 64px
 	
 
@@ -66,7 +76,7 @@ a
 *
 	box-sizing: border-box
 	--cubea: cubic-bezier(1.000, -0.105, 1.000, 0.410)
-	--purp: #61339C
+	--purp: #94309D
 
 .boxr
 	display: flex
@@ -81,10 +91,6 @@ a
 	box-sizing: border-box
 	display: flex
 	flex-direction: column
-	@media screen and (min-width: 1024px)	
-		padding: 40px
-	@media screen and (max-width: 1023px)
-		padding: 24px 16px
 
 .neon
 	background: #10C56D
@@ -564,34 +570,34 @@ pre
 				height: 100%
 
 
-.trans a
-	.mot
-		.mot-1
-			transition: all 0.3s ease
-			transition-delay: 0.04s
-		.mot-2
-			transition: all 0.3s ease
-			transition-delay: 0.08s
-		.mot-3
-			transition: all 0.3s ease
-			transition-delay: 0.12s
-		.mot-4
-			transition: all 0.3s ease
-			transition-delay: 0.16s
-		.mot-5
-			transition: all 0.3s ease
-			transition-delay: 0.2s
-		.mot-6
-			transition: all 0.3s ease
-			transition-delay: 0.24s
+
+.mot
+	.mot-1
+		transition: all 0.3s ease
+		transition-delay: 0.04s
+	.mot-2
+		transition: all 0.3s ease
+		transition-delay: 0.08s
+	.mot-3
+		transition: all 0.3s ease
+		transition-delay: 0.12s
+	.mot-4
+		transition: all 0.3s ease
+		transition-delay: 0.16s
+	.mot-5
+		transition: all 0.3s ease
+		transition-delay: 0.2s
+	.mot-6
+		transition: all 0.3s ease
+		transition-delay: 0.24s
 
 
-.trans a
+.mot
 	&:hover
 		.mot-1, .mot-3, .mot-5
 			fill: #10D56C
 		.mot-2, .mot-4, .mot-6
-			fill: var(--purp)
+			fill: #94309D
 		.mot
 			animation: therotation 4s ease infinite
 
@@ -638,3 +644,20 @@ pre
 		grid-template-areas: ". ."
 		gap: 16px 16px
 		height: 100%
+
+h1.prime
+	font-size: 64px
+	text-transform: uppercase
+	font-weight: 600
+	font-family: 'Spline Sans', sans-serif
+	color: white
+	margin: 0
+	border-bottom: 1px solid #272727
+	@media screen and (max-width: 1023px)
+		font-size: 40px
+
+.x00
+	h6
+		font-size: 15px
+		.gr
+			color: #10D56C

@@ -2,7 +2,7 @@
 .hljs, .broGPT .hljs {
   color: #10D56C;
 	line-height: 1.5;
-	font-family: 'Spline Sans Mono', monospace;
+	font-family: 'JetBrains Mono', monospace;
 	tab-size: 1;
 	font-size: 14px;
 }

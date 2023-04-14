@@ -1,12 +1,12 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte' 
-	import { resizableAction } from 'svelte-legos'
 	import { Auth } from '@supabase/auth-ui-svelte'
 	import { ThemeSupa } from '@supabase/auth-ui-shared'
 	import type { PageData } from './$types'
 	import { toast } from 'svoast'
 	import hljs from 'highlight.js'
+	import ButtonGlow from '$lib/components/ButtonGlow.svelte'
 	import '$lib/styles/highlight.css'
 	import { page } from '$app/stores'
 	import supabase from '$lib/utils/supabase'
@@ -86,10 +86,14 @@
 			<input type="text" placeholder="type" bind:value={type}/>
 			<input type="number" placeholder="counting" bind:value={counting}/>
 			<textarea class="hljs" bind:value={codesnippet}/>
-			<button class="glowing">Submit</button>
+			<ButtonGlow --buttonwidth="128px">
+				<div on:click={inputNote} on:keydown={inputNote}>
+					Submit
+				</div>
+			</ButtonGlow>
 		</div>
 	</div>
-	<div class="editor-wrapper" use:resizableAction>
+	<div class="editor-wrapper">
 		<div bind:this={editor}/>
 	</div>
 </div>
@@ -108,13 +112,19 @@
 		grid-template-columns: 1fr 320px
 		grid-template-areas: "editor notes"
 		gap: 0 40px
-		min-height: 100vh
 		padding-top: 128px
+		min-height: calc(100vh - 80px)
 		.notes
 			grid-area: notes
 		.editor-wrapper
 			grid-area: editor
-			height: 100%
+	@media screen and (max-width: 1023px)
+		padding-top: 80px
+		grid-template-areas: "editor" "notes"
+		.notes
+			grid-area: notes
+		.editor-wrapper
+			grid-area: editor
 
 .editor-wrapper
 	margin-bottom: 16px

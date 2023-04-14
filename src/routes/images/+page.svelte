@@ -28,7 +28,7 @@
 .standardbloghorizontal
 	display: grid
 	width: 100vw
-	height: 100vh
+	height: calc(100vh - 144px)
 	grid-template-columns: 1fr 1fr 1fr
 	grid-template-rows: 1fr 1fr
 	grid-template-areas: ". . ." ". . ."
@@ -36,10 +36,11 @@
 	grid-auto-flow: column
 	overflow-x: scroll
 	overflow-y: hidden
+	margin-top: 64px
 	.bigimagebox
 		flex-shrink: 0
 		width: 50vw
-		height: 50vh
+		height: calc(50vh - 72px)
 	.bigimagebox a
 		img
 			object-fit: cover

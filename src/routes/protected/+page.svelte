@@ -6,6 +6,8 @@
   $: ({ user, tableData } = data);
 </script>
 
+<div class="buffer bufferYt bufferYb">
 <div>Protected content for {user.email}</div>
 <pre>{JSON.stringify(tableData, null, 2)}</pre>
 <pre>{JSON.stringify(user, null, 2)}</pre>
+</div>

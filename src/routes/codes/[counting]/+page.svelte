@@ -4,6 +4,7 @@
 	import hljs from 'highlight.js'
 	import '$lib/styles/highlight.css'
 	import supabase from '$lib/utils/supabase'
+	import Animations from 'textify.js'
 	let lang:any
 	let editingOn:boolean = false
 	let fake:boolean = false
@@ -141,6 +142,22 @@
 
 	onMount(async() => {
 		hljs.highlightAll()
+		const { Textify, TextifyTitle } = Animations
+		new TextifyTitle({
+			duration: 1000,
+			stagger: 50,
+			once: false,
+			scale: 0,
+			fade: true,
+			fadeDuration: 500,
+			ease: "elasticInOut"
+		})
+		new Textify({
+			duration: 600,
+			stagger: 60,
+			once: false,
+			fade: true
+		})
 		lang = data.lang
 		titular = data.title
 		theid = data.id
@@ -156,7 +173,7 @@
 </svelte:head>
 
 
-<div class="pagecontainer x00">
+<div class="pagecontainer x00 buffer bufferYt bufferYb">
 	{#if editingOn}
 		<div class="editingsection">
 		<h5>Select Field to Edit:</h5>
@@ -207,9 +224,9 @@
 		</div>
 	{:else}
 	<div class="boxr">
-		<h2>
-			{data.title}
-		</h2>
+	<h1 class="prime" data-textify-title>
+		{data.title}
+	</h1>
 		<div style="text-align: right; padding-left: 24px; color: #fe4a49; cursor: pointer; font-size: 12px" on:click={openEditing} on:keydown={fauxfake}>EDIT</div>
 	</div>
 	<h6>
@@ -345,26 +362,13 @@
 .notepara
 	line-height: 1.8
 
-h2
-	text-transform: uppercase
-	margin: 0
-	font-family: 'Spline Sans', sans-serif
-	padding-bottom: 12px
-	font-weight: 600
-	color: white
-	font-size: 40px
-	@media screen and (max-width: 1023px)
-		font-size: 21px
-		text-align: center
-		margin-bottom: 16px
-
 .x00
-	padding: 0
+	background-color: hsla(0,1%,3%,1)
+	background-image: radial-gradient(at 18% 82%, hsla(199,91%,7%,1) 0px, transparent 50%), radial-gradient(at 60% 0%, hsla(231,76%,22%,0.3) 0px, transparent 50%)
 	row-gap: 0
 	position: relative
 	h6
 		margin: 0
-		padding-left: 72px
 		font-weight: 400
 		text-transform: uppercase
 		color: #474747

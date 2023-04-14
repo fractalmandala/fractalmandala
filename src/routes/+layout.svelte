@@ -11,6 +11,7 @@
 	import Lenis from '@studio-freight/lenis'
 	import { page } from '$app/stores'
 	import '$lib/styles/global.sass'
+	import '$lib/styles/animations.sass'
 
 	let y:number
 	let isInvisible:boolean = false
@@ -158,11 +159,6 @@
 		</div>
 	</TransitionPage>
 	<div class="foot">
-		<div class="animatedicon">
-			<div class="one"></div>
-			<div class="two"></div>
-			<div class="three"></div>
-		</div>
 		<div class="rightside">
 			<div class="boxr" style="gap: 16px">
 				<div class="twittericon" style="height: 20px">
@@ -209,83 +205,12 @@
 
 <style lang="sass">
 
-.animatedicon
-	display: grid
-	grid-auto-flow: row
-	grid-template-columns: 1fr 1fr 1fr
-	grid-template-rows: 1fr
-	grid-template-areas: "one two three"
-	width: 21px
-	height: 20px
-	background: #171717
-	column-gap: 2px
-	justify-items: center
-	justify-content: center
-	margin-bottom: 16px
-	.one
-		grid-area: one
-	.two
-		grid-area: two
-	.three
-		grid-area: three
-
-.one, .two
-	width: 3px
-	height: 20px
-	background: #878787
-
-.animatedicon
-	cursor: pointer
-	&:hover
-		.one, .two, .three
-			background: #10D56C
-
-.three
-	width: 3px
-	height: 0px
-	background: #878787
-
-.one
-	animation: oneh 6s ease infinite alternate-reverse
-
-.two
-	animation: twoh 3s ease-in infinite
-
-.three
-	animation: threeh 2s ease-out infinite alternate-reverse
-
-@keyframes oneh
-	0%
-		height: 20px
-	100%
-		height: 0px
-
-@keyframes twoh
-	0%
-		height: 15px
-		margin-bottom: 0
-	50%
-		height: 5px
-		margin-bottom: 15px
-	100%
-		height: 15px
-		margin-bottom: 0
-
-@keyframes threeh
-	0%
-		height: 0px
-	100%
-		height: 20px
-
-
-
-
 .foot
 	display: flex
 	flex-direction: column
 	justify-content: center
 	align-items: center
-	height: 120px
+	height: 80px
 	border-top: 1px solid #272727
 	padding: 0 40px
 	background: #171717

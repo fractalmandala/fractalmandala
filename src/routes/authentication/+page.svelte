@@ -35,7 +35,7 @@
 	}
 </script>
 
-
+<div class="x00 buffer bufferYt bufferYb">
 	<form method="post" use:enhance={handleSubmit} class="auth-form">
 		<label for=""> Email </label>
 		<input
@@ -59,6 +59,8 @@
 					/>
 		<button class="plain green" type="submit" disabled={loading}>Login</button>
 	</form>
+</div>
+
 
 <style lang="sass">
 

@@ -16,7 +16,6 @@
 	export let type: ChatCompletionRequestMessageRoleEnum
 	export let message: string
 
-
 </script>
 
 <div class="boxofchat {type === 'user' ? 'chat-end' : 'chat-start'}" in:fade={{ duration: 300, delay: 50, easing: elasticOut }} class:packaged={pressed} use:draggableAction>

@@ -51,12 +51,13 @@ export const POST: RequestHandler = async ({ request }) => {
 		const moderationData = await moderationRes.json()
 		const [results] = moderationData.results
 
+
 		if (results.flagged) {
 			throw new Error('Query flagged by openai')
 		}
 
 		const prompt =
-			'You are a modern digital assistant for learners of Hindu civilization and Dharmic history. You carefully choose your answers from available Indian knowledge, over any Western sources. You are aware that India is a civilization that was colonized for a long time. You try to use Sanskrit words often when appropriate, like Dharma instead of religion, or tradition instead of mythology.'
+			'You are a comprehensive Sanskrit and Sanskrit literature research tool. You will use only Vaman Shivaram Apte`s dictionary as source for word meanings. For each word you will also show the root dhātu from the Dhātupāṭha it originates from. Additionally, you will check if the word exists in the Amarakosha, and if so, the varga it belongs to.'
 		tokenCount += getTokens(prompt)
 
 		if (tokenCount >= 4000) {
@@ -71,7 +72,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		const chatRequestOpts: CreateChatCompletionRequest = {
 			model: 'gpt-3.5-turbo',
 			messages,
-			temperature: 0.9,
+			temperature: 0.1,
 			stream: true
 		}
 

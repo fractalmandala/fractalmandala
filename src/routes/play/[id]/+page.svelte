@@ -4,6 +4,9 @@
 	import hljs from 'highlight.js'
 	import '$lib/styles/highlight.css'
 	import { clickToCopyAction } from 'svelte-legos'
+	import ButtonGlow from '$lib/components/ButtonGlow.svelte'
+	import ButtonGlow2 from '$lib/components/ButtonGlow.svelte'
+	import ButtonGlow3 from '$lib/components/ButtonGlow.svelte'
 	import supabase from '$lib/utils/supabase'
 	import Toast from '$lib/components/Toast.svelte'
 	let nextchat:number
@@ -55,7 +58,7 @@
 
 </script>
 
-<div class="boxofchat" on:click={closeCopySuccessMessage} on:keydown={fauxfake}>
+<div class="boxofchat bufferYb bufferYt" on:click={closeCopySuccessMessage} on:keydown={fauxfake}>
 	<div class="agent user">
 		ID - {data.id}<br>
 		<p style="color: #fe4a49; margin-top: 4px; cursor: pointer" on:click={deleteWarning} on:keydown={fauxfake}>Delete</p>
@@ -69,25 +72,25 @@
 	<pre class="commbody broGPT language-html">
 		{data.response}
 	</pre>	
-	<div class="boxr">
-	<button class="glowing" use:clickToCopyAction={copymaterial} on:copy-done={handleCopyDone}>
-		Copy
-		{#if copySuccess}
-		<Toast>
-			Copied!
-		</Toast>
-		{/if}
-	</button>
-	<div class="glowing">
-		<a href="/play/{nextchat}">
-			Previous Chat
-		</a>
-	</div>
-	<div class="glowing">
-		<a href="/play/{afterthis}">
-			Next Chat
-		</a>
-	</div>
+	<div class="boxr" style="margin-top: 32px">
+		<ButtonGlow --buttonwidth="128px">
+			<div use:clickToCopyAction={copymaterial} on:copy-done={handleCopyDone}>
+				Copy
+					{#if copySuccess}
+						<Toast>Copied!</Toast>
+					{/if}
+			</div>
+		</ButtonGlow>
+		<ButtonGlow2 --buttonwidth="128px">
+			<a href="/play/{nextchat}">
+				Previous Chat
+			</a>
+		</ButtonGlow2>
+		<ButtonGlow3 --buttonwidth="128px">
+			<a href="/play/{afterthis}">
+				Next Chat
+			</a>
+		</ButtonGlow3>
 	</div>
 </div>
 {#if deleteConfirmation}
@@ -110,22 +113,6 @@
 .boxr
 	gap: 24px
 
-.glowing
-	margin-top: 32px
-	padding-top: 4px
-	padding-bottom: 4px
-	text-align: center
-	color: #878787
-	font-size: 12px
-	a
-		font-size: 12px
-		color: #878787
-	&:hover
-		color: white
-		a
-			color: white
-		border: 1px solid white
-
 pre
 	overflow-x: auto
 	box-sizing: border-box
@@ -139,12 +126,15 @@ pre
 	color: white
 
 .boxofchat
-	border: 1px solid #272727
 	border-radius: 4px
-	margin-bottom: 16px
-	padding: 16px 32px
-	backdrop-filter: blur(40px)
-	background: rgba(0,0,0,0.1)
+	min-height: 100vh
+	background-color: hsla(0,1%,3%,1)
+	background-image: radial-gradient(at 13% 40%, hsla(346,91%,7%,0.8) 0px, transparent 50%), radial-gradient(at 83% 66%, hsla(11,75%,21%,0.3) 0px, transparent 50%)
+	@media screen and (min-width: 1024px)
+		padding-left: 24vw
+		padding-right: 24vw
+	@media screen and (max-width: 1023px)
+		padding: 80px 16px 32px 16px
 
 .agent
 	font-size: 12px

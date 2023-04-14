@@ -2,8 +2,8 @@
 
 	import { onMount } from 'svelte'
 	import ChatMessage from '$lib/components/ChatMessage.svelte'
-	import hljs from 'highlight.js'
-	import '$lib/styles/highlight.css'	
+	import Prism from 'prismjs'
+	import '$lib/styles/prism.css'
 	import type { ChatCompletionRequestMessage } from 'openai'
 	import { TagsFiltered } from '$lib/utils/supabase'
 	import { SSE } from 'sse.js'
@@ -110,7 +110,7 @@
 
 
 	onMount(async() => {
-		hljs.highlightAll()	
+		Prism.highlightAll()	
 		codas = await TagsFiltered(tags)
 	})
 </script>

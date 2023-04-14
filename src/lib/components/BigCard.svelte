@@ -25,7 +25,6 @@ export let linkvar:any
 	align-items: center
 	text-align: center
 	border-radius: 4px
-	transition: all 0.7s cubic-bezier(0.430, 0.580, 0.000, 1.140)
 	cursor: pointer
 	&::before
 		position: absolute

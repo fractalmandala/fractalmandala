@@ -13,7 +13,7 @@
 </script>
 
 
-<div class="standardbloggrid buffer bufferYt bufferYb">
+<div class="standardbloggrid buffer bufferYt bufferYb height">
 	{#if posts && posts.length > 0}
 		{#each posts as item, i}
 			<Postal i={i} linkvar={item.path}>
