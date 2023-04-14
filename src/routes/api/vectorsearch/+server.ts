@@ -1,33 +1,27 @@
+import { VITE_OPENAI_API_KEY } from '$env/static/private'
+import '$lib/utils/supabase'
 import { getTokens } from '$lib/utils/tokenizer'
-import type { RequestHandler } from './$types'
 import type { CreateChatCompletionRequest, ChatCompletionRequestMessage } from 'openai'
-import supabase from '$lib/utils/supabase'
+import type { RequestHandler } from './$types'
 import { json } from '@sveltejs/kit'
 
 export const config = {
 	runtime: 'edge'
 }
 
-const openAiKey = import.meta.env.VITE_OPENAI_API_KEY
-
-	export const POST: RequestHandler = async ({ request }) => {
-		try {
-			if (!openAiKey) {
-				throw new Error('OPENAI_KEY env variable not set')
-			}
-
+export const POST: RequestHandler = async ({ request }) => {
+	try {
+		if (!VITE_OPENAI_API_KEY) {
+			throw new Error('OPENAI_KEY env variable not set')
+		}
 		const requestData = await request.json()
-
 		if (!requestData) {
 			throw new Error('No request data')
 		}
-
 		const reqMessages: ChatCompletionRequestMessage[] = requestData.messages
-
 		if (!reqMessages) {
 			throw new Error('no messages provided')
 		}
-
 		let tokenCount = 0
 
 		reqMessages.forEach((msg) => {
@@ -35,49 +29,39 @@ const openAiKey = import.meta.env.VITE_OPENAI_API_KEY
 			tokenCount += tokens
 		})
 
-		const moderationRes = await fetch('https://api.openai.com/v1/moderations', {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${openAiKey}`
-			},
-			method: 'POST',
-				body: JSON.stringify({
-					input: reqMessages[reqMessages.length - 1].content
-				})
-			})
-			if (!moderationRes.ok) {
-				const err = await moderationRes.json()
-				throw new Error(err.error.message)
-			}
+    const sanitizedQuery = query.trim()
+    const moderationResponse = await fetch('https://api.openai.com/v1/moderations', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${openAiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        input: sanitizedQuery,
+      }),
+    }).then((res) => res.json())
 
-			const moderationData = await moderationRes.json()
-			const [results] = moderationData.results
+    const [results] = moderationResponse.results
 
-			if (results.flagged) {
-				throw new Error('Query flagged by openai')
-			}
-	
-			const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
-      	method: 'POST',
-      	headers: {
-        	Authorization: `Bearer ${openAiKey}`,
-        	'Content-Type': 'application/json',
-      	},
-      	body: JSON.stringify({
-        	model: 'text-embedding-ada-002',
-        	input: reqMessages[reqMessages.length - 1].content
-      	}),
-    	})
+    const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${VITE_OPENAI_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'text-embedding-ada-002',
+        input: sanitizedQuery.replaceAll('\n', ' '),
+      }),
+    })	
+    if (embeddingResponse.status !== 200) {
+      throw new ApplicationError('Failed to create embedding for question', embeddingResponse)
+    }
 
-    	if (embeddingResponse.status !== 200) {
-      	throw new Error('Failed to create embedding for question')
-    	}
-
-    	const {
-      	data: [{ embedding }],
-    	} = await embeddingResponse.json()
-
-    const { error , data: pageSections } = await supabase.rpc(
+    const {
+      data: [{ embedding }],
+    } = await embeddingResponse.json()
+    const { error: matchError, data: pageSections } = await supabaseClient.rpc(
       'match_page_sections',
       {
         embedding,
@@ -87,52 +71,10 @@ const openAiKey = import.meta.env.VITE_OPENAI_API_KEY
       }
     )
 
-    if (error) {
-      throw new Error(error.message)
+    if (matchError) {
+      throw new ApplicationError('Failed to match page sections', matchError)
     }
-
-
-		const prompt =
-			'You are a modern digital assistant.'
-		tokenCount += getTokens(prompt)
-
-		if (tokenCount >= 4000) {
-			throw new Error('Query too large')
-		}
-
-		const messages: ChatCompletionRequestMessage[] = [
-			{ role: 'system', content: prompt },
-			...reqMessages
-		]
-
-		const chatRequestOpts: CreateChatCompletionRequest = {
-			model: 'gpt-3.5-turbo',
-			messages,
-			temperature: 0.9,
-			stream: true
-		}
-
-		const chatResponse = await fetch('https://api.openai.com/v1/chat/completions', {
-			headers: {
-				Authorization: `Bearer ${openAiKey}`,
-				'Content-Type': 'application/json'
-			},
-			method: 'POST',
-			body: JSON.stringify(chatRequestOpts)
-		})
-
-		if (!chatResponse.ok) {
-			const err = await chatResponse.json()
-			throw new Error(err.error.message)
-		}
-
-		return new Response(chatResponse.body, {
-			headers: {
-				'Content-Type': 'text/event-stream'
-			}
-		})
-	} catch (err) {
-		console.error(err)
-		return json({ error: 'There was an error processing your request' }, { status: 500 })
+		
 	}
 }
+

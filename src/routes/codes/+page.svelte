@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte'
 	import { allCodes } from '$lib/utils/supabase'
 	import BigCard from '$lib/components/BigCard.svelte'
+	import Postal from '$lib/components/Postal.svelte'
 
 	let codas:any
 
@@ -13,38 +14,22 @@
 </script>
 
 
-<div class="postsarea">
+<div class="standardbloggrid buffer bufferYt bufferYb">
 	{#if codas && codas.length > 0}
 		{#each codas as item, i}
-			<BigCard linkvar="/codes/{item.counting}">
-				<small slot="category">{item.type}</small>
-				<h5 slot="title">{item.title}</h5>
-				<p slot="tags">{item.tags} - {item.lang}</p>
-			</BigCard>
+			<Postal i={i} linkvar="/codes/{item.counting}">
+				<small slot="postalone">{item.type}</small>
+				<h5 slot="postaltwo">{item.title}</h5>
+				<p slot="postalthree">{item.tags} | {item.lang}</p>
+			</Postal>
 		{/each}
 	{/if}
 </div>
 
 <style lang="sass">
 
-.postsarea
-	display: grid
-	grid-auto-flow: row
-	grid-template-rows: auto
-	margin-top: 32px
-	padding-bottom: 32px
-	@media screen and (min-width: 1024px)
-		grid-template-columns: 1fr 1fr 1fr 1fr
-		grid-template-areas: ". . . ."
-		gap: 16px 16px
-		height: 100%
-	@media screen and (max-width: 1023px)
-		grid-template-columns: 1fr 1fr
-		grid-template-areas: ". ."
-		gap: 16px 16px
-		padding-bottom: 0px
-		height: 100%
-		padding-left: 16px
-		padding-right: 16px
+.standardbloggrid
+	background-color: hsla(0,0%,4%,1)
+	background-image: radial-gradient(at 40% 20%, hsla(283,62%,9%,0.71) 0px, transparent 50%), radial-gradient(at 76% 83%, hsla(256,77%,16%,0.64) 0px, transparent 50%)
 
 </style>

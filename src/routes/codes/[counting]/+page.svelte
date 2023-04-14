@@ -207,14 +207,6 @@
 		</div>
 	{:else}
 	<div class="boxr">
-		<div class="boxr nav">
-			<a href="/notes/{previd}" target="_self">
-				<img src="https://rnfvzaelmwbbvfbsppir.supabase.co/storage/v1/object/public/brhatwebsite/08icons/chevleft.png" alt="left"/>
-			</a>
-			<a href="/notes/{nextid}" target="_self">
-				<img src="https://rnfvzaelmwbbvfbsppir.supabase.co/storage/v1/object/public/brhatwebsite/08icons/chevright.png" alt="right"/>
-			</a>
-		</div>
 		<h2>
 			{data.title}
 		</h2>
@@ -259,7 +251,7 @@
 	</div>
 	{/if}
 </div>
-	{#if confirmationWindow}
+{#if confirmationWindow}
 	<div class="confirmationmodal">
 		<div class="insidemodal">
 			<h5>This will delete the document!</h5>
@@ -270,7 +262,7 @@
 			</div>
 		</div>
 	</div>
-	{/if}
+{/if}
 
 <style lang="sass">
 
@@ -418,15 +410,6 @@ h2
 	height: 28px
 	padding-bottom: 8px
 	gap: 12px
-	img
-		object-fit: contain
-		height: 20px
-		filter: saturate(0.01)
-		opacity: 0.5
-		cursor: pointer
-		&:hover
-			filter: saturate(1)
-			opacity: 1
 	@media screen and (max-width: 1023px)
 		width: 100%
 		flex-direction: row

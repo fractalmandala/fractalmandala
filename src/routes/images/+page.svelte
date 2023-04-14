@@ -11,7 +11,7 @@
 
 </script>
 
-<div class="postsarea">
+<div class="standardbloghorizontal">
 	{#if images && images.length > 0}
 		{#each images as item, i}
 			<div class="bigimagebox">
@@ -25,30 +25,25 @@
 
 <style lang="sass">
 
-.bigimagebox a
-	img
-		object-fit: cover
-		height: 100%
-		width: 100%
-
-.postsarea
+.standardbloghorizontal
 	display: grid
-	grid-auto-flow: row
-	grid-template-rows: auto
-	margin-top: 32px
-	padding-bottom: 32px
-	@media screen and (min-width: 1024px)
-		grid-template-columns: 1fr 1fr 1fr 1fr
-		grid-template-areas: ". . . ."
-		gap: 16px 16px
-		height: 100%
-	@media screen and (max-width: 1023px)
-		grid-template-columns: 1fr 1fr
-		grid-template-areas: ". ."
-		gap: 16px 16px
-		padding-bottom: 0px
-		height: 100%
-		padding-left: 16px
-		padding-right: 16px
+	width: 100vw
+	height: 100vh
+	grid-template-columns: 1fr 1fr 1fr
+	grid-template-rows: 1fr 1fr
+	grid-template-areas: ". . ." ". . ."
+	gap: 4px 4px
+	grid-auto-flow: column
+	overflow-x: scroll
+	overflow-y: hidden
+	.bigimagebox
+		flex-shrink: 0
+		width: 50vw
+		height: 50vh
+	.bigimagebox a
+		img
+			object-fit: cover
+			height: 100%
+			width: 100%
 
 </style>

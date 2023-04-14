@@ -7,7 +7,7 @@
 .ql-container {
   box-sizing: border-box;
   font-family: 'Spline Sans', sans-serif;
-  font-size: 13px;
+  font-size: 12px;
   margin: 0px;
   position: relative;
 	border: 1px solid #272727;
@@ -42,7 +42,7 @@
 	margin-top: 16px;
   box-sizing: border-box;
   line-height: 1.42;
-  min-height: 400px;
+  min-height: 500px;
   outline: 1px solid #272727;
   overflow: visible;
   padding: 12px 15px;
@@ -51,47 +51,15 @@
   text-align: left;
   white-space: pre-wrap;
   word-wrap: break-word;
-	background: #171717;
+	background: #111111;
 	border-radius: 4px;
-	box-shadow: 4px 6px 10px #040404;
 	position: relative;
-	backdrop-filter: blur(20px);
+	font-size: 14px
 }
 .ql-editor:hover::before {
 		width: 0;
 		height: 0;
 	}
-
-.ql-editor::before {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	content: '';
-	width: 100%;
-	height: 100%;
-	border-radius: 4px;
-	margin: 0 auto;
-	z-index: -1;
-	background: linear-gradient(89deg, rgba(16,213,108,1), rgba(40,10,53,1));
-	background-size: 400% 4%;
-	animation: theglowing 5s ease infinite;
-	background-position: 0% 0%;
-	filter: blur(30px);
-}
-
-.ql-editor::after {
-	position: absolute;
-	background: #171717;
-	backdrop-filter: blur(10px);
-	content: '';
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	z-index: -1;
-	border-radius: 4px;
-}
 
 
 .ql-editor > * {
@@ -115,7 +83,7 @@
 }
 
 .ql-editor p, .ql-editor li {
-	font-size: 18px;
+	font-size: 16px;
 }
 .ql-editor ol,
 .ql-editor ul {

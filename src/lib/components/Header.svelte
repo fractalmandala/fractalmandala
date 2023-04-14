@@ -3,14 +3,12 @@
 	import { onMount } from 'svelte'
 	import { get, writable } from 'svelte/store'
 	import supabase from '$lib/utils/supabase'
-	import StandardSidebar from '$lib/components/StandardSidebar.svelte'
 	const searchStore = writable('')
 	let searchinput
 	const resultsStore = writable([])
 	let showResults = false
 	let loadingStore = false;
 	import { fly } from 'svelte/transition'
-	import { backIn, backOut } from 'svelte/easing' 
 	import { page } from '$app/stores'
 	import LogoFM from '$lib/components/LogoFM.svelte'
 	import LogoFMMotif from '$lib/components/LogoFMMotif.svelte'
@@ -30,6 +28,9 @@
 
 	function togglePagesOn(){
 		if ( screenWidth > 1023 ) {
+			if ( showThemeItems === true ) {
+				showThemeItems = false
+			}
 			if ( showPages === false ) {
 				showPages = true
 			}
@@ -46,6 +47,9 @@
 
 	function toggleThemeItemsOn(){
 		if ( screenWidth > 1023 ) {
+			if ( showPages === true ) {
+				showPages = false
+			}
 			if ( showThemeItems === false ) {
 				showThemeItems = true
 			}
@@ -81,21 +85,29 @@
 	}
 
 	const searchWord = async() => {
-	loadingStore = true
-	showResults = true
-	const searchTerm = get(searchStore)
-	let results: any[] = []
-	const { data, error } = await supabase
-		.from('amrit-notes')
-		.select()
-		.textSearch('fts', searchTerm)
-		.order('id')
-		if (error) throw new Error(error.message)
-		results = results.concat(data)
+		loadingStore = true
+		showResults = true
+		const searchTerm = get(searchStore)
+		let results: any[] = []
+		const { data, error } = await supabase
+			.from('amrit-notes')
+			.select()
+			.textSearch('fts', searchTerm)
+			.order('id')
+			if (error) throw new Error(error.message)
+			results = results.concat(data)
+
+		const { data: dataone, error: errorone } = await supabase
+			.from('amrit-chatswithgpt')
+			.select()
+			.textSearch('fts', searchTerm)
+			.order('id')
+			if (errorone) throw new Error(errorone.message)
+			results = results.concat(dataone)
 	// @ts-ignore
-	resultsStore.set(data)
-	loadingStore = false
-	input.value = ''
+		resultsStore.set(results)
+		loadingStore = false
+		input.value = ''
 }
 	
 
@@ -130,32 +142,17 @@
 					<path fill-rule="evenodd" clip-rule="evenodd" d="M19 17.25C19.1381 17.25 19.25 17.3619 19.25 17.5C19.25 17.6381 19.1381 17.75 19 17.75C18.8619 17.75 18.75 17.6381 18.75 17.5C18.75 17.3619 18.8619 17.25 19 17.25ZM20.75 17.5C20.75 16.5335 19.9665 15.75 19 15.75C18.0335 15.75 17.25 16.5335 17.25 17.5C17.25 18.4665 18.0335 19.25 19 19.25C19.9665 19.25 20.75 18.4665 20.75 17.5Z" fill="white"/>
 				</svg>	
 			</div>
-			{#if breakPoint}
-			<div class="fields">
-				<div class="themes" on:keydown={blankKey} on:mouseenter={toggleThemeItemsOn}>Themes</div>
-				{#if showThemeItems}
-				<div class="themeitems" in:fly={{ duration: 150, y: 200, easing: backOut}} out:fly={{ duration: 200, y: -200, easing: backIn}} on:mouseleave={toggleThemeItemsOff}>
-					<div class="singletheme"><a href="/mandala">Posts</a></div>
-					<div class="singletheme"><a href="/docs">Documentation</a></div>
-					<div class="singletheme"><a href="/codes">Codes</a></div>
-					<div class="singletheme"><a href="/play">GPT Chats</a></div>
-					<div class="singletheme"><a href="/images">Images</a></div>
-				</div>
-				{/if}
-			</div>
-			<div class="pages">
-				<div class="allpages" on:keydown={blankKey} on:mouseenter={togglePagesOn}>Pages</div>
-				{#if showPages}
-					<div class="pageitems" in:fly={{ duration: 150, y: 200, easing: backOut}} out:fly={{ duration: 200, y: -200, easing: backIn}} on:mouseleave={togglePagesOff}>
-						<div class="singlepage"><a href="/pad">Notepad</a></div>
-						<div class="singlepage"><a href="/play">Playground</a></div>
-						<div class="singlepage"><a href="/form">Forms</a></div>
-					</div>
-				{/if}
-			</div>
-			{/if}
 		</div>
-		{#if breakPoint}
+		<div class="openarea" on:mouseleave={toggleThemeItemsOff} on:mouseleave={togglePagesOff}>
+			<div class="singletheme"><a href="/mandala">Posts</a></div>
+			<div class="singletheme"><a href="/docs">Docs</a></div>
+			<div class="singletheme"><a href="/codes">Codes</a></div>
+			<div class="singletheme"><a href="/play">GPT Chats</a></div>
+			<div class="singletheme"><a href="/images">Images</a></div>
+			<div class="singletheme"><a href="/pad">Pad</a></div>
+			<div class="singletheme"><a href="/play">Play</a></div>
+			<div class="singletheme"><a href="/form">Form</a></div>
+		</div>
 		<div class="searcherinput">
 			<input type="text"
 				bind:this={searchinput}
@@ -165,12 +162,11 @@
 				<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path class="inputwhite" d="M11 21C16.5229 21 21 16.5229 21 11C21 5.47715 16.5229 1 11 1C5.47715 1 1 5.47715 1 11C1 16.5229 5.47715 21 11 21Z" fill="#171717"/>
 				<path class="inputwhite" fill-rule="evenodd" clip-rule="evenodd" d="M0.25 11C0.25 5.06294 5.06294 0.25 11 0.25C16.9371 0.25 21.75 5.06294 21.75 11C21.75 16.9371 16.9371 21.75 11 21.75C5.06294 21.75 0.25 16.9371 0.25 11ZM11 1.75C5.89136 1.75 1.75 5.89136 1.75 11C1.75 16.1086 5.89136 20.25 11 20.25C16.1086 20.25 20.25 16.1086 20.25 11C20.25 5.89136 16.1086 1.75 11 1.75Z" fill="#171717"/>
-				<path class="inputpurple" fill-rule="evenodd" clip-rule="evenodd" d="M6.96967 6.96967C7.26256 6.67678 7.73744 6.67678 8.03033 6.96967L11.5303 10.4697C11.8232 10.7626 11.8232 11.2374 11.5303 11.5303L8.03033 15.0303C7.73744 15.3232 7.26256 15.3232 6.96967 15.0303C6.67678 14.7374 6.67678 14.2626 6.96967 13.9697L9.93934 11L6.96967 8.03033C6.67678 7.73744 6.67678 7.26256 6.96967 6.96967Z" fill="#BB1B7B"/>
-				<path class="inputpurple" fill-rule="evenodd" clip-rule="evenodd" d="M11.4697 6.96967C11.7626 6.67678 12.2374 6.67678 12.5303 6.96967L16.0303 10.4697C16.3232 10.7626 16.3232 11.2374 16.0303 11.5303L12.5303 15.0303C12.2374 15.3232 11.7626 15.3232 11.4697 15.0303C11.1768 14.7374 11.1768 14.2626 11.4697 13.9697L14.4393 11L11.4697 8.03033C11.1768 7.73744 11.1768 7.26256 11.4697 6.96967Z" fill="#BB1B7B"/>
+				<path class="inputpurple" fill-rule="evenodd" clip-rule="evenodd" d="M6.96967 6.96967C7.26256 6.67678 7.73744 6.67678 8.03033 6.96967L11.5303 10.4697C11.8232 10.7626 11.8232 11.2374 11.5303 11.5303L8.03033 15.0303C7.73744 15.3232 7.26256 15.3232 6.96967 15.0303C6.67678 14.7374 6.67678 14.2626 6.96967 13.9697L9.93934 11L6.96967 8.03033C6.67678 7.73744 6.67678 7.26256 6.96967 6.96967Z" fill="#61339C"/>
+				<path class="inputpurple" fill-rule="evenodd" clip-rule="evenodd" d="M11.4697 6.96967C11.7626 6.67678 12.2374 6.67678 12.5303 6.96967L16.0303 10.4697C16.3232 10.7626 16.3232 11.2374 16.0303 11.5303L12.5303 15.0303C12.2374 15.3232 11.7626 15.3232 11.4697 15.0303C11.1768 14.7374 11.1768 14.2626 11.4697 13.9697L14.4393 11L11.4697 8.03033C11.1768 7.73744 11.1768 7.26256 11.4697 6.96967Z" fill="#61339C"/>
 				</svg>
 			</button>
 		</div>
-		{/if}
 	</div>
 {#if loadingStore}
 	<div class="sidestream">
@@ -181,7 +177,11 @@
 	<div class="sidestream" on:click={closeSearch} on:keydown={blankKey}>
 		{#if $resultsStore.length>0}
 				{#each $resultsStore as item, i}
-					<p in:fly={{ duration: 200, delay: i*20, x: 128}}><a href="/notes/{item.counting}">{item.title}</a></p>
+					{#if item.title && item.title.length > 0}
+						<p in:fly={{ duration: 200, delay: i*20, x: 128}}><a href="/notes/{item.counting}">{item.title}</a></p>
+					{:else if item.prompt && item.prompt.length > 0}
+						<p in:fly={{ duration: 200, delay: i*20, x: 128}}><a href="/play/{item.id}">{item.prompt.slice(0,35)}</a></p>
+					{/if}
 				{/each}
 		{/if}
 	</div>
@@ -192,28 +192,24 @@
 
 <style lang="sass">
 
-.fields, .pages
+.openarea
+	display: flex
+	flex-direction: row
+	align-items: center
+	gap: 24px
+
+.singletheme
 	border: 1px solid #272727
 	border-radius: 4px
 	cursor: pointer
 	transform-origin: center center
-	position: relative
 	color: #FFFFFF
-	transition: all 0.15s var(--cubed)
-	box-shadow: 4px 6px 12px #010101
-	@media screen and (max-width: 1023px)
-		border: none
-		border-radius: none
-		box-shadow: none
-		background: none
-		&::before
-			width: 0
-			height: 0
-			background-image: none
-			background-color: none
-
-.fields
-	margin-left: 12px
+	transition: all 0.15s ease
+	box-shadow: none
+	font-size: 14px
+	padding: 4px 8px
+	position: relative
+	z-index: 1
 	&::before
 		position: absolute
 		top: 0
@@ -221,123 +217,32 @@
 		width: 100%
 		height: 100%
 		content: ''
-		background-color: hsla(140,80%,60%,0.5)
-		filter: blur(40px)
 		z-index: -1
-		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
-		background-size: 400% 400%
+		background-color: hsla(100,90%,5%,1)
+		transition: all 0.05s ease
+		filter: blur(30px)
+		background-image: radial-gradient(at 17% 36%, hsla(148,97%,99%,1) 0px, transparent 1%), radial-gradient(at 80% 70%, hsla(125,87%,60%,1) 0px, transparent 50%)
 	&:hover
+		box-shadow: 4px 6px 12px #010101
+		overflow: hidden
+		background: #111111
 		&::before
-			filter: blur(20px)
-	@media screen and (max-width: 1023px)
-		&::before
-			background-image: radial-gradient(at 17% 36%, hsla(108,67%,12%,0) 0px, transparent 100%), radial-gradient(at 85% 70%, hsla(325,87%,60%,0) 0px, transparent 50%)
-			background-color: hsla(0,2%,5%,0)
-		&:hover
-			&::before
-				background-image: radial-gradient(at 17% 36%, hsla(108,67%,20%,0) 0px, transparent 100%), radial-gradient(at 85% 70%, hsla(325,87%,60%,0) 0px, transparent 50%)
-
-.pages
-	&::before
-		position: absolute
-		top: 0
-		left: 0
-		width: 100%
-		height: 100%
-		content: ''
-		background-color: hsla(0,2%,5%,1)
-		z-index: -1
-		background-image: radial-gradient(at 17% 36%, hsla(108,67%,12%,0.1) 0px, transparent 100%), radial-gradient(at 35% 14%, hsla(325,87%,60%,0.4) 0px, transparent 100%)
-		background-size: 400% 100%
-	&:hover
-		&::before
-			background-image: radial-gradient(at 17% 36%, hsla(108,67%,12%,0.1) 0px, transparent 100%), radial-gradient(at 35% 14%, hsla(325,87%,60%,0.7) 0px, transparent 100%)
-	@media screen and (max-width: 1023px)
-		&::before
-			background-image: radial-gradient(at 17% 36%, hsla(108,67%,12%,0) 0px, transparent 100%), radial-gradient(at 85% 70%, hsla(325,87%,60%,0) 0px, transparent 50%)
-			background-color: hsla(0,2%,5%,0)
-		&:hover
-			&::before
-				background-image: radial-gradient(at 17% 36%, hsla(108,67%,20%,0) 0px, transparent 100%), radial-gradient(at 85% 70%, hsla(325,87%,60%,0) 0px, transparent 50%)
-
-.themes, .allpages
-	font-size: 16px
-	padding: 6px 18px
-	@media screen and (max-width: 1023px)
-		display: none
-
-.themeitems, .pageitems
-	position: absolute
-	background: rgba(0,0,0,0.1)
-	backdrop-filter: blur(30px)
-	padding: 16px
-	border: 1px solid #272727
-	box-shadow: 4px 6px 12px #010101, -4px -6px 12px #111111
-	border-radius: 4px
-	@media screen and (max-width: 1023px)
-		background: rgba(0,0,0,0)
-		backdrop-filter: blur(0)
-		box-shadow: none
-		width: 100vw
-		position: static
-		border: none
-
-.themeitems
-	top: 56px
-	left: 0
-	background-color: hsla(0,2%,5%,1)
-	background-image: radial-gradient(at 17% 36%, hsla(108,67%,12%,0.3) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,60%,0.4) 0px, transparent 42%)
-	display: flex
-	flex-direction: row
-	min-width: 600px !important
-	gap: 12px
-	@media screen and (max-width: 1023px)
-		background-color: hsla(0,2%,5%,0)
-		background-image: radial-gradient(at 17% 36%, hsla(108,67%,12%,0) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,60%,0) 0px, transparent 42%)
-		text-align: left
-
-.pageitems
-	top: 56px
-	right: 0
-	text-align: right
-	background-color: hsla(0,2%,5%,1)
-	background-image: radial-gradient(at 17% 36%, hsla(108,67%,10%,0.6) 0px, transparent 100%), radial-gradient(at 50% 70%, hsla(325,87%,60%,0.1) 0px, transparent 42%)
-	align-items: flex-end
-	display: flex
-	flex-direction: row
-	min-width: 240px	
-	@media screen and (max-width: 1023px)
-		background-color: hsla(0,2%,5%,0)
-		background-image: radial-gradient(at 17% 36%, hsla(108,67%,12%,0) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,60%,0) 0px, transparent 42%)
-		text-align: left
-		padding-left: 24px
-
-.singletheme
-	font-size: 20px
-	padding: 8px
-	&:hover
-		color: #BB1B7B
-	@media screen and (max-width: 1023px)
-		font-size: 24px
-
-.singlepage
-	font-size: 20px
-	padding: 8px
-	&:hover
-		color: #10C56D
-	text-align: right
-	@media screen and (max-width: 1023px)
-		font-size: 24px
-	
+			background-color: hsla(100,90%,25%,1)
+			filter: blur(15px)
 
 .roundicon
 	background: none
 	border: none
 	outline: none
 	cursor: pointer
+	display: flex
+	flex-direction: row
+	align-items: center
 	svg
-		border: 1px solid #BB1B7B
+		border: 1px solid #61339C
 		border-radius: 50%
+		width: 30px
+		height: 30px
 	&:hover
 		.inputpurple
 			fill: #10C56D
@@ -386,21 +291,20 @@
 	z-index: 900
 	height: 100vh
 	position: absolute
-	margin-left: calc(100% - 360px)
-	top: 80px
+	top: 56px
 	right: 0
-	width: 360px
-	padding: 32px
+	width: 400px
+	padding: 48px
 	p
-		margin: 0 0 8px 0
-		padding: 4px 0
+		margin: 0 0 5px 0
+		padding: 6px
 		color: white
 		text-transform: capitalize
 		text-align: right
-		font-size: 18px
+		font-size: 14px
 		text-shadow: 4px 3px 6px #060606
-		&:hover
-			color: var(--purp)
+		color: white
+		cursor: pointer
 	@media screen and (max-width: 1023px)
 		top: 80px
 		left: 0
@@ -408,16 +312,25 @@
 		background: #171717
 		width: 100vw
 
+@keyframes backincrease
+	0%
+		width: 0
+	100%
+		width: 100%
+
 .searcherinput
 	display: flex
 	flex-direction: row
+	align-items: center
 	gap: 8px
+	min-width: 280px
 	input[type=text]
 		border-radius: 4px
 		border: 1px solid #474747
 		color: white
+		height: 32px
 		outline: none
-		width: 160px
+		width: 240px
 		background: none
 
 .headerouter
@@ -457,16 +370,10 @@
 					border: 1px solid white
 					background: white
 					color: black
-			
-
-.hiddenheader
-	transform: translateY(-56px)
 
 .topcol
-	display: flex
-	flex-direction: row
-	justify-content: space-between
-	align-items: center
+	display: grid
+	grid-auto-flow: row
 	height: 88px
 	position: relative
 	transition: 0.24s ease
@@ -479,6 +386,16 @@
 		content: ''
 		background: #10D56C
 		animation: greenstreak 30s ease infinite alternate-reverse
+	@media screen and (min-width: 1024px)
+		grid-template-rows: auto
+		grid-template-columns: 300px 1fr 280px
+		grid-template-areas: "trans openarea searcherinput"
+		.trans
+			grid-area: trans
+		.openarea
+			grid-area: openarea
+		.searcherinput
+			grid-area: searcherinput
 	@media screen and (max-width: 1023px)
 		flex-direction: row
 		justify-content: space-between

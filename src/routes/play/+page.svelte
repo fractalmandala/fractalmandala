@@ -4,7 +4,9 @@
 	import hljs from 'highlight.js'
 	import '$lib/styles/highlight.css'	
 	import { chatsGPT } from '$lib/utils/supabase'
+	import { slide } from 'svelte/transition'
 	import BigCard from '$lib/components/BigCard.svelte'
+	import Postal from '$lib/components/Postal.svelte'
 
 	let chats:any
 
@@ -24,37 +26,23 @@
 </svelte:head>
 
 
-<div class="postsarea">
+<div class="standardbloggrid buffer bufferYt bufferYb">
 	{#if chats && chats.length > 0}
 		{#each chats as item, i}
-			<BigCard linkvar="/play/{item.id}">
-				<h5 slot="title">{item.prompt.slice(0,50)}</h5>
-			</BigCard>
+			<Postal i={i} linkvar="/play/{item.id}">
+				<h5 slot="postalone">{item.prompt.slice(0,50)}</h5>
+				<p slot="postaltwo">{item.response.slice(0,200)}</p>
+			</Postal>
 		{/each}
 	{/if}
 </div>
 
+
 <style lang="sass">
 
-.postsarea
-	display: grid
-	grid-auto-flow: row
-	grid-template-rows: auto
-	margin-top: 32px
-	padding-bottom: 32px
-	@media screen and (min-width: 1024px)
-		grid-template-columns: 1fr 1fr 1fr 1fr
-		grid-template-areas: ". . . ."
-		gap: 16px 16px
-		height: 100%
-	@media screen and (max-width: 1023px)
-		grid-template-columns: 1fr 1fr
-		grid-template-areas: ". ."
-		gap: 16px 16px
-		padding-bottom: 0px
-		height: 100%
-		padding-left: 16px
-		padding-right: 16px
+.standardbloggrid
+	background-color: hsla(0,0%,4%,1)
+	background-image: radial-gradient(at 23% 26%, hsla(103,91%,7%,0.59) 0px, transparent 50%), radial-gradient(at 89% 55%, hsla(135,89%,7%,0.59) 0px, transparent 50%)
+
 
 </style>
-

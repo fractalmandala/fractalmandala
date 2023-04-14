@@ -5,57 +5,27 @@
 	import hljs from 'highlight.js'
 	import '$lib/styles/highlight.css'	
 	import type { ChatCompletionRequestMessage } from 'openai'
+	import { TagsFiltered } from '$lib/utils/supabase'
 	import { SSE } from 'sse.js'
-	import BigCard from '$lib/components/BigCard.svelte'
-	import { get, writable } from 'svelte/store'
+	import Postal from '$lib/components/Postal.svelte'
 	import supabase from '$lib/utils/supabase'
-	import { allNotes, allCodes, noCodes, allOthers, CodeCSS, CodeJS, CodeHTML, quillNotes, MidjourneyImages, MidjourneyTagged, chatsGPT, onlyStarred, singleNote } from '$lib/utils/supabase'
-	import { allDocs, allMandalas } from '$lib/utils/localpulls'
 	let submittance:any
 	let query: string = ''
 	let answer: string = ''
 	let userprompt:any
 	let loading: boolean = false
 	let chatMessages: ChatCompletionRequestMessage[] = []
+	let tags = 'star'
+	let codas:any
+	let fake = false
 
-	const searchStore = writable('')
-	let searchinput
-	const resultsStore = writable([])
-	let showResults = false
-	let loadingStore = false;	
-	let notes:any
-	let codes:any
-	let gens:any
-	let ccss:any
-	let cjs:any
-	let chtml:any
-	let docs:any
-	let images:any
-	let quills:any
-	let chats:any
-	let posts:any
-	let nocodas:any
-	let stars:any
-	let faux:boolean = false
-	let imageTag:any = ''
-	let taggedimages:any
-	let lightbox:boolean[] = Array(400).fill(false)
 	let area:boolean[] = Array(9).fill(false)
-	let inView:boolean[] = Array(300).fill(false)
 	area[1] = true
-	inView[1] = true
-	let title:any
-	let single:any
-	let galleryView:boolean = false
-	let postsview:boolean = false
-	let openSidebar:boolean = false
 
-	function showGallery(){
-		galleryView = !galleryView
-		if ( postsview === true) {
-			postsview = false
-		}
+	function fauxfake(){
+		fake = !fake
 	}
+
 
 	const handleSubmit = async () => {
 		loading = true
@@ -128,52 +98,20 @@
 		console.error(err)
 	}
 
-	const searchWord = async() => {
-	loadingStore = true
-	showResults = true
-	const searchTerm = get(searchStore)
-	let results: any[] = []
-	const { data, error } = await supabase
-		.from('amrit-notes')
-		.select()
-		.textSearch('fts', searchTerm)
-		.order('id')
-		if (error) throw new Error(error.message)
-		results = results.concat(data)
-	// @ts-ignore
-	resultsStore.set(data)
-	loadingStore = false
-	searchinput = ''
-}
-
-	$: if (imageTag) {
-			(async() => {
-				taggedimages = await MidjourneyTagged(imageTag)
-			})()
-		}
-
-
-	function toggleFaux(){
-		faux = !faux
+	function changeTag(newTag:any){
+		tags = newTag
 	}
+
+	$: if ( tags ) {
+		(async() => {
+		codas = await TagsFiltered(tags)
+		})()
+	}
+
 
 	onMount(async() => {
 		hljs.highlightAll()	
-		stars = await onlyStarred()
-		notes = await allNotes()
-		codes = await allCodes()
-		gens = await allOthers()
-		ccss = await CodeCSS()
-		cjs = await CodeJS()
-		chtml = await CodeHTML()
-		docs = await allDocs()
-		quills = await quillNotes()
-		images = await MidjourneyImages()
-		posts = await allMandalas()
-		chats = await chatsGPT()
-		nocodas = await noCodes()
-		taggedimages = await MidjourneyTagged(imageTag)
-		single = await singleNote(title)
+		codas = await TagsFiltered(tags)
 	})
 </script>
 
@@ -184,9 +122,31 @@
 
 
 
-<div class="introarea">
-	<div class="inviewarea">
-		<ChatMessage type="assistant" message="Namaste. How may I help you?" />	
+<div class="introarea buffer bufferYt">
+	<p>
+		A simple blog to document a non-programmer bootstrapping himself into web-dev. <span class="special">My stack:</span>
+	</p>
+	<p>
+		- backend at <a href="https://supabase.com/" target="_blank" rel="noreferrer">Supabase</a><br>
+		- framework: <a href="https://kit.svelte.dev/" target="_blank" rel="noreferrer">Sveltekit</a><br>
+		- deployed at <a href="https://vercel.com/home" target="_blank" rel="noreferrer">Vercel</a><br>
+		- also mounted:
+	</p>
+	<ul>
+		<li><a href="https://lenis.studiofreight.com/" target="_blank" rel="noreferrer">Lenis</a></li>
+		<li><a href="https://greensock.com/gsap/" target="_blank" rel="noreferrer">GSAP</a></li>
+		<li><a href="https://mdsvex.pngwn.io/" target="_blank" rel="noreferrer">MDSvex</a></li>
+		<li><a href="https://github.com/SharifClick/svelte-swipe" target="_blank" rel="noreferrer">Svelte Swipe</a></li>
+		<li><a href="https://github.com/DaveKeehl/svelte-reveal" target="_blank" rel="noreferrer">Svelte Reveal</a></li>
+		<li><a href="https://sveltelegos.com/" target="_blank" rel="noreferrer">Svelte Legos</a></li>
+		<li><a href="https://prismjs.com/" target="_blank" rel="noreferrer">Prism JS</a></li>
+	</ul>
+	<p>
+		Browse/search through an unorganized assortment of code snippets, setup guides and troubleshooting pointers. Play with broGPT, my AI pal, below.
+	</p>
+</div>
+<div class="inviewarea buffer bufferYb">
+	<ChatMessage type="assistant" message="Namaste. How may I help you?" />	
 		{#each chatMessages as message}
 			<ChatMessage type={message.role} message={message.content} />
 		{/each}
@@ -204,37 +164,34 @@
 				<button class="glowing" type="submit" on:click={() => handleSubmit()} on:keydown={handleKeyDownInput}> Send </button>
 			</form>
 		</div>
-	</div>
-	<div class="outview">
-		<p>
-			A simple blog to document a non-programmer bootstrapping himself into web-dev. <span class="special">My stack:</span>
-		</p>
-		<p>
-			- backend at <a href="https://supabase.com/" target="_blank" rel="noreferrer">Supabase</a><br>
-			- framework: <a href="https://kit.svelte.dev/" target="_blank" rel="noreferrer">Sveltekit</a><br>
-			- deployed at <a href="https://vercel.com/home" target="_blank" rel="noreferrer">Vercel</a><br>
-			- also mounted:
-		</p>
-			<li><a href="https://lenis.studiofreight.com/" target="_blank" rel="noreferrer">Lenis</a></li>
-			<li><a href="https://greensock.com/gsap/" target="_blank" rel="noreferrer">GSAP</a></li>
-			<li><a href="https://mdsvex.pngwn.io/" target="_blank" rel="noreferrer">MDSvex</a></li>
-			<li><a href="https://github.com/SharifClick/svelte-swipe" target="_blank" rel="noreferrer">Svelte Swipe</a></li>
-			<li><a href="https://github.com/DaveKeehl/svelte-reveal" target="_blank" rel="noreferrer">Svelte Reveal</a></li>
-			<li><a href="https://sveltelegos.com/" target="_blank" rel="noreferrer">Svelte Legos</a></li>
-			<li><a href="https://prismjs.com/" target="_blank" rel="noreferrer">Prism JS</a></li>
-		<p>
-			Browse/search through an unorganized assortment of code snippets, setup guides and troubleshooting pointers. Play with broGPT, my AI pal, below.
-		</p>
-	</div>
 </div>
-<div class="postsarea">
-	{#if posts && posts.length > 0}
-		{#each posts as item}
-			<BigCard linkvar={item.path}>
-				<small slot="category">{item.meta.type}</small>
-				<h5 slot="title">{item.meta.title}</h5>
-				<p slot="tags">{item.meta.tags}</p>
-			</BigCard>
+
+<div class="thinstrip">
+	<div on:click={() => changeTag('star')} on:keydown={fauxfake} class="{ tags === 'star' ? 'currentTag' : ''}">Star</div>
+	<div on:click={() => changeTag('sveltecode')} on:keydown={fauxfake} class="{ tags === 'sveltecode' ? 'currentTag' : ''}">Sveltecode</div>
+	<div on:click={() => changeTag('scroll')} on:keydown={fauxfake} class="{ tags === 'scroll' ? 'currentTag' : ''}">Scroll</div>
+	<div on:click={() => changeTag('gpt')} on:keydown={fauxfake} class="{ tags === 'gpt' ? 'currentTag' : ''}">GPT</div>
+	<div on:click={() => changeTag('supabase')} on:keydown={fauxfake} class="{ tags === 'supabase' ? 'currentTag' : ''}">Supabase</div>
+	<div on:click={() => changeTag('animation')} on:keydown={fauxfake} class="{ tags === 'animation' ? 'currentTag' : ''}">Animations</div>
+	<div on:click={() => changeTag('template')} on:keydown={fauxfake} class="{ tags === 'template' ? 'currentTag' : ''}">Templates</div>
+	<div on:click={() => changeTag('error')} on:keydown={fauxfake} class="{ tags === 'error' ? 'currentTag' : ''}">Errors</div>
+	<div on:click={() => changeTag('fetch')} on:keydown={fauxfake} class="{ tags === 'fetch' ? 'currentTag' : ''}">Fetch</div>
+	<div on:click={() => changeTag('setup')} on:keydown={fauxfake} class="{ tags === 'setup' ? 'currentTag' : ''}">Setups</div>
+	<div on:click={() => changeTag('typography')} on:keydown={fauxfake} class="{ tags === 'typography' ? 'currentTag' : ''}">Typography</div>
+</div>
+<div class="standardbloggrid buffer bufferYb x00">
+	{#if codas && codas.length > 0}
+		{#each codas as item, i}
+			<Postal i={i} linkvar="/codes/{item.counting}">
+				<small slot="postalone">{item.lang}</small>
+				<h5 slot="postaltwo">{item.title}</h5>
+				<p slot="postalthree">{item.tags}</p>
+				<pre slot="codes">
+					<code class="language-{item.lang}">
+						{item.codesnippet}
+					</code>
+				</pre>
+			</Postal>
 		{/each}
 	{/if}
 </div>	
@@ -242,29 +199,62 @@
 
 <style lang="sass">
 
-.introarea
-	display: grid
-	grid-auto-flow: row
-	@media screen and (min-width: 1024px)
-		grid-template-columns: 1fr 1fr
-		grid-template-rows: auto
-		grid-template-areas: ". ."
-		gap: 0 0px
-		.inviewarea
-			padding-right: 104px
-		.outview
-			margin: 0
+.x00
+	align-items: start
+	align-content: start
+
+.thinstrip
+	div
+		cursor: pointer
+		border: 1px solid #272727
+		border-radius: 4px
+		cursor: pointer
+		transform-origin: center center
+		color: #FFFFFF
+		transition: all 0.15s ease
+		box-shadow: none
+		font-size: 14px
+		padding: 4px 8px
+		position: relative
+		z-index: 1
+		&::before
+			position: absolute
+			top: 0
+			left: 0
 			width: 100%
-	@media screen and (max-width: 1023px)
-		grid-template-columns: 1fr
-		grid-template-rows: auto auto
-		grid-template-areas: "outview" "inviewarea"
-		gap: 24px 0
-		padding-left: 16px
-		padding-right: 16px
-		padding-top: 96px
-		.outview
-			grid-area: outview
+			height: 100%
+			content: ''
+			z-index: -1
+			background-color: hsla(100,90%,5%,1)
+			transition: all 0.05s ease
+			filter: blur(30px)
+			background-image: radial-gradient(at 17% 36%, hsla(148,97%,99%,1) 0px, transparent 1%), radial-gradient(at 80% 70%, hsla(125,87%,60%,1) 0px, transparent 50%)
+		&:hover
+			box-shadow: 4px 6px 12px #010101
+			overflow: hidden
+			background: #111111
+			&::before
+				background-color: hsla(100,90%,25%,1)
+				filter: blur(15px)
+	.currentTag
+		&::before
+			filter: blur(30px)
+			background-color: hsla(100,90%,95%,1)
+			background-image: radial-gradient(at 99% 90%, hsla(248,79%,99%,1) 0px, transparent 100%), radial-gradient(at 8% 7%, hsla(395,99%,90%,1) 0px, transparent 10%)
+		
+
+.thinstrip
+	.currentTag
+		background: #171717
+		border: 1px solid #272727
+
+.thinstrip
+	display: flex
+	@media screen and (min-width: 1024px)
+		flex-direction: row
+		justify-content: center
+		gap: 48px
+
 	
 p .special
 	background: #64F540

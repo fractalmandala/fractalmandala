@@ -20,14 +20,18 @@
 <path class="mot-2" fill-rule="evenodd" clip-rule="evenodd" d="M17 5.75C16.3097 5.75 15.75 6.30966 15.75 7C15.75 7.69034 16.3097 8.25 17 8.25C17.6903 8.25 18.25 7.69034 18.25 7C18.25 6.30966 17.6903 5.75 17 5.75ZM14.25 7C14.25 5.48124 15.4812 4.25 17 4.25C18.5188 4.25 19.75 5.48124 19.75 7C19.75 8.51876 18.5188 9.75 17 9.75C15.4812 9.75 14.25 8.51876 14.25 7Z" fill="white"/>
 <path class="mot-1" d="M12 3C12 4.10455 11.1046 5 10 5C8.89545 5 8 4.10455 8 3C8 1.89543 8.89545 1 10 1C11.1046 1 12 1.89543 12 3Z" fill="white"/>
 <path class="mot-1" fill-rule="evenodd" clip-rule="evenodd" d="M10 1.75C9.30966 1.75 8.75 2.30965 8.75 3C8.75 3.69034 9.30961 4.25 9.99995 4.25C10.6903 4.25 11.25 3.69034 11.25 3C11.25 2.30965 10.6903 1.75 10 1.75ZM7.25 3C7.25 1.48121 8.48124 0.25 10 0.25C11.5188 0.25 12.75 1.48121 12.75 3C12.75 4.51876 11.5188 5.75 10 5.75C8.48124 5.75 7.25 4.51876 7.25 3Z" fill="white"/>
+<linearGradient id="paint0_linear_235_9" x1="3.22859e-08" y1="4" x2="26" y2="16" gradientUnits="userSpaceOnUse">
+<stop stop-color="#2E031F"/>
+<stop offset="1" stop-color="#EA69FF"/>
+</linearGradient>
 </svg>
 
 
 <style lang="sass">
 
 svg
-	width: 32px
-	height: 32px
+	width: 27px
+	height: 27px
 	margin-right: 12px
 	@media screen and (max-width: 1023px)
 		width: 26px

@@ -7,6 +7,7 @@
 	import supabase from '$lib/utils/supabase'
 	import Toast from '$lib/components/Toast.svelte'
 	let nextchat:number
+	let afterthis:number
 	let theid:any
 	let copymaterial: any
 	let copySuccess:boolean = false
@@ -45,6 +46,7 @@
 	onMount(async() => {
 		hljs.highlightAll()
 		nextchat = data.id - 1
+		afterthis = data.id + 1
 		copymaterial = data.response
 		theid = data.id
 	})
@@ -77,8 +79,13 @@
 		{/if}
 	</button>
 	<div class="glowing">
-		<a href="/play/{nextchat}" target="_self">
+		<a href="/play/{nextchat}">
 			Previous Chat
+		</a>
+	</div>
+	<div class="glowing">
+		<a href="/play/{afterthis}">
+			Next Chat
 		</a>
 	</div>
 	</div>

@@ -3,9 +3,27 @@ body, html
 	box-sizing: border-box
 	color: white
 	font-family: 'Spline Sans', sans-serif
-	background-color: hsla(0,2%,2%,1)
-	background-image: radial-gradient(at 80% 80%, hsla(101,3%,2%,1) 0px, transparent 50%), radial-gradient(at 40% 0%, hsla(126,75%,7%,1) 0px, transparent 50%)
-	background-size: 800% 400%
+
+body::-webkit-scrollbar-track
+	background: rgba(0,0,0,0)
+
+.buffer
+	@media screen and (min-width: 1024px)
+		padding-left: 48px
+		padding-right: 48px
+	@media screen and (max-width: 1023px)
+		padding-left: 16px
+		padding-right: 16px
+
+.bufferYt
+	@media screen and (min-width: 1024px)
+		padding-top: 80px
+
+.bufferYb
+	@media screen and (min-width: 1024px)
+		padding-bottom: 64px
+	
+
 
 p, .mandpand p
 	font-family: 'Spline Sans', sans-serif
@@ -25,7 +43,7 @@ p, .mandpand p
 	top: 0
 	left: 0
 	z-index: 9000
-	column-gap: 16px
+	column-gap: 24px
 	padding: 0 48px
 	opacity: 0.1
 	pointer-events: none
@@ -48,7 +66,7 @@ a
 *
 	box-sizing: border-box
 	--cubea: cubic-bezier(1.000, -0.105, 1.000, 0.410)
-	--purp: #500652
+	--purp: #61339C
 
 .boxr
 	display: flex
@@ -355,39 +373,6 @@ a
 		font-size: 15px
 		color: #575757
 
-#docsinside
-	p
-		padding-left: 0
-		margin-left: 0
-		white-space: pre-line
-
-#docsinside
-	background: #171717
-	border: 1px solid #272727
-	box-shadow: 3px 5px 8px rgba(0,0,0,0.7)
-	padding: 32px
-	&:hover
-		box-shadow: 0px 0px 0px rgba(0,0,0,0)
-	pre
-		overflow-x: scroll
-		border-top: 1px solid #272727
-		border-bottom: 1px solid #272727
-		padding: 16px 0
-		border-radius: 4px
-		padding: 16px
-		background: #121212
-		box-shadow: 3px 5px 8px rgba(0,0,0,0.5) inset, -3px -2px 5px rgba(0,0,0,0.4) inset
-		&:hover
-			box-shadow: 3px 5px 8px rgba(0,0,0,0) inset, -3px -2px 5px rgba(0,0,0,0) inset
-	@media screen and (max-width: 1023px)
-		padding: 8px
-		pre
-			margin: 0
-			background: #171717
-			box-shadow: none
-			&:hover
-				box-shadow: none
-
 pre
 	overflow-x: auto
 	box-sizing: border-box
@@ -397,65 +382,37 @@ pre
 	white-space: -o-pre-wrap
 	word-wrap: break-word
 	word-break: break-word
-		
-#docsinside
-	p, ul li, ol li
-		font-family: 'Spline Sans', sans-serif
-		font-size: 15px
-		color: white
-		line-height: 1.8
 
-.bigcard
+.postal
 	h5
 		font-size: 20px
-		font-family: 'Spline Sans', sans-serif
-		margin: 0
 		font-weight: 500
-	p
-		margin: 0
-		font-size: 14px
-		padding-top: 4px
-		transition: 0.3s cubic-bezier(0.430, 0.580, 0.000, 1.140)
-		transform: translateY(80px)
-		opacity: 0
-		text-transform: capitalize
-		color: #980789 !important
-	@media screen and (max-width: 1023px)
-		h5
-			font-size: 16px
-
-.bigcard
-	transition: 0.3s cubic-bezier(0.430, 0.580, 0.000, 1.140)
-	h5
-		transform: translateY(12px)
+		font-family: 'Spline Sans', sans-serif
 		transition: all 0.3s cubic-bezier(0.430, 0.580, 0.000, 1.140)
 		color: white
 		text-transform: capitalize
-	small
-		text-transform: uppercase
-		opacity: 0
+		margin: 2px 0 0 0
+		@media screen and (max-width: 1023px)
+			font-size: 18px
+	p
+		color: white
 		font-size: 12px
+		line-height: 1.8
+		padding-top: 16px
+		margin-top: 8px
+		border-top: 1px solid #272727
+	small
 		color: #10D56C
-	&:hover
-		overflow: hidden
-		small
-			opacity: 1
-		h5
-			transform: translateY(0px)
-			color: white
-		p
-			animation: aajaaaja 0.5s cubic-bezier(0.430, 0.580, 0.000, 1.140) forwards
+		font-size: 10px
+		text-transform: uppercase
+		font-weight: bold
+		letter-spacing: 2px
 
-@keyframes aajaaaja
-	0%
-		transform: translateY(80px)
-		opacity: 0
-	50%
-		transform: translateY(0px)
-		opacity: 0
-	100%
-		transform: translateY(0px)
-		opacity: 1
+.postal
+	&:hover
+		p
+			border-top: 1px solid #10D56C
+
 
 @keyframes theglowing
 	0%
@@ -663,3 +620,21 @@ pre
 		height: 100%
 		padding-left: 16px
 		padding-right: 16px
+
+.standardbloggrid
+	display: grid
+	grid-auto-flow: row
+	grid-template-rows: auto
+	margin-top: 32px
+	@media screen and (min-width: 1024px)
+		grid-template-columns: 1fr 1fr 1fr
+		grid-template-areas: ". . ."
+		gap: 16px 24px
+		height: 100%
+		align-items: start
+		align-content: start
+	@media screen and (max-width: 1023px)
+		grid-template-columns: 1fr 1fr
+		grid-template-areas: ". ."
+		gap: 16px 16px
+		height: 100%

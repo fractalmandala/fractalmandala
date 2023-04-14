@@ -2,6 +2,7 @@
 
 	import { onMount } from 'svelte'
 	import { invalidate } from '$app/navigation'
+	import { lazyLoadImageAction } from 'svelte-legos'
 	import type { LayoutData } from './$types'
 	import Header from '$lib/components/Header.svelte'
 	import TransitionPage from '$lib/components/TransitionPage.svelte'
@@ -30,6 +31,8 @@
 	let showrest:boolean = true
 	let mandalaview:boolean = true
 	let foralign:boolean = false
+
+
 
 
 	function toggleModal(){
@@ -152,17 +155,6 @@
 	<TransitionPage>
 		<div class="pagedoublegrid">
 			<slot></slot>
-			<div class="galleryarea">
-				{#if images && images.length > 0}
-					<div class="carousel">
-						{#each images as item}
-							<div class="singleimage">
-								<img src="https://wganhlzrylmkvvaoalco.supabase.co/storage/v1/object/public/images/batch1/{item.link.slice(90,100)}" alt={item.id}>
-							</div>
-						{/each}
-						</div>
-				{/if}
-			</div>
 		</div>
 	</TransitionPage>
 	<div class="foot">
@@ -362,68 +354,12 @@
 		grid-template-areas: "."
 		grid-template-rows: auto
 		gap: 0
-		padding-top: 120px
-		padding-left: 48px
-		padding-right: 48px
+		padding: 0
 	@media screen and (max-width: 1023px)
 		grid-template-columns: 1fr
 		grid-template-rows: auto
 		grid-template-areas: "."
-		padding-top: 56px
+		padding: 0
 		height: 100%
-
-.galleryarea
-	overflow-x: hidden
-	overflow-y: hidden
-	width: 100%
-	border-radius: 4px
-	margin-top: 32px
-	margin-bottom: 32px
-	pointer-events: auto
-	.carousel
-		display: grid
-		grid-auto-flow: column
-		overflow-x: scroll
-		overflow-y: hidden
-		width: 100%
-		white-space: nowrap
-		gap: 16px 16px
-		touch-action: pan-x
-		.singleimage
-			width: calc(25vw - 36px)
-			flex-shrink: 0
-	.carousel::-webkit-scrollbar
-		height: 0px
-	@media screen and (min-width: 1024px)
-		.carousel
-			grid-template-columns: 1fr 1fr 1fr 1fr
-			grid-template-rows: 1fr 1fr
-			grid-template-areas: ". . . ." ". . . ."
-	@media screen and (max-width: 1023px)
-		width: 100%
-		overflow-x: hidden
-		padding-left: 16px
-		padding-right: 16px
-		padding-bottom: 32px
-		padding-top: 32px
-		.carousel
-			grid-template-columns: 1fr 1fr 1fr 1fr
-			grid-template-rows: 1fr 1fr
-			grid-template-areas: ". . . ." ". . . ."
-			overflow-x: scroll
-			white-space: nowrap
-			.singleimage
-				width: 104px
-				height: 104px
-
-.singleimage
-	display: flex
-	flex-direction: column
-	height: 200px
-	img
-		object-fit: cover
-		height: 100%
-		width: 100%
-
 
 </style>
