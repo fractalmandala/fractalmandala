@@ -106,8 +106,6 @@
 	grid-auto-flow: row
 	grid-template-rows: auto
 	width: 100%
-	background-color: hsla(247,1%,6%,1)
-	background-image: radial-gradient(at 11% 74%, hsla(346,94%,8%,1) 0px, transparent 50%), radial-gradient(at 93% 10%, hsla(339,95%,8%,0.82) 0px, transparent 50%)
 	@media screen and (min-width: 1024px)
 		grid-template-columns: 1fr 320px
 		grid-template-areas: "editor notes"

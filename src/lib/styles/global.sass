@@ -3,9 +3,17 @@ body, html
 	box-sizing: border-box
 	color: white
 	font-family: 'Spline Sans', sans-serif
+	overflow-x: hidden
+
+body::-webkit-scrollbar
+	width: 2px
 
 body::-webkit-scrollbar-track
-	background: rgba(0,0,0,0)
+	background: #000000
+
+body::-webkit-scrollbar-thumb
+	background: #10d56C
+	filter: blur(20px)
 
 .height
 	@media screen and (min-width: 1024px)
@@ -100,52 +108,6 @@ a
 	display: flex
 	flex-direction: column
 
-.neon
-	background: #10C56D
-	border: 1px solid #272727
-	padding: 8px 24px
-	color: white
-	width: max-content
-	transform-origin: center center
-	cursor: pointer
-	transition: all 0.09s ease
-	border-radius: 4px
-	&:hover
-		transform: scale(0.9)
-
-.neon.light
-	background-color: hsla(0,0%,100%,1)
-	background-image: radial-gradient(at 25% 23%, hsla(126,66%,45%,1) 0px, transparent 50%), radial-gradient(at 86% 61%, hsla(155,85%,36%,1) 0px, transparent 50%)
-	border: 1px solid #d7d7d7
-
-.doc-card, .snip-card
-	background: #171717
-	p
-		margin: 4px 0
-		text-transform: capitalize
-		color: white
-		font-size: 15px
-		line-height: 1.1
-		font-weight: 400
-		&:hover
-			color: #10D56C
-	small
-		color: #474747
-		font-size: 12px
-	h6
-		margin: 0 0 8px 0
-		border-bottom: 1px solid #212121
-		padding-bottom: 2px
-		color: #474747
-		font-weight: 400
-		letter-spacing: 3px
-		font-size: 10px
-	@media screen and (max-width: 1023px)
-		p
-			font-size: 16px
-		small
-			font-size: 12px
-
 .popup
 	p
 		margin: 0
@@ -158,19 +120,6 @@ a
 		border-bottom: 1px solid #272727
 		&:hover
 			color: #10D56C
-
-
-.themer.light
-	background: white
-	color: #474747
-	p
-		color: #272727
-	.bodybody
-		p, a
-			color: #272727
-	.mandalasecondicon
-		svg path
-			fill: #474747
 
 .columnright
 	p
@@ -203,11 +152,7 @@ a
 		padding: 24px
 		border: 1px solid #272727
 		border-radius: 4px
-		box-shadow: 3px 5px 18px rgba(0,0,0,0.7), -3px -5px 12px rgba(0,0,0,0.3)
 		transition: all 1s
-		background: #141414
-		&:hover
-			animation: tinydance 1s cubic-bezier(0.000, 0.760, 0.645, 1.650) forwards
 	h1
 		font-family: 'Spline Sans', sans-serif
 		font-weight: 600
@@ -415,66 +360,6 @@ pre
 	100%
 		background-position: 50% 0%
 
-.glowing
-	padding-left: 20px
-	padding-right: 20px
-	padding-top: 4px
-	padding-bottom: 4px
-	min-width: 120px
-	color: white
-	cursor: pointer
-	display: flex
-	flex-direction: column
-	justify-content: center
-	align-items: center
-	border-radius: 4px
-	background: #171717
-	position: relative
-	backdrop-filter: blur(20px)
-	border: 1px solid #272727
-	z-index: 3
-	transition: all 0.32s ease
-	text-align: center
-	color: #878787
-	font-size: 12px
-	a
-		font-size: 12px
-		color: #878787
-	&:hover
-		color: white
-		a
-			color: white
-		border: 1px solid white
-	&::before
-		position: absolute
-		top: 0
-		left: 0
-		right: 0
-		content: ''
-		width: 100%
-		height: 100%
-		border-radius: 4px
-		margin: 0 auto
-		z-index: -1
-		background: linear-gradient(89deg, rgba(16,213,108,1), rgba(40,10,53,1))
-		background-size: 400% 400%
-		animation: theglowing 5s ease infinite
-		background-position: 100% 100%
-		filter: blur(30px)
-	&::after
-		position: absolute
-		background: #171717
-		backdrop-filter: blur(10px)
-		content: ''
-		top: 0
-		left: 0
-		width: 100%
-		height: 100%
-		z-index: -1
-		border-radius: 4px
-	&:hover
-		&::after
-			background: rgba(0,0,0,0)
 
 .blogpadding a
 	color: #10D56C
@@ -525,73 +410,6 @@ pre
 			row-gap: 16px
 			
 
-.topimagebox
-	display: flex
-	flex-flow: column
-	overflow: hidden
-	height: 264px
-	width: 264px
-	margin-bottom: 16px
-	.outerport
-		display: flex
-		flex-direction: row
-		flex-wrap: nowrap
-		overflow-x: scroll
-		height: 264px
-		width: 264px
-		scroll-snap-type: x mandatory
-		scroll-behavior: smooth
-		.innerport
-			display: flex
-			scroll-snap-align: start
-			flex-shrink: 0
-			height: 264px
-			width: 264px
-			transition: all 0.44s cubic-bezier(1.000, -0.010, 0.000, 1.005)
-			img
-				object-fit: cover
-				object-position: center center
-				width: 100%
-				height: 100%
-
-
-
-.mot
-	.mot-1
-		transition: all 0.3s ease
-		transition-delay: 0.04s
-	.mot-2
-		transition: all 0.3s ease
-		transition-delay: 0.08s
-	.mot-3
-		transition: all 0.3s ease
-		transition-delay: 0.12s
-	.mot-4
-		transition: all 0.3s ease
-		transition-delay: 0.16s
-	.mot-5
-		transition: all 0.3s ease
-		transition-delay: 0.2s
-	.mot-6
-		transition: all 0.3s ease
-		transition-delay: 0.24s
-
-
-.mot
-	&:hover
-		.mot-1, .mot-3, .mot-5
-			fill: #10D56C
-		.mot-2, .mot-4, .mot-6
-			fill: #94309D
-		.mot
-			animation: therotation 4s ease infinite
-
-@keyframes therotation
-	0%
-		transform: rotate(0deg)
-	100%
-		transform: rotate(720deg)
-				
 
 .postsarea
 	display: grid
@@ -732,7 +550,7 @@ h1.prime
 		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
 		background-size: 400% 400%	
 
-.postal
+.postal, .tube
 	h5
 		font-size: 18px
 		font-weight: 500
@@ -752,7 +570,6 @@ h1.prime
 		padding-top: 4px
 		margin-top: 8px
 	small
-		color: #10D56C
 		font-size: 10px
 		text-transform: uppercase
 		font-weight: bold
@@ -829,3 +646,35 @@ h1.prime
 		box-shadow: 3px 5px 18px rgba(0,0,0,0.7), -3px -5px 12px rgba(0,0,0,0.3)
 	100%
 		box-shadow: 3px 5px 18px rgba(0,0,0,0.7) inset, -3px -5px 12px rgba(0,0,0,0.3) inset
+
+
+.major
+	cursor: pointer
+	border-radius: 4px
+	transform-origin: center center
+	color: #FFFFFF
+	transition: all 0.15s ease
+	border: 1px solid #272727
+	font-size: 14px
+	padding: 4px 8px
+	position: relative
+	overflow: hidden
+	z-index: 1
+	text-align: center
+	&::before
+		position: absolute
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
+		content: ''
+		z-index: -1
+		background-color: hsla(200,9%,5%,1)
+		transition: all 0.05s ease
+		filter: blur(20px)
+		background-image: radial-gradient(at 17% 36%, hsla(248,47%,49%,1) 0px, transparent 1%), radial-gradient(at 80% 70%, hsla(125,87%,60%,0.2) 0px, transparent 50%)
+	&:hover
+		overflow: visible
+		&::before
+			background-color: hsla(130,90%,45%,1)
+			filter: blur(15px)

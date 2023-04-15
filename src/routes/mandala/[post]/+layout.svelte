@@ -30,12 +30,3 @@
 		{/if}
 	</div>
 </div>
-
-<style lang="sass">
-
-.paint
-	box-sizing: border-box
-	background-color: hsla(0,1%,3%,1)
-	background-image: radial-gradient(at 18% 82%, hsla(137,87%,7%,1) 0px, transparent 50%), radial-gradient(at 60% 0%, hsla(137,100%,12%,0.3) 0px, transparent 50%)
-
-</style>

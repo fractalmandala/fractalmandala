@@ -1,0 +1,309 @@
+.tube
+	overflow: visible
+	animation: none
+	display: flex
+	flex-direction: column
+	position: relative
+	border-radius: 4px
+	justify-content: flex-start
+	align-items: stretch
+	transition: all 0.5s var(--cubed)
+	background: #121212
+	border: 1px solid #272727
+	backdrop-filter: blur(0)
+	@media screen and (min-width: 1024px)
+		padding: 16px 16px 8px 16px
+		row-gap: 0
+	@media screen and (max-width: 1023px)
+		padding: 24px
+		justify-content: flex-start
+	&::before
+		position: absolute
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
+		content: ''
+		filter: blur(40px)
+		z-index: -1
+
+.tube.green
+	small
+		color: #10D56C
+
+.themegreen
+	background: #101010
+
+.tube.green
+	&::before
+		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		background-size: 400% 400%
+		background-color: hsla(10,80%,60%,0)
+	&:hover
+		animation: greenborder 0.2s var(--cubea) forwards, repeater 2s ease 1.2s infinite
+		&::before
+			animation: tubegreen 0.17s var(--cubea) forwards, slowerdeath 1s var(--cubea) 1s forwards
+
+@keyframes tubegreen
+	0%
+		background-color: hsla(140,80%,60%,0.1)
+		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(14px)
+	42%
+		background-color: hsla(90,80%,60%,0.4)
+		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(12px)
+	41.5%
+		background-color: hsla(120,80%,60%,0.34)
+		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,0.2) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(10px)
+	42%
+		background-color: hsla(100,80%,60%,0.5)
+		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,0.3) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(500px)
+	43%
+		background-color: hsla(90,80%,60%,0.46)
+		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,0.6) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(12px)
+	44%
+		background-color: hsla(150,80%,60%,5)
+		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,0.4) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(10px)
+	50%
+		background-color: hsla(80,80%,60%,0.5)
+		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,0.6) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(3px)
+	100%
+		background-color: hsla(133,80%,60%,1)
+		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(40px)
+
+@keyframes greenborder
+	0%
+		border: 1px solid hsla(131, 6%, 30%, 0)
+	42%
+		border: 1px solid hsla(131, 6%, 40%, 0.1)
+	41.5%
+		border: 1px solid hsla(131, 30%, 60%,0.1)
+	42%
+		border: 1px solid hsla(131, 60%, 60%, 0.2)
+	43%
+		border: 1px solid hsla(131, 60%, 60%, 0.3)
+	44%
+		border: 1px solid hsla(131, 60%, 60%, 0.5)
+	50%
+		border: 1px solid hsla(131, 6%, 60%, 0)
+	100%
+		border: 1px solid hsla(131, 67%, 60%, 0.3)
+
+@keyframes repeater
+	0%
+		border: 1px solid hsla(131, 67%, 60%, 0.3)
+	50%
+		border: 1px solid hsla(131, 67%, 60%, 1)
+	100%
+		border: 1px solid hsla(131, 67%, 60%, 0.3)
+
+.themeblue
+	background: #101010
+
+.tube.blue
+	&::before
+		background-image: radial-gradient(at 97% 96%, hsla(228,100%,20%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		background-size: 400% 400%
+		background-color: hsla(230,80%,20%,0)
+	&:hover
+		animation: blueborder 0.2s var(--cubea) forwards, repeaterblue 2s ease 1.2s infinite
+		&::before
+			animation: tubeblue 0.17s var(--cubea) forwards, slowerdeath 1s var(--cubea) 1s forwards
+
+@keyframes tubeblue
+	0%
+		background-color: hsla(216,90%,30%,0.1)
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(4px)
+	42%
+		background-color: hsla(216,90%,30%,0.4)
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(2px)
+	41.5%
+		background-color: hsla(216,90%,30%,0.14)
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.2) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(10px)
+	42%
+		background-color: hsla(216,90%,30%,0.5)
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.3) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(500px)
+	43%
+		background-color: hsla(216,90%,30%,0.46)
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.6) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(12px)
+	44%
+		background-color: hsla(216,90%,30%,0.5)
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.4) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(10px)
+	50%
+		background-color: hsla(230,90%,30%,0.5)
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.6) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(3px)
+	100%
+		background-color: hsla(230,100%,40%,1)
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,62%,1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(40px)
+
+@keyframes blueborder
+	0%
+		border: 1px solid hsla(231, 6%, 30, 0%)
+	42%
+		border: 1px solid hsla(231, 6%, 40, 10%)
+	41.5%
+		border: 1px solid hsla(231, 30, 60,10%)
+	42%
+		border: 1px solid hsla(231, 60, 60, 20%)
+	43%
+		border: 1px solid hsla(231, 60, 60, 30%)
+	44%
+		border: 1px solid hsla(231, 60, 60, 40%)
+	50%
+		border: 1px solid hsla(231, 6%, 60, 0%)
+	100%
+		border: 1px solid hsla(231, 67, 60, 30%)
+
+@keyframes repeaterblue
+	0%
+		border: 1px solid hsla(231, 67, 60, 30%)
+	50%
+		border: 1px solid hsla(231, 67, 60, 100%)
+	100%
+		border: 1px solid hsla(231, 67, 60, 30%)
+
+.tube.blue
+	small
+		color: #227ceb
+
+
+.themered
+	background: #101010
+
+.tube.red
+	&::before
+		background-image: radial-gradient(at 97% 96%, hsla(228,100%,20%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		background-size: 400% 400%
+		background-color: hsla(10,80%,20%,0)
+	&:hover
+		animation: redborder 0.2s var(--cubea) forwards, repeaterred 2s ease 1.2s infinite
+		&::before
+			animation: tubered 0.17s var(--cubea) forwards, slowerdeath 1s var(--cubea) 1s forwards
+
+.tube.red
+	small
+		color: #F64241
+
+
+@keyframes tubered
+	0%
+		background-color: hsla(10,50%,30%,0.1)
+		background-image: radial-gradient(at 97% 96%, hsla(228,100%,20%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(4px)
+	42%
+		background-color: hsla(10,50%,30%,0.4)
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(2px)
+	41.5%
+		background-color: hsla(10,0%,60%,0.14)
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.2) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(10px)
+	42%
+		background-color: hsla(10,50%,10%,0.4) 
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.3) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(500px)
+	43%
+		background-color: hsla(10,50%,20%,0.3)
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.6) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(12px)
+	44%
+		background-color: hsla(10,80%,20%,0.1)
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.4) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(10px)
+	50%
+		background-color: hsla(10,80%,20%,0.5)
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.6) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(3px)
+	100%
+		background-color: hsla(10,80%,40%,1)
+		background-image: radial-gradient(at 97% 96%, hsla(228,100%,20%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(40px)
+
+@keyframes redborder
+	0%
+		border: 1px solid hsla(10, 80%, 20%, 0%)
+	100%
+		border: 1px solid hsla(10, 80%, 20%, 100%)
+
+@keyframes repeaterred
+	0%
+		border: 1px solid hsla(10, 80%, 20%, 100%)
+	50%
+		border: 1px solid hsla(10, 80%, 60%, 50%)
+	100%
+		border: 1px solid hsla(10, 80%, 20%, 100%)
+
+.themeyell
+	background: #101010
+
+.tube.yellow
+	&::before
+		background-image: radial-gradient(at 97% 96%, hsla(228,100%,20%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		background-size: 400% 400%
+		background-color: hsla(60,89%,50%,0)
+	&:hover
+		animation: yellowborder 0.2s var(--cubea) forwards, repeateryellow 2s ease 1.2s infinite
+		&::before
+			animation: tubeyellow 0.17s var(--cubea) forwards, slowerdeath 1s var(--cubea) 1s forwards
+
+.tube.yellow
+	small
+		color: #f4d301
+
+.tube.yellow
+	h5
+		border-top: 1px solid #f4d301
+
+.tube.yellow
+	p
+		color: white
+
+
+@keyframes tubeyellow
+	0%
+		background-color: hsla(10,90%,30%,0)
+		background-image: radial-gradient(at 97% 96%, hsla(228,100%,20%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(4px)
+	42%
+		background-color: hsla(60,89%,50%,0.1)
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(2px)
+	41.5%
+		background-color: hsla(60,89%,50%,0.4)
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.2) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(10px)
+	42%
+		background-color: hsla(60,89%,5%,0.6)
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.3) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(500px)
+	43%
+		background-color: hsla(60,89%,0%,0.3)
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.6) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(12px)
+	44%
+		background-color: hsla(60,89%,50%,0.1)
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.4) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(10px)
+	50%
+		background-color: hsla(60,89%,50%,0.6)
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.6) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(3px)
+	100%
+		background-color: hsla(60,89%,50%,1)
+		background-image: radial-gradient(at 97% 96%, hsla(228,100%,20%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(40px)

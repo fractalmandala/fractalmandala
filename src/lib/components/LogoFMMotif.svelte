@@ -37,4 +37,11 @@ svg
 		width: 32px
 		height: 32px
 
+svg
+	path
+		fill: #474747
+	&:hover
+		path
+			fill: #53DD6c
+
 </style>

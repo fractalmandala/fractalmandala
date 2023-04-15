@@ -6,11 +6,11 @@
 	import { backOut, backIn } from 'svelte/easing'
 	import hljs from 'highlight.js'
 	import '$lib/styles/highlight.css'
+	import '$lib/styles/themes.sass'
 	import type { ChatCompletionRequestMessage } from 'openai'
 	import { TagsFiltered } from '$lib/utils/supabase'
-	import { allMandalas } from '$lib/utils/localpulls'
+	import { allMandalas, fullPull } from '$lib/utils/localpulls'
 	import { SSE } from 'sse.js'
-	import Postal from '$lib/components/Postal.svelte'
 	import BigCard from '$lib/components/BigCard.svelte'
 	import supabase from '$lib/utils/supabase'
 	let submittance:any
@@ -23,6 +23,7 @@
 	let chatTitle: ChatCompletionRequestMessage[] = []
 	let tags = 'star'
 	let codas:any
+	let allitems:any
 	let fake = false
 	let gridalign = false
 	let posts:any
@@ -175,6 +176,7 @@
 		hljs.highlightAll()	
 		codas = await TagsFiltered(tags)
 		posts = await allMandalas()
+		allitems = await fullPull()
 		
 	})
 </script>
@@ -185,8 +187,8 @@
 </svelte:head>
 
 
-
-<div class="introarea buffer wider bufferYt">
+<div class="themegreen">
+	<div class="introarea buffer wider bufferYt">
 	<p>
 		A simple blog to document a non-programmer bootstrapping himself into web-dev. <span class="special">My stack:</span>
 	</p>
@@ -208,10 +210,9 @@
 	<p>
 		Browse/search through an unorganized assortment of code snippets, setup guides and troubleshooting pointers. Play with broGPT, my AI pal, below.
 	</p>
-</div>
-<div class="inviewarea buffer wider bufferYb">
+	</div>
+	<div class="inviewarea buffer wider bufferYb">
 	<h5>{answerTitle}</h5>
-	<ChatMessage type="assistant" message="Namaste. How may I help you?" />	
 		{#each chatMessages as message}
 			<ChatMessage type={message.role} message={message.content} />
 		{/each}
@@ -226,15 +227,14 @@
 				<textarea bind:value={query}
 					on:keydown={handleKeyDownInput}
 					/>
-				<button class="glowing" type="submit" on:click={() => handleSubmit()} on:keydown={handleKeyDownInput}> Send </button>
+				<div class="major" on:click={() => handleSubmit()} on:keydown={handleKeyDownInput}> Send </div>
 			</form>
 		</div>
-</div>
-
-<div class="newgrid buffer wider bufferYb x00">
+	</div>
+	<div class="newgrid buffer wider bufferYb x00">
 	{#if posts && posts.length > 0}
 		{#each posts as item, i}
-			<div class="postal" on:click={() => togglePostItem(i)} on:keydown={fauxfake} class:opened={expand[i]} in:scale={{delay: 50*i, easing: backOut }} out:scale={{ delay: 10*i, easing: backIn }}>
+			<div class="tube green" on:click={() => togglePostItem(i)} on:keydown={fauxfake} class:opened={expand[i]} in:scale={{delay: 50*i, easing: backOut }} out:scale={{ delay: 10*i, easing: backIn }}>
 				<small>{item.meta.type}</small>
 				<h5>
 					<a href={item.path}>
@@ -245,9 +245,8 @@
 			</div>
 		{/each}
 	{/if}
-</div>
-
-<div class="thinstrip buffer wider">
+	</div>
+	<div class="thinstrip buffer wider">
 	<div on:click={() => changeTag('star')} on:keydown={fauxfake} class="{ tags === 'star' ? 'currentTag' : ''}">Star</div>
 	<div on:click={() => changeTag('sveltecode')} on:keydown={fauxfake} class="{ tags === 'sveltecode' ? 'currentTag' : ''}">Sveltecode</div>
 	<div on:click={() => changeTag('scroll')} on:keydown={fauxfake} class="{ tags === 'scroll' ? 'currentTag' : ''}">Scroll</div>
@@ -259,11 +258,11 @@
 	<div on:click={() => changeTag('fetch')} on:keydown={fauxfake} class="{ tags === 'fetch' ? 'currentTag' : ''}">Fetch</div>
 	<div on:click={() => changeTag('setup')} on:keydown={fauxfake} class="{ tags === 'setup' ? 'currentTag' : ''}">Setups</div>
 	<div on:click={() => changeTag('typography')} on:keydown={fauxfake} class="{ tags === 'typography' ? 'currentTag' : ''}">Typography</div>
-</div>
-<div class="newgrid buffer wider bufferYb x00" class:calibratedgrid={gridalign}>
+	</div>
+	<div class="newgrid buffer wider bufferYb x00" class:calibratedgrid={gridalign}>
 	{#if codas && codas.length > 0}
 		{#each codas as item, i}
-			<div class="postal" on:click={() => togglePostItem(i)} on:keydown={fauxfake} class:opened={expand[i]} in:scale={{delay: 50*i, easing: backOut }} out:scale={{ delay: 10*i, easing: backIn }}>
+			<div class="tube green" on:click={() => togglePostItem(i)} on:keydown={fauxfake} class:opened={expand[i]} in:scale={{delay: 50*i, easing: backOut }} out:scale={{ delay: 10*i, easing: backIn }}>
 					<small>{item.type}</small>
 					<h5>
 						{#if item.type.length > 0 && item.type === 'code'}
@@ -285,11 +284,20 @@
 			</div>
 		{/each}
 	{/if}
-</div>	
+	</div>	
+</div>
 
 
 <style lang="sass">
 
+.major
+	width: 88px
+	display: flex
+	flex-direction: row
+	align-items: center
+	text-align: center
+	justify-content: center
+	
 .x00
 	align-items: start
 	align-content: start
@@ -297,18 +305,16 @@
 .thinstrip
 	div
 		cursor: pointer
-		border: 1px solid #272727
 		border-radius: 4px
 		cursor: pointer
 		transform-origin: center center
-		box-shadow: 4px 6px 12px #010101
-		overflow: hidden
-		background: #111111
 		color: #FFFFFF
 		transition: all 0.15s ease
+		border: 1px solid #272727
 		font-size: 14px
 		padding: 4px 8px
 		position: relative
+		overflow: hidden
 		z-index: 1
 		text-align: center
 		&::before
@@ -319,27 +325,27 @@
 			height: 100%
 			content: ''
 			z-index: -1
-			background-color: hsla(100,90%,25%,1)
+			background-color: hsla(200,9%,5%,1)
 			transition: all 0.05s ease
-			filter: blur(30px)
-			background-image: radial-gradient(at 17% 36%, hsla(148,97%,99%,1) 0px, transparent 1%), radial-gradient(at 80% 70%, hsla(125,87%,60%,1) 0px, transparent 50%)
+			filter: blur(20px)
+			background-image: radial-gradient(at 17% 36%, hsla(248,47%,49%,1) 0px, transparent 1%), radial-gradient(at 80% 70%, hsla(125,87%,60%,0.2) 0px, transparent 50%)
 		&:hover
 			overflow: visible
 			&::before
-				background-color: hsla(100,90%,5%,1)
+				background-color: hsla(130,90%,45%,1)
 				filter: blur(15px)
 	.currentTag
 		&:hover
 			overflow: visible
 		&::before
 			filter: blur(30px)
-			background-color: hsla(100,9%,9%,0.1)
-			background-image: radial-gradient(at 9% 90%, hsla(248,79%,99%,0.1) 0px, transparent 100%), radial-gradient(at 8% 7%, hsla(395,99%,90%,0.1) 0px, transparent 10%)
+			background-color: hsla(130,90%,45%,1)
+			background-image: radial-gradient(at 17% 36%, hsla(248,47%,49%,1) 0px, transparent 1%), radial-gradient(at 80% 70%, hsla(125,87%,60%,0.2) 0px, transparent 50%)
 		
 
 .thinstrip
 	.currentTag
-		background: var(--purp)
+		background-color: hsla(130,90%,15%,1)
 		border: 1px solid #272727
 		box-shadow: none
 	div.currentTag
@@ -418,6 +424,7 @@ li
 		flex-direction: row
 		gap: 16px
 	form textarea
+		font-family: 'Spline Sans', sans-serif
 		height: 64px
 		border: 1px solid #272727
 		color: white

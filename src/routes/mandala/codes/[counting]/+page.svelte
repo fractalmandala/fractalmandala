@@ -339,7 +339,7 @@
 	padding: 24px
 	border: 1px solid #272727
 	border-radius: 4px
-	box-shadow: 3px 5px 18px rgba(0,0,0,0.7), -3px -5px 12px rgba(0,0,0,0.3)
+
 	transition: all 1s
 	background: #141414
 	&:hover
@@ -357,8 +357,6 @@
 	line-height: 1.8
 
 .x00
-	background-color: hsla(0,1%,3%,1)
-	background-image: radial-gradient(at 18% 82%, hsla(199,91%,7%,1) 0px, transparent 50%), radial-gradient(at 60% 0%, hsla(231,76%,22%,0.3) 0px, transparent 50%)
 	row-gap: 0
 	position: relative
 	h6

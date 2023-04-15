@@ -12,10 +12,10 @@
 </script>
 
 
-<div class="newgrid wider buffer bufferYt bufferYb height">
+<div class="newgrid wider buffer bufferYt bufferYb height themeblue">
 	{#if posts && posts.length > 0}
 		{#each posts as item, i}
-			<div class="postal">
+			<div class="tube blue">
 				<small>{item.meta.type}</small>
 				<h5>
 					<a href="{item.path}">
@@ -27,11 +27,3 @@
 		{/each}
 	{/if}
 </div>
-
-<style lang="sass">
-
-.newgrid
-	background-color: hsla(0,0%,4%,1)
-	background-image: radial-gradient(at 23% 26%, hsla(53,95%,22%,0.09) 0px, transparent 50%), radial-gradient(at 89% 55%, hsla(97,86%,9%,0.27) 0px, transparent 50%)
-
-</style>

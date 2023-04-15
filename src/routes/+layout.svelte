@@ -259,8 +259,7 @@
 	display: flex
 	flex-direction: column
 	height: 100%
-	background-color: hsla(0,0%,4%,1)
-	animation: radiation 30s ease infinite
+	background: #121212
 
 @keyframes radiation
 	0%

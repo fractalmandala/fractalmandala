@@ -74,10 +74,6 @@
 
 <style lang="sass">
 
-.x00
-	background-color: hsla(0,1%,3%,1)
-	background-image: radial-gradient(at 18% 82%, hsla(254,87%,7%,0.2) 0px, transparent 50%), radial-gradient(at 60% 0%, hsla(328,100%,12%,0.24) 0px, transparent 50%)
-
 .columnleft
 	display: flex
 	flex-direction: column

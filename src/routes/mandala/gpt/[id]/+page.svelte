@@ -54,7 +54,7 @@
 		nextchat = data.id - 1
 		afterthis = data.id + 1
 		copymaterial = data.response
-		styledText = data.response.replace(regex, '<pre>$1</pre>');
+		styledText = data.response
 		theid = data.id
 	})
 
@@ -120,16 +120,13 @@
 .boxofchat
 	border-radius: 4px
 	min-height: 100vh
-	background-color: hsla(0,1%,3%,1)
-	background-image: radial-gradient(at 13% 40%, hsla(346,91%,7%,0.8) 0px, transparent 50%), radial-gradient(at 83% 66%, hsla(11,75%,21%,0.3) 0px, transparent 50%)
-	padding-top: 80px
+	padding-top: 96px
 
 .agent
 	font-size: 12px
 
 .agent.user
 	text-transform: uppercase
-	text-align: right
 	color: white
 
 .agent.broGPT
@@ -141,13 +138,14 @@
 	font-family: 'Spline Sans', sans-serif
 
 .commbody.broGPT
-	font-size: 14px
+	font-size: 18px
 	padding-top: 4px
+	font-weight: 400
+	line-height: 1.6
 
 .commbody.user
-	text-align: right
 	color: #575757
-	font-size: 14px
+	font-size: 16px
 	white-space: normal
 	border-bottom: 1px solid #272727
 	padding-bottom: 16px
@@ -155,16 +153,6 @@
 
 .commbody
 	white-space: pre-line
-
-@keyframes theglowing
-	0%
-		background-position: 0% 50%
-	33%
-		background-position: 50% 100%
-	66%
-		background-position: 100% 50%
-	100%
-		background-position: 50% 0%
 
 .confirmationmodal
 	position: absolute

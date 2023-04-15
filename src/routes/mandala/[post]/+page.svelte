@@ -1,8 +1,8 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte'
-	import hljs from 'highlight.js'
-	import '$lib/styles/highlight.css'
+	import Prism from 'prismjs'
+	import '$lib/styles/prism.css'
 	import Animations from 'textify.js'
 	let codeContents:any
 	let fake:boolean = false
@@ -10,12 +10,6 @@
 	function fauxfake(){
 		fake = !fake
 	}
-
-	const preTags = document.querySelectorAll('pre')
-
-	$: preTags.forEach(pre => {
-		 codeContents = pre.textContent
-	});
 
 	function copyToClipboard(){
 		const range = document.createRange();
@@ -38,8 +32,9 @@
   	}
 	}
 
+
 	onMount(async() => {
-		hljs.highlightAll()
+		Prism.highlightAll()
 		const { Textify, TextifyTitle } = Animations
 		new TextifyTitle({
 			duration: 1000,

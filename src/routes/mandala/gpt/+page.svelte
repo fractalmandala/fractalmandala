@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte'
 	import hljs from 'highlight.js'
 	import '$lib/styles/highlight.css'	
+	import '$lib/styles/themes.sass'
 	import { chatsGPT } from '$lib/utils/supabase'
 
 	let chats:any
@@ -23,10 +24,10 @@
 </svelte:head>
 
 
-<div class="newgrid wider buffer bufferYt bufferYb">
+<div class="newgrid wider buffer bufferYt bufferYb themeyell">
 	{#if chats && chats.length > 0}
 		{#each chats as item, i}
-			<div class="postal">
+			<div class="tube yellow">
 				<h5>
 					<a href="/mandala/gpt/{item.id}">
 					{item.prompt.slice(0,50)}
@@ -37,13 +38,3 @@
 		{/each}
 	{/if}
 </div>
-
-
-<style lang="sass">
-
-.newgrid
-	background-color: hsla(0,0%,4%,1)
-	background-image: radial-gradient(at 23% 26%, hsla(103,91%,7%,0.59) 0px, transparent 50%), radial-gradient(at 89% 55%, hsla(135,89%,7%,0.59) 0px, transparent 50%)
-
-
-</style>
