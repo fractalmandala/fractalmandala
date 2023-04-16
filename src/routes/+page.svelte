@@ -1,50 +1,43 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte'
-	import ChatMessage from '$lib/components/ChatMessage.svelte'
+	import BroGPT from '$lib/agents/broGPT.svelte'
+	import Sanskrit from '$lib/agents/Sanskrit.svelte'
+	import Svelter from '$lib/agents/Svelter.svelte'
 	import { scale } from 'svelte/transition'
 	import { backOut, backIn } from 'svelte/easing'
 	import hljs from 'highlight.js'
 	import '$lib/styles/highlight.css'
 	import '$lib/styles/themes.sass'
-	import type { ChatCompletionRequestMessage } from 'openai'
 	import { TagsFiltered } from '$lib/utils/supabase'
 	import { allMandalas } from '$lib/utils/localpulls'
-	import { SSE } from 'sse.js'
 	import BigCard from '$lib/components/BigCard.svelte'
 	import supabase from '$lib/utils/supabase'
 	let submittance:any
-	let query: string = ''
-	let answer: string = ''
-	let answerTitle: string = ''
 	let userprompt:any
-	let loading: boolean = false
-	let chatMessages: ChatCompletionRequestMessage[] = []
-	let chatTitle: ChatCompletionRequestMessage[] = []
+	let selectedAgent:boolean[] = Array(4).fill(false)	
+
 	let tags = 'star'
 	let codas:any
-	let allitems:any
 	let fake = false
 	let gridalign = false
 	let posts:any
 	let expand:boolean[] = Array(20).fill(false)
 	let area:boolean[] = Array(9).fill(false)
+	let ifhovering = false
 	area[1] = true
-	let agent:any
-	let allfalse = false
 
-	function setAgentCode(){
-		agent = 'svelte'
+	function toggleHovering(){
+		ifhovering = !ifhovering
 	}
 
-	function setAgentChat(){
-		agent = 'chat'
-	}
-
-	$: if ( expand.every(i => i === false )) {
-		allfalse = true
-	} else {
-		allfalse = false
+	function selectAgent(index:number){
+		selectedAgent[index] = !selectedAgent[index]
+		for ( let i = 0; i < selectedAgent.length; i ++ ) {
+			if ( i !== index && selectedAgent[i] === true ) {
+				selectedAgent[i] = false
+			}
+		}
 	}
 
 	function fauxfake(){
@@ -64,55 +57,6 @@
 		}
 	}
 
-	const handleSubmit = async () => {
-		loading = true
-		chatMessages = [...chatMessages, { role: 'user', content: query }]
-		userprompt = query
-		const eventSource = new SSE(`/api/${agent}`, {
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			payload: JSON.stringify({ messages: chatMessages })
-		})
-
-		eventSource.addEventListener('error', handleError)
-
-		eventSource.addEventListener('message', (e: {data: string;}) => {
-			try {
-				loading = false
-				if (e.data === '[DONE]') {
-					chatMessages = [...chatMessages, { role: 'assistant', content: answer }]
-					console.log(answer)
-					submittance = answer
-					answer = ''
-					return
-				}
-
-				const completionResponse = JSON.parse(e.data)
-				const [{ delta }] = completionResponse.choices
-
-				if (delta.content) {
-					answer = (answer ?? '') + delta.content
-				}
-			} catch (err) {
-				handleError(err)
-			}
-		})
-		eventSource.stream()
-	}
-
-
-	$: if (submittance) {
-		submitAnswer()	
-	}
-
-	function handleKeyDownInput(e:any){
-		if (e.shiftkey && e.key === 'enter') {
-			e.preventDefault(),
-			query += '\n'
-		}
-	}
-
 	async function submitAnswer(){
 		try {
 			const { error } = await supabase
@@ -125,13 +69,6 @@
     } catch (e) {
       console.error('Error inserting into Supabase:', e)
     }
-	}
-
-	function handleError<T>(err: T) {
-		loading = false
-		query = ''
-		answer = ''
-		console.error(err)
 	}
 
 	function changeTag(newTag:any){
@@ -160,49 +97,24 @@
 
 
 <div class="themegreen">
-	<div class="introarea buffer wider bufferYt">
-	</div>
 	<div class="inviewarea buffer wider bufferYb">
+		<small>Select GPT Agent:</small>
 		<div class="boxr">
-			<div on:click={setAgentChat} on:keydown={fauxfake}>Chat</div>
-			<div on:click={setAgentCode} on:keydown={fauxfake}>Code</div>
-			<div>Lang</div>
+			<div class="agents" on:click={() => selectAgent(1)} on:keydown={fauxfake} class:selectedone={selectedAgent[1]}>broGPT</div>
+			<div class="agents" on:click={() => selectAgent(2)} on:keydown={fauxfake} class:selectedtwo={selectedAgent[2]}>the Sanskritist</div>
+			<div class="agents" on:click={() => selectAgent(3)} on:keydown={fauxfake} class:selectedthree={selectedAgent[3]}>Svelta Lowda</div>
 		</div>
-	<h5>{answerTitle}</h5>
-		{#each chatMessages as message}
-			<ChatMessage type={message.role} message={message.content} />
-		{/each}
-		{#if answer}
-			<ChatMessage type="assistant" message={answer}/>
+		{#if selectedAgent[1]}
+			<BroGPT></BroGPT>
 		{/if}
-		{#if loading}
-			<ChatMessage type="assistant" message="Loading.." />
+		{#if selectedAgent[2]}
+			<Sanskrit></Sanskrit>
 		{/if}
-		<div class="boxc ofform">
-			<form on:submit|preventDefault>
-				<textarea bind:value={query}
-					on:keydown={handleKeyDownInput}
-					/>
-				<div class="major" on:click={() => handleSubmit()} on:keydown={handleKeyDownInput}> Send </div>
-			</form>
-		</div>
+		{#if selectedAgent[3]}
+			<Svelter></Svelter>
+		{/if}
 	</div>
-	<div class="newgrid buffer wider bufferYb x00">
-	{#if posts && posts.length > 0}
-		{#each posts as item, i}
-			<div class="tube green" on:click={() => togglePostItem(i)} on:keydown={fauxfake} class:opened={expand[i]} in:scale={{delay: 50*i, easing: backOut }} out:scale={{ delay: 10*i, easing: backIn }}>
-				<small>{item.meta.type}</small>
-				<h5>
-					<a href={item.path}>
-						{item.meta.title}
-					</a>
-				</h5>
-				<p>{item.meta.tags}</p>
-			</div>
-		{/each}
-	{/if}
-	</div>
-	<div class="thinstrip buffer wider">
+	<div class="thinstrip buffer bufferYb bufferYt">
 	<div on:click={() => changeTag('star')} on:keydown={fauxfake} class="{ tags === 'star' ? 'currentTag' : ''}">Star</div>
 	<div on:click={() => changeTag('sveltecode')} on:keydown={fauxfake} class="{ tags === 'sveltecode' ? 'currentTag' : ''}">Sveltecode</div>
 	<div on:click={() => changeTag('scroll')} on:keydown={fauxfake} class="{ tags === 'scroll' ? 'currentTag' : ''}">Scroll</div>
@@ -215,10 +127,10 @@
 	<div on:click={() => changeTag('setup')} on:keydown={fauxfake} class="{ tags === 'setup' ? 'currentTag' : ''}">Setups</div>
 	<div on:click={() => changeTag('typography')} on:keydown={fauxfake} class="{ tags === 'typography' ? 'currentTag' : ''}">Typography</div>
 	</div>
-	<div class="newgrid buffer wider bufferYb x00" class:calibratedgrid={gridalign}>
+	<div class="newgrids buffer bufferYb x00" class:resized={ifhovering}>
 	{#if codas && codas.length > 0}
 		{#each codas as item, i}
-			<div class="tube green" on:click={() => togglePostItem(i)} on:keydown={fauxfake} class:opened={expand[i]} in:scale={{delay: 50*i, easing: backOut }} out:scale={{ delay: 10*i, easing: backIn }}>
+			<div class="tube green" class:hovered={ifhovering} in:scale={{delay: 50*i, easing: backOut }} out:scale={{ delay: 10*i, easing: backIn }}>
 					<small>{item.type}</small>
 					<h5>
 						{#if item.type.length > 0 && item.type === 'code'}
@@ -246,13 +158,30 @@
 
 <style lang="sass">
 
-.major
-	width: 88px
-	display: flex
-	flex-direction: row
-	align-items: center
-	text-align: center
-	justify-content: center
+.inviewarea
+	>small
+		color: #676767
+	.boxr
+		padding-top: 8px
+		gap: 16px
+		border-bottom: 1px solid #272727
+		padding-bottom: 16px
+
+.agents.selectedone
+	color: #10D56C
+
+.agents.selectedtwo
+	color: #227ceb
+
+.agents.selectedthree
+	color: #F64241
+
+.agents
+	text-transform: uppercase
+	cursor: pointer
+
+.themegreen
+	padding-top: 128px
 	
 .x00
 	align-items: start
@@ -319,78 +248,6 @@
 		grid-template-rows: 1fr 1fr 1fr
 		gap: 8px 8px
 
-	
-p .special
-	background: #64F540
-	background: linear-gradient(to right, #64F540 0%, #11E876 50%, #07E859 100%)
-	-webkit-background-clip: text
-	-webkit-text-fill-color: transparent
 
-.introarea a
-	position: relative
-	&:hover
-		background: #64F540
-		background: linear-gradient(to right, #64F540 0%, #11E876 50%, #07E859 100%)
-		-webkit-background-clip: text
-		-webkit-text-fill-color: transparent
-		&::after
-			animation: vanishing 0.08s ease forwards
-	&::after
-		position: absolute
-		bottom: 0
-		left: 0
-		height: 1px
-		width: 100%
-		content: ''
-		background: #64F540
-		background: linear-gradient(to right, #64F540 0%, #11E876 50%, #07E859 100%)
-
-.introarea p
-	font-family: 'Spline Sans', sans-serif
-	font-size: 16px
-	color: #FFFFFF
-	line-height: 2
-li
-	font-family: 'Spline Sans', sans-serif
-	font-size: 14px
-	color: #FFFFFF
-	line-height: 1.5
-	list-style-type: none
-	padding: 0
-	margin-left: 32px
-
-@media screen and (max-width: 1023px)
-	p .special
-		padding: 16px
-		margin-left: 0
-		margin-right: 0
-		padding: 0 0 24px 0
-		width: 100%
-		border-bottom: 1px solid #272727
-	p
-		font-size: 14px
-
-	
-.ofform
-	width: 100%
-	transition: all 0.15s ease
-	margin-top: 8px
-	form
-		display: flex
-		flex-direction: row
-		gap: 16px
-	form textarea
-		font-family: 'Spline Sans', sans-serif
-		height: 64px
-		border: 1px solid #272727
-		color: white
-		padding: 16px
-		background: #171717
-		outline: none
-		width: 100%
-
-.inviewarea
-	h5
-		color: white
 
 </style>

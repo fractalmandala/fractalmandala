@@ -11,6 +11,7 @@
 	import Lenis from '@studio-freight/lenis'
 	import { page } from '$app/stores'
 	import '$lib/styles/global.sass'
+	import '$lib/styles/themes.sass'
 	import '$lib/styles/animations.sass'
 
 	let y:number

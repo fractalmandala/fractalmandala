@@ -139,13 +139,10 @@
 		</div>
 		<nav>
 			<div class="singletheme"><a href="/mandala">Posts</a></div>
-			<div class="singletheme"><a href="/mandala/docs">Docs</a></div>
-			<div class="singletheme"><a href="/mandala/codes">Codes</a></div>
 			<div class="singletheme"><a href="/mandala/gpt">GPT</a></div>
 			<div class="singletheme"><a href="/mandala/images">Images</a></div>
 			<div class="singletheme"><a href="/pad">Pad</a></div>
 			<div class="singletheme"><a href="/play">Play</a></div>
-			<div class="singletheme"><a href="/form">Form</a></div>
 		</nav>
 	</div>
 	{#if showResults && $resultsStore.length>0}
@@ -176,7 +173,7 @@
 	z-index: 999
 	transition: 0.3s ease
 	@media screen and (min-width: 1024px)
-		grid-template-columns: 360px 1fr
+		grid-template-columns: 300px 1fr
 		grid-template-rows: 1fr
 		grid-template-areas: "logo area"
 		width: 100%
@@ -365,9 +362,8 @@ nav
 		border-radius: 4px
 		cursor: pointer
 		transform-origin: center center
-		color: #FFFFFF
+		color: #575757
 		transition: all 0.15s var(--cubed)
-		backdrop-filter: blur(0px)
 		height: 32px
 		font-size: 14px
 		display: flex
@@ -375,24 +371,8 @@ nav
 		align-items: center
 		justify-content: center
 		text-align: center
-		overflow: hidden
 		width: 64px
-		&::before
-			position: absolute
-			top: 0
-			left: 0
-			width: 100%
-			height: 100%
-			content: ''
-			background-color: hsla(140,80%,60%,0)
-			filter: blur(4px)
-			z-index: -1
-			background-image: radial-gradient(at 97% 96%, hsla(108,57%,82%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(125,17%,10%,0.1) 0px, transparent 50%)
-			background-size: 100% 100%
 		&:hover
-			backdrop-filter: blur(3px)
-			overflow: hidden
-			&::before
-				background-color: hsla(140,80%,30%,1)
+			color: #10D56C
 
 </style>

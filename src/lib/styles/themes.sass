@@ -1,5 +1,6 @@
 .tube
 	overflow: visible
+	box-shadow: 6px 8px 12px #020202, -4px -7px 10px #111111
 	animation: none
 	display: flex
 	flex-direction: column
@@ -7,7 +8,7 @@
 	border-radius: 4px
 	justify-content: flex-start
 	align-items: stretch
-	transition: all 0.5s var(--cubed)
+	transition: all 0.15s var(--cubed)
 	background: #101010
 	border: 1px solid #191919
 	backdrop-filter: blur(4px)
@@ -29,20 +30,26 @@
 
 .tube.green
 	small
-		color: #10D56C
+		color: #3ef710
 
 .themegreen
 	background: #101010
 
 .tube.green
 	&::before
-		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		background-image: radial-gradient(at 17% 36%, hsla(248,47%,49%,1) 0px, transparent 1%), radial-gradient(at 80% 70%, hsla(125,87%,60%,0.2) 0px, transparent 50%)
 		background-size: 400% 400%
-		background-color: hsla(10,80%,60%,0)
+		background-color: hsla(200,9%,5%,1)
 	&:hover
-		animation: bordergo 0.4s ease forwards, greenborder 0.2s var(--cubea) 0.4s forwards, repeater 2s ease 1.6s infinite
+		animation: bordergo 0.2s ease forwards, greenborder 0.12s var(--cubea) 0.4s forwards, repeater 2s ease 1s infinite
 		&::before
-			animation: tubegreen 0.35s var(--cubea) forwards, slowerdeath 1s var(--cubea) 1s forwards
+			animation: tubegreen 0.25s var(--cubea) 0.2s forwards, slowerdeath 1s var(--cubea) 1s forwards
+
+@keyframes bordergo
+	0%
+		box-shadow: 6px 8px 12px #020202, -4px -7px 10px #111111
+	100%
+		box-shadow: 0px 0px 0px #020202, 0px 0px 0px #111111
 
 @keyframes tubegreen
 	0%
@@ -50,19 +57,15 @@
 		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
 		filter: blur(24px)
 	42%
-		background-color: hsla(120,80%,60%,0.4)
+		background-color: hsla(120,80%,60%,0.2)
 		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
-		filter: blur(22px)
-	44%
-		background-color: hsla(150,80%,60%,0.47)
-		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,0.4) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
-		filter: blur(30px)
+		filter: blur(102px)
 	70%
-		background-color: hsla(120,80%,60%,0.55)
+		background-color: hsla(120,80%,60%,0.35)
 		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,0.6) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
 		filter: blur(32px)
 	100%
-		background-color: hsla(133,80%,60%,0.8)
+		background-color: hsla(130,90%,45%,1)
 		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
 		filter: blur(20px)
 
@@ -91,6 +94,37 @@
 		border: 1px solid hsla(131, 67%, 60%, 1)
 	100%
 		border: 1px solid hsla(131, 67%, 60%, 0.3)
+
+.major.green
+	cursor: pointer
+	border-radius: 4px
+	transform-origin: center center
+	color: #FFFFFF
+	transition: all 0.15s ease
+	border: 1px solid #272727
+	font-size: 14px
+	padding: 4px 8px
+	position: relative
+	overflow: hidden
+	z-index: 1
+	text-align: center
+	&::before
+		position: absolute
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
+		content: ''
+		z-index: -1
+		background-color: hsla(200,9%,5%,1)
+		transition: all 0.05s ease
+		filter: blur(20px)
+		background-image: radial-gradient(at 17% 36%, hsla(248,47%,49%,1) 0px, transparent 1%), radial-gradient(at 80% 70%, hsla(125,87%,60%,0.2) 0px, transparent 50%)
+	&:hover
+		overflow: visible
+		&::before
+			background-color: hsla(130,90%,45%,1)
+			filter: blur(15px)
 
 .themeblue
 	background: #101010
@@ -157,6 +191,38 @@
 	small
 		color: #227ceb
 
+.major.blue
+	cursor: pointer
+	border-radius: 4px
+	transform-origin: center center
+	color: #FFFFFF
+	transition: all 0.15s ease
+	border: 1px solid #272727
+	font-size: 14px
+	padding: 4px 8px
+	position: relative
+	overflow: hidden
+	z-index: 1
+	text-align: center
+	&::before
+		position: absolute
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
+		content: ''
+		z-index: -1
+		background-color: hsla(230,80%,20%,0.24)
+		transition: all 0.05s ease
+		filter: blur(20px)
+		background-image: radial-gradient(at 17% 36%, hsla(248,87%,49%,1) 0px, transparent 1%), radial-gradient(at 80% 70%, hsla(125,87%,60%,0.2) 0px, transparent 50%)
+	&:hover
+		overflow: visible
+		&::before
+			background-color: hsla(230,80%,40%,1)
+			filter: blur(25px)
+
+
 
 .themered
 	background: #101010
@@ -174,6 +240,40 @@
 .tube.red
 	small
 		color: #F64241
+
+
+.major.red
+	cursor: pointer
+	border-radius: 4px
+	transform-origin: center center
+	color: #FFFFFF
+	transition: all 0.15s ease
+	border: 1px solid #272727
+	font-size: 14px
+	padding: 4px 8px
+	position: relative
+	overflow: hidden
+	z-index: 1
+	text-align: center
+	&::before
+		position: absolute
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
+		content: ''
+		z-index: -1
+		background-color: hsla(10,80%,40%,0.09)
+		transition: all 0.05s ease
+		filter: blur(20px)
+		background-image: radial-gradient(at 17% 36%, hsla(248,87%,49%,1) 0px, transparent 1%), radial-gradient(at 80% 70%, hsla(125,87%,60%,0.2) 0px, transparent 50%)
+	&:hover
+		overflow: visible
+		&::before
+			background-color: hsla(10,80%,40%,1)
+			filter: blur(25px)
+
+
 
 
 @keyframes tubered

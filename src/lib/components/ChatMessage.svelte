@@ -19,10 +19,10 @@
 </script>
 
 <div class="boxofchat {type === 'user' ? 'chat-end' : 'chat-start'}" in:fade={{ duration: 300, delay: 50, easing: elasticOut }}>
-	<div class="agent {type === 'user' ? 'user' : 'broGPT'}">
-		{type === 'user' ? 'user' : 'broGPT'}:
+	<div class="agent {type === 'user' ? 'user' : 'gpt'}">
+		{type === 'user' ? 'user' : 'gpt'}:
 	</div>
-	<pre class="commbody {type === 'user' ? 'user' : 'broGPT'}">
+	<pre class="commbody {type === 'user' ? 'user' : 'gpt'}">
 		{@html message}
 	</pre>
 </div>
@@ -43,14 +43,14 @@ pre
 	text-align: right
 	color: white
 
-.agent.broGPT
-	color: #10C56D
+.agent.gpt
+	color: #575757
 
-.commbody.user, .commbody.broGPT
+.commbody.user, .commbody.gpt
 	color: white
 	font-family: 'Spline Sans', sans-serif
 
-.commbody.broGPT
+.commbody.gpt
 	font-size: 14px
 
 .commbody.user

@@ -1,19 +1,19 @@
 <script lang="ts">
 	//@ts-nocheck
 	import { onMount } from 'svelte'
-	import hljs from 'highlight.js'
-	import '$lib/styles/highlight.css'
+	import Prism from 'prismjs'
+	import '$lib/styles/prism.css'
 	import { clickToCopyAction } from 'svelte-legos'
 	import ButtonGlow from '$lib/components/ButtonGlow.svelte'
 	import ButtonGlow2 from '$lib/components/ButtonGlow.svelte'
 	import ButtonGlow3 from '$lib/components/ButtonGlow.svelte'
+	import ButtonGlow4 from '$lib/components/ButtonGlow.svelte'
 	import supabase from '$lib/utils/supabase'
 	import Toast from '$lib/components/Toast.svelte'
 	let nextchat:number
 	let afterthis:number
 	let theid:any
 	let copymaterial: any
-	let styledText
 	let copySuccess:boolean = false
 	let fake = false
 	let deleteConfirmation:boolean = false
@@ -47,14 +47,11 @@
 		location.replace("/")		
 	}
 
-	const regex = /```([\s\S]*?)```/g;
-
 	onMount(async() => {
-		hljs.highlightAll()
+		Prism.highlightAll()
 		nextchat = data.id - 1
 		afterthis = data.id + 1
 		copymaterial = data.response
-		styledText = data.response
 		theid = data.id
 	})
 
@@ -67,15 +64,15 @@
 		ID - {data.id}<br>
 		<p style="color: #fe4a49; margin-top: 4px; cursor: pointer" on:click={deleteWarning} on:keydown={fauxfake}>Delete</p>
 	</div>
-	<div class="commbody user">
-		{data.prompt}
-	</div>
+	<pre class="commbody user">
+		{@html data.prompt}
+	</pre>
 	<div class="agent broGPT">
 		GPT:
 	</div>
-	<code class="commbody broGPT language-html">
-		{styledText}
-	</code>	
+	<div class="commbody broGPT">
+		{data.response}
+	</div>	
 	<div class="boxr" style="margin-top: 32px">
 		<ButtonGlow --buttonwidth="128px" --this="var(--orange)">
 			<div use:clickToCopyAction={copymaterial} on:copy-done={handleCopyDone}>
@@ -95,6 +92,11 @@
 				Next Chat
 			</a>
 		</ButtonGlow3>
+		<ButtonGlow4 --buttonwidth="128px" --this="var(--orange)">
+			<a href="/">
+				New Chat
+			</a>
+		</ButtonGlow4>
 	</div>
 </div>
 {#if deleteConfirmation}
@@ -138,7 +140,7 @@
 	font-family: 'Spline Sans', sans-serif
 
 .commbody.broGPT
-	font-size: 18px
+	font-size: 16px
 	padding-top: 4px
 	font-weight: 400
 	line-height: 1.6
@@ -146,7 +148,7 @@
 .commbody.user
 	color: #575757
 	font-size: 16px
-	white-space: normal
+	white-space: pre-line
 	border-bottom: 1px solid #272727
 	padding-bottom: 16px
 	padding-top: 4px

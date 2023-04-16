@@ -1,5 +1,5 @@
 code[class*="language-"],
-pre[class*="language-"] {
+pre[class*="language-"],pre[class="commbody"], code[class*="commbody"] {
 	text-align: left;
 	white-space: pre-line;
 	word-spacing: normal;

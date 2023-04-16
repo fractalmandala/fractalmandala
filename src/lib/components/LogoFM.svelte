@@ -58,7 +58,7 @@ svg
 	object-fit: contain
 	margin-top: 4px
 	height: 42px
-	width: 280px
+	width: 240px
 	transition: all 0.7s var(--cubea)
 	@media screen and (max-width: 1023px)
 		height: 48px

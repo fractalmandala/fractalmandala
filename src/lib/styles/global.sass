@@ -74,6 +74,29 @@ p, .mandpand p
 		border: 1px solid white
 		height: 100vh
 
+.newgrids
+	display: grid
+	grid-auto-flow: row
+	grid-template-columns: 1fr 1fr 1fr 1fr
+	grid-template-rows: auto
+	grid-template-areas: ". . . ."
+	gap: 64px 64px
+	@media screen and (min-width: 1024px)
+		padding-left: 10vw
+		padding-right: 10vw
+	@media screen and (max-width: 1023px)
+		grid-template-columns: 1fr 1fr
+		grid-template-rows: auto
+		grid-template-areas: ". ."
+		gap: 24px 24px
+
+.newgrids.resized
+	@media screen and (min-width: 1024px)
+		grid-template-rows: 400px auto
+		grid-template-areas: "hovered hovered hovered hovered" ". . . ."
+		.hovered
+			grid-area: hovered
+
 .gridwork.xx
 	display: none
 
@@ -644,35 +667,3 @@ h1.prime
 		box-shadow: 3px 5px 18px rgba(0,0,0,0.7), -3px -5px 12px rgba(0,0,0,0.3)
 	100%
 		box-shadow: 3px 5px 18px rgba(0,0,0,0.7) inset, -3px -5px 12px rgba(0,0,0,0.3) inset
-
-
-.major
-	cursor: pointer
-	border-radius: 4px
-	transform-origin: center center
-	color: #FFFFFF
-	transition: all 0.15s ease
-	border: 1px solid #272727
-	font-size: 14px
-	padding: 4px 8px
-	position: relative
-	overflow: hidden
-	z-index: 1
-	text-align: center
-	&::before
-		position: absolute
-		top: 0
-		left: 0
-		width: 100%
-		height: 100%
-		content: ''
-		z-index: -1
-		background-color: hsla(200,9%,5%,1)
-		transition: all 0.05s ease
-		filter: blur(20px)
-		background-image: radial-gradient(at 17% 36%, hsla(248,47%,49%,1) 0px, transparent 1%), radial-gradient(at 80% 70%, hsla(125,87%,60%,0.2) 0px, transparent 50%)
-	&:hover
-		overflow: visible
-		&::before
-			background-color: hsla(130,90%,45%,1)
-			filter: blur(15px)
