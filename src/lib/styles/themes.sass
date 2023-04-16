@@ -8,12 +8,11 @@
 	justify-content: flex-start
 	align-items: stretch
 	transition: all 0.5s var(--cubed)
-	background: #121212
-	border: 1px solid #272727
-	box-shadow: 5px 8px 12px #090909
-	backdrop-filter: blur(0)
+	background: #101010
+	border: 1px solid #191919
+	backdrop-filter: blur(4px)
 	@media screen and (min-width: 1024px)
-		padding: 12px 12px 8px 12px
+		padding: 40px 32px
 		row-gap: 0
 	@media screen and (max-width: 1023px)
 		padding: 24px
@@ -45,12 +44,6 @@
 		&::before
 			animation: tubegreen 0.35s var(--cubea) forwards, slowerdeath 1s var(--cubea) 1s forwards
 
-@keyframes bordergo
-	0%
-		box-shadow: 5px 8px 12px #090909
-	100%
-		box-shadow: 0px 0px 0px rgba(0,0,0,0)
-
 @keyframes tubegreen
 	0%
 		background-color: hsla(140,80%,60%,0.1)
@@ -65,13 +58,13 @@
 		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,0.4) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
 		filter: blur(30px)
 	70%
-		background-color: hsla(120,80%,60%,0.75)
+		background-color: hsla(120,80%,60%,0.55)
 		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,0.6) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
 		filter: blur(32px)
 	100%
-		background-color: hsla(133,80%,60%,1)
+		background-color: hsla(133,80%,60%,0.8)
 		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
-		filter: blur(40px)
+		filter: blur(20px)
 
 @keyframes greenborder
 	0%
@@ -256,6 +249,20 @@
 		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.6) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
 		filter: blur(3px)
 	100%
-		background-color: hsla(60,89%,50%,0.8)
-		background-image: radial-gradient(at 97% 96%, hsla(228,100%,20%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
-		filter: blur(40px)
+		background-color: hsla(60,89%,50%,0.9)
+		background-image: radial-gradient(at 97% 96%, hsla(228,100%,20%,0.8) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(30px)
+
+@keyframes yellowborder
+	0%
+		border: 1px solid hsla(58, 100%, 90%, 0)
+	100%
+		border: 1px solid hsla(58, 100%, 60%, 0.5)
+
+@keyframes repeateryellow
+	0%
+		border: 1px solid hsla(58, 100%, 90%, 1)
+	50%
+		border: 1px solid hsla(58, 100%, 90%, 0.5)
+	100%
+		border: 1px solid hsla(58, 100%, 90%, 1)

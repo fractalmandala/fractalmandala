@@ -103,8 +103,10 @@
 	@media screen and (min-width: 1024px)
 		padding-left: 10vw
 		padding-right: 10vw
-
-.tube
-	box-shadow: 5px 8px 12px #090909
+	@media screen and (max-width: 1023px)
+		grid-template-columns: 1fr 1fr
+		grid-template-rows: auto
+		grid-template-areas: ". ."
+		gap: 24px 24px
 
 </style>

@@ -168,7 +168,7 @@
 				</svg>
 				</div>
 			</div>
-			<small><a href="/" target="_self">2023 | Amritanshu Pandey</a></small>
+			<small><a href="/about">2023 | Amritanshu Pandey</a></small>
 		</div>
 	</div>
 </div>

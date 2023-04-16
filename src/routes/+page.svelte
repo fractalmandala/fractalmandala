@@ -161,27 +161,6 @@
 
 <div class="themegreen">
 	<div class="introarea buffer wider bufferYt">
-	<p>
-		A simple blog to document a non-programmer bootstrapping himself into web-dev. <span class="special">My stack:</span>
-	</p>
-	<p>
-		- backend at <a href="https://supabase.com/" target="_blank" rel="noreferrer">Supabase</a><br>
-		- framework: <a href="https://kit.svelte.dev/" target="_blank" rel="noreferrer">Sveltekit</a><br>
-		- deployed at <a href="https://vercel.com/home" target="_blank" rel="noreferrer">Vercel</a><br>
-		- also mounted:
-	</p>
-	<ul>
-		<li><a href="https://lenis.studiofreight.com/" target="_blank" rel="noreferrer">Lenis</a></li>
-		<li><a href="https://greensock.com/gsap/" target="_blank" rel="noreferrer">GSAP</a></li>
-		<li><a href="https://mdsvex.pngwn.io/" target="_blank" rel="noreferrer">MDSvex</a></li>
-		<li><a href="https://github.com/SharifClick/svelte-swipe" target="_blank" rel="noreferrer">Svelte Swipe</a></li>
-		<li><a href="https://github.com/DaveKeehl/svelte-reveal" target="_blank" rel="noreferrer">Svelte Reveal</a></li>
-		<li><a href="https://sveltelegos.com/" target="_blank" rel="noreferrer">Svelte Legos</a></li>
-		<li><a href="https://prismjs.com/" target="_blank" rel="noreferrer">Prism JS</a></li>
-	</ul>
-	<p>
-		Browse/search through an unorganized assortment of code snippets, setup guides and troubleshooting pointers. Play with broGPT, my AI pal, below.
-	</p>
 	</div>
 	<div class="inviewarea buffer wider bufferYb">
 		<div class="boxr">

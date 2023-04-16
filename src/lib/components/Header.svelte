@@ -18,6 +18,10 @@
 	let showThemeItems = false
 	let keyBlank = false
 	let showPages = false
+	let height:number
+	let isInvisible:boolean = false
+	let mouseY:number = 0
+	let latestScrollY:number 
 	let y:number
 	let url:any
 	let breakPoint = true
@@ -31,44 +35,6 @@
 
 	function handleClickOutside() {
   	showResults = !showResults
-	}
-
-	function togglePagesOn(){
-		if ( screenWidth > 1023 ) {
-			if ( showThemeItems === true ) {
-				showThemeItems = false
-			}
-			if ( showPages === false ) {
-				showPages = true
-			}
-		}
-	}
-
-	function togglePagesOff(){
-		if ( screenWidth > 1023 ) {
-			if ( showPages === true ) {
-				showPages = false
-			}
-		}
-	}
-
-	function toggleThemeItemsOn(){
-		if ( screenWidth > 1023 ) {
-			if ( showPages === true ) {
-				showPages = false
-			}
-			if ( showThemeItems === false ) {
-				showThemeItems = true
-			}
-		}
-	}
-
-	function toggleThemeItemsOff(){
-		if ( screenWidth > 1023 ) {
-			if ( showThemeItems === true ) {
-				showThemeItems = false
-			}
-		}
 	}
 
 	function blankKey(){
@@ -116,17 +82,37 @@
 		loadingStore = false
 		input.value = ''
 }
+
+	$: {
+		if ( y > 100 && y > latestScrollY ) {
+			isInvisible = true
+		} else {
+			isInvisible = false
+		}
+
+		latestScrollY = y
+	}
 	
 
 	onMount(async() => {
 		url = $page.url.pathname
+		const handleMouse = (event: {clientY: number;}) => {
+			mouseY = event.clientY
+			if ( mouseY <= 128 ) {
+				isInvisible = false
+			}
+		}
+		window.addEventListener('mousemove', handleMouse)
+		return() => {
+			window.removeEventListener('mousemove', handleMouse)
+		}
 	})
 
 </script>
 
 <svelte:window bind:scrollY={y} bind:innerWidth={screenWidth}/>
 
-<div class="header" class:expanded={expandedMenu} class:showsearch={showResults}>
+<div class="header" class:expanded={expandedMenu} class:showsearch={showResults} class:hiddenheader={isInvisible}>
 	<div class="logo">
 		<a href="/">
 			<LogoFMMotif></LogoFMMotif>
@@ -251,6 +237,9 @@
 		.openarea
 			display: none
 
+.hiddenheader
+	transform: translateY(-72px)
+
 .header.expanded
 	@media screen and (max-width: 1023px)
 		grid-template-columns: 1fr 40px
@@ -373,15 +362,12 @@ nav
 
 .singletheme
 	@media screen and (min-width: 1024px)
-		border: 1px solid #272727
 		border-radius: 4px
 		cursor: pointer
 		transform-origin: center center
 		color: #FFFFFF
 		transition: all 0.15s var(--cubed)
-		box-shadow: 4px 6px 12px #010101
-		background: rgba(0,0,0,1)
-		backdrop-filter: blur(3px)
+		backdrop-filter: blur(0px)
 		height: 32px
 		font-size: 14px
 		display: flex
@@ -389,6 +375,7 @@ nav
 		align-items: center
 		justify-content: center
 		text-align: center
+		overflow: hidden
 		width: 64px
 		&::before
 			position: absolute
@@ -397,17 +384,15 @@ nav
 			width: 100%
 			height: 100%
 			content: ''
-			background-color: hsla(140,80%,60%,0.5)
-			filter: blur(40px)
+			background-color: hsla(140,80%,60%,0)
+			filter: blur(4px)
 			z-index: -1
-			background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
-			background-size: 400% 400%
+			background-image: radial-gradient(at 97% 96%, hsla(108,57%,82%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(125,17%,10%,0.1) 0px, transparent 50%)
+			background-size: 100% 100%
 		&:hover
-			backdrop-filter: blur(30px)
+			backdrop-filter: blur(3px)
+			overflow: hidden
 			&::before
-				filter: blur(10px)
-	@media screen and (max-width: 1023px)
-		&:hover
-			color: var(--purp)
+				background-color: hsla(140,80%,30%,1)
 
 </style>
