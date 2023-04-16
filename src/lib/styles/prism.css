@@ -5,9 +5,9 @@ pre[class*="language-"] {
 	word-spacing: normal;
 	word-break: normal;
 	word-wrap: normal;
- 	color: white;
+ 	color: rgb(128, 128, 128);
 	font-family: 'JetBrains Mono', monospace;
-	font-size: 1em;
+	font-size: 14px;
 	line-height: 1.5em;
 	-moz-tab-size: 4;
 	-o-tab-size: 4;
@@ -49,7 +49,7 @@ pre[class*="language-"] {
 .language-css > code,
 .language-sass > code,
 .language-scss > code {
-	color: #fd9170;
+	color: #ea4c1c;
 }
 
 [class*="language-"] .namespace {
@@ -61,7 +61,7 @@ pre[class*="language-"] {
 }
 
 .token.attr-name {
-	color: #ffcb6b;
+	color: #777777;
 }
 
 .token.attr-value {

@@ -1,7 +1,7 @@
 <script lang="ts">
 
   import { page } from '$app/stores';
-	import { quintIn, expoInOut, quintOut } from 'svelte/easing'
+	import { quintIn, quintOut } from 'svelte/easing'
   import { fly } from 'svelte/transition';
 
 </script>

@@ -9,7 +9,7 @@
 	import '$lib/styles/themes.sass'
 	import type { ChatCompletionRequestMessage } from 'openai'
 	import { TagsFiltered } from '$lib/utils/supabase'
-	import { allMandalas, fullPull } from '$lib/utils/localpulls'
+	import { allMandalas } from '$lib/utils/localpulls'
 	import { SSE } from 'sse.js'
 	import BigCard from '$lib/components/BigCard.svelte'
 	import supabase from '$lib/utils/supabase'
@@ -30,7 +30,16 @@
 	let expand:boolean[] = Array(20).fill(false)
 	let area:boolean[] = Array(9).fill(false)
 	area[1] = true
+	let agent:any
 	let allfalse = false
+
+	function setAgentCode(){
+		agent = 'svelte'
+	}
+
+	function setAgentChat(){
+		agent = 'chat'
+	}
 
 	$: if ( expand.every(i => i === false )) {
 		allfalse = true
@@ -59,7 +68,7 @@
 		loading = true
 		chatMessages = [...chatMessages, { role: 'user', content: query }]
 		userprompt = query
-		const eventSource = new SSE('/api/chat', {
+		const eventSource = new SSE(`/api/${agent}`, {
 			headers: {
 				'Content-Type': 'application/json'
 			},
@@ -92,41 +101,6 @@
 		eventSource.stream()
 	}
 
-	const handleTitle = async () => {
-		chatTitle = [...chatMessages, { role: 'user', content: query }]
-		userprompt = query
-		const eventSource = new SSE('/api/title', {
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			payload: JSON.stringify({ messages: chatMessages })
-		})
-
-		query = ''
-
-		eventSource.addEventListener('error', handleError)
-
-		eventSource.addEventListener('message', (e: {data: string;}) => {
-			try {
-				loading = false
-				if (e.data === '[DONE]') {
-					chatTitle = [...chatMessages, { role: 'assistant', content: answerTitle }]
-					answerTitle = ''
-					return
-				}
-
-				const completionResponse = JSON.parse(e.data)
-				const [{ delta }] = completionResponse.choices
-
-				if (delta.content) {
-					answerTitle = (answerTitle ?? '') + delta.content
-				}
-			} catch (err) {
-				handleError(err)
-			}
-		})
-		eventSource.stream()
-	}
 
 	$: if (submittance) {
 		submitAnswer()	
@@ -147,7 +121,6 @@
       if (error) {
         throw new Error(error.message)
       }
-			handleTitle()
       console.log('submitted')
     } catch (e) {
       console.error('Error inserting into Supabase:', e)
@@ -176,7 +149,6 @@
 		hljs.highlightAll()	
 		codas = await TagsFiltered(tags)
 		posts = await allMandalas()
-		allitems = await fullPull()
 		
 	})
 </script>
@@ -212,6 +184,11 @@
 	</p>
 	</div>
 	<div class="inviewarea buffer wider bufferYb">
+		<div class="boxr">
+			<div on:click={setAgentChat} on:keydown={fauxfake}>Chat</div>
+			<div on:click={setAgentCode} on:keydown={fauxfake}>Code</div>
+			<div>Lang</div>
+		</div>
 	<h5>{answerTitle}</h5>
 		{#each chatMessages as message}
 			<ChatMessage type={message.role} message={message.content} />

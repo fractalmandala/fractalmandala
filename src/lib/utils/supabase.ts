@@ -153,9 +153,19 @@ export async function allNotes() {
 	const { data, error } = await supabase
 		.from('amrit-notes')
 		.select()
-		.neq('type','quillnote')
 		.neq('tags','tests')
 		.order('id',{ascending: false})
+		if (error) throw new Error(error.message)
+	return data
+}
+
+export async function limitNotes(limit:number) {
+	const { data, error } = await supabase
+		.from('amrit-notes')
+		.select()
+		.neq('tags','tests')
+		.order('id',{ascending: false})
+		.limit(limit)
 		if (error) throw new Error(error.message)
 	return data
 }

@@ -17,7 +17,7 @@
 	<div class="newgrid buffer wider bufferYb x00">
 		{#if posts && posts.length > 0}
 		{#each posts as item, i}
-			<div class="postal" in:scale={{delay: 50*i, easing: backOut }} out:scale={{ delay: 10*i, easing: backIn }}>
+			<div class="tube blue" in:scale={{delay: 50*i, easing: backOut }} out:scale={{ delay: 10*i, easing: backIn }}>
 				<small>{item.meta.type}</small>
 				<h5>
 					<a href={item.path}>

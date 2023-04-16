@@ -135,20 +135,7 @@
 </svelte:head>
 
 
-<div class="gridwork xx">
-	<div class="bogg"></div>
-	<div class="bogg"></div>
-	<div class="bogg"></div>
-	<div class="bogg"></div>
-	<div class="bogg"></div>
-	<div class="bogg"></div>
-	<div class="bogg"></div>
-	<div class="bogg"></div>
-	<div class="bogg"></div>
-	<div class="bogg"></div>
-	<div class="bogg"></div>
-	<div class="bogg"></div>
-</div>
+
 
 <div class="themer">
 	<Header>

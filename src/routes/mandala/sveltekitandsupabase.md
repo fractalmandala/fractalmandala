@@ -16,7 +16,7 @@ This is an example of how to integrate Supabase with Sveltekit. Some caveats to 
 
 I'm going to assume instances of Sveltekit and Supabase projects already set up and running. To begin on this with Supabase, first:
 
-```bash
+```shell
 npm install @supabase/supabase-js
 
 //or
@@ -30,7 +30,7 @@ Next, we must incorporate into Sveltekit the private environment variables we wi
 
 Create a file title .env in your root Sveltekit folder. This means that if you have a project folder titled 'Bananas,' within which you would have 'src,' 'static,' 'lib' and other folders, create the .env file in the folder 'Bananas'. Inside this file, we add the two variables like so:
 
-```bash
+```shell
 VITE_SUPABASE_URL="project_url"
 VITE_SUPABASE_ANON_KEY="project_api_keys"
 ```

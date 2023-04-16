@@ -99,14 +99,7 @@ export async function allMandalas() {
 	return allPosts
 }
 
-
-
-
-export async function fullPull(){
-	let postslist:any
-	let docslist:any
-	let noteslist:any
-	let chatslist:any
+export async function limitMandalas() {
 	const allPostFiles = import.meta.glob('/src/routes/mandala/*.md')
 	const iterablePostFiles = Object.entries(allPostFiles)
 	const allPosts = await Promise.all(
@@ -120,33 +113,24 @@ export async function fullPull(){
 			}
 		})
 	)
-	postslist = allPosts
-	const allDocFiles = import.meta.glob('/src/routes/mandala/docs/*.md')
-	const iterableDocFiles = Object.entries(allDocFiles)
-	const allDocs = await Promise.all(
-		iterableDocFiles.map(async ([path, resolver]) => {
+	// @ts-ignore
+	return allPosts.slice(0, 4)	
+}
+
+export async function limitDocs() {
+	const allPostFiles = import.meta.glob('/src/routes/mandala/docs/*.md')
+	const iterablePostFiles = Object.entries(allPostFiles)
+	const allPosts = await Promise.all(
+		iterablePostFiles.map(async ([path, resolver]) => {
 			// @ts-ignore
 			const { metadata } = await resolver()
-			const docPath = path.slice(11,-3)
+			const postPath = path.slice(11,-3)
 			return {
 				meta: metadata,
-				path: docPath,
+				path: postPath,
 			}
 		})
 	)
-	docslist = allDocs
-	const { data, error } = await supabase
-	.from ('amrit-notes')
-	.select()
-	.order('id',{ascending: false})
-	if (error) throw new Error(error.message)
-	noteslist = data
-	
-	const { data: datatwo, error: errortwo } = await supabase
-	.from ('amrit-chatswithgpt')
-	.select()
-	.order('id',{ascending: false})
-	if (errortwo) throw new Error(errortwo.message)
-	chatslist = datatwo
-
+	// @ts-ignore
+	return allPosts.slice(0, 4)	
 }
