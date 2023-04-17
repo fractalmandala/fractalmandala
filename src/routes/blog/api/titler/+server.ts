@@ -56,7 +56,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		}
 
 		const prompt =
-			'Reduce the prompt you are given to only 2 words maximum which can be used as tags to descibe the entire prompt.'
+			'Reduce the prompt you are given to only 15 words maximum which can be used as title to descibe the entire prompt.'
 		tokenCount += getTokens(prompt)
 
 		if (tokenCount >= 4000) {
