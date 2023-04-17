@@ -1,24 +1,19 @@
 <script lang="ts">
 
-	import { onMount } from 'svelte'
 	import ChatMessage from '$lib/components/ChatMessage.svelte'
 	import '$lib/styles/themes.sass'
 	import type { ChatCompletionRequestMessage } from 'openai'
 	import { SSE } from 'sse.js'
-	import supabase from '$lib/utils/supabase'
 	let query: string = ''
 	let answer: string = ''
-	let userprompt:any
 	let loading: boolean = false
 	let chatMessages: ChatCompletionRequestMessage[] = []
 	let fake = false
-	let submittance:string = ''
 	
 
 	const handleSubmit = async () => {
 		loading = true
 		chatMessages = [...chatMessages, { role: 'user', content: query }]
-		userprompt = query
 		const eventSource = new SSE('api/tester', {
 			headers: {
 				'Content-Type': 'application/json'
