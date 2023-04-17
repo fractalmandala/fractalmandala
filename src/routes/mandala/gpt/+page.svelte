@@ -24,7 +24,7 @@
 </svelte:head>
 
 
-<div class="newgrid wider buffer bufferYt bufferYb themeyell">
+<div class="newgrids buffer bufferYt bufferYb themeyell">
 	{#if chats && chats.length > 0}
 		{#each chats as item, i}
 			<div class="tube yellow">
@@ -33,7 +33,7 @@
 					{item.prompt.slice(0,50)}
 					</a>
 				</h5>
-				<p>{item.response.slice(0,200)}</p>
+				<p>{item.response.slice(0,100)}</p>
 			</div>
 		{/each}
 	{/if}

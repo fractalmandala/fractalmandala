@@ -1,76 +1,60 @@
-<!-- src/routes/logging-in/+page.svelte -->
 <script lang="ts">
 
-	import type { ActionData } from './$types';
-	import { applyAction, enhance, type SubmitFunction } from '$app/forms';
-	import { invalidate } from '$app/navigation';
-	import { browser } from '$app/environment';
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
-	import type { PageData } from './$types';
+	import { onMount } from 'svelte'
+	import { allNotes } from '$lib/utils/supabase'
+	import SvelteTable from 'svelte-table'
 
-	export let data: PageData;
-	export let form: ActionData;
-	let loading = false
+	let notes:any
+	let data:any = []
 
-	const handleSubmit: SubmitFunction = () => {
-		loading = true;
-		return async ({ result }) => {
-			if (result.type === 'redirect') {
-				await invalidate('supabase:auth');
-			} else {
-				await applyAction(result);
-			}
-			loading = false;
-		};
-	};
+	onMount(async() => {
+		data = await allNotes()
+	})
 
-	$: {
-		const redirectTo = $page.url.searchParams.get('redirect');
-
-		// check if user has been set in session store then redirect
-		if (browser && data.session) {
-			goto(redirectTo ?? '/');
-		}
-	}
+	
+	
 </script>
 
-<div class="x00 buffer bufferYt bufferYb">
-	<form method="post" use:enhance={handleSubmit} class="auth-form">
-		<label for=""> Email </label>
-		<input
-						id="email"
-						name="email"
-						value={form?.values?.email ?? ''}
-						class="input"
-						type="email"
-						placeholder="Email"
-						required
-					/>
-		<label for=""> Password </label>
-					<input
-						id="password"
-						name="password"
-						class="input"
-						type="password"
-						placeholder="Password"
-						autocomplete="current-password"
-						required
-					/>
-		<button class="plain green" type="submit" disabled={loading}>Login</button>
-	</form>
+{#if data && data.length > 0}
+<div class="padl2">
+		<table>
+			<thead>
+				<tr>
+					<th>Title</th>
+					<th>Type</th>
+					<th>Tags</th>
+					<th>URL</th>
+					<th>Date</th>
+				</tr>
+			</thead>
+			<tbody>
+				{#each data as item}
+						<tr>
+							<td>{item.title}</td>
+							<td>{item.type}</td>
+							<td>{item.tags}</td>
+							<td>/blog/{item.type}/{item.id}</td>
+							<td>{item.created_at}</td>
+						</tr>
+				{/each}
+			</tbody>
+		</table>
 </div>
-
+{/if}
 
 <style lang="sass">
 
-.auth-form
-	display: flex
-	flex-direction: column
-	row-gap: 2px
-	width: 16%
-	input
-		margin-bottom: 16px
+table
+	text-align: left
 
+thead
+	font-size: 16px
+	color: #676767
+	font-weight: 400
+	text-transform: uppercase
+
+tbody
+	font-size: 14px
+	color: #474747
 
 </style>

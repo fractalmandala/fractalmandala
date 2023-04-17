@@ -21,6 +21,11 @@
 
 </script>
 
+<svelte:head>
+<title>The Fractal Maṇḍala</title>
+<meta name="description" content="tech, dev, design, dharma"/>
+</svelte:head>
+
 <div>
 	<slot></slot>
 	<div class="newgrids buffer bufferYt bufferYb">

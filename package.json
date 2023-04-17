@@ -26,6 +26,7 @@
 		"sass": "^1.60.0",
 		"svelte": "^3.54.0",
 		"svelte-check": "^3.0.1",
+		"svelte-grid": "^5.1.1",
 		"svelte-reveal": "^0.7.0",
 		"svoast": "^1.3.1",
 		"tslib": "^2.4.1",
@@ -50,6 +51,7 @@
 		"sse.js": "^0.6.1",
 		"svelte-legos": "^0.1.9",
 		"svelte-swipe": "^1.9.2",
+		"svelte-table": "^0.5.9",
 		"textify.js": "^2.4.3",
 		"uuidv4": "^6.2.13"
 	}

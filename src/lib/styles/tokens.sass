@@ -1,0 +1,471 @@
+
+$l1: 16px
+$l2: 24px
+$l3: 32px
+$l4: 48px
+$l5: 64px
+$l10: 128px
+$l20: 240px
+$minh: calc(100vh - 80px)
+$gret: #676767
+$line: #272727
+$greenpop: #3ef710
+$greenth: #53DD6c
+$greenhero: #10D56C
+$blue: #227ceb
+$red: #F64241
+$yellow: #f4d301
+$shadow-tube: 6px 6px 10px #090909, -4px -7px 10px #111111
+$shadow-no:	0px 0px 0px #020202, 0px 0px 0px #111111
+$back-tube: #171717
+$trans1: all 0.15s cubic-bezier(1.000, -0.105, 1.000, 0.410)
+
+$green0: hsla(200,9%,5%,1)
+$green1: hsla(140,80%,60%,0.1)
+$green2: hsla(120,80%,60%,0.2)
+$green3: hsla(120,80%,60%,0.35)
+$green4: hsla(130,90%,45%,1)
+
+$blue0: hsla(230,80%,20%,0)
+$blue1: hsla(216,90%,30%,0.1)
+$blue2: hsla(216,90%,30%,0.5)
+$blue3: hsla(230,90%,30%,0.5)
+$blue4: hsla(230,100%,40%,1)
+
+$red0: hsla(10,80%,20%,0)
+$red1: hsla(10,50%,30%,0.1)
+$red2: hsla(10,50%,10%,0.4)
+$red3: hsla(10,80%,20%,0.5)
+$red4: hsla(10,80%,40%,1)
+
+$yell0: hsla(60,89%,50%,0)
+$yell1: hsla(10,90%,30%,0)
+$yell2: hsla(60,89%,50%,0.1)
+$yell3:  hsla(60,89%,50%,0.6)
+$yell4: hsla(60,89%,50%,0.9)
+
+$color-majoryellowafter: hsla(60,89%,50%,0.9)
+$color-majoryellowbefore: hsla(60,89%,50%,0.12)
+
+$color-majorredafter: hsla(10,80%,40%,1)
+$color-majorredbefore: hsla(10,80%,40%,0.09)
+
+$color-majorblueafter: hsla(230,80%,40%,1)
+$color-majorbluebefore: hsla(230,80%,20%,0.24)
+
+$cubea: cubic-bezier(1.000, -0.105, 1.000, 0.410)
+$cubeb: cubic-bezier(0.61, 1, 0.88, 1)
+
+$dur025s: 0.25s
+$dur015s: 0.15s
+$dur200s: 2s
+$del040s: 0.4s
+$del100s: 1s
+
+
+$spacing-large: 64px
+$spacing-mid: 32px
+$spacing-small: 16px
+$font-family-Spline: 'Spline Sans', sans-serif
+$font-family-Jet: 'JetBrains Mono', monospace
+$shadow-level-3: 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12), 0 3px 5px -1px rgba(0,0,0,0.20)
+$media-query-minwidth: 1024px
+$media-query-maxwidth: 1023px
+$padl1left: 64px
+$padl1right: 64px
+$padl1top: 128px
+$padl1bot: 128px
+
+html, body
+	margin: 0
+	box-sizing: border-box
+	background: #121212
+	color: white
+
+a
+	color: inherit
+	text-decoration: none
+	&:hover
+		color: inherit
+
+div
+	font-family: 'Spline Sans', sans-serif
+
+*
+	box-sizing: border-box
+	--green3: $green3
+	--gret: $gret
+	--line: $line
+	--l1: $l1
+	--greenhero: $greenhero
+	--blue: $blue
+	--red: $red
+	--blue: $blue
+	--greenpop: $greenpop
+	--redzero: #F64241
+
+:root
+	box-sizing: border-box
+	--green3: $green3
+	--gret: $gret
+	--line: $line
+	--l1: $l1
+	--greenhero: $greenhero
+	--blue: $blue
+	--red: $red
+	--blue: $blue
+	--greenpop: $greenpop
+
+
+.bdr
+	border: 1px solid red
+
+.boxc, .boxr
+	display: flex
+
+.boxc
+	flex-direction: column
+
+.boxr
+	flex-direction: row
+
+.padl1
+	box-sizing: border-box
+	@media screen and (min-width: 1024px)
+		padding: $l10 $l5
+		min-height: $minh
+	@media screen and (max-width: 1023px)
+		padding: $l10 $l2
+
+.padl2
+	@media screen and (min-width: 1024px)
+		padding: $l10 $l20
+		min-height: $minh
+	@media screen and (max-width: 1023px)
+		padding: $l10 $l2
+
+.padl2.sides
+	@media screen and (min-width: 1024px)
+		padding-left: $l20
+		padding-right: $l20
+		padding-top: 0
+		padding-bottom: 0
+		min-height: $minh
+	@media screen and (max-width: 1023px)
+		padding-left: $l2
+		padding-right: $l2
+		padding-top: 0
+		padding-bottom: 0
+
+.thegrid
+	display: grid
+	grid-auto-flow: row
+	@media screen and (min-width: 1024px)
+		grid-template-columns: 1fr 1fr 1fr 1fr
+		grid-template-rows: auto
+		grid-template-areas: ". . . ."
+		gap: 32px 32px
+	@media screen and (max-width: 1023px)
+		grid-template-columns: 1fr 1fr
+		grid-template-rows: auto
+		grid-template-areas: ". ."
+		gap: 16px 16px
+
+.thegrid.aligned
+	@media screen and (min-width: 1024px)
+		grid-template-rows: auto auto
+		grid-template-areas: "opentab opentab opentab opentab" ". . . ."
+		.tube.opentab
+			grid-area: opentab
+			height: 100%
+	@media screen and (max-width: 1023px)
+		grid-template-rows: auto auto
+		grid-template-areas: "opentab opentab"
+		.tube.opentab
+			grid-area: opentab
+			height: 100%
+
+.tube.opentab
+	overflow: hidden
+	box-shadow: $shadow-no
+	&:hover
+		overflow: hidden
+
+
+.tube
+	overflow: visible
+	box-shadow: $shadow-tube
+	display: flex
+	flex-direction: column
+	position: relative
+	border-radius: 4px
+	justify-content: flex-start
+	align-items: stretch
+	transition: $trans1
+	background: $back-tube
+	border: 1px solid #101010
+	cursor: pointer
+	@media screen and (min-width: 1024px)
+		padding: 40px 32px
+		row-gap: 0
+		height: 100%
+	@media screen and (max-width: 1023px)
+		padding: 24px
+		justify-content: flex-start
+	&::before
+		position: absolute
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
+		content: ''
+		filter: blur(40px)
+		z-index: -1
+
+.tube
+	h5, small, p
+		margin: 0
+	small
+		color: #474747
+		text-transform: uppercase
+		font-size: 10px
+		font-weight: bold
+		letter-spacing: 1px
+	p
+		color: #474747
+		font-size: 12px
+		width: max-content
+		border-top: 1px solid #272727
+		padding-top: 4px
+	h5
+		text-transform: capitalize
+		padding-top: 8px
+		padding-bottom: 16px
+	h6
+		margin: 0
+		font-weight: 400
+		color: white
+		font-size: 16px
+		padding-top: 32px
+		
+.tube.opentab
+	cursor: auto
+	h5
+		font-size: 24px
+
+.tube.opentab.green
+	small
+		color: $green4
+
+.tube.opentab.red
+	small
+		color: var(--redzero)
+
+.tube.image
+	padding: 0
+	img
+		object-fit: cover
+		width: 100%
+		height: 100%
+
+.tube.image.opentab
+	height: 600px
+
+.tube.green
+	&::before
+		background-image: radial-gradient(at 17% 36%, hsla(248,47%,49%,1) 0px, transparent 1%), radial-gradient(at 80% 70%, hsla(125,87%,60%,0.2) 0px, transparent 50%)
+		background-size: 400% 400%
+		background-color: $green0
+	&:hover
+		animation: bordergo $dur025s ease forwards, greenborder $dur015s $cubea $del040s forwards, repeatergreen $dur200s ease $del100s infinite, flinkin $del040s $cubea forwards
+		&::before
+			animation: tubegreen $dur025s $cubea $dur025s forwards
+
+.tube.green.opentab
+	&:hover
+		animation: none
+
+.tube.blue
+	&::before
+		background-image: radial-gradient(at 97% 96%, hsla(228,100%,20%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		background-size: 400% 400%
+		background-color: $blue0
+	&:hover
+		animation: bordergo $dur025s ease forwards, blueborder $dur015s $cubea $del040s forwards, repeaterblue $dur200s ease $del100s infinite, flinkin $del040s $cubea forwards
+		&::before
+			animation: tubeblue $dur025s $cubea $dur025s forwards
+
+.tube.blue.opentab
+	&:hover
+		animation: bordergo $dur025s ease forwards, blueborder $dur015s $cubea $del040s forwards, repeaterblue $dur200s ease $del100s infinite
+
+.tube.red
+	&::before
+		background-image: radial-gradient(at 97% 96%, hsla(228,100%,20%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		background-size: 400% 400%
+		background-color: $red0
+	&:hover
+		animation: bordergo $dur025s ease forwards, redborder $dur015s $cubea $del040s forwards, repeaterred $dur200s ease $del100s infinite, flinkin $del040s $cubea forwards
+		&::before
+			animation: tubered $dur025s $cubea $dur025s forwards
+
+.tube.red.opentab
+	&:hover
+		animation: bordergo $dur025s ease forwards, redborder $dur015s $cubea $del040s forwards, repeaterred $dur200s ease $del100s infinite
+
+.tube.yell
+	&::before
+		background-image: radial-gradient(at 97% 96%, hsla(228,100%,20%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		background-size: 400% 400%
+		background-color: $yell0
+	&:hover
+		animation: bordergo $dur025s ease forwards, yellowborder $dur015s $cubea $del040s forwards, repeateryellow $dur200s ease $del100s infinite, flinkin $del040s $cubea forwards
+		&::before
+			animation: tubeyellow $dur025s $cubea $dur025s forwards
+
+
+.tube.yell.opentab
+	&:hover
+		animation: bordergo $dur025s ease forwards, yellowborder $dur015s $cubea $del040s forwards, repeateryellow $dur200s ease $del100s infinite
+
+@keyframes bordergo
+	0%
+		box-shadow: $shadow-tube
+	100%
+		box-shadow: $shadow-no
+
+
+@keyframes tubegreen
+	0%
+		background-color: $green1
+		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(24px)
+	42%
+		background-color: $green2
+		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(102px)
+	70%
+		background-color: $green3
+		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,0.6) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(32px)
+	100%
+		background-color: $green4
+		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(20px)
+
+@keyframes tubeblue
+	0%
+		background-color: $blue1
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(4px)
+	44%
+		background-color: $blue2
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.4) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(10px)
+	70%
+		background-color: $blue3
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.6) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(3px)
+	100%
+		background-color: $blue4
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,62%,1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(40px)
+
+@keyframes tubered
+	0%
+		background-color: $red1
+		background-image: radial-gradient(at 97% 96%, hsla(228,100%,20%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(4px)
+	42%
+		background-color: $red2
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.3) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(500px)
+	70%
+		background-color: $red3
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.6) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(3px)
+	100%
+		background-color: $red4
+		background-image: radial-gradient(at 97% 96%, hsla(228,100%,20%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(40px)
+
+@keyframes tubeyellow
+	0%
+		background-color: $yell1
+		background-image: radial-gradient(at 97% 96%, hsla(228,100%,20%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(4px)
+	44%
+		background-color: $yell2
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.4) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(10px)
+	70%
+		background-color: $yell3
+		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.6) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(3px)
+	100%
+		background-color: $yell4
+		background-image: radial-gradient(at 97% 96%, hsla(228,100%,20%,0.8) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		filter: blur(30px)
+
+@keyframes repeaternull
+	0%
+		border: 1px solid #171717
+	100%
+		border: 1px solid #171717
+
+@keyframes repeatergreen
+	0%
+		border: 1px solid hsla(131, 67%, 60%, 0.3)
+	50%
+		border: 1px solid hsla(131, 67%, 60%, 1)
+	100%
+		border: 1px solid hsla(131, 67%, 60%, 0.3)
+
+@keyframes repeaterblue
+	0%
+		border: 1px solid hsla(231, 67%, 60%, 30%)
+	50%
+		border: 1px solid hsla(231, 67%, 60%, 100%)
+	100%
+		border: 1px solid hsla(231, 67%, 60%, 30%)
+
+@keyframes repeaterred
+	0%
+		border: 1px solid hsla(10, 80%, 20%, 100%)
+	50%
+		border: 1px solid hsla(10, 80%, 60%, 50%)
+	100%
+		border: 1px solid hsla(10, 80%, 20%, 100%)
+
+@keyframes repeateryellow
+	0%
+		border: 1px solid hsla(58, 100%, 90%, 1)
+	50%
+		border: 1px solid hsla(58, 100%, 90%, 0.5)
+	100%
+		border: 1px solid hsla(58, 100%, 90%, 1)
+
+
+@keyframes greenborder
+	0%
+		border: 1px solid hsla(131, 6%, 30%, 0)
+	100%
+		border: 1px solid hsla(131, 67%, 60%, 0.6)
+
+@keyframes blueborder
+	0%
+		border: 1px solid hsla(231, 6%, 30%, 0%)
+	100%
+		border: 1px solid hsla(231, 67%, 60%, 70%)
+
+@keyframes redborder
+	0%
+		border: 1px solid hsla(10, 80%, 20%, 0%)
+	100%
+		border: 1px solid hsla(10, 80%, 20%, 100%)
+
+@keyframes yellowborder
+	0%
+		border: 1px solid hsla(58, 100%, 90%, 0)
+	100%
+		border: 1px solid hsla(58, 100%, 60%, 0.5)

@@ -39,9 +39,6 @@ svg
 
 svg
 	path
-		fill: #474747
-	&:hover
-		path
-			fill: #53DD6c
+		fill: #53DD6c
 
 </style>

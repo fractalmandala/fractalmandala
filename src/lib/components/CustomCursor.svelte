@@ -1,5 +1,7 @@
 <script>
+
 	import { spring } from 'svelte/motion';
+	import { onMount } from 'svelte'
 
 	let coords1 = spring(
 		{ x: 0, y: 0 },
@@ -18,6 +20,7 @@
 	);
 
 	let size = spring(10);
+
 
 </script>
 
@@ -52,6 +55,9 @@
 	position: fixed
 	top: 0
 	left: 0
+	z-index: 9999
+	cursor: none
+	pointer-events: none
 
 
 </style>

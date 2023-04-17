@@ -18,10 +18,6 @@
 	let showThemeItems = false
 	let keyBlank = false
 	let showPages = false
-	let height:number
-	let isInvisible:boolean = false
-	let mouseY:number = 0
-	let latestScrollY:number 
 	let y:number
 	let url:any
 	let breakPoint = true
@@ -40,6 +36,7 @@
 	function blankKey(){
 		keyBlank = !keyBlank
 	}
+
 
 	function closeSearch(){
 		if (showResults === true ) {
@@ -70,49 +67,22 @@
 			if (error) throw new Error(error.message)
 			results = results.concat(data)
 
-		const { data: dataone, error: errorone } = await supabase
-			.from('amrit-chatswithgpt')
-			.select()
-			.textSearch('fts', searchTerm)
-			.order('id')
-			if (errorone) throw new Error(errorone.message)
-			results = results.concat(dataone)
 	// @ts-ignore
 		resultsStore.set(results)
 		loadingStore = false
 		input.value = ''
 }
 
-	$: {
-		if ( y > 100 && y > latestScrollY ) {
-			isInvisible = true
-		} else {
-			isInvisible = false
-		}
-
-		latestScrollY = y
-	}
-	
 
 	onMount(async() => {
 		url = $page.url.pathname
-		const handleMouse = (event: {clientY: number;}) => {
-			mouseY = event.clientY
-			if ( mouseY <= 128 ) {
-				isInvisible = false
-			}
-		}
-		window.addEventListener('mousemove', handleMouse)
-		return() => {
-			window.removeEventListener('mousemove', handleMouse)
-		}
 	})
 
 </script>
 
 <svelte:window bind:scrollY={y} bind:innerWidth={screenWidth}/>
 
-<div class="header" class:expanded={expandedMenu} class:showsearch={showResults} class:hiddenheader={isInvisible}>
+<div class="header" class:expanded={expandedMenu} class:showsearch={showResults}>
 	<div class="logo">
 		<a href="/">
 			<LogoFMMotif></LogoFMMotif>
@@ -138,9 +108,7 @@
 			</button>
 		</div>
 		<nav>
-			<div class="singletheme"><a href="/mandala">Posts</a></div>
-			<div class="singletheme"><a href="/mandala/gpt">GPT</a></div>
-			<div class="singletheme"><a href="/mandala/images">Images</a></div>
+			<div class="singletheme"><a href="/blog/gptchat">GPT</a></div>
 			<div class="singletheme"><a href="/pad">Pad</a></div>
 			<div class="singletheme"><a href="/play">Play</a></div>
 		</nav>
@@ -149,11 +117,11 @@
 		<div class="searchresults modal" on:click={closeSearch} on:keydown={blankKey} use:clickOutsideAction on:clickoutside={handleClickOutside}>
 			{#each $resultsStore as item, i}
 					{#if item.title && item.type === 'code'}
-						<p in:fly={{ duration: 200, delay: i*20, x: 128}}><a href="/mandala/codes/{item.counting}">{item.title}</a><span style="color: #10D56C">{item.tags}</span></p>
+						<p in:fly={{ duration: 200, delay: i*20, x: 128}}><a href="/blog/code/{item.id}">{item.title}</a><span style="color: #10D56C">{item.tags}</span></p>
 					{:else if item.prompt && item.prompt.length > 0}
-						<p in:fly={{ duration: 200, delay: i*20, x: 128}}><a href="/mandala/gpt/{item.id}">{item.prompt.slice(0,35)}</a></p>
+						<p in:fly={{ duration: 200, delay: i*20, x: 128}}><a href="/blog/gptchat/{item.id}">{item.prompt.slice(0,35)}</a></p>
 					{:else}		
-						<p in:fly={{ duration: 200, delay: i*20, x: 128}}><a href="/mandala/notes/{item.counting}">{item.title}</a><span style="color: #10D56C">{item.tags}</span></p>
+						<p in:fly={{ duration: 200, delay: i*20, x: 128}}><a href="/blog/general/{item.id}">{item.title}</a><span style="color: #10D56C">{item.tags}</span></p>
 					{/if}
 			{/each}
 		</div>
@@ -173,7 +141,7 @@
 	z-index: 999
 	transition: 0.3s ease
 	@media screen and (min-width: 1024px)
-		grid-template-columns: 300px 1fr
+		grid-template-columns: 360px 1fr
 		grid-template-rows: 1fr
 		grid-template-areas: "logo area"
 		width: 100%
@@ -183,7 +151,6 @@
 		position: fixed
 		padding-left: 16px
 		padding-right: 16px
-		background: rgba(0,0,0,0.1)
 		backdrop-filter: blur(10px)
 		top: 0
 		.logo
@@ -196,7 +163,7 @@
 			flex-direction: row-reverse
 			align-items: center
 			height: 72px
-			gap: 0
+			column-gap: 32px
 			padding: 0
 			.searcherinput
 				width: 240px
@@ -233,9 +200,6 @@
 			height: 72px
 		.openarea
 			display: none
-
-.hiddenheader
-	transform: translateY(-72px)
 
 .header.expanded
 	@media screen and (max-width: 1023px)
@@ -348,6 +312,7 @@ nav
 		display: flex
 		flex-direction: row
 		align-items: center
+		justify-content: flex-end
 		height: 72px
 		gap: 16px
 	@media screen and (max-width: 1023px)

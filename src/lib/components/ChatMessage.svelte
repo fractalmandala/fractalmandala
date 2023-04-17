@@ -23,7 +23,7 @@
 		{type === 'user' ? 'user' : 'gpt'}:
 	</div>
 	<pre class="commbody {type === 'user' ? 'user' : 'gpt'}">
-		{@html message}
+		{message}
 	</pre>
 </div>
 

@@ -21,23 +21,20 @@
 
 </script>
 
-<div class="standardbloghorizontal">
+<div class="standardbloghorizontal buffer">
 	{#if images && images.length > 0}
-		<Swipe {...swipeConfig}>
+		<div class="carousel">
 			{#each images as item, i}
-				<SwipeItem>
-					<div class="bigimagebox">
-						<a href="/mandala/images/{item.id}">
-							<img use:lazyLoadImageAction src="https://wganhlzrylmkvvaoalco.supabase.co/storage/v1/object/public/images/batch1/{item.link.slice(90,100)}" data-src="https://wganhlzrylmkvvaoalco.supabase.co/storage/v1/object/public/images/batch1/{item.link.slice(90,100)}" alt={item.id}>
-						</a>
-					</div>
-				</SwipeItem>
+					<a href="/mandala/images/{item.id}" class="link"> 
+						<img use:lazyLoadImageAction src="https://wganhlzrylmkvvaoalco.supabase.co/storage/v1/object/public/images/batch1/{item.link.slice(90,100)}" data-src="https://wganhlzrylmkvvaoalco.supabase.co/storage/v1/object/public/images/batch1/{item.link.slice(90,100)}" alt={item.id}>
+					</a>
 			{/each}
-		</Swipe>
+			</div>
 	{/if}
 </div>
 
 <style lang="sass">
+
 
 .standardbloghorizontal
 	display: grid
@@ -49,13 +46,35 @@
 	gap: 4px 4px
 	grid-auto-flow: column
 	margin-top: 64px
-	.bigimagebox
+	align-content: center
+	align-items: center
+	.carousel
+		display: flex
+		flex-direction: row
 		width: 100%
-		height: 100%
-	.bigimagebox a
-		img
-			object-fit: cover
+		height: 60%
+		white-space: nowrap
+		overflow-x: scroll
+		overflow-y: hidden
+		gap: 0
+		a
+			width: 25%
 			height: 100%
-			width: 100%
+			display: inline-block
+			transition: 0.4s ease
+			img
+				object-fit: cover
+				object-position: center center
+				height: 100%
+
+.carousel::-webkit-scrollbar
+	width: 0
+	height: 0
+
+.carousel
+	&:hover
+		a
+			&:hover
+				width: 50%
 
 </style>

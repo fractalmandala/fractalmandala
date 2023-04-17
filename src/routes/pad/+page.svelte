@@ -77,7 +77,7 @@
 </svelte:head>
 
 
-<div class="pagecontainer buffer bufferYb">
+<div class="pagecontainer padl2">
 	<div class="boxc notes">
 		<div class="notesection boxr">
 			<input type="text" placeholder="title" bind:value={title}/>
@@ -109,9 +109,9 @@
 	@media screen and (min-width: 1024px)
 		grid-template-columns: 1fr 320px
 		grid-template-areas: "editor notes"
-		gap: 0 40px
 		padding-top: 128px
-		min-height: calc(100vh - 80px)
+		height: calc(100vh - 120px)
+		column-gap: 32px
 		.notes
 			grid-area: notes
 		.editor-wrapper
@@ -128,7 +128,7 @@
 	margin-bottom: 16px
 
 .notesection
-	row-gap: 8px
+	row-gap: 16px
 	justify-content: space-between
 	flex-wrap: wrap
 	input[type=text], input[type=number]
@@ -138,7 +138,7 @@
 		padding: 8px
 		outline: none
 		color: white
-		box-shadow: -4px 10px 8px rgba(0,0,0,0.7)
+		box-shadow: -4px 5px 5px rgba(0,0,0,0.7)
 		cursor: pointer
 	textarea
 		background: #171717

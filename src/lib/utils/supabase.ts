@@ -13,7 +13,6 @@ export const allCodes = async() => {
 		.from('amrit-notes')
 		.select()
 		.eq('type','code')
-		.neq('tags','tests')
 		.order('id',{ascending: false})
 		if (error) throw new Error(error.message)
 	return data
@@ -56,7 +55,6 @@ export const allGenerals = async() => {
 		.from('amrit-notes')
 		.select()
 		.eq('type','general')
-		.neq('tags','tests')
 		.order('id',{ascending: false})
 		if (error) throw new Error(error.message)
 	return data
@@ -66,7 +64,7 @@ export const TagsFiltered = async(tags: any) => {
 	const { data, error } = await supabase
 		.from('amrit-notes')
 		.select()
-		.textSearch('fts',tags)
+		.textSearch('tags',tags)
 		.order('id',{ascending: false})
 		if (error) throw new Error(error.message)
 	return data
@@ -94,24 +92,22 @@ export const CodesFiltered = async(lang: any) => {
 	return data
 }
 
-export const CodeSQL = async() => {
+export const Sveltecode = async() => {
 	const { data, error } = await supabase
 		.from('amrit-notes')
 		.select()
-		.eq('type','code')
-		.eq('lang','sql')
-		.order('id',{ascending: false})
+		.textSearch('tags','sveltecode')
+		.order('created_at',{ascending: false})
 		if (error) throw new Error(error.message)
 	return data
 }
 
-export const CodeCSS = async() => {
+export const Supabases = async() => {
 	const { data, error } = await supabase
 		.from('amrit-notes')
 		.select()
-		.eq('type','code')
-		.or('lang.eq.css,lang.eq.sass')
-		.order('id',{ascending: false})
+		.textSearch('tags','supabase')
+		.order('created_at',{ascending: false})
 		if (error) throw new Error(error.message)
 	return data
 }
@@ -153,8 +149,8 @@ export async function allNotes() {
 	const { data, error } = await supabase
 		.from('amrit-notes')
 		.select()
-		.neq('tags','tests')
-		.order('id',{ascending: false})
+		.neq('type','quillcode')
+		.order('created_at',{ascending: false})
 		if (error) throw new Error(error.message)
 	return data
 }
@@ -163,8 +159,7 @@ export async function limitNotes(limit:number) {
 	const { data, error } = await supabase
 		.from('amrit-notes')
 		.select()
-		.neq('tags','tests')
-		.order('id',{ascending: false})
+		.order('created_at',{ascending: false})
 		.limit(limit)
 		if (error) throw new Error(error.message)
 	return data
@@ -302,8 +297,8 @@ export async function blogPosts(){
 	const { data, error } = await supabase
 	.from('amrit-notes')
 	.select()
-	.eq('type','quillnote')
-	.order('id')
+	.eq('type','post')
+	.order('created_at',{ascending: false})
 	if (error) throw new Error(error.message)
 	return data
 }

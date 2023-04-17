@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte'
 	import Prism from 'prismjs'
 	import '$lib/styles/prism.css'
+	import SubmitToSupabase from '$lib/components/SubmitToSupabase.svelte'
 	import Animations from 'textify.js'
 	let codeContents:any
 	let fake:boolean = false
@@ -73,7 +74,8 @@
 		<div class="boxc" id="docsinside">
 			<div id="copy" style="font-size: 12px; cursor: pointer; color: #10D56C" on:click={copyToClipboard} on:keydown={fauxfake}>COPY</div>
 			<svelte:component this={data.content} bind:this={codeContents}/>
-		</div>	
+		</div>
+		<SubmitToSupabase title={data.title} tags={data.tags} note={data.content}></SubmitToSupabase>	
 	</div>
 </div>
 

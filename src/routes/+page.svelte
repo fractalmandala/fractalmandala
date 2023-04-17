@@ -1,44 +1,29 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte'
-	import BroGPT from '$lib/agents/broGPT.svelte'
-	import Sanskrit from '$lib/agents/Sanskrit.svelte'
-	import Svelter from '$lib/agents/Svelter.svelte'
+	import { lazyLoadImageAction } from 'svelte-legos'
+	import Prism from 'prismjs'
+	import '$lib/styles/prism.css'
+	import { browser } from '$app/environment'
 	import { scale } from 'svelte/transition'
 	import { backOut, backIn } from 'svelte/easing'
-	import hljs from 'highlight.js'
-	import '$lib/styles/highlight.css'
 	import '$lib/styles/themes.sass'
-	import { TagsFiltered } from '$lib/utils/supabase'
-	import { allMandalas } from '$lib/utils/localpulls'
-	import BigCard from '$lib/components/BigCard.svelte'
-	import supabase from '$lib/utils/supabase'
-	let submittance:any
-	let userprompt:any
-	let selectedAgent:boolean[] = Array(4).fill(false)	
-
-	let tags = 'star'
+	import '$lib/styles/tokens.sass'
+	import { limitNotes, onlyStarred, Sveltecode, blogPosts, Supabases, allCodes, allGenerals, MidjourneyImages } from '$lib/utils/supabase'
 	let codas:any
+	let notes:any
+	let gens:any
+	let starred:any
+	let sveltecodes:any
+	let images:any
+	let supas:any
+	let posts:any
+	let limit = 12
 	let fake = false
 	let gridalign = false
-	let posts:any
 	let expand:boolean[] = Array(20).fill(false)
-	let area:boolean[] = Array(9).fill(false)
-	let ifhovering = false
-	area[1] = true
-
-	function toggleHovering(){
-		ifhovering = !ifhovering
-	}
-
-	function selectAgent(index:number){
-		selectedAgent[index] = !selectedAgent[index]
-		for ( let i = 0; i < selectedAgent.length; i ++ ) {
-			if ( i !== index && selectedAgent[i] === true ) {
-				selectedAgent[i] = false
-			}
-		}
-	}
+	expand[8] = true 
+	let openThis:boolean[] = Array(200).fill(false)
 
 	function fauxfake(){
 		fake = !fake
@@ -50,43 +35,39 @@
 			if (i !== index && expand[i] === true) {
 			expand[i] = false;
 			}
-			if ( expand.every(i => i === false )) {
-				gridalign = false
-			} else
-				gridalign = true
 		}
 	}
 
-	async function submitAnswer(){
-		try {
-			const { error } = await supabase
-      .from('amrit-chatswithgpt')
-      .insert({ prompt: userprompt, response: submittance })
-      if (error) {
-        throw new Error(error.message)
-      }
-      console.log('submitted')
-    } catch (e) {
-      console.error('Error inserting into Supabase:', e)
-    }
+
+	function toggleOpenItem(index:number){
+		openThis[index] = !openThis[index]
+			for (let i = 0; i < openThis.length; i++) {
+			if (i !== index && openThis[i] === true) {
+			openThis[i] = false;
+			}
+		}
+		if ( gridalign === false) {
+			gridalign = true
+		}
 	}
 
-	function changeTag(newTag:any){
-		tags = newTag
-	}
-
-	$: if ( tags ) {
-		(async() => {
-		codas = await TagsFiltered(tags)
-		})()
-	}
-
+$:	if (browser && openThis) {
+			window.scrollTo({
+				top: 0,
+				behavior: 'smooth'
+			});
+		}
 
 	onMount(async() => {
-		hljs.highlightAll()	
-		codas = await TagsFiltered(tags)
-		posts = await allMandalas()
-		
+		Prism.highlightAll()
+		starred = await onlyStarred()
+		posts = await blogPosts()
+		notes = await limitNotes(limit)
+		sveltecodes = await Sveltecode()
+		supas = await Supabases()
+		codas = await allCodes()
+		gens = await allGenerals()
+		images = await MidjourneyImages()
 	})
 </script>
 
@@ -96,158 +77,632 @@
 </svelte:head>
 
 
-<div class="themegreen">
-	<div class="inviewarea buffer wider bufferYb">
-		<small>Select GPT Agent:</small>
-		<div class="boxr">
-			<div class="agents" on:click={() => selectAgent(1)} on:keydown={fauxfake} class:selectedone={selectedAgent[1]}>broGPT</div>
-			<div class="agents" on:click={() => selectAgent(2)} on:keydown={fauxfake} class:selectedtwo={selectedAgent[2]}>the Sanskritist</div>
-			<div class="agents" on:click={() => selectAgent(3)} on:keydown={fauxfake} class:selectedthree={selectedAgent[3]}>Svelta Lowda</div>
-		</div>
-		{#if selectedAgent[1]}
-			<BroGPT></BroGPT>
-		{/if}
-		{#if selectedAgent[2]}
-			<Sanskrit></Sanskrit>
-		{/if}
-		{#if selectedAgent[3]}
-			<Svelter></Svelter>
-		{/if}
+<div class="padl2">
+	<div class="thinstrip">
+		<div class="newstd" class:currentTag={expand[1]} on:click={() => togglePostItem(1)} on:keydown={fauxfake}>Recent</div>
+		<div class="newstd" class:currentTag={expand[2]} on:click={() => togglePostItem(2)} on:keydown={fauxfake}>Starred</div>
+		<div class="newstd" class:currentTag={expand[3]} on:click={() => togglePostItem(3)} on:keydown={fauxfake}>Sveltecode</div>
+		<div class="newstd" class:currentTag={expand[4]} on:click={() => togglePostItem(4)} on:keydown={fauxfake}>Posts</div>
+		<div class="newstd" class:currentTag={expand[5]} on:click={() => togglePostItem(5)} on:keydown={fauxfake}>Supabase</div>
+		<div class="newstd" class:currentTag={expand[6]} on:click={() => togglePostItem(6)} on:keydown={fauxfake}>Code</div>
+		<div class="newstd" class:currentTag={expand[7]} on:click={() => togglePostItem(7)} on:keydown={fauxfake}>Docs</div>
+		<div class="newstd" class:currentTag={expand[8]} on:click={() => togglePostItem(8)} on:keydown={fauxfake}>Images</div>
 	</div>
-	<div class="thinstrip buffer bufferYb bufferYt">
-	<div on:click={() => changeTag('star')} on:keydown={fauxfake} class="{ tags === 'star' ? 'currentTag' : ''}">Star</div>
-	<div on:click={() => changeTag('sveltecode')} on:keydown={fauxfake} class="{ tags === 'sveltecode' ? 'currentTag' : ''}">Sveltecode</div>
-	<div on:click={() => changeTag('scroll')} on:keydown={fauxfake} class="{ tags === 'scroll' ? 'currentTag' : ''}">Scroll</div>
-	<div on:click={() => changeTag('gpt')} on:keydown={fauxfake} class="{ tags === 'gpt' ? 'currentTag' : ''}">GPT</div>
-	<div on:click={() => changeTag('supabase')} on:keydown={fauxfake} class="{ tags === 'supabase' ? 'currentTag' : ''}">Supabase</div>
-	<div on:click={() => changeTag('animation')} on:keydown={fauxfake} class="{ tags === 'animation' ? 'currentTag' : ''}">Animations</div>
-	<div on:click={() => changeTag('template')} on:keydown={fauxfake} class="{ tags === 'template' ? 'currentTag' : ''}">Templates</div>
-	<div on:click={() => changeTag('error')} on:keydown={fauxfake} class="{ tags === 'error' ? 'currentTag' : ''}">Errors</div>
-	<div on:click={() => changeTag('fetch')} on:keydown={fauxfake} class="{ tags === 'fetch' ? 'currentTag' : ''}">Fetch</div>
-	<div on:click={() => changeTag('setup')} on:keydown={fauxfake} class="{ tags === 'setup' ? 'currentTag' : ''}">Setups</div>
-	<div on:click={() => changeTag('typography')} on:keydown={fauxfake} class="{ tags === 'typography' ? 'currentTag' : ''}">Typography</div>
-	</div>
-	<div class="newgrids buffer bufferYb x00" class:resized={ifhovering}>
-	{#if codas && codas.length > 0}
-		{#each codas as item, i}
-			<div class="tube green" class:hovered={ifhovering} in:scale={{delay: 50*i, easing: backOut }} out:scale={{ delay: 10*i, easing: backIn }}>
-					<small>{item.type}</small>
-					<h5>
-						{#if item.type.length > 0 && item.type === 'code'}
-						<a href="/mandala/codes/{item.counting}">
-						{item.title}
-						</a>
+	<div class="thegrid" class:aligned={gridalign}>
+		{#if expand[1]}
+			{#if notes && notes.length > 0}
+				{#each notes as item, i}
+					{#if item.type.length > 0 && item.type === 'code'}
+						{#if openThis[i]}
+						<div class="tube green opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.lang}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+							<h6>{item.note}</h6>
+							<pre class="language-{item.lang}">
+								<code>
+									{item.codesnippet}
+								</code>
+							</pre>
+						</div>
 						{:else}
-						<a href="/mandala/notes/{item.counting}">
-						{item.title}
-						</a>				
+						<div class="tube green" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.lang}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
 						{/if}
-					</h5>
-					<p>{item.lang} - {item.tags}</p>
-					{#if expand[i]}
-						<BigCard language={item.lang}>
-							{item.codesnippet}
-						</BigCard>
+					{:else if item.type.length > 0 && item.type === 'gptchat'}
+						{#if openThis[i]}
+						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+							<h6>{item.note}</h6>
+							<pre>
+								<code>
+									{item.codesnippet}
+								</code>
+							</pre>
+						</div>
+						{:else}
+						<div class="tube yell" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.codesnippet.slice(0,15)}</h5>
+							<p>{item.title}</p>
+						</div>
+						{/if}
+					{:else if item.type.length > 0 && item.type === 'post'}
+						{#if openThis[i]}
+						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{:else}
+						<div class="tube red" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{/if}
+					{:else}
+						{#if openThis[i]}
+						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+							<h6>{item.note}</h6>
+						</div>
+						{:else}
+						<div class="tube blue" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{/if}
 					{/if}
-			</div>
-		{/each}
-	{/if}
-	</div>	
+				{/each}
+			{/if}
+		{/if}
+		{#if expand[2]}
+			{#if starred && starred.length > 0}
+				{#each starred as item, i}
+					{#if item.type.length > 0 && item.type === 'code'}
+						{#if openThis[i]}
+						<div class="tube green opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.lang}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+							<h6>{item.note}</h6>
+							<pre class="language-{item.lang}">
+								<code>
+									{item.codesnippet}
+								</code>
+							</pre>
+						</div>
+						{:else}
+						<div class="tube green" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.lang}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{/if}
+					{:else if item.type.length > 0 && item.type === 'gptchat'}
+						{#if openThis[i]}
+						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+							<h6>{item.note}</h6>
+							<pre>
+								<code>
+									{item.codesnippet}
+								</code>
+							</pre>
+						</div>
+						{:else}
+						<div class="tube yell" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.codesnippet.slice(0,15)}</h5>
+							<p>{item.title}</p>
+						</div>
+						{/if}
+					{:else if item.type.length > 0 && item.type === 'post'}
+						{#if openThis[i]}
+						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{:else}
+						<div class="tube red" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{/if}
+					{:else}
+						{#if openThis[i]}
+						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+							<h6>{item.note}</h6>
+						</div>
+						{:else}
+						<div class="tube blue" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{/if}
+					{/if}
+				{/each}
+			{/if}
+		{/if}
+		{#if expand[3]}
+			{#if sveltecodes && sveltecodes.length > 0}
+				{#each sveltecodes as item, i}
+					{#if item.type.length > 0 && item.type === 'code'}
+						{#if openThis[i]}
+						<div class="tube green opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.lang}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+							<h6>{item.note}</h6>
+							<pre class="language-{item.lang}">
+								<code>
+									{item.codesnippet}
+								</code>
+							</pre>
+						</div>
+						{:else}
+						<div class="tube green" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.lang}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{/if}
+					{:else if item.type.length > 0 && item.type === 'gptchat'}
+						{#if openThis[i]}
+						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+							<h6>{item.note}</h6>
+							<pre>
+								<code>
+									{item.codesnippet}
+								</code>
+							</pre>
+						</div>
+						{:else}
+						<div class="tube yell" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.codesnippet.slice(0,15)}</h5>
+							<p>{item.title}</p>
+						</div>
+						{/if}
+					{:else if item.type.length > 0 && item.type === 'post'}
+						{#if openThis[i]}
+						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{:else}
+						<div class="tube red" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{/if}
+					{:else}
+						{#if openThis[i]}
+						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+							<h6>{item.note}</h6>
+						</div>
+						{:else}
+						<div class="tube blue" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{/if}
+					{/if}
+				{/each}
+			{/if}
+		{/if}
+		{#if expand[4]}
+			{#if posts && posts.length > 0}
+				{#each posts as item, i}
+					{#if item.type.length > 0 && item.type === 'code'}
+						{#if openThis[i]}
+						<div class="tube green opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.lang}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+							<h6>{item.note}</h6>
+							<pre class="language-{item.lang}">
+								<code>
+									{item.codesnippet}
+								</code>
+							</pre>
+						</div>
+						{:else}
+						<div class="tube green" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.lang}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{/if}
+					{:else if item.type.length > 0 && item.type === 'gptchat'}
+						{#if openThis[i]}
+						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+							<h6>{item.note}</h6>
+							<pre>
+								<code>
+									{item.codesnippet}
+								</code>
+							</pre>
+						</div>
+						{:else}
+						<div class="tube yell" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.codesnippet.slice(0,15)}</h5>
+							<p>{item.title}</p>
+						</div>
+						{/if}
+					{:else if item.type.length > 0 && item.type === 'post'}
+						{#if openThis[i]}
+						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{:else}
+						<div class="tube red" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{/if}
+					{:else}
+						{#if openThis[i]}
+						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+							<h6>{item.note}</h6>
+						</div>
+						{:else}
+						<div class="tube blue" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{/if}
+					{/if}
+				{/each}
+			{/if}
+		{/if}
+		{#if expand[5]}
+			{#if supas && supas.length > 0}
+				{#each supas as item, i}
+					{#if item.type.length > 0 && item.type === 'code'}
+						{#if openThis[i]}
+						<div class="tube green opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.lang}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+							<h6>{item.note}</h6>
+							<pre class="language-{item.lang}">
+								<code>
+									{item.codesnippet}
+								</code>
+							</pre>
+						</div>
+						{:else}
+						<div class="tube green" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.lang}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{/if}
+					{:else if item.type.length > 0 && item.type === 'gptchat'}
+						{#if openThis[i]}
+						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+							<h6>{item.note}</h6>
+							<pre>
+								<code>
+									{item.codesnippet}
+								</code>
+							</pre>
+						</div>
+						{:else}
+						<div class="tube yell" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.codesnippet.slice(0,15)}</h5>
+							<p>{item.title}</p>
+						</div>
+						{/if}
+					{:else if item.type.length > 0 && item.type === 'post'}
+						{#if openThis[i]}
+						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{:else}
+						<div class="tube red" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{/if}
+					{:else}
+						{#if openThis[i]}
+						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+							<h6>{item.note}</h6>
+						</div>
+						{:else}
+						<div class="tube blue" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{/if}
+					{/if}
+				{/each}
+			{/if}
+		{/if}
+		{#if expand[6]}
+			{#if codas && codas.length > 0}
+				{#each codas as item, i}
+					{#if item.type.length > 0 && item.type === 'code'}
+						{#if openThis[i]}
+						<div class="tube green opentab" out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.lang}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+							<h6>{item.note}</h6>
+							<pre class="language-{item.lang}">
+								<code>
+									{item.codesnippet}
+								</code>
+							</pre>
+						</div>
+						{:else}
+						<div class="tube green" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.lang}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{/if}
+					{:else if item.type.length > 0 && item.type === 'gptchat'}
+						{#if openThis[i]}
+						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+							<h6>{item.note}</h6>
+							<pre>
+								<code>
+									{item.codesnippet}
+								</code>
+							</pre>
+						</div>
+						{:else}
+						<div class="tube yell" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.codesnippet.slice(0,15)}</h5>
+							<p>{item.title}</p>
+						</div>
+						{/if}
+					{:else if item.type.length > 0 && item.type === 'post'}
+						{#if openThis[i]}
+						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{:else}
+						<div class="tube red" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{/if}
+					{:else}
+						{#if openThis[i]}
+						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+							<h6>{item.note}</h6>
+						</div>
+						{:else}
+						<div class="tube blue" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{/if}
+					{/if}
+				{/each}
+			{/if}
+		{/if}
+		{#if expand[7]}
+			{#if gens && gens.length > 0}
+				{#each gens as item, i}
+					{#if item.type.length > 0 && item.type === 'code'}
+						{#if openThis[i]}
+						<div class="tube green opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.lang}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+							<h6>{item.note}</h6>
+							<pre class="language-{item.lang}">
+								<code>
+									{item.codesnippet}
+								</code>
+							</pre>
+						</div>
+						{:else}
+						<div class="tube green" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.lang}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{/if}
+					{:else if item.type.length > 0 && item.type === 'gptchat'}
+						{#if openThis[i]}
+						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+							<h6>{item.note}</h6>
+							<pre>
+								<code>
+									{item.codesnippet}
+								</code>
+							</pre>
+						</div>
+						{:else}
+						<div class="tube yell" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.codesnippet.slice(0,15)}</h5>
+							<p>{item.title}</p>
+						</div>
+						{/if}
+					{:else if item.type.length > 0 && item.type === 'post'}
+						{#if openThis[i]}
+						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{:else}
+						<div class="tube red" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{/if}
+					{:else}
+						{#if openThis[i]}
+						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+							<h6>{item.note}</h6>
+						</div>
+						{:else}
+						<div class="tube blue" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<small>{item.type}</small>
+							<h5>{item.title}</h5>
+							<p>{item.tags}</p>
+						</div>
+						{/if}
+					{/if}
+				{/each}
+			{/if}
+		{/if}
+		{#if expand[8]}
+			{#if images && images.length > 0}
+				{#each images as item, i}
+					{#if openThis[i]}
+						<div class="tube opentab image" in:scale={{duration: 600, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<img src="https://wganhlzrylmkvvaoalco.supabase.co/storage/v1/object/public/images/batch1{item.link.slice(89,200)}" alt={item.id}/>
+						</div>
+					{:else}
+						<div class="tube image" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>	
+							<img use:lazyLoadImageAction src="https://wganhlzrylmkvvaoalco.supabase.co/storage/v1/object/public/images/batch1{item.link.slice(89,200)}" alt={item.id}/>
+						</div>
+					{/if}
+				{/each}
+			{/if}
+		{/if}
+	</div>
 </div>
 
 
 <style lang="sass">
 
-.inviewarea
-	>small
-		color: #676767
-	.boxr
-		padding-top: 8px
-		gap: 16px
-		border-bottom: 1px solid #272727
-		padding-bottom: 16px
 
-.agents.selectedone
-	color: #10D56C
 
-.agents.selectedtwo
-	color: #227ceb
-
-.agents.selectedthree
-	color: #F64241
-
-.agents
-	text-transform: uppercase
+.newstd
 	cursor: pointer
-
-.themegreen
-	padding-top: 128px
-	
-.x00
-	align-items: start
-	align-content: start
-
-.thinstrip
-	div
-		cursor: pointer
-		border-radius: 4px
-		cursor: pointer
-		transform-origin: center center
+	border-radius: 4px
+	cursor: pointer
+	transform-origin: center center
+	color: #474747
+	transition: all 0.05s ease
+	font-size: 14px
+	padding: 4px 8px
+	position: relative
+	overflow: hidden
+	z-index: 1
+	text-align: center
+	background: #171717
+	&::before
+		position: absolute
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
+		content: ''
+		z-index: -1
+		background-color: hsla(200,9%,5%,0)
+		transition: all 0.05s ease
+		filter: blur(290px)
+		background-image: radial-gradient(at 17% 36%, hsla(248,47%,99%,0.1) 0px, transparent 1%), radial-gradient(at 80% 70%, hsla(125,87%,60%,0.2) 0px, transparent 50%)
+	&:hover
 		color: #FFFFFF
-		transition: all 0.15s ease
-		border: 1px solid #272727
-		font-size: 14px
-		padding: 4px 8px
-		position: relative
-		overflow: hidden
-		z-index: 1
-		text-align: center
 		&::before
-			position: absolute
-			top: 0
-			left: 0
-			width: 100%
-			height: 100%
-			content: ''
-			z-index: -1
-			background-color: hsla(200,9%,5%,1)
-			transition: all 0.05s ease
-			filter: blur(20px)
-			background-image: radial-gradient(at 17% 36%, hsla(248,47%,49%,1) 0px, transparent 1%), radial-gradient(at 80% 70%, hsla(125,87%,60%,0.2) 0px, transparent 50%)
-		&:hover
-			overflow: visible
-			&::before
-				background-color: hsla(130,90%,45%,1)
-				filter: blur(15px)
-	.currentTag
-		&:hover
-			overflow: visible
-		&::before
-			filter: blur(30px)
 			background-color: hsla(130,90%,45%,1)
-			background-image: radial-gradient(at 17% 36%, hsla(248,47%,49%,1) 0px, transparent 1%), radial-gradient(at 80% 70%, hsla(125,87%,60%,0.2) 0px, transparent 50%)
-		
+			filter: blur(15px)
+.currentTag
+	color: white
+	&:hover
+		overflow: visible
+	&::before
+		filter: blur(30px)
+		background-color: hsla(130,90%,45%,1)
+		background-image: radial-gradient(at 17% 36%, hsla(248,47%,49%,1) 0px, transparent 1%), radial-gradient(at 80% 70%, hsla(125,87%,60%,0.2) 0px, transparent 50%)
 
 .thinstrip
 	.currentTag
 		background-color: hsla(130,90%,15%,1)
 		border: 1px solid #272727
-		box-shadow: none
-	div.currentTag
-		box-shadow: none
+	.newstd.currentTag
+		box-shadow: 6px 8px 12px #030303
 
 .thinstrip
 	display: grid
 	grid-auto-flow: row
 	@media screen and (min-width: 1024px)
-		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr
-		grid-template-rows: 1fr 1fr
-		gap: 16px 16px
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr
+		grid-template-rows: 1fr
+		gap: 16px 32px
+		margin-bottom: 32px
 	@media screen and (max-width: 1023px)
 		grid-template-columns: 1fr 1fr 1fr 1fr
 		grid-template-rows: 1fr 1fr 1fr
 		gap: 8px 8px
-
 
 
 </style>

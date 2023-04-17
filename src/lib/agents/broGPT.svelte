@@ -1,17 +1,19 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte'
-	import { writable } from 'svelte/store'
 	import ChatMessage from '$lib/components/ChatMessage.svelte'
 	import '$lib/styles/themes.sass'
 	import type { ChatCompletionRequestMessage } from 'openai'
 	import { SSE } from 'sse.js'
+	import supabase from '$lib/utils/supabase'
 	let query: string = ''
 	let answer: string = ''
 	let userprompt:any
 	let loading: boolean = false
 	let chatMessages: ChatCompletionRequestMessage[] = []
 	let fake = false
+	let submittance:string = ''
+	
 
 	const handleSubmit = async () => {
 		loading = true
@@ -31,6 +33,7 @@
 				loading = false
 				if (e.data === '[DONE]') {
 					chatMessages = [...chatMessages, { role: 'assistant', content: answer }]
+					submittance = answer
 					answer = ''
 					return
 				}
@@ -55,21 +58,29 @@
 		console.error(err)
 	}
 
+	async function submitAnswer(){
+		try {
+			const { error } = await supabase
+      .from('amrit-notes')
+      .insert({ title: 'chat with gpt', note: userprompt, codesnippet: submittance, type: 'gptchat' })
+      if (error) {
+        throw new Error(error.message)
+      }
+      console.log('submitted')
+    } catch (e) {
+      console.error('Error inserting into Supabase:', e)
+    }
+	}
+
 	function fauxfake(){
 		fake = !fake
 	}	
-
+	$: if (submittance) {
+		submitAnswer()	
+	}
 
 </script>
 
-<div class="boxr ofform">
-	<form on:submit|preventDefault>
-		<textarea bind:value={query}
-			on:keydown={fauxfake}
-			/>
-		<div class="major green" on:click={() => handleSubmit()} on:keydown={fauxfake}> Send </div>
-	</form>
-</div>
 {#each chatMessages as message}
 	<ChatMessage type={message.role} message={message.content} />
 {/each}
@@ -79,6 +90,14 @@
 {#if loading}
 	<ChatMessage type="assistant" message="Loading.." />
 {/if}
+<div class="boxr ofform">
+	<form on:submit|preventDefault>
+		<textarea bind:value={query}
+			on:keydown={fauxfake}
+			/>
+		<div class="major green" on:click={() => handleSubmit()} on:keydown={fauxfake}> Send </div>
+	</form>
+</div>
 
 <style lang="sass">
 

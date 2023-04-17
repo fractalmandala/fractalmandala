@@ -1,5 +1,5 @@
 code[class*="language-"],
-pre[class*="language-"],pre[class="commbody"], code[class*="commbody"] {
+pre[class*="language-"],pre[class="commbody"], code[class*="commbody"], .columnleft pre code, .tube pre code {
 	text-align: left;
 	white-space: pre-line;
 	word-spacing: normal;

@@ -208,10 +208,10 @@
 	{:else}
 	<div class="boxr">
 		<div class="boxr nav">
-			<a href="/notes/{previd}" target="_self">
+			<a href="/notes/{previd}">
 				<img src="https://rnfvzaelmwbbvfbsppir.supabase.co/storage/v1/object/public/brhatwebsite/08icons/chevleft.png" alt="left"/>
 			</a>
-			<a href="/notes/{nextid}" target="_self">
+			<a href="/notes/{nextid}">
 				<img src="https://rnfvzaelmwbbvfbsppir.supabase.co/storage/v1/object/public/brhatwebsite/08icons/chevright.png" alt="right"/>
 			</a>
 		</div>
@@ -336,7 +336,6 @@
 	padding: 24px
 	border: 1px solid #272727
 	border-radius: 4px
-	box-shadow: 3px 5px 18px rgba(0,0,0,0.7), -3px -5px 12px rgba(0,0,0,0.3)
 	transition: all 1s
 	background: #141414
 	&:hover
@@ -367,9 +366,12 @@ h2
 		margin-bottom: 16px
 
 .x00
-	padding: 0
 	row-gap: 0
 	position: relative
+	@media screen and (min-width: 1024px)
+		padding-top: 128px
+		padding-left: 10vw
+		padding-right: 10vw
 	h6
 		margin: 0
 		padding-left: 72px
