@@ -342,12 +342,12 @@ export async function tableTags(selectag:any){
 		data
 	}	
 
-	export async function chatswithGPT(limit:number){
+	export async function chatswithGPT(){
 		const { data, error } = await supabase
-		.from('amrit-chatswithgpt')
+		.from('amrit-notes')
 		.select()
-		.order('id',{ascending: false})
-		.limit(limit)
+		.eq('type','gptchat')
+		.order('created_at',{ascending: false})
 		if (error) throw new Error(error.message)
 		return data
 	}

@@ -9,10 +9,11 @@
 	import { backOut, backIn } from 'svelte/easing'
 	import '$lib/styles/themes.sass'
 	import '$lib/styles/tokens.sass'
-	import { limitNotes, onlyStarred, Sveltecode, blogPosts, Supabases, allCodes, allGenerals, MidjourneyImages } from '$lib/utils/supabase'
+	import { limitNotes, onlyStarred, Sveltecode, blogPosts, Supabases, allCodes, allGenerals, MidjourneyImages, chatswithGPT } from '$lib/utils/supabase'
 	let codas:any
 	let notes:any
 	let gens:any
+	let chats:any
 	let starred:any
 	let sveltecodes:any
 	let images:any
@@ -66,7 +67,7 @@ $:	if (browser && openThis) {
 		sveltecodes = await Sveltecode()
 		supas = await Supabases()
 		codas = await allCodes()
-		gens = await allGenerals()
+		gens = await chatswithGPT()
 		images = await MidjourneyImages()
 	})
 </script>
@@ -85,7 +86,7 @@ $:	if (browser && openThis) {
 		<div class="newstd" class:currentTag={expand[4]} on:click={() => togglePostItem(4)} on:keydown={fauxfake}>Posts</div>
 		<div class="newstd" class:currentTag={expand[5]} on:click={() => togglePostItem(5)} on:keydown={fauxfake}>Supabase</div>
 		<div class="newstd" class:currentTag={expand[6]} on:click={() => togglePostItem(6)} on:keydown={fauxfake}>Code</div>
-		<div class="newstd" class:currentTag={expand[7]} on:click={() => togglePostItem(7)} on:keydown={fauxfake}>Docs</div>
+		<div class="newstd" class:currentTag={expand[7]} on:click={() => togglePostItem(7)} on:keydown={fauxfake}>Chats</div>
 		<div class="newstd" class:currentTag={expand[8]} on:click={() => togglePostItem(8)} on:keydown={fauxfake}>Images</div>
 	</div>
 	<div class="thegrid" class:aligned={gridalign}>
@@ -128,7 +129,7 @@ $:	if (browser && openThis) {
 						{:else}
 						<div class="tube yell" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
 							<small>{item.type}</small>
-							<h5>{item.codesnippet.slice(0,15)}</h5>
+							<pre>{item.codesnippet.slice(0,15)}</pre>
 							<p>{item.title}</p>
 						</div>
 						{/if}
