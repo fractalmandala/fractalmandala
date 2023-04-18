@@ -25,6 +25,7 @@
 	let expand:boolean[] = Array(20).fill(false)
 	expand[8] = true 
 	let openThis:boolean[] = Array(200).fill(false)
+	let nulled:boolean[] = Array(200).fill(false)
 
 	function fauxfake(){
 		fake = !fake
@@ -45,6 +46,7 @@
 			for (let i = 0; i < openThis.length; i++) {
 			if (i !== index && openThis[i] === true) {
 			openThis[i] = false;
+			nulled[i] = true
 			}
 		}
 		if ( gridalign === false) {
@@ -79,15 +81,19 @@ $:	if (browser && openThis) {
 
 
 <div class="padl2">
+	<div class="border"> 
 	<div class="thinstrip">
 		<div class="newstd" class:currentTag={expand[1]} on:click={() => togglePostItem(1)} on:keydown={fauxfake}>Recent</div>
 		<div class="newstd" class:currentTag={expand[2]} on:click={() => togglePostItem(2)} on:keydown={fauxfake}>Starred</div>
-		<div class="newstd" class:currentTag={expand[3]} on:click={() => togglePostItem(3)} on:keydown={fauxfake}>Sveltecode</div>
+		<div class="newstd" class:currentTag={expand[3]} on:click={() => togglePostItem(3)} on:keydown={fauxfake}>Svelte</div>
 		<div class="newstd" class:currentTag={expand[4]} on:click={() => togglePostItem(4)} on:keydown={fauxfake}>Posts</div>
-		<div class="newstd" class:currentTag={expand[5]} on:click={() => togglePostItem(5)} on:keydown={fauxfake}>Supabase</div>
+		<div class="newstd" class:currentTag={expand[5]} on:click={() => togglePostItem(5)} on:keydown={fauxfake}>Supa</div>
 		<div class="newstd" class:currentTag={expand[6]} on:click={() => togglePostItem(6)} on:keydown={fauxfake}>Code</div>
 		<div class="newstd" class:currentTag={expand[7]} on:click={() => togglePostItem(7)} on:keydown={fauxfake}>Chats</div>
 		<div class="newstd" class:currentTag={expand[8]} on:click={() => togglePostItem(8)} on:keydown={fauxfake}>Images</div>
+		<div class="newstd" class:currentTag={expand[12]} on:click={() => togglePostItem(12)} on:keydown={fauxfake}>
+			<input type="text" placeholder="search"/>
+		</div>
 	</div>
 	<div class="thegrid" class:aligned={gridalign}>
 		{#if expand[1]}
@@ -96,6 +102,7 @@ $:	if (browser && openThis) {
 					{#if item.type.length > 0 && item.type === 'code'}
 						{#if openThis[i]}
 						<div class="tube green opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
+							<div style="background: #171717">
 							<small>{item.lang}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -105,9 +112,10 @@ $:	if (browser && openThis) {
 									{item.codesnippet}
 								</code>
 							</pre>
+							</div>
 						</div>
 						{:else}
-						<div class="tube green" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube green" in:scale={{duration: 100, delay: i * 100, easing: backIn}} out:scale={{duration: 100, delay: i*10, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
 							<small>{item.lang}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -127,9 +135,9 @@ $:	if (browser && openThis) {
 							</pre>
 						</div>
 						{:else}
-						<div class="tube yell" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube yell" in:scale={{duration: 100, delay: i * 100, easing: backIn}} out:scale={{duration: 100, delay: i*10, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
 							<small>{item.type}</small>
-							<pre>{item.codesnippet.slice(0,15)}</pre>
+							<h5>{item.codesnippet.slice(0,15)}</h5>
 							<p>{item.title}</p>
 						</div>
 						{/if}
@@ -172,6 +180,11 @@ $:	if (browser && openThis) {
 					{#if item.type.length > 0 && item.type === 'code'}
 						{#if openThis[i]}
 						<div class="tube green opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
+							<div class="closebutton">
+								<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+									<path d="M13.9036 26.7961C6.53965 26.7961 0.570312 20.8267 0.570312 13.4627C0.570312 6.09873 6.53965 0.129395 13.9036 0.129395C21.2676 0.129395 27.237 6.09873 27.237 13.4627C27.237 20.8267 21.2676 26.7961 13.9036 26.7961ZM13.9036 11.5774L10.133 7.80539L8.24631 9.69206L12.0183 13.4627L8.24631 17.2334L10.133 19.1201L13.9036 15.3481L17.6743 19.1201L19.561 17.2334L15.789 13.4627L19.561 9.69206L17.6743 7.80539L13.9036 11.5774Z" fill="white"/>
+								</svg>
+							</div>
 							<small>{item.lang}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -192,6 +205,11 @@ $:	if (browser && openThis) {
 					{:else if item.type.length > 0 && item.type === 'gptchat'}
 						{#if openThis[i]}
 						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
+							<div class="closebutton">
+								<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+									<path d="M13.9036 26.7961C6.53965 26.7961 0.570312 20.8267 0.570312 13.4627C0.570312 6.09873 6.53965 0.129395 13.9036 0.129395C21.2676 0.129395 27.237 6.09873 27.237 13.4627C27.237 20.8267 21.2676 26.7961 13.9036 26.7961ZM13.9036 11.5774L10.133 7.80539L8.24631 9.69206L12.0183 13.4627L8.24631 17.2334L10.133 19.1201L13.9036 15.3481L17.6743 19.1201L19.561 17.2334L15.789 13.4627L19.561 9.69206L17.6743 7.80539L13.9036 11.5774Z" fill="white"/>
+								</svg>
+							</div>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -212,6 +230,11 @@ $:	if (browser && openThis) {
 					{:else if item.type.length > 0 && item.type === 'post'}
 						{#if openThis[i]}
 						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
+							<div class="closebutton">
+								<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+									<path d="M13.9036 26.7961C6.53965 26.7961 0.570312 20.8267 0.570312 13.4627C0.570312 6.09873 6.53965 0.129395 13.9036 0.129395C21.2676 0.129395 27.237 6.09873 27.237 13.4627C27.237 20.8267 21.2676 26.7961 13.9036 26.7961ZM13.9036 11.5774L10.133 7.80539L8.24631 9.69206L12.0183 13.4627L8.24631 17.2334L10.133 19.1201L13.9036 15.3481L17.6743 19.1201L19.561 17.2334L15.789 13.4627L19.561 9.69206L17.6743 7.80539L13.9036 11.5774Z" fill="white"/>
+								</svg>
+							</div>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -226,6 +249,11 @@ $:	if (browser && openThis) {
 					{:else}
 						{#if openThis[i]}
 						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
+							<div class="closebutton">
+								<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+									<path d="M13.9036 26.7961C6.53965 26.7961 0.570312 20.8267 0.570312 13.4627C0.570312 6.09873 6.53965 0.129395 13.9036 0.129395C21.2676 0.129395 27.237 6.09873 27.237 13.4627C27.237 20.8267 21.2676 26.7961 13.9036 26.7961ZM13.9036 11.5774L10.133 7.80539L8.24631 9.69206L12.0183 13.4627L8.24631 17.2334L10.133 19.1201L13.9036 15.3481L17.6743 19.1201L19.561 17.2334L15.789 13.4627L19.561 9.69206L17.6743 7.80539L13.9036 11.5774Z" fill="white"/>
+								</svg>
+							</div>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -248,6 +276,11 @@ $:	if (browser && openThis) {
 					{#if item.type.length > 0 && item.type === 'code'}
 						{#if openThis[i]}
 						<div class="tube green opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
+							<div class="closebutton">
+								<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+									<path d="M13.9036 26.7961C6.53965 26.7961 0.570312 20.8267 0.570312 13.4627C0.570312 6.09873 6.53965 0.129395 13.9036 0.129395C21.2676 0.129395 27.237 6.09873 27.237 13.4627C27.237 20.8267 21.2676 26.7961 13.9036 26.7961ZM13.9036 11.5774L10.133 7.80539L8.24631 9.69206L12.0183 13.4627L8.24631 17.2334L10.133 19.1201L13.9036 15.3481L17.6743 19.1201L19.561 17.2334L15.789 13.4627L19.561 9.69206L17.6743 7.80539L13.9036 11.5774Z" fill="white"/>
+								</svg>
+							</div>
 							<small>{item.lang}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -268,6 +301,11 @@ $:	if (browser && openThis) {
 					{:else if item.type.length > 0 && item.type === 'gptchat'}
 						{#if openThis[i]}
 						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
+							<div class="closebutton">
+								<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+									<path d="M13.9036 26.7961C6.53965 26.7961 0.570312 20.8267 0.570312 13.4627C0.570312 6.09873 6.53965 0.129395 13.9036 0.129395C21.2676 0.129395 27.237 6.09873 27.237 13.4627C27.237 20.8267 21.2676 26.7961 13.9036 26.7961ZM13.9036 11.5774L10.133 7.80539L8.24631 9.69206L12.0183 13.4627L8.24631 17.2334L10.133 19.1201L13.9036 15.3481L17.6743 19.1201L19.561 17.2334L15.789 13.4627L19.561 9.69206L17.6743 7.80539L13.9036 11.5774Z" fill="white"/>
+								</svg>
+							</div>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -288,6 +326,11 @@ $:	if (browser && openThis) {
 					{:else if item.type.length > 0 && item.type === 'post'}
 						{#if openThis[i]}
 						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
+							<div class="closebutton">
+								<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+									<path d="M13.9036 26.7961C6.53965 26.7961 0.570312 20.8267 0.570312 13.4627C0.570312 6.09873 6.53965 0.129395 13.9036 0.129395C21.2676 0.129395 27.237 6.09873 27.237 13.4627C27.237 20.8267 21.2676 26.7961 13.9036 26.7961ZM13.9036 11.5774L10.133 7.80539L8.24631 9.69206L12.0183 13.4627L8.24631 17.2334L10.133 19.1201L13.9036 15.3481L17.6743 19.1201L19.561 17.2334L15.789 13.4627L19.561 9.69206L17.6743 7.80539L13.9036 11.5774Z" fill="white"/>
+								</svg>
+							</div>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -302,6 +345,11 @@ $:	if (browser && openThis) {
 					{:else}
 						{#if openThis[i]}
 						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
+							<div class="closebutton">
+								<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+									<path d="M13.9036 26.7961C6.53965 26.7961 0.570312 20.8267 0.570312 13.4627C0.570312 6.09873 6.53965 0.129395 13.9036 0.129395C21.2676 0.129395 27.237 6.09873 27.237 13.4627C27.237 20.8267 21.2676 26.7961 13.9036 26.7961ZM13.9036 11.5774L10.133 7.80539L8.24631 9.69206L12.0183 13.4627L8.24631 17.2334L10.133 19.1201L13.9036 15.3481L17.6743 19.1201L19.561 17.2334L15.789 13.4627L19.561 9.69206L17.6743 7.80539L13.9036 11.5774Z" fill="white"/>
+								</svg>
+							</div>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -324,6 +372,11 @@ $:	if (browser && openThis) {
 					{#if item.type.length > 0 && item.type === 'code'}
 						{#if openThis[i]}
 						<div class="tube green opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
+							<div class="closebutton">
+								<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+									<path d="M13.9036 26.7961C6.53965 26.7961 0.570312 20.8267 0.570312 13.4627C0.570312 6.09873 6.53965 0.129395 13.9036 0.129395C21.2676 0.129395 27.237 6.09873 27.237 13.4627C27.237 20.8267 21.2676 26.7961 13.9036 26.7961ZM13.9036 11.5774L10.133 7.80539L8.24631 9.69206L12.0183 13.4627L8.24631 17.2334L10.133 19.1201L13.9036 15.3481L17.6743 19.1201L19.561 17.2334L15.789 13.4627L19.561 9.69206L17.6743 7.80539L13.9036 11.5774Z" fill="white"/>
+								</svg>
+							</div>
 							<small>{item.lang}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -344,6 +397,11 @@ $:	if (browser && openThis) {
 					{:else if item.type.length > 0 && item.type === 'gptchat'}
 						{#if openThis[i]}
 						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
+							<div class="closebutton">
+								<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+									<path d="M13.9036 26.7961C6.53965 26.7961 0.570312 20.8267 0.570312 13.4627C0.570312 6.09873 6.53965 0.129395 13.9036 0.129395C21.2676 0.129395 27.237 6.09873 27.237 13.4627C27.237 20.8267 21.2676 26.7961 13.9036 26.7961ZM13.9036 11.5774L10.133 7.80539L8.24631 9.69206L12.0183 13.4627L8.24631 17.2334L10.133 19.1201L13.9036 15.3481L17.6743 19.1201L19.561 17.2334L15.789 13.4627L19.561 9.69206L17.6743 7.80539L13.9036 11.5774Z" fill="white"/>
+								</svg>
+							</div>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -364,6 +422,11 @@ $:	if (browser && openThis) {
 					{:else if item.type.length > 0 && item.type === 'post'}
 						{#if openThis[i]}
 						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
+							<div class="closebutton">
+								<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+									<path d="M13.9036 26.7961C6.53965 26.7961 0.570312 20.8267 0.570312 13.4627C0.570312 6.09873 6.53965 0.129395 13.9036 0.129395C21.2676 0.129395 27.237 6.09873 27.237 13.4627C27.237 20.8267 21.2676 26.7961 13.9036 26.7961ZM13.9036 11.5774L10.133 7.80539L8.24631 9.69206L12.0183 13.4627L8.24631 17.2334L10.133 19.1201L13.9036 15.3481L17.6743 19.1201L19.561 17.2334L15.789 13.4627L19.561 9.69206L17.6743 7.80539L13.9036 11.5774Z" fill="white"/>
+								</svg>
+							</div>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -378,6 +441,11 @@ $:	if (browser && openThis) {
 					{:else}
 						{#if openThis[i]}
 						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
+							<div class="closebutton">
+								<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+									<path d="M13.9036 26.7961C6.53965 26.7961 0.570312 20.8267 0.570312 13.4627C0.570312 6.09873 6.53965 0.129395 13.9036 0.129395C21.2676 0.129395 27.237 6.09873 27.237 13.4627C27.237 20.8267 21.2676 26.7961 13.9036 26.7961ZM13.9036 11.5774L10.133 7.80539L8.24631 9.69206L12.0183 13.4627L8.24631 17.2334L10.133 19.1201L13.9036 15.3481L17.6743 19.1201L19.561 17.2334L15.789 13.4627L19.561 9.69206L17.6743 7.80539L13.9036 11.5774Z" fill="white"/>
+								</svg>
+							</div>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -400,6 +468,11 @@ $:	if (browser && openThis) {
 					{#if item.type.length > 0 && item.type === 'code'}
 						{#if openThis[i]}
 						<div class="tube green opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
+							<div class="closebutton">
+								<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+									<path d="M13.9036 26.7961C6.53965 26.7961 0.570312 20.8267 0.570312 13.4627C0.570312 6.09873 6.53965 0.129395 13.9036 0.129395C21.2676 0.129395 27.237 6.09873 27.237 13.4627C27.237 20.8267 21.2676 26.7961 13.9036 26.7961ZM13.9036 11.5774L10.133 7.80539L8.24631 9.69206L12.0183 13.4627L8.24631 17.2334L10.133 19.1201L13.9036 15.3481L17.6743 19.1201L19.561 17.2334L15.789 13.4627L19.561 9.69206L17.6743 7.80539L13.9036 11.5774Z" fill="white"/>
+								</svg>
+							</div>
 							<small>{item.lang}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -420,6 +493,11 @@ $:	if (browser && openThis) {
 					{:else if item.type.length > 0 && item.type === 'gptchat'}
 						{#if openThis[i]}
 						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
+							<div class="closebutton">
+								<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+									<path d="M13.9036 26.7961C6.53965 26.7961 0.570312 20.8267 0.570312 13.4627C0.570312 6.09873 6.53965 0.129395 13.9036 0.129395C21.2676 0.129395 27.237 6.09873 27.237 13.4627C27.237 20.8267 21.2676 26.7961 13.9036 26.7961ZM13.9036 11.5774L10.133 7.80539L8.24631 9.69206L12.0183 13.4627L8.24631 17.2334L10.133 19.1201L13.9036 15.3481L17.6743 19.1201L19.561 17.2334L15.789 13.4627L19.561 9.69206L17.6743 7.80539L13.9036 11.5774Z" fill="white"/>
+								</svg>
+							</div>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -440,6 +518,11 @@ $:	if (browser && openThis) {
 					{:else if item.type.length > 0 && item.type === 'post'}
 						{#if openThis[i]}
 						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
+							<div class="closebutton">
+								<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+									<path d="M13.9036 26.7961C6.53965 26.7961 0.570312 20.8267 0.570312 13.4627C0.570312 6.09873 6.53965 0.129395 13.9036 0.129395C21.2676 0.129395 27.237 6.09873 27.237 13.4627C27.237 20.8267 21.2676 26.7961 13.9036 26.7961ZM13.9036 11.5774L10.133 7.80539L8.24631 9.69206L12.0183 13.4627L8.24631 17.2334L10.133 19.1201L13.9036 15.3481L17.6743 19.1201L19.561 17.2334L15.789 13.4627L19.561 9.69206L17.6743 7.80539L13.9036 11.5774Z" fill="white"/>
+								</svg>
+							</div>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -454,6 +537,11 @@ $:	if (browser && openThis) {
 					{:else}
 						{#if openThis[i]}
 						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
+							<div class="closebutton">
+								<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+									<path d="M13.9036 26.7961C6.53965 26.7961 0.570312 20.8267 0.570312 13.4627C0.570312 6.09873 6.53965 0.129395 13.9036 0.129395C21.2676 0.129395 27.237 6.09873 27.237 13.4627C27.237 20.8267 21.2676 26.7961 13.9036 26.7961ZM13.9036 11.5774L10.133 7.80539L8.24631 9.69206L12.0183 13.4627L8.24631 17.2334L10.133 19.1201L13.9036 15.3481L17.6743 19.1201L19.561 17.2334L15.789 13.4627L19.561 9.69206L17.6743 7.80539L13.9036 11.5774Z" fill="white"/>
+								</svg>
+							</div>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -476,6 +564,11 @@ $:	if (browser && openThis) {
 					{#if item.type.length > 0 && item.type === 'code'}
 						{#if openThis[i]}
 						<div class="tube green opentab" out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+							<div class="closebutton">
+								<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+									<path d="M13.9036 26.7961C6.53965 26.7961 0.570312 20.8267 0.570312 13.4627C0.570312 6.09873 6.53965 0.129395 13.9036 0.129395C21.2676 0.129395 27.237 6.09873 27.237 13.4627C27.237 20.8267 21.2676 26.7961 13.9036 26.7961ZM13.9036 11.5774L10.133 7.80539L8.24631 9.69206L12.0183 13.4627L8.24631 17.2334L10.133 19.1201L13.9036 15.3481L17.6743 19.1201L19.561 17.2334L15.789 13.4627L19.561 9.69206L17.6743 7.80539L13.9036 11.5774Z" fill="white"/>
+								</svg>
+							</div>
 							<small>{item.lang}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -496,6 +589,11 @@ $:	if (browser && openThis) {
 					{:else if item.type.length > 0 && item.type === 'gptchat'}
 						{#if openThis[i]}
 						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
+							<div class="closebutton">
+								<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+									<path d="M13.9036 26.7961C6.53965 26.7961 0.570312 20.8267 0.570312 13.4627C0.570312 6.09873 6.53965 0.129395 13.9036 0.129395C21.2676 0.129395 27.237 6.09873 27.237 13.4627C27.237 20.8267 21.2676 26.7961 13.9036 26.7961ZM13.9036 11.5774L10.133 7.80539L8.24631 9.69206L12.0183 13.4627L8.24631 17.2334L10.133 19.1201L13.9036 15.3481L17.6743 19.1201L19.561 17.2334L15.789 13.4627L19.561 9.69206L17.6743 7.80539L13.9036 11.5774Z" fill="white"/>
+								</svg>
+							</div>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -516,6 +614,11 @@ $:	if (browser && openThis) {
 					{:else if item.type.length > 0 && item.type === 'post'}
 						{#if openThis[i]}
 						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
+							<div class="closebutton">
+								<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+									<path d="M13.9036 26.7961C6.53965 26.7961 0.570312 20.8267 0.570312 13.4627C0.570312 6.09873 6.53965 0.129395 13.9036 0.129395C21.2676 0.129395 27.237 6.09873 27.237 13.4627C27.237 20.8267 21.2676 26.7961 13.9036 26.7961ZM13.9036 11.5774L10.133 7.80539L8.24631 9.69206L12.0183 13.4627L8.24631 17.2334L10.133 19.1201L13.9036 15.3481L17.6743 19.1201L19.561 17.2334L15.789 13.4627L19.561 9.69206L17.6743 7.80539L13.9036 11.5774Z" fill="white"/>
+								</svg>
+							</div>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -530,6 +633,11 @@ $:	if (browser && openThis) {
 					{:else}
 						{#if openThis[i]}
 						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
+							<div class="closebutton">
+								<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+									<path d="M13.9036 26.7961C6.53965 26.7961 0.570312 20.8267 0.570312 13.4627C0.570312 6.09873 6.53965 0.129395 13.9036 0.129395C21.2676 0.129395 27.237 6.09873 27.237 13.4627C27.237 20.8267 21.2676 26.7961 13.9036 26.7961ZM13.9036 11.5774L10.133 7.80539L8.24631 9.69206L12.0183 13.4627L8.24631 17.2334L10.133 19.1201L13.9036 15.3481L17.6743 19.1201L19.561 17.2334L15.789 13.4627L19.561 9.69206L17.6743 7.80539L13.9036 11.5774Z" fill="white"/>
+								</svg>
+							</div>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -552,6 +660,11 @@ $:	if (browser && openThis) {
 					{#if item.type.length > 0 && item.type === 'code'}
 						{#if openThis[i]}
 						<div class="tube green opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
+							<div class="closebutton">
+								<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+									<path d="M13.9036 26.7961C6.53965 26.7961 0.570312 20.8267 0.570312 13.4627C0.570312 6.09873 6.53965 0.129395 13.9036 0.129395C21.2676 0.129395 27.237 6.09873 27.237 13.4627C27.237 20.8267 21.2676 26.7961 13.9036 26.7961ZM13.9036 11.5774L10.133 7.80539L8.24631 9.69206L12.0183 13.4627L8.24631 17.2334L10.133 19.1201L13.9036 15.3481L17.6743 19.1201L19.561 17.2334L15.789 13.4627L19.561 9.69206L17.6743 7.80539L13.9036 11.5774Z" fill="white"/>
+								</svg>
+							</div>
 							<small>{item.lang}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -572,6 +685,11 @@ $:	if (browser && openThis) {
 					{:else if item.type.length > 0 && item.type === 'gptchat'}
 						{#if openThis[i]}
 						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
+							<div class="closebutton">
+								<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+									<path d="M13.9036 26.7961C6.53965 26.7961 0.570312 20.8267 0.570312 13.4627C0.570312 6.09873 6.53965 0.129395 13.9036 0.129395C21.2676 0.129395 27.237 6.09873 27.237 13.4627C27.237 20.8267 21.2676 26.7961 13.9036 26.7961ZM13.9036 11.5774L10.133 7.80539L8.24631 9.69206L12.0183 13.4627L8.24631 17.2334L10.133 19.1201L13.9036 15.3481L17.6743 19.1201L19.561 17.2334L15.789 13.4627L19.561 9.69206L17.6743 7.80539L13.9036 11.5774Z" fill="white"/>
+								</svg>
+							</div>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -592,6 +710,11 @@ $:	if (browser && openThis) {
 					{:else if item.type.length > 0 && item.type === 'post'}
 						{#if openThis[i]}
 						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
+							<div class="closebutton">
+								<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+									<path d="M13.9036 26.7961C6.53965 26.7961 0.570312 20.8267 0.570312 13.4627C0.570312 6.09873 6.53965 0.129395 13.9036 0.129395C21.2676 0.129395 27.237 6.09873 27.237 13.4627C27.237 20.8267 21.2676 26.7961 13.9036 26.7961ZM13.9036 11.5774L10.133 7.80539L8.24631 9.69206L12.0183 13.4627L8.24631 17.2334L10.133 19.1201L13.9036 15.3481L17.6743 19.1201L19.561 17.2334L15.789 13.4627L19.561 9.69206L17.6743 7.80539L13.9036 11.5774Z" fill="white"/>
+								</svg>
+							</div>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -606,6 +729,11 @@ $:	if (browser && openThis) {
 					{:else}
 						{#if openThis[i]}
 						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
+							<div class="closebutton">
+								<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+									<path d="M13.9036 26.7961C6.53965 26.7961 0.570312 20.8267 0.570312 13.4627C0.570312 6.09873 6.53965 0.129395 13.9036 0.129395C21.2676 0.129395 27.237 6.09873 27.237 13.4627C27.237 20.8267 21.2676 26.7961 13.9036 26.7961ZM13.9036 11.5774L10.133 7.80539L8.24631 9.69206L12.0183 13.4627L8.24631 17.2334L10.133 19.1201L13.9036 15.3481L17.6743 19.1201L19.561 17.2334L15.789 13.4627L19.561 9.69206L17.6743 7.80539L13.9036 11.5774Z" fill="white"/>
+								</svg>
+							</div>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -638,6 +766,7 @@ $:	if (browser && openThis) {
 			{/if}
 		{/if}
 	</div>
+	</div>
 </div>
 
 
@@ -647,20 +776,33 @@ $:	if (browser && openThis) {
 	pre
 		width: 100%
 
+.newstd input
+	border: none
+	text-align: center
+	background: none
+	text-transform: uppercase
+	font-size: 12px
+	color: #474747
+	width: 100%
+	cursor: pointer
+	outline: none
+	&:hover
+		color: white !important
+
 .newstd
 	cursor: pointer
 	border-radius: 4px
-	cursor: pointer
 	transform-origin: center center
 	color: #474747
 	transition: all 0.05s ease
-	font-size: 14px
+	font-size: 12px
 	padding: 4px 8px
 	position: relative
 	overflow: hidden
 	z-index: 1
 	text-align: center
 	background: #171717
+	text-transform: uppercase
 	&::before
 		position: absolute
 		top: 0
@@ -675,6 +817,8 @@ $:	if (browser && openThis) {
 		background-image: radial-gradient(at 17% 36%, hsla(248,47%,99%,0.1) 0px, transparent 1%), radial-gradient(at 80% 70%, hsla(125,87%,60%,0.2) 0px, transparent 50%)
 	&:hover
 		color: #FFFFFF
+		input
+			color: white
 		&::before
 			background-color: hsla(130,90%,45%,1)
 			filter: blur(15px)
@@ -698,9 +842,9 @@ $:	if (browser && openThis) {
 	display: grid
 	grid-auto-flow: row
 	@media screen and (min-width: 1024px)
-		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr
-		grid-template-rows: 1fr
-		gap: 16px 32px
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr
+		grid-template-rows: 1fr 1fr
+		gap: 16px 24px
 		margin-bottom: 32px
 	@media screen and (max-width: 1023px)
 		grid-template-columns: 1fr 1fr 1fr 1fr

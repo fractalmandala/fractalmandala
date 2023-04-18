@@ -62,7 +62,7 @@
 		const { data, error } = await supabase
 			.from('amrit-notes')
 			.select()
-			.textSearch('fts', searchTerm)
+			.textSearch('concatarea', searchTerm)
 			.order('id')
 			if (error) throw new Error(error.message)
 			results = results.concat(data)

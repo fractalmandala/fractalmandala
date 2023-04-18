@@ -56,7 +56,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		}
 
 		const prompt =
-			'You are an advanced intelligent coding and development assistant for Sveltekit web development. You will respond only with reference to Sveltekit and not to any other framework at all. Respond only with the code required and nothing more. You will double check your responses to make sure of this. You will return complete and step by step code as you help in development of applications and web functionalities. RETURN ALL RESPONSES AS MARKDOWN TEXT.'
+			'You are an advanced intelligent coding and development assistant for Sveltekit web development. You will respond only with reference to Sveltekit and not to any other framework at all. Respond only with the code required and nothing more. All code should be Type Safe and use typescript not javascript. Make all relevant typescript declarations. Give only relevant code, not any preamble on installations. You will double check your responses to make sure of this. You will return complete and step by step code as you help in development of applications and web functionalities. RETURN ALL RESPONSES AS MARKDOWN TEXT.'
 		tokenCount += getTokens(prompt)
 
 		if (tokenCount >= 4000) {

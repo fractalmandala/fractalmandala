@@ -1,10 +1,9 @@
-
 $l1: 16px
 $l2: 24px
 $l3: 32px
 $l4: 48px
 $l5: 64px
-$l10: 128px
+$l10: 96px
 $l20: 240px
 $minh: calc(100vh - 80px)
 $gret: #676767
@@ -15,54 +14,43 @@ $greenhero: #10D56C
 $blue: #227ceb
 $red: #F64241
 $yellow: #f4d301
-$shadow-tube: 6px 6px 10px #090909, -4px -7px 10px #111111
+$shadow-tube: 6px 6px 10px #010101, -4px -7px 10px #090909
 $shadow-no:	0px 0px 0px #020202, 0px 0px 0px #111111
 $back-tube: #171717
-$trans1: all 0.15s cubic-bezier(1.000, -0.105, 1.000, 0.410)
-
+$trans1: all 0.1s cubic-bezier(1.000, -0.105, 1.000, 0.410)
 $green0: hsla(200,9%,5%,1)
 $green1: hsla(140,80%,60%,0.1)
 $green2: hsla(120,80%,60%,0.2)
 $green3: hsla(120,80%,60%,0.35)
 $green4: hsla(130,90%,45%,1)
-
 $blue0: hsla(230,80%,20%,0)
 $blue1: hsla(216,90%,30%,0.1)
 $blue2: hsla(216,90%,30%,0.5)
 $blue3: hsla(230,90%,30%,0.5)
 $blue4: hsla(230,100%,40%,1)
-
 $red0: hsla(10,80%,20%,0)
 $red1: hsla(10,50%,30%,0.1)
 $red2: hsla(10,50%,10%,0.4)
 $red3: hsla(10,80%,20%,0.5)
 $red4: hsla(10,80%,40%,1)
-
 $yell0: hsla(60,89%,50%,0)
-$yell1: hsla(10,90%,30%,0)
+$yell1: hsla(10,90%,100%,0)
 $yell2: hsla(60,89%,50%,0.1)
 $yell3:  hsla(60,89%,50%,0.6)
-$yell4: hsla(60,89%,50%,0.9)
-
+$yell4: hsla(58,80%,50%,1)
 $color-majoryellowafter: hsla(60,89%,50%,0.9)
 $color-majoryellowbefore: hsla(60,89%,50%,0.12)
-
 $color-majorredafter: hsla(10,80%,40%,1)
 $color-majorredbefore: hsla(10,80%,40%,0.09)
-
 $color-majorblueafter: hsla(230,80%,40%,1)
 $color-majorbluebefore: hsla(230,80%,20%,0.24)
-
 $cubea: cubic-bezier(1.000, -0.105, 1.000, 0.410)
 $cubeb: cubic-bezier(0.61, 1, 0.88, 1)
-
 $dur025s: 0.25s
 $dur015s: 0.15s
 $dur200s: 2s
 $del040s: 0.4s
 $del100s: 1s
-
-
 $spacing-large: 64px
 $spacing-mid: 32px
 $spacing-small: 16px
@@ -129,6 +117,15 @@ pre
 .bdr
 	border: 1px solid red
 
+.border
+	border: 1px solid #272727
+	border-radius: 4px
+	background: #090909
+	@media screen and (min-width: 900px)
+		padding: $l5
+	@media screen and (max-width: 899px)
+		padding: 16px
+
 .boxc, .boxr
 	display: flex
 
@@ -179,6 +176,7 @@ pre
 		grid-template-rows: auto
 		grid-template-areas: ". ."
 		gap: 16px 16px
+		padding-top: 32px
 
 .thegrid.aligned
 	@media screen and (min-width: 1024px)
@@ -194,15 +192,35 @@ pre
 			grid-area: opentab
 			height: 100%
 
+.tube.green.nulled, .tube.red.nulled, .tube.blue.nulled, .tube.yell.nulled
+	&::before
+		background: #171717
+
 .tube.opentab
 	overflow: hidden
 	box-shadow: $shadow-no
 	&:hover
 		overflow: hidden
 
+.tube.green
+	small
+		color: $greenpop
+
+.tube.yell
+	small
+		color: $yellow
+
+.tube.red
+	small
+		color: $red
+
+.tube.blue
+	small
+		color: $blue
+
 
 .tube
-	overflow: visible
+	overflow: hidden
 	box-shadow: $shadow-tube
 	display: flex
 	flex-direction: column
@@ -211,13 +229,16 @@ pre
 	justify-content: flex-start
 	align-items: stretch
 	transition: $trans1
-	background: $back-tube
 	border: 1px solid #101010
 	cursor: pointer
+	background: #171717
+	z-index: 1
+	pre
+		white-space: pre-line
 	@media screen and (min-width: 1024px)
-		padding: 40px 32px
+		padding: 24px
 		row-gap: 0
-		height: 100%
+		min-height: 160px
 	@media screen and (max-width: 1023px)
 		padding: 24px
 		justify-content: flex-start
@@ -231,6 +252,7 @@ pre
 		filter: blur(40px)
 		z-index: -1
 
+
 .tube
 	h5, small, p
 		margin: 0
@@ -243,28 +265,79 @@ pre
 	p
 		color: #474747
 		font-size: 12px
-		width: max-content
 		border-top: 1px solid #272727
 		padding-top: 4px
 	h5
 		text-transform: capitalize
 		padding-top: 8px
 		padding-bottom: 16px
-	h6
+		font-size: 16px !important
+		color: white
+		font-weight: 500
+	h6, pre
 		margin: 0
 		font-weight: 400
 		color: white
 		font-size: 16px
 		padding-top: 32px
-		
+		font-family: 'Spline Sans', sans-serif
+	&:hover
+		animation: repeaternull 0.2s ease forwards
+		h6, small, p
+			opacity: 0
+
 .tube.opentab
 	cursor: auto
 	h5
-		font-size: 24px
+		font-size: 32px !important
+	&:hover
+		h6, small, p
+			opacity: 1
 
 .tube.opentab.green
+	background: #171717
+	&::before
+		background-color: #171717
 	small
 		color: $green4
+	&:hover
+		animation: none
+		&::before
+			background-color: #171717
+
+.tube.opentab.blue
+	background: #171717
+	&::before
+		background-color: #171717
+	small
+		color: $green4
+	&:hover
+		animation: none
+		&::before
+			background-color: #171717
+
+.tube.opentab.red
+	background: #171717
+	&::before
+		background-color: #171717
+	small
+		color: $green4
+	&:hover
+		animation: none
+		&::before
+			background-color: #171717
+
+.tube.opentab.yell
+	background: #171717
+	&::before
+		background-color: #171717
+		background: #171717
+	small
+		color: $green4
+	&:hover
+		animation: none
+		&::before
+			background-color: #171717
 
 .tube.opentab.red
 	small
@@ -282,60 +355,56 @@ pre
 
 .tube.green
 	&::before
-		background-image: radial-gradient(at 17% 36%, hsla(248,47%,49%,1) 0px, transparent 1%), radial-gradient(at 80% 70%, hsla(125,87%,60%,0.2) 0px, transparent 50%)
+		background-image: radial-gradient(at 17% 36%, hsla(248,47%,49%,0.1) 0px, transparent 1%), radial-gradient(at 80% 70%, hsla(125,87%,60%,0.2) 0px, transparent 50%)
 		background-size: 400% 400%
-		background-color: $green0
+		background-color: $green1
 	&:hover
-		animation: bordergo $dur025s ease forwards, greenborder $dur015s $cubea $del040s forwards, repeatergreen $dur200s ease $del100s infinite, flinkin $del040s $cubea forwards
+		animation: bordergo 0.05s ease forwards, greenborder $dur015s $cubea forwards
 		&::before
-			animation: tubegreen $dur025s $cubea $dur025s forwards
-
-.tube.green.opentab
-	&:hover
-		animation: none
+			background-color: $green4
 
 .tube.blue
 	&::before
 		background-image: radial-gradient(at 97% 96%, hsla(228,100%,20%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
 		background-size: 400% 400%
-		background-color: $blue0
+		background-color: $blue1
 	&:hover
-		animation: bordergo $dur025s ease forwards, blueborder $dur015s $cubea $del040s forwards, repeaterblue $dur200s ease $del100s infinite, flinkin $del040s $cubea forwards
+		animation: bordergo $dur025s ease forwards, blueborder $dur015s $cubea $del040s forwards
 		&::before
-			animation: tubeblue $dur025s $cubea $dur025s forwards
+			background-color: $blue4
 
 .tube.blue.opentab
 	&:hover
-		animation: bordergo $dur025s ease forwards, blueborder $dur015s $cubea $del040s forwards, repeaterblue $dur200s ease $del100s infinite
+		animation: bordergo $dur025s ease forwards, blueborder $dur015s $cubea $del040s forwards
 
 .tube.red
 	&::before
 		background-image: radial-gradient(at 97% 96%, hsla(228,100%,20%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
 		background-size: 400% 400%
-		background-color: $red0
+		background-color: $red1
 	&:hover
-		animation: bordergo $dur025s ease forwards, redborder $dur015s $cubea $del040s forwards, repeaterred $dur200s ease $del100s infinite, flinkin $del040s $cubea forwards
+		animation: bordergo $dur025s ease forwards, redborder $dur015s $cubea $del040s forwards
 		&::before
-			animation: tubered $dur025s $cubea $dur025s forwards
+			background-color: $red4
 
 .tube.red.opentab
 	&:hover
-		animation: bordergo $dur025s ease forwards, redborder $dur015s $cubea $del040s forwards, repeaterred $dur200s ease $del100s infinite
+		animation: bordergo $dur025s ease forwards, redborder $dur015s $cubea $del040s forwards
 
 .tube.yell
 	&::before
-		background-image: radial-gradient(at 97% 96%, hsla(228,100%,20%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
+		background-image: radial-gradient(at 97% 96%, hsla(60,80%,20%,1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(65,87%,90%,1) 0px, transparent 50%)
 		background-size: 400% 400%
-		background-color: $yell0
+		background-color: $yell1
 	&:hover
-		animation: bordergo $dur025s ease forwards, yellowborder $dur015s $cubea $del040s forwards, repeateryellow $dur200s ease $del100s infinite, flinkin $del040s $cubea forwards
+		animation: bordergo $dur025s ease forwards, yellowborder $dur015s $cubea $del040s forwards
 		&::before
-			animation: tubeyellow $dur025s $cubea $dur025s forwards
+			background-color: $yell4
 
 
 .tube.yell.opentab
 	&:hover
-		animation: bordergo $dur025s ease forwards, yellowborder $dur015s $cubea $del040s forwards, repeateryellow $dur200s ease $del100s infinite
+		animation: bordergo $dur025s ease forwards, yellowborder $dur015s $cubea $del040s forwards
 
 @keyframes bordergo
 	0%
@@ -349,6 +418,8 @@ pre
 		background-color: $green1
 		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
 		filter: blur(24px)
+		width: 200%
+		height: 200%
 	42%
 		background-color: $green2
 		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
@@ -361,6 +432,8 @@ pre
 		background-color: $green4
 		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
 		filter: blur(20px)
+		width: 100%
+		height: 100%
 
 @keyframes tubeblue
 	0%
@@ -416,65 +489,36 @@ pre
 		background-image: radial-gradient(at 97% 96%, hsla(228,100%,20%,0.8) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
 		filter: blur(30px)
 
-@keyframes repeaternull
-	0%
-		border: 1px solid #171717
-	100%
-		border: 1px solid #171717
+.closebutton
+	display: flex
+	flex-direction: row
+	justify-content: flex-end
+	svg
+		object-fit: contain
+		cursor: pointer
+		width: 27px
+		height: 27px
 
-@keyframes repeatergreen
-	0%
-		border: 1px solid hsla(131, 67%, 60%, 0.3)
-	50%
-		border: 1px solid hsla(131, 67%, 60%, 1)
-	100%
-		border: 1px solid hsla(131, 67%, 60%, 0.3)
+.opentab.green
+	.closebutton svg
+		&:hover
+			path
+				fill: $green4
 
-@keyframes repeaterblue
-	0%
-		border: 1px solid hsla(231, 67%, 60%, 30%)
-	50%
-		border: 1px solid hsla(231, 67%, 60%, 100%)
-	100%
-		border: 1px solid hsla(231, 67%, 60%, 30%)
+.opentab.red
+	.closebutton svg
+		&:hover
+			path
+				fill: $red4
 
-@keyframes repeaterred
-	0%
-		border: 1px solid hsla(10, 80%, 20%, 100%)
-	50%
-		border: 1px solid hsla(10, 80%, 60%, 50%)
-	100%
-		border: 1px solid hsla(10, 80%, 20%, 100%)
+.opentab.blue
+	.closebutton svg
+		&:hover
+			path
+				fill: $blue4
 
-@keyframes repeateryellow
-	0%
-		border: 1px solid hsla(58, 100%, 90%, 1)
-	50%
-		border: 1px solid hsla(58, 100%, 90%, 0.5)
-	100%
-		border: 1px solid hsla(58, 100%, 90%, 1)
-
-
-@keyframes greenborder
-	0%
-		border: 1px solid hsla(131, 6%, 30%, 0)
-	100%
-		border: 1px solid hsla(131, 67%, 60%, 0.6)
-
-@keyframes blueborder
-	0%
-		border: 1px solid hsla(231, 6%, 30%, 0%)
-	100%
-		border: 1px solid hsla(231, 67%, 60%, 70%)
-
-@keyframes redborder
-	0%
-		border: 1px solid hsla(10, 80%, 20%, 0%)
-	100%
-		border: 1px solid hsla(10, 80%, 20%, 100%)
-
-@keyframes yellowborder
-	0%
-		border: 1px solid hsla(58, 100%, 90%, 0)
-	100%
-		border: 1px solid hsla(58, 100%, 60%, 0.5)
+.opentab.yell
+	.closebutton svg
+		&:hover
+			path
+				fill: $yell4
