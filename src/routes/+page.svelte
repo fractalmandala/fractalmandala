@@ -643,7 +643,9 @@ $:	if (browser && openThis) {
 
 <style lang="sass">
 
-
+.thegrid
+	pre
+		width: 100%
 
 .newstd
 	cursor: pointer
