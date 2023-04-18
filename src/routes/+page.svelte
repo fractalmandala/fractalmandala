@@ -95,7 +95,7 @@ $:	if (browser && openThis) {
 			<input type="text" placeholder="search"/>
 		</div>
 	</div>
-	<div class="thegrid" class:aligned={gridalign}>
+	<div class="thegrid text-base prose prose-truegray xl:text-xl" class:aligned={gridalign}>
 		{#if expand[1]}
 			{#if notes && notes.length > 0}
 				{#each notes as item, i}
