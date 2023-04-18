@@ -95,7 +95,7 @@ $:	if (browser && openThis) {
 				{#each notes as item, i}
 					{#if item.type.length > 0 && item.type === 'code'}
 						{#if openThis[i]}
-						<div class="tube green opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube green opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.lang}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -115,7 +115,7 @@ $:	if (browser && openThis) {
 						{/if}
 					{:else if item.type.length > 0 && item.type === 'gptchat'}
 						{#if openThis[i]}
-						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -135,7 +135,7 @@ $:	if (browser && openThis) {
 						{/if}
 					{:else if item.type.length > 0 && item.type === 'post'}
 						{#if openThis[i]}
-						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -149,7 +149,7 @@ $:	if (browser && openThis) {
 						{/if}
 					{:else}
 						{#if openThis[i]}
-						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -171,7 +171,7 @@ $:	if (browser && openThis) {
 				{#each starred as item, i}
 					{#if item.type.length > 0 && item.type === 'code'}
 						{#if openThis[i]}
-						<div class="tube green opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube green opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.lang}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -191,7 +191,7 @@ $:	if (browser && openThis) {
 						{/if}
 					{:else if item.type.length > 0 && item.type === 'gptchat'}
 						{#if openThis[i]}
-						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -211,7 +211,7 @@ $:	if (browser && openThis) {
 						{/if}
 					{:else if item.type.length > 0 && item.type === 'post'}
 						{#if openThis[i]}
-						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -225,7 +225,7 @@ $:	if (browser && openThis) {
 						{/if}
 					{:else}
 						{#if openThis[i]}
-						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -247,7 +247,7 @@ $:	if (browser && openThis) {
 				{#each sveltecodes as item, i}
 					{#if item.type.length > 0 && item.type === 'code'}
 						{#if openThis[i]}
-						<div class="tube green opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube green opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.lang}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -267,7 +267,7 @@ $:	if (browser && openThis) {
 						{/if}
 					{:else if item.type.length > 0 && item.type === 'gptchat'}
 						{#if openThis[i]}
-						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -287,7 +287,7 @@ $:	if (browser && openThis) {
 						{/if}
 					{:else if item.type.length > 0 && item.type === 'post'}
 						{#if openThis[i]}
-						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -301,7 +301,7 @@ $:	if (browser && openThis) {
 						{/if}
 					{:else}
 						{#if openThis[i]}
-						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -323,7 +323,7 @@ $:	if (browser && openThis) {
 				{#each posts as item, i}
 					{#if item.type.length > 0 && item.type === 'code'}
 						{#if openThis[i]}
-						<div class="tube green opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube green opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.lang}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -343,7 +343,7 @@ $:	if (browser && openThis) {
 						{/if}
 					{:else if item.type.length > 0 && item.type === 'gptchat'}
 						{#if openThis[i]}
-						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -363,7 +363,7 @@ $:	if (browser && openThis) {
 						{/if}
 					{:else if item.type.length > 0 && item.type === 'post'}
 						{#if openThis[i]}
-						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -377,7 +377,7 @@ $:	if (browser && openThis) {
 						{/if}
 					{:else}
 						{#if openThis[i]}
-						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -399,7 +399,7 @@ $:	if (browser && openThis) {
 				{#each supas as item, i}
 					{#if item.type.length > 0 && item.type === 'code'}
 						{#if openThis[i]}
-						<div class="tube green opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube green opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.lang}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -419,7 +419,7 @@ $:	if (browser && openThis) {
 						{/if}
 					{:else if item.type.length > 0 && item.type === 'gptchat'}
 						{#if openThis[i]}
-						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -439,7 +439,7 @@ $:	if (browser && openThis) {
 						{/if}
 					{:else if item.type.length > 0 && item.type === 'post'}
 						{#if openThis[i]}
-						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -453,7 +453,7 @@ $:	if (browser && openThis) {
 						{/if}
 					{:else}
 						{#if openThis[i]}
-						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -495,7 +495,7 @@ $:	if (browser && openThis) {
 						{/if}
 					{:else if item.type.length > 0 && item.type === 'gptchat'}
 						{#if openThis[i]}
-						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -515,7 +515,7 @@ $:	if (browser && openThis) {
 						{/if}
 					{:else if item.type.length > 0 && item.type === 'post'}
 						{#if openThis[i]}
-						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -529,7 +529,7 @@ $:	if (browser && openThis) {
 						{/if}
 					{:else}
 						{#if openThis[i]}
-						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -551,7 +551,7 @@ $:	if (browser && openThis) {
 				{#each gens as item, i}
 					{#if item.type.length > 0 && item.type === 'code'}
 						{#if openThis[i]}
-						<div class="tube green opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube green opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.lang}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -571,7 +571,7 @@ $:	if (browser && openThis) {
 						{/if}
 					{:else if item.type.length > 0 && item.type === 'gptchat'}
 						{#if openThis[i]}
-						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -591,7 +591,7 @@ $:	if (browser && openThis) {
 						{/if}
 					{:else if item.type.length > 0 && item.type === 'post'}
 						{#if openThis[i]}
-						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube red opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
@@ -605,7 +605,7 @@ $:	if (browser && openThis) {
 						{/if}
 					{:else}
 						{#if openThis[i]}
-						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube blue opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<small>{item.type}</small>
 							<h5>{item.title}</h5>
 							<p>{item.tags}</p>
