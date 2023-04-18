@@ -6,6 +6,7 @@
 	import Writer from '$lib/agents/Writer.svelte'
 	import Tester from '$lib/agents/Tester.svelte'
 	import Titler from '$lib/agents/Titler.svelte'
+	import Arvind from '$lib/agents/Arvind.svelte'
 
 
 	let selectedAgent:boolean[] = Array(4).fill(false)
@@ -36,6 +37,7 @@
 			<div class="agents" on:click={() => selectAgent(4)} on:keydown={fauxfake} class:selectedfour={selectedAgent[4]}>Write</div>
 			<div class="agents" on:click={() => selectAgent(5)} on:keydown={fauxfake} class:selectedfive={selectedAgent[5]}>Test</div>
 			<div class="agents" on:click={() => selectAgent(6)} on:keydown={fauxfake} class:selectedfive={selectedAgent[6]}>Title</div>
+			<div class="agents" on:click={() => selectAgent(7)} on:keydown={fauxfake} class:selectedtwo={selectedAgent[7]}>Arvind</div>
 		</div>
 		{#if selectedAgent[2]}
 			<Sanskrit></Sanskrit>
@@ -47,6 +49,8 @@
 			<Tester></Tester>
 		{:else if selectedAgent[6]}
 			<Titler></Titler>
+		{:else if selectedAgent[7]}
+			<Arvind></Arvind>
 		{:else}
 			<BroGPT></BroGPT>
 		{/if}
