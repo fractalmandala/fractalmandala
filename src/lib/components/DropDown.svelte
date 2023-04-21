@@ -1,3 +1,18 @@
+<script lang="ts">
+
+	import { onMount } from 'svelte'
+	import { allNotes } from '$lib/utils/supabase'
+	import AutoComplete from 'simple-svelte-autocomplete'
+		
+	let selectedNote
+	let notes
+
+	onMount(async() => {
+		notes = await allNotes()
+	})
+
+</script>
+
 <div class="dropdown">
 <slot></slot>
 </div>

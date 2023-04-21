@@ -149,7 +149,6 @@ export async function allNotes() {
 	const { data, error } = await supabase
 		.from('amrit-notes')
 		.select()
-		.neq('type','quillcode')
 		.order('created_at',{ascending: false})
 		if (error) throw new Error(error.message)
 	return data
@@ -246,10 +245,11 @@ export async function editTitle(id: any,title: any){
 		}
 }
 
-export async function MidjourneyImages(){
+export async function MidjourneyImages(imagesLow:any,imagesHigh:any){
 	const { data, error } = await supabase
 	.from('amrit-gallery')
 	.select()
+	.range(imagesLow,imagesHigh)
 	.order('id', {ascending: false})
 	if (error) throw new Error(error.message)
 	return data

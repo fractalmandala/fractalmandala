@@ -91,6 +91,7 @@ div
 	--blue: $blue
 	--greenpop: $greenpop
 	--redzero: #F64241
+	--agnostic-link-color: #10C56D
 
 :root
 	box-sizing: border-box
@@ -229,8 +230,6 @@ pre
 	justify-content: flex-start
 	align-items: stretch
 	transition: $trans1
-	border: 1px solid #101010
-	cursor: pointer
 	background: #171717
 	z-index: 1
 	pre
@@ -287,9 +286,9 @@ pre
 			opacity: 0
 
 .tube.opentab
-	cursor: auto
 	h5
 		font-size: 32px !important
+		padding-bottom: 8px
 	&:hover
 		h6, small, p
 			opacity: 1
@@ -342,6 +341,10 @@ pre
 .tube.opentab.red
 	small
 		color: var(--redzero)
+
+.tube.opentab.yellow
+	small
+		color: $yell4
 
 .tube.image
 	padding: 0
@@ -522,3 +525,32 @@ pre
 		&:hover
 			path
 				fill: $yell4
+
+.input-container
+	input
+		background: transparent
+		color: white
+		border: 1px solid #474747
+		border-radius: 3px
+		width: 200px !important
+
+.headerautocomplete
+	&::after
+		border: 1px solid red
+		content: none
+		contents: none
+
+.simple-svelte-autocomplete.surge.sh
+	&::after, &::before
+		border: 1px solid red
+
+.autocomplete-list
+	background: #171717
+
+.genericpad
+	small
+		text-transform: uppercase
+		font-size: 12px
+	cite
+		color: #474747
+		font-style: normal

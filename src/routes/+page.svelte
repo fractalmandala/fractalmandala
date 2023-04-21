@@ -4,9 +4,16 @@
 	import { lazyLoadImageAction } from 'svelte-legos'
 	import Prism from 'prismjs'
 	import '$lib/styles/prism.css'
+	import '$lib/styles/prismtoolbar.css'
 	import { browser } from '$app/environment'
 	import { scale } from 'svelte/transition'
 	import { backOut, backIn } from 'svelte/easing'
+	import TubeGreenOpen from '$lib/tubes/TubeGreenOpen.svelte'
+	import TubeYellowOpen from '$lib/tubes/TubeYellowOpen.svelte'
+	import TubeGreenOpenCode from '$lib/tubes/TubeGreenOpen.svelte'
+	import CloseButton1 from '$lib/tubes/CloseButton.svelte'
+	import CloseButton2 from '$lib/tubes/CloseButton.svelte'
+	import CloseButton6 from '$lib/tubes/CloseButton.svelte'
 	import '$lib/styles/themes.sass'
 	import '$lib/styles/tokens.sass'
 	import { limitNotes, onlyStarred, Sveltecode, blogPosts, Supabases, allCodes, allGenerals, MidjourneyImages, chatswithGPT } from '$lib/utils/supabase'
@@ -19,9 +26,13 @@
 	let images:any
 	let supas:any
 	let posts:any
-	let limit = 12
+	let limit = 24
 	let fake = false
 	let gridalign = false
+	let imagesLow = 0
+	let imagesHigh = 11
+	let low = 0
+	let high = 11
 	let expand:boolean[] = Array(20).fill(false)
 	expand[8] = true 
 	let openThis:boolean[] = Array(200).fill(false)
@@ -29,6 +40,11 @@
 
 	function fauxfake(){
 		fake = !fake
+	}
+
+	function nextTwelve(newLow:number,newHigh:number){
+		low = newLow,
+		high = newHigh
 	}
 
 	function togglePostItem(index:number){
@@ -70,7 +86,7 @@ $:	if (browser && openThis) {
 		supas = await Supabases()
 		codas = await allCodes()
 		gens = await chatswithGPT()
-		images = await MidjourneyImages()
+		images = await MidjourneyImages(imagesLow,imagesHigh)
 	})
 </script>
 
@@ -101,19 +117,16 @@ $:	if (browser && openThis) {
 				{#each notes as item, i}
 					{#if item.type.length > 0 && item.type === 'code'}
 						{#if openThis[i]}
-						<div class="tube green opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
-							<div style="background: #171717">
-							<small>{item.lang}</small>
-							<h5>{item.title}</h5>
-							<p>{item.tags}</p>
-							<h6>{item.note}</h6>
-							<pre class="language-{item.lang}">
-								<code>
-									{item.codesnippet}
-								</code>
-							</pre>
+						<TubeGreenOpen language={item.lang}>
+							<div slot="button" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+								<CloseButton1/>
 							</div>
-						</div>
+							<small slot="lang">{item.lang}</small>
+							<h5 slot="title">{item.title}</h5>
+							<p slot="tags">{item.tags}</p>
+							<h6 slot="note">{item.note}</h6>
+							<code slot="code">{item.codesnippet}</code>
+						</TubeGreenOpen>
 						{:else}
 						<div class="tube green" in:scale={{duration: 100, delay: i * 100, easing: backIn}} out:scale={{duration: 100, delay: i*10, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
 							<small>{item.lang}</small>
@@ -123,17 +136,16 @@ $:	if (browser && openThis) {
 						{/if}
 					{:else if item.type.length > 0 && item.type === 'gptchat'}
 						{#if openThis[i]}
-						<div class="tube yell opentab" in:scale={{duration: 250, delay: 50, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
-							<small>{item.type}</small>
-							<h5>{item.title}</h5>
-							<p>{item.tags}</p>
-							<h6>{item.note}</h6>
-							<pre>
-								<code>
-									{item.codesnippet}
-								</code>
-							</pre>
-						</div>
+						<TubeYellowOpen>
+							<div slot="button" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+								<CloseButton2/>
+							</div>
+							<small slot="lang">{item.type}</small>
+							<h5 slot="title">{item.title}</h5>
+							<p slot="tags">{item.tags}</p>
+							<h6 slot="note">{item.note}</h6>
+							<code slot="code">{item.codesnippet}</code>
+						</TubeYellowOpen>
 						{:else}
 						<div class="tube yell" in:scale={{duration: 100, delay: i * 100, easing: backIn}} out:scale={{duration: 100, delay: i*10, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
 							<small>{item.type}</small>
@@ -563,22 +575,18 @@ $:	if (browser && openThis) {
 				{#each codas as item, i}
 					{#if item.type.length > 0 && item.type === 'code'}
 						{#if openThis[i]}
-						<div class="tube green opentab" out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
-							<div class="closebutton">
-								<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
-									<path d="M13.9036 26.7961C6.53965 26.7961 0.570312 20.8267 0.570312 13.4627C0.570312 6.09873 6.53965 0.129395 13.9036 0.129395C21.2676 0.129395 27.237 6.09873 27.237 13.4627C27.237 20.8267 21.2676 26.7961 13.9036 26.7961ZM13.9036 11.5774L10.133 7.80539L8.24631 9.69206L12.0183 13.4627L8.24631 17.2334L10.133 19.1201L13.9036 15.3481L17.6743 19.1201L19.561 17.2334L15.789 13.4627L19.561 9.69206L17.6743 7.80539L13.9036 11.5774Z" fill="white"/>
-								</svg>
+						<TubeGreenOpenCode language={item.lang}>
+							<div slot="button" on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+								<CloseButton6/>
 							</div>
-							<small>{item.lang}</small>
-							<h5>{item.title}</h5>
-							<p>{item.tags}</p>
-							<h6>{item.note}</h6>
-							<pre class="language-{item.lang}">
-								<code>
-									{item.codesnippet}
-								</code>
-							</pre>
-						</div>
+							<small slot="lang">{item.lang}</small>
+							<h5 slot="title">{item.title}</h5>
+							<p slot="tags">{item.tags}</p>
+							<h6 slot="note">
+								<a href="/blog/code/{item.id}">Go to Page</a><br>
+								{item.note}</h6>
+							<code slot="code">{item.codesnippet}</code>
+						</TubeGreenOpenCode>
 						{:else}
 						<div class="tube green" in:scale={{duration: 100, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
 							<small>{item.lang}</small>
@@ -754,7 +762,7 @@ $:	if (browser && openThis) {
 			{#if images && images.length > 0}
 				{#each images as item, i}
 					{#if openThis[i]}
-						<div class="tube opentab image" in:scale={{duration: 600, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}} on:click={() => toggleOpenItem(i)} on:keydown={fauxfake}>
+						<div class="tube opentab image" in:scale={{duration: 600, delay: i * 25, easing: backIn}} out:scale={{duration: 100, easing: backOut}}>
 							<img src="https://wganhlzrylmkvvaoalco.supabase.co/storage/v1/object/public/images/batch1{item.link.slice(89,200)}" alt={item.id}/>
 						</div>
 					{:else}

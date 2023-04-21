@@ -9,6 +9,7 @@
 	import { page } from '$app/stores'
 	import '$lib/styles/tokens.sass'
 	import '$lib/styles/animations.sass'
+	import '$lib/styles/saved.sass'
 
 	let y:number
 	let mobileView:boolean = false
