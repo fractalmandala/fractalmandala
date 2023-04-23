@@ -39,7 +39,7 @@
 </svelte:head>
 
 
-<div class="padl2 sides">
+<div class="padl1 sides">
 	<form class="boxr passform">
 		<input type="password" bind:value={password} bind:this={input}/>
 		<div class="newstd maxwid" on:click={toggleChat} on:keydown={fauxfake}>Open</div>
