@@ -1,6 +1,6 @@
 <div class="foot">
 	<div class="rightside">
-		<div class="boxr" style="gap: 16px">
+		<div class="rta-row" style="gap: 16px">
 			<div class="twittericon" style="height: 20px">
 				<a href="https://twitter.com/saamaanyafreaky" target="_blank" rel="noreferrer">
 					<svg width="21" height="16" viewBox="0 0 21 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -47,7 +47,7 @@
 		width: 100%
 		cursor: pointer
 		&:hover
-			color: var(--green3)
+			color: #10D56C
 	@media screen and (max-width: 1023px)
 		padding: 0 16px
 

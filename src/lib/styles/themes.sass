@@ -1,123 +1,695 @@
-.major.green
-	cursor: pointer
-	border-radius: 4px
-	transform-origin: center center
-	color: #FFFFFF
-	transition: all 0.15s ease
-	border: 1px solid #272727
-	font-size: 14px
-	padding: 4px 8px
-	position: relative
-	overflow: hidden
-	z-index: 1
-	text-align: center
-	&::before
-		position: absolute
-		top: 0
-		left: 0
-		width: 100%
-		height: 100%
-		content: ''
-		z-index: -1
-		background-color: hsla(200,9%,5%,1)
-		transition: all 0.05s ease
-		filter: blur(20px)
-		background-image: radial-gradient(at 17% 36%, hsla(248,47%,49%,1) 0px, transparent 1%), radial-gradient(at 80% 70%, hsla(125,87%,60%,0.2) 0px, transparent 50%)
-	&:hover
-		overflow: visible
-		&::before
-			background-color: hsla(130,90%,45%,1)
-			filter: blur(15px)
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap')
 
-.major.blue
-	cursor: pointer
-	border-radius: 4px
-	transform-origin: center center
-	color: #FFFFFF
-	transition: all 0.15s ease
-	border: 1px solid #272727
-	font-size: 14px
-	padding: 4px 8px
-	position: relative
-	overflow: hidden
-	z-index: 1
-	text-align: center
-	&::before
-		position: absolute
-		top: 0
-		left: 0
-		width: 100%
-		height: 100%
-		content: ''
-		z-index: -1
-		background-color: hsla(230,80%,20%,0.24)
-		transition: all 0.05s ease
-		filter: blur(20px)
-		background-image: radial-gradient(at 17% 36%, hsla(248,87%,49%,1) 0px, transparent 1%), radial-gradient(at 80% 70%, hsla(125,87%,60%,0.2) 0px, transparent 50%)
-	&:hover
-		overflow: visible
-		&::before
-			background-color: hsla(230,80%,40%,1)
-			filter: blur(25px)
+$green: #63D471
+$black: #171717
+$black2: #272727
+$white: #FFFFFF
+$white2: #d7d7d7
+$grey: #676767
+$grey2: #878787
+$grey3: #474747
 
-.major.red
-	cursor: pointer
-	border-radius: 4px
-	transform-origin: center center
-	color: #FFFFFF
-	transition: all 0.15s ease
-	border: 1px solid #272727
-	font-size: 14px
-	padding: 4px 8px
-	position: relative
-	overflow: hidden
-	z-index: 1
-	text-align: center
-	&::before
-		position: absolute
-		top: 0
-		left: 0
-		width: 100%
-		height: 100%
-		content: ''
-		z-index: -1
-		background-color: hsla(10,80%,40%,0.09)
-		transition: all 0.05s ease
-		filter: blur(20px)
-		background-image: radial-gradient(at 17% 36%, hsla(248,87%,49%,1) 0px, transparent 1%), radial-gradient(at 80% 70%, hsla(125,87%,60%,0.2) 0px, transparent 50%)
-	&:hover
-		overflow: visible
-		&::before
-			background-color: hsla(10,80%,40%,1)
-			filter: blur(25px)
+@font-face
+	family: 'JetBrains Mono'
+	src: url('/fonts/JetBrainsMono-VariableFont_wght.ttf') format('ttf')
+	font-style: normal
+	font-weight: 400
 
-.major.yell
-	cursor: pointer
-	border-radius: 4px
-	transform-origin: center center
-	color: #FFFFFF
-	transition: all 0.15s ease
-	border: 1px solid #272727
-	font-size: 14px
-	padding: 4px 8px
-	position: relative
-	overflow: hidden
-	z-index: 1
-	text-align: center
-	&::before
-		position: absolute
-		top: 0
-		left: 0
-		width: 100%
-		height: 100%
-		content: ''
-		z-index: -1
-		background-color: hsla(60,89%,50%,0.12)
-		transition: all 0.05s ease
-		filter: blur(20px)
-		background-image: radial-gradient(at 17% 36%, hsla(248,87%,49%,1) 0px, transparent 1%), radial-gradient(at 80% 70%, hsla(125,87%,60%,0.2) 0px, transparent 50%)
+:root
+	--dur: 0.08s
+	font-family: 'JetBrains Mono', monospace
+
+p, h5, h6, li, small, cite
+	color: var(--textone)
+	font-family: 'JetBrains Mono', monospace
+
+a
+	text-decoration: none
+	font-family: inherit
+	color: inherit
 	&:hover
-		overflow: visible
-		&::before
-			background-color: hsla(60,89%,50%,0.9)
-			filter: blur(25px)
+		color: inherit
+
+
+.dark
+	--borderline: #272727
+	--green: #63D471
+	--background: #121212
+	--opposite: #FFFFFF
+	--near: #d7d7d7
+	--textone: #373737
+	--texttwo: #676767
+	--grey: #878787
+
+.light
+	--borderline: #e7e7e7
+	--green: #63D471
+	--background: #FFFFFF
+	--opposite: #272727
+	--near: #373737
+	--textone: #878787
+	--texttwo: #474747
+	--grey: #878787
+
+h3, h4
+	font-family: 'Spline Sans', sans-serif
+
+p, li, small, cite, h6, h2, h1, ul
+	margin-top: 0
+	margin-bottom: 1rem
+	font-family: 'JetBrains Mono', monospace
+
+ul, li
+	margin-left: 0
+	padding-left: 1rem
+	font-family: 'JetBrains Mono', monospace
+
+p, li, ul
+	font-size: 14px
+
+h6
+	font-size: 0.88rem
+	color: var(--texttwo)
+	font-weight: 400
+
+.leftone
+	h6
+		text-transform: uppercase
+
+h5
+	font-size: 1.12em
+	margin-top: 8px
+	margin-bottom: 1rem
+
+h5.near
+	color: var(--near)
+
+h4
+	font-size: 1.44rem
+	color: var(--near)
+h3
+	font-size: 1.72rem
+	font-weight: 600
+h2
+	font-size: 2.2rem
+	color: var(--borderline)
+h1
+	font-size: 2.4rem
+	color: var(--opposite)
+	border-bottom: 1px solid var(--green)
+	padding-bottom: 8px
+
+//units
+$unit4: 4px
+$unit8: 8px
+$unit16: 16px
+$unit20: 20px
+$unit24: 24px
+$unit32: 32px
+$unit48: 48px
+$unit64: 64px
+$unit80: 80px
+$unit128: 128px
+
+//spacing
+@media screen and (min-width: 1024px)
+	.rowgap50
+		row-gap: 4px
+	.colgap100
+		column-gap: $unit8
+	.rowgap100
+		row-gap: $unit8
+	.gap100
+		gap: $unit8
+	.colgap200
+		column-gap: $unit16
+	.rowgap200
+		row-gap: $unit16
+	.gap200
+		gap: $unit16
+	.colgap300
+		column-gap: $unit24
+	.rowgap300
+		row-gap: $unit24
+	.gap300
+		gap: $unit24
+	.colgap400
+		column-gap: $unit32
+	.rowgap400
+		row-gap: $unit32
+	.gap400
+		gap: $unit32
+	.colgap500
+		column-gap: $unit48
+	.rowgap500
+		row-gap: $unit48
+	.gap500
+		gao: $unit48
+	.colgap600
+		column-gap: $unit64
+	.rowgap600
+		row-gap: $unit64
+	.gap600
+		gao: $unit64
+@media screen and (max-width: 1023px) and (min-width: 768px)
+	.colgap100
+		column-gap: $unit8
+	.rowgap100
+		row-gap: $unit8
+	.gap100
+		gap: $unit8
+	.colgap200
+		column-gap: $unit16
+	.rowgap200
+		row-gap: $unit16
+	.gap200
+		gap: $unit16
+	.colgap300
+		column-gap: $unit24
+	.rowgap300
+		row-gap: $unit24
+	.gap300
+		gap: $unit24
+	.colgap400
+		column-gap: $unit24
+	.rowgap400
+		row-gap: $unit24
+	.gap400
+		gap: $unit24
+	.colgap400
+		column-gap: $unit32
+	.rowgap400
+		row-gap: $unit32
+	.gap400
+		gap: $unit32
+	.colgap500
+		column-gap: $unit32
+	.rowgap500
+		row-gap: $unit32
+	.gap500
+		gao: $unit32
+	.colgap600
+		column-gap: $unit48
+	.rowgap600
+		row-gap: $unit48
+	.gap600
+		gao: $unit48
+@media screen and (max-width: 767px)
+	.colgap100
+		column-gap: $unit8
+	.rowgap100
+		row-gap: $unit8
+	.gap100
+		gap: $unit8
+	.colgap200
+		column-gap: $unit16
+	.rowgap200
+		row-gap: $unit16
+	.gap200
+		gap: $unit16
+	.colgap300
+		column-gap: $unit20
+	.rowgap300
+		row-gap: $unit20
+	.gap300
+		gap: $unit20
+	.colgap400
+		column-gap: $unit24
+	.rowgap400
+		row-gap: $unit24
+	.gap400
+		gap: $unit24
+	.colgap400
+		column-gap: $unit32
+	.rowgap400
+		row-gap: $unit32
+	.gap400
+		gap: $unit32
+	.colgap500
+		column-gap: $unit32
+	.rowgap500
+		row-gap: $unit32
+	.gap500
+		gao: $unit32
+	.colgap600
+		column-gap: $unit32
+	.rowgap600
+		row-gap: $unit32
+	.gap600
+		gao: $unit32
+
+
+
+body, html
+	box-sizing: border-box
+	margin: 0
+
+//global
+:root
+	box-sizing: border-box
+
+*
+	box-sizing: border-box
+
+.bdr
+	border: 1px solid red
+
+.back
+	background-position: center center
+	background-size: cover
+	background-repeat: no-repeat
+
+
+.rta-image
+	img
+		object-fit: cover
+		height: 100%
+		width: 100%
+
+//sizing
+.minH
+	@media screen and (min-width: 1024px)
+		min-height: 100vh
+
+.height-40
+	@media screen and (min-width: 1024px)
+		height: 50vh
+	@media screen and (max-width: 1023px)
+		height: 20vh
+
+.height-40-20
+	@media screen and (min-width: 1024px)
+		height: 20vh
+	@media screen and (max-width: 1023px)
+		height: 20vh
+
+.height-30
+	@media screen and (min-width: 1024px)
+		height: 30vh
+	@media screen and (max-width: 1023px)
+		height: 8vh
+
+.height-30-2
+	@media screen and (min-width: 1024px)
+		height: 30vh
+	@media screen and (max-width: 1023px)
+		height: 12vh
+
+.height-30-3
+	@media screen and (min-width: 1024px)
+		height: 30vh
+	@media screen and (max-width: 1023px)
+		height: 20vh
+
+.height-20
+	@media screen and (min-width: 1024px)
+		height: 20vh
+	@media screen and (max-width: 1023px)
+		height: 8vh
+
+.height-24
+	@media screen and (min-width: 1024px)
+		height: 24vh
+	@media screen and (max-width: 1023px)
+		height: 20vh
+
+.height-10
+	@media screen and (min-width: 1024px)
+		height: 10vh
+	@media screen and (max-width: 1023px)
+		height: 8vh
+
+.fullH
+	height: 100%
+
+.ta-c-d
+	@media screen and (min-width: 1024px)
+		text-align: center
+
+.ta-c-m
+	@media screen and (max-width: 1023px)
+		text-align: center
+
+.ta-r-d
+	@media screen and (min-width: 1024px)
+		text-align: right
+
+.tt-u
+	text-transform: uppercase
+
+.tt-c
+	text-transform: capitalize
+
+//containers
+.rta-column
+	display: flex
+	flex-direction: column
+	&.ycenter
+		justify-content: center
+	&.ytop
+		justify-content: flex-start
+	&.ybot
+		justify-content: flex-end
+	&.ybetween
+		justify-content: space-between
+	&.xcenter
+		align-items: center
+	&.xleft
+		align-items: flex-start
+	&.xright
+		align-items: flex-end
+
+.rta-column.col-row
+	@media screen and (max-width: 1023px)
+		flex-direction: row
+		column-gap: 16px
+		.rta-image
+			width: 28%
+		.rta-column
+			width: 68%
+		
+
+.rta-row
+	display: flex
+	&.ycenter
+		align-items: center
+	&.xcenter-d
+		@media screen and (min-width: 1024px)
+			justify-content: center
+	&.xcenter-m
+		@media screen and (max-width: 1023px)
+			justify-content: center
+	&.xend
+		justify-content: flex-end
+	&.between
+		justify-content: space-between
+	&.ytop
+		align-items: flex-start
+	&.ybot
+		align-items: flex-end
+	@media screen and (min-width: 1024px)
+		flex-direction: row
+		.in50, .in50.w32, .in50.w64
+			width: calc(50% - 16px)
+		.w32
+			width: 32%
+		.w64
+			width: 60%
+	@media screen and (max-width: 1023px)
+		flex-direction: row
+		flex-wrap: wrap
+		.in50.w32
+			width: 32%
+		.in50.w64
+			width: 60%
+		.in50
+			width: 50%
+
+.rta-row
+	&.ytop-m
+		@media screen and (max-width: 1023px)
+			align-items: flex-start
+
+.rta-row.fixed
+	@media screen and (max-width: 1023px)
+		flex-wrap: nowrap
+		.w32
+			width: 32%
+		.w64
+			width: 60%
+
+.rta-row.row-col
+	@media screen and (min-width: 1024px)
+		&.ycenter
+			align-items: center
+		&.xend
+			justify-content: flex-end
+		&.between
+			justify-content: space-between
+		.w32
+			width: 32%
+		.w64
+			width: 64%
+	@media screen and (max-width: 1023px)
+		.w32, .w64
+			width: 100%
+		flex-direction: column
+
+.rta-grid
+	display: grid
+	grid-auto-flow: row
+	grid-template-rows: auto
+	width: 100%
+
+.rta-grid.ycenter
+	align-items: center
+
+@media screen and (min-width: 1024px)
+	.grid5
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr
+		grid-template-areas: ". . . . ."	
+	.grid4
+		grid-template-columns: 1fr 1fr 1fr 1fr
+		grid-template-areas: ". . . ."
+	.grid3
+		grid-template-columns: 1fr 1fr 1fr
+		grid-template-areas: ". . ."
+	.grid2
+		grid-template-columns: 1fr 1fr
+		grid-template-areas: ". ."
+		transition: 0.2s
+	.grid2.left0
+		grid-template-columns: 24% 1fr
+		grid-template-areas: ". ."
+	.grid2.right0
+		grid-template-columns: 1fr 24%
+		grid-template-areas: ". ."
+	.grid2.left
+		grid-template-columns: 32% 1fr
+		grid-template-areas: ". ."
+	.grid2.right
+		grid-template-columns: 1fr 32%
+		grid-template-areas: ". ."	
+	.grid2.left2
+		grid-template-columns: 40% 1fr
+		grid-template-areas: ". ."
+		transition: 0.2s
+	.grid2.right2
+		grid-template-columns: 1fr 40%
+		grid-template-areas: ". ."	
+		transition: 0.2s
+	.grid2.right3
+		grid-template-columns: 1fr 27%
+		grid-template-areas: ". ."	
+		transition: 0.2s
+
+@media screen and (max-width: 1023px)
+	.grid5.stay2
+		grid-template-columns: 1fr 1fr
+		grid-template-areas: ". ."	
+	.grid4
+		grid-template-columns: 1fr
+		grid-template-areas: "." "." "." "."
+	.grid4.stay2
+		grid-template-columns: 1fr 1fr
+		grid-template-areas: ". ."
+	.grid4.stay3
+		grid-template-columns: 1fr 1fr 1fr
+		grid-template-areas: ". . ."
+	.grid3
+		grid-template-columns: 1fr
+		grid-template-areas: "." "." "."
+	.grid3.stay2
+		grid-template-columns: 1fr 1fr
+		grid-template-areas: "." "."
+	.grid2
+		grid-template-columns: 1fr
+		grid-template-areas: "up" "down"
+		.up
+			grid-area: up
+		.down
+			grid-area: down
+	
+
+.bord-top
+	border-top: 1px solid var(--borderline)
+
+.bord-bot
+	border-bottom: 1px solid var(--borderline)
+
+.bord-bot-m
+	@media screen and (max-width: 1023px)
+		border-bottom: 1px solid var(--borderline)
+
+.bord-right-d
+	@media screen and (min-width: 1024px)
+		border-right: 1px solid var(--borderline)
+
+.p-top-64
+	@media screen and (min-width: 1024px)
+		padding-top: 64px
+	@media screen and (max-width: 1023px)
+		padding-top: 32px
+
+.p-bot-64
+	@media screen and (min-width: 1024px)
+		padding-bottom: 64px
+	@media screen and (max-width: 1023px)
+		padding-bottom: 32px
+
+.p-bot-64-d
+	@media screen and (min-width: 1024px)
+		padding-bottom: 64px
+	@media screen and (max-width: 1023px)
+		padding-bottom: 0
+
+.p-top-32
+	padding-top: 32px
+.p-bot-32
+	padding-bottom: 32px
+.p-bot-32-m
+	@media screen and (max-width: 1023px)
+		padding-bottom: 32px
+.p-bot-32-d
+	@media screen and (min-width: 1024px)
+		padding-bottom: 32px
+.p-top-32-m
+	@media screen and (max-width: 1023px)
+		padding-top: 32px
+.p-top-8
+	padding-top: 8px
+.p-top-16
+	padding-top: 16px
+.m-top-16
+	margin-top: 16px
+.m-bot-4
+	margin-bottom: 4px
+
+.p-bot-16
+	@media screen and (min-width: 1024px)
+		padding-bottom: 16px
+	@media screen and (max-width: 1023px)
+		padding-bottom: 8px
+
+.p-bot-16-m
+	@media screen and (max-width: 1023px)
+		padding-bottom: 16px
+
+.p-all-32
+	@media screen and (min-width: 1024px)
+		padding: 32px
+	@media screen and (max-width: 1023px)
+		padding: 16px
+
+.p-all-16
+	padding: 16px
+
+//buttons
+.blank-button
+	background: none
+	border: none
+	padding: 0
+	
+
+.point
+	cursor: pointer
+
+.rta-modal
+	width: 100vw
+	position: fixed
+	z-index: 2000
+	@media screen and (min-width: 1024px)
+		height: 100vh
+		left: 0
+		top: 0
+	@media screen and (max-width: 1023px)
+		height: 100vh
+		top: 0
+		height: 0
+		
+.blogstyle
+	p
+		color: var(--near)
+		line-height: 1.6
+	blockquote
+		font-style: italic
+		p
+			color: var(--texttwo)
+			border-left: 2px solid var(--green)
+			padding-left: 16px
+	h4
+		margin-top: 2.4rem
+		margin-bottom: 1rem
+		color: var(--green)
+		border-top: 1px solid var(--borderline)
+		padding-top: 32px
+	h5
+		border-top: 1px solid var(--borderline)
+		border-bottom: 1px solid var(--borderline)
+		padding-top: 32px
+		padding-bottom: 32px
+		margin-top: 1.2rem
+		margin-bottom: 1.2rem
+		color: var(--textone)
+
+.snipstyle
+	h4
+		color: var(--near)
+		border-left: 4px solid var(--green)
+		padding-left: 16px
+		margin-top: 3.2rem
+	a
+		position: relative
+		color: var(--opposite)
+		&::after
+			position: absolute
+			content: ''
+			bottom: 0
+			left: 0
+			height: 1px
+			width: 0%
+			background: var(--opposite)
+			transition: 0.2s
+		&:hover
+			color: var(--green)
+			&::after
+				width: 100%
+
+.grid2.stdfix
+	@media screen and (min-width: 1024px)
+		grid-template-columns: 1fr 280px
+		grid-template-areas: "mainone rightone"
+		.mainone
+			padding-right: 4vw
+			h1
+				margin-bottom: 2rem
+		.rightone
+			padding-left: 24px
+			border-left: 1px solid var(--borderline)
+			height: max-content
+			position: sticky
+			top: 128px
+			p
+				font-size: 0.8rem
+				cursor: pointer
+				&:hover
+					color: var(--green)
+			p strong
+				color: var(--opposite)
+
+a
+	position: relative
+	&::after
+		position: absolute
+		content: ''
+		bottom: 0
+		left: 0
+		height: 1px
+		width: 0%
+		background: var(--opposite)
+		transition: 0.2s
+	&:hover
+		color: var(--green)
+		&::after
+			width: 100%

@@ -1,15 +1,17 @@
 <script lang="ts">
 
-	import { onMount } from 'svelte'
+	import { onMount, afterUpdate } from 'svelte'
 	import { invalidate } from '$app/navigation'
+	import visibilityMode from '$lib/stores/visibility'	
+	import { slide } from 'svelte/transition'
+	import { circOut } from 'svelte/easing'
 	import type { LayoutData } from './$types'
 	import Header from '$lib/components/Header.svelte'
 	import Footer from '$lib/components/Footer.svelte'
 	import Lenis from '@studio-freight/lenis'
 	import { page } from '$app/stores'
-	import '$lib/styles/tokens.sass'
-	import '$lib/styles/animations.sass'
-	import '$lib/styles/saved.sass'
+	import '$lib/styles/themes.sass'
+	import '$lib/styles/prism.css'
 
 	let y:number
 	let mobileView:boolean = false
@@ -21,19 +23,25 @@
 	let pageurl:any	
 	let isHover:any
 	let pageurlcut:any
+	let dropMenu = Array(10).fill(false)
 
 	let showrest:boolean = true
-	let mandalaview:boolean = true
-	let foralign:boolean = false
+	let fake = false
+	let essayCheck:boolean
 
-
-	$: if ( pageurlcut === '/mandala') {
-		mandalaview = false
-		foralign = true
-	} else {
-		mandalaview = true
-		foralign = false
+	function fauxfake(){
+		fake = !fake
 	}
+
+	function toggleMenuDrop(index:number){
+		dropMenu[index] = !dropMenu[index]
+		for ( let i = 0; i < dropMenu.length; i ++ ) {
+			if ( i !== index && dropMenu[i] === true ) {
+				dropMenu[i] = false
+			}
+		}
+	}
+
 
 	$: if ( screenWidth <= 1023 ) {
 		mobileView = true
@@ -113,7 +121,137 @@
 
 <Header>
 </Header>
-	<slot></slot>
+<div id="appcontainer" class="rta-grid grid3" class:light={!$visibilityMode} class:dark={$visibilityMode}>
+	<div class="rta-column leftone">
+		<div class="rta-column leftcontainer">
+			<div class="rta-column dropsection">
+			<p class="tt-u"><b><a href="/essays">All Essays</a></b></p>
+			</div>
+			<div class="rta-column dropsection">
+			<p class="tt-u"><b><a href="/gallery">Gallery</a></b></p>
+			</div>
+			<div class="rta-column dropsection" on:click={() => toggleMenuDrop(1)} on:keydown={fauxfake}>
+			<div class="rta-row ycenter between">
+				<p class="tt-u" class:opened={dropMenu[1]}><b>Web Dev</b></p>
+				<div class="iconchev" class:rotated={dropMenu[1]}>
+					<svg width="13" height="9" viewBox="0 0 13 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M2.66345 0.187622L0.413452 2.43762L6.41345 8.43762L12.4135 2.43762L10.1635 0.187622L6.41345 3.93762L2.66345 0.187622Z" fill="black"/>
+					</svg>
+				</div>
+			</div>
+			{#if dropMenu[1]}
+			<div class="rta-column insidedrop p-top-16" transition:slide={{ duration: 200, easing: circOut}}>
+				<p><a href="/themes/webdev/sveltekit">Sveltekit</a></p>
+				<p><a href="/themes/webdev/supabase">Supabase</a></p>
+				<p><a href="/themes/webdev/javascript">Javascript/TS</a></p>
+				<p><a href="/themes/webdev/general">General</a></p>
+			</div>
+			{/if}
+			</div>
+			<div class="rta-column dropsection" on:click={() => toggleMenuDrop(2)} on:keydown={fauxfake}>
+			<div class="rta-row ycenter between">
+				<p class="tt-u" class:opened={dropMenu[2]}><b>Design</b></p>
+				<div class="iconchev" class:rotated={dropMenu[2]}>
+					<svg width="13" height="9" viewBox="0 0 13 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M2.66345 0.187622L0.413452 2.43762L6.41345 8.43762L12.4135 2.43762L10.1635 0.187622L6.41345 3.93762L2.66345 0.187622Z" fill="black"/>
+					</svg>
+				</div>
+			</div>		
+			{#if dropMenu[2]}
+			<div class="rta-column insidedrop p-top-16" transition:slide={{ duration: 200, easing: circOut}}>
+				<p><a href="/themes/design">How it Started</a></p>
+				<p>Rainmeter</p>
+				<p>Maps</p>
+				<p><a href="/themes/design/components">Components Library</a></p>
+			</div>
+			{/if}	
+			</div>
+			<div class="rta-column dropsection" on:click={() => toggleMenuDrop(3)} on:keydown={fauxfake}>
+			<div class="rta-row ycenter between">
+				<p class="tt-u" class:opened={dropMenu[3]}><b>Site Links</b></p>
+				<div class="iconchev" class:rotated={dropMenu[3]}>
+					<svg width="13" height="9" viewBox="0 0 13 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M2.66345 0.187622L0.413452 2.43762L6.41345 8.43762L12.4135 2.43762L10.1635 0.187622L6.41345 3.93762L2.66345 0.187622Z" fill="black"/>
+					</svg>
+				</div>
+			</div>		
+			{#if dropMenu[3]}
+			<div class="rta-column insidedrop p-top-16" transition:slide={{ duration: 200, easing: circOut}}>
+				<p><a href="/gpt">GPT</a></p>
+				<p><a href="/play">Play</a></p>
+			</div>
+			{/if}	
+			</div>
+		</div>
+	</div>
+	<div class="rta-column midone">
+		<slot></slot>
+	</div>
+</div>
 <Footer></Footer>
+
+<style lang="sass">
+
+.grid3
+	@media screen and (min-width: 1024px)
+		grid-template-areas: "leftone midone"
+		grid-template-columns: 280px 1fr
+		.leftone
+			border-right: 1px solid var(--borderline)
+			padding-top: 128px
+			padding-left: 24px
+			padding-right: 24px
+			.leftcontainer
+				height: max-content
+				position: sticky
+				top: 128px
+		.midone
+			padding-left: 4vw
+			padding-top: 128px
+			padding-right: 24px
+
+#appcontainer
+	background: var(--background)
+	box-sizing: border-box
+	margin: 0
+	padding: 0
+	min-height: calc(100vh - 80px)
+
+.dropsection
+	border-bottom: 1px solid var(--borderline)
+	padding-top: 12px
+	padding-bottom: 12px
+	cursor: pointer
+	.tt-u
+		margin: 0
+		&:hover
+			color: var(--green)
+
+.iconchev
+	transition: 0.15s
+	svg path
+		fill: var(--textone)
+
+.iconchev.rotated
+	transform: rotate(180deg)
+	svg path
+		fill: var(--opposite)
+
+.dropsection
+	&:hover
+		.iconchev
+			svg path
+				fill: var(--green)
+
+.tt-u.opened
+	color: var(--opposite)
+
+.insidedrop p
+	cursor: pointer
+	&:hover
+		color: var(--green)
+
+
+</style>
 
 

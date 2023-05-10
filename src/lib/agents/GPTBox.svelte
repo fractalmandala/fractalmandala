@@ -30,7 +30,7 @@
 
 <div class="boxc">
 	<small>Select GPT Agent:</small>
-		<div class="boxr">
+		<div class="rta-row colgap200">
 			<div class="agents" on:click={() => selectAgent(1)} on:keydown={fauxfake} class:selectedone={selectedAgent[1]}>broGPT</div>
 			<div class="agents" on:click={() => selectAgent(2)} on:keydown={fauxfake} class:selectedtwo={selectedAgent[2]}>the Sanskritist</div>
 			<div class="agents" on:click={() => selectAgent(3)} on:keydown={fauxfake} class:selectedthree={selectedAgent[3]}>Svelta Lowda</div>
@@ -63,7 +63,7 @@
 	padding-top: 32px
 	>small
 		color: #373737
-	.boxr
+	.rta-row
 		padding-top: var(--l1)
 		gap: var(--l1)
 		border-bottom: 1px solid var(--line)

@@ -18,6 +18,56 @@ export const allCodes = async() => {
 	return data
 }
 
+export async function quillNotes() {
+	const { data, error } = await supabase
+		.from('amrit-notes')
+		.select()
+		.eq('type','quillcode')
+		.order('id',{ascending: false})
+		if (error) throw new Error(error.message)
+	return data
+}
+
+export async function blogPosts(){
+	const { data, error } = await supabase
+	.from('amrit-notes')
+	.select()
+	.eq('type','post')
+	.order('created_at',{ascending: false})
+	if (error) throw new Error(error.message)
+	return data
+}
+
+	export async function chatswithGPT(){
+		const { data, error } = await supabase
+		.from('amrit-notes')
+		.select()
+		.eq('type','gptchat')
+		.order('created_at',{ascending: false})
+		if (error) throw new Error(error.message)
+		return data
+	}
+
+export const allGenerals = async() => {
+	const { data, error } = await supabase
+		.from('amrit-notes')
+		.select()
+		.eq('type','general')
+		.order('id',{ascending: false})
+		if (error) throw new Error(error.message)
+	return data
+}
+
+export const allDocums = async() => {
+	const { data, error } = await supabase
+		.from('amrit-notes')
+		.select()
+		.eq('type','documentation')
+		.order('id',{ascending: false})
+		if (error) throw new Error(error.message)
+	return data
+}
+
 export const noCodes = async() => {
 	const { data, error } = await supabase
 		.from('amrit-notes')
@@ -45,16 +95,6 @@ export const filteredCode = async(language:any) => {
 		.eq('type','code')
 		.eq('lang',language)
 		.neq('tags','tests')
-		.order('id',{ascending: false})
-		if (error) throw new Error(error.message)
-	return data
-}
-
-export const allGenerals = async() => {
-	const { data, error } = await supabase
-		.from('amrit-notes')
-		.select()
-		.eq('type','general')
 		.order('id',{ascending: false})
 		if (error) throw new Error(error.message)
 	return data
@@ -160,16 +200,6 @@ export async function limitNotes(limit:number) {
 		.select()
 		.order('created_at',{ascending: false})
 		.limit(limit)
-		if (error) throw new Error(error.message)
-	return data
-}
-
-export async function quillNotes() {
-	const { data, error } = await supabase
-		.from('amrit-notes')
-		.select()
-		.eq('type','quillnote')
-		.order('id',{ascending: false})
 		if (error) throw new Error(error.message)
 	return data
 }
@@ -293,16 +323,6 @@ export async function formentries(){
 		return data
 	}
 
-export async function blogPosts(){
-	const { data, error } = await supabase
-	.from('amrit-notes')
-	.select()
-	.eq('type','post')
-	.order('created_at',{ascending: false})
-	if (error) throw new Error(error.message)
-	return data
-}
-
 export async function searchResult(searchinput:any){
 	const { data, error } = await supabase
 		.from('amrit-notes')
@@ -341,16 +361,6 @@ export async function tableTags(selectag:any){
 		if (error) throw new Error(error.message)
 		data
 	}	
-
-	export async function chatswithGPT(){
-		const { data, error } = await supabase
-		.from('amrit-notes')
-		.select()
-		.eq('type','gptchat')
-		.order('created_at',{ascending: false})
-		if (error) throw new Error(error.message)
-		return data
-	}
 
 	export async function chatsGPT(){
 		const { data, error } = await supabase
