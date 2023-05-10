@@ -2,7 +2,6 @@
 
 	import GPTBox from '$lib/agents/GPTBox.svelte'
 	import '$lib/styles/themes.sass'
-	import '$lib/styles/tokens.sass'
 	let fake = false
 	let area:boolean[] = Array(9).fill(false)
 	area[1] = true

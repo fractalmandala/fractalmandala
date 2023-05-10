@@ -6,36 +6,13 @@
 	import Prism from 'prismjs'
 	import '$lib/styles/prism.css'
 	import '$lib/styles/prismtoolbar.css'
-	import { browser } from '$app/environment'
 	import LogoFMMotif from '$lib/components/LogoFMMotif.svelte'
 	import '$lib/styles/themes.sass'
 	import '$lib/styles/tokens.sass'
-	let codas:any
-	let notes:any
-	let gens:any
-	let chats:any
-	let docus:any
-	let starred:any
-	let sveltecodes:any
-	let images:any
-	let supas:any
-	let posts:any
-	let limit = 24
 	let fake = false
-	let gridalign = false
-	let imagesLow = 0
-	let imagesHigh = 11
-	let low = 0
-	let high = 11
 	let width = "50%"
 	let expand:boolean[] = Array(20).fill(false)
 	expand[8] = true 
-	let openThis:boolean[] = Array(200).fill(false)
-	let nulled:boolean[] = Array(200).fill(false)
-
-	function fauxfake(){
-		fake = !fake
-	}
 
 	onMount(() => {
 		Prism.highlightAll();

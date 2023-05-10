@@ -5,7 +5,6 @@
 	import '$lib/styles/themes.sass'
 	import type { ChatCompletionRequestMessage } from 'openai'
 	import { SSE } from 'sse.js'
-	import supabase from '$lib/utils/supabase'
 	let query: string = ''
 	let answer: string = ''
 	let userprompt:any

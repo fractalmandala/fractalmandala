@@ -9,7 +9,6 @@
 	import { slide } from 'svelte/transition'
 	import { circOut } from 'svelte/easing'
 	import Header from '$lib/components/Header.svelte'
-	import Searcher from '$lib/components/FlexSearcher.svelte'
 	import Footer from '$lib/components/Footer.svelte'
 	import Lenis from '@studio-freight/lenis'
 	import '$lib/styles/themes.sass'
