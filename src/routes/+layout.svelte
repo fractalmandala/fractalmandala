@@ -1,11 +1,10 @@
 <script lang="ts">
 
-	import { onMount, afterUpdate } from 'svelte'
-	import { invalidate } from '$app/navigation'
-	import visibilityMode from '$lib/stores/visibility'	
+	import { onMount } from 'svelte'
+	import visibilityMode from '$lib/stores/visibility'
+	import TransitionPage from '$lib/components/TransitionPage.svelte'
 	import { slide } from 'svelte/transition'
 	import { circOut } from 'svelte/easing'
-	import type { LayoutData } from './$types'
 	import Header from '$lib/components/Header.svelte'
 	import Footer from '$lib/components/Footer.svelte'
 	import Lenis from '@studio-freight/lenis'
@@ -65,12 +64,7 @@
 		linksonmobile = false
 	}
 
-	$: ({ supabase, session } = data)
-
 	onMount(async() => {
-		pageurl = $page.url.pathname
-		isHover = pageurl
-		pageurlcut = pageurl.substr(0,8)
 		const lenis = new Lenis({
 			duration: 1.2,
 			orientation: 'vertical',
@@ -85,16 +79,9 @@
 		requestAnimationFrame(raf)
 		}
 		requestAnimationFrame(raf)	
-		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
-			if (_session?.expires_at !== session?.expires_at) {
-				invalidate('supabase:auth')
-			}
-		})
-		return () => data.subscription.unsubscribe()
-		})
+	})
 
-
-	export let data: LayoutData
+	export let data
 
 </script>
 
@@ -121,6 +108,8 @@
 
 <Header>
 </Header>
+{#key data.pathname}
+<TransitionPage>
 <div id="appcontainer" class="rta-grid grid3" class:light={!$visibilityMode} class:dark={$visibilityMode}>
 	<div class="rta-column leftone">
 		<div class="rta-column leftcontainer">
@@ -188,6 +177,8 @@
 		<slot></slot>
 	</div>
 </div>
+</TransitionPage>
+{/key}
 <Footer></Footer>
 
 <style lang="sass">
