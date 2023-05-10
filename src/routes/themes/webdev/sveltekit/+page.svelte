@@ -1,5 +1,11 @@
-<div class="rta-column">
-	<h1>Sveltekit</h1>
+<script lang="ts">
+
+	import visibilityMode from '$lib/stores/visibility'
+
+</script>
+
+<div class="rta-column" class:light={!$visibilityMode} class:dark={$visibilityMode}>
+	<h3 class="bord-bot p-bot-16">Sveltekit</h3>
 	<p>
 		I have no background or experience in web development, only a long-running interest in all things web-design and coding- which I began to pursue in 2023 armed with the utility of chatGPT.
 	</p>

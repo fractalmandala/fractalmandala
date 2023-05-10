@@ -23,9 +23,12 @@ body, html
 	--dur: 0.08s
 	font-family: 'JetBrains Mono', monospace
 
-p, h5, h6, li, small, cite
+h5, h6, li, small, cite
 	color: var(--textone)
 	font-family: 'JetBrains Mono', monospace
+
+p
+	color: var(--texttwo)
 
 a
 	text-decoration: none
@@ -33,6 +36,24 @@ a
 	color: inherit
 	&:hover
 		color: inherit
+
+.text
+	a
+		position: relative
+		color: var(--opposite)
+		&::after
+			position: absolute
+			content: ''
+			bottom: 0
+			left: 0
+			height: 1px
+			width: 0%
+			background: var(--opposite)
+			transition: 0.2s
+		&:hover
+			color: var(--green)
+			&::after
+				width: 100%
 
 
 .dark
@@ -69,7 +90,10 @@ ul, li
 	font-family: 'JetBrains Mono', monospace
 
 p, li, ul
-	font-size: 14px
+	font-size: 15px
+
+p
+	line-height: 1.6
 
 h6
 	font-size: 0.88rem
@@ -94,6 +118,7 @@ h4
 h3
 	font-size: 1.72rem
 	font-weight: 600
+	color: var(--opposite)
 h2
 	font-size: 2.2rem
 	color: var(--borderline)
@@ -665,6 +690,7 @@ body, html
 		grid-template-areas: "mainone rightone"
 		.mainone
 			padding-right: 4vw
+			padding-bottom: 64px
 			h1
 				margin-bottom: 2rem
 		.rightone
@@ -676,6 +702,7 @@ body, html
 			p
 				font-size: 0.8rem
 				cursor: pointer
+				color: var(--textone)
 				&:hover
 					color: var(--green)
 			p strong

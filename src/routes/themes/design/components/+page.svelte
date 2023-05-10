@@ -43,7 +43,7 @@
 </script>
 
 <div class="rta-column">
-	<h1>Components Library</h1>
+	<h3 class="bord-bot p-bot-16">Components Library</h3>
 	<p>
 		Building my own UI components library is a long-term project I've taken on. Plan, roadmap and maybe even tools will change as I go along, but for now I'm building on Sveltekit, and am aiming for lowest dependency-model. This means no third-party libraries, despite how wonderfully convenient libraries like <a href="https://sveltelegos.com/" target="_blank" rel="noreferrer">Svelte Legos</a> and <a href="https://auto-animate.formkit.com/" target="_blank" rel="noreferrer">Auto Animate</a> are.
 	</p>

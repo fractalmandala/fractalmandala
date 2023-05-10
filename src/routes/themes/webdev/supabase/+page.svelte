@@ -4,8 +4,8 @@
 
 </script>
 
-<div class="rta-column" class:dark={$visibilityMode} class:light={$visibilityMode}>
-	<h1>Supabase</h1>
+<div class="rta-column" class:dark={$visibilityMode} class:light={!$visibilityMode}>
+	<h3 class="bord-bot p-bot-16">Supabase</h3>
 	<p>
 		I <b>absolutely</b> love Supabase. How can anyone not! And for me it came at absolutely the right time as exactly what I needed/was looking for.
 	</p>

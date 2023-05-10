@@ -6,6 +6,8 @@
 	</div>
 	<div class="rta-column rightone">
 		<p><strong><a href="/themes/design">DESIGN HOME</a></strong></p>
-
+		<p><a href="/themes/design/rainmeter">Rainmeter</a></p>
+		<p><a href="/themes/design/maps">Maps</a></p>
+		<p><a href="/themes/design/components">Components Library</a></p>
 	</div>
 </div>

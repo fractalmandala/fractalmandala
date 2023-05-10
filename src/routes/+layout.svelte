@@ -214,6 +214,7 @@
 	cursor: pointer
 	.tt-u
 		margin: 0
+		color: var(--textone)
 		&:hover
 			color: var(--green)
 
@@ -238,6 +239,7 @@
 
 .insidedrop p
 	cursor: pointer
+	color: var(--textone)
 	&:hover
 		color: var(--green)
 
