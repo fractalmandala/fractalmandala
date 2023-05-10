@@ -1,6 +1,7 @@
 <script lang="ts">
 
 	import { onMount, afterUpdate } from 'svelte'
+	import visibilityMode from '$lib/stores/visibility'
 	import Logo from '$lib/assets/FMLogo.svelte'
 	import Prism from 'prismjs'
 	import '$lib/styles/prism.css'
@@ -97,7 +98,7 @@ $:	if (browser && openThis) {
 </svelte:head>
 
 
-<div class="rta-column" id="panelone">
+<div class="rta-column" id="panelone" class:dark={$visibilityMode} class:light={!$visibilityMode}>
 	<img src="/images/mands.webp" alt="mandala"/>
 	<Logo width={width}></Logo>
 	<p class="bord-top p-top-32">
@@ -127,9 +128,9 @@ $:	if (browser && openThis) {
 		</div>
 	</div>
 	-->
-	<p>Read my essays on Indian civilizational consciousness here.</p>
+	<p>Read my essays on Indian civilizational consciousness <a class="greenlink" href="/essays">here.</a></p>
 	<p>My amateur forays in psytrance production can be grooved to here.</p>
-	<p>Experiments with Midjourney-based storytelling, and the full gallery.</p>
+	<p>Experiments with Midjourney-based storytelling, at the <a class="greenlink" href="/gallery">gallery.</a></p>
 	<p>For the rest, the sidebar on left (menu on mobile) should help.</p>
 	<LogoFMMotif/>
 </div>

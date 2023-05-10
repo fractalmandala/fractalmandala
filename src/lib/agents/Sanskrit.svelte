@@ -58,27 +58,9 @@
 		console.error(err)
 	}
 
-	async function submitAnswer(){
-		try {
-			const { error } = await supabase
-      .from('amrit-notes')
-      .insert({ title: 'chat with gpt', note: userprompt, codesnippet: submittance, type: 'gptchat' })
-      if (error) {
-        throw new Error(error.message)
-      }
-      console.log('submitted')
-    } catch (e) {
-      console.error('Error inserting into Supabase:', e)
-    }
-	}
-
 	function fauxfake(){
 		fake = !fake
 	}	
-
-	$: if (submittance) {
-		submitAnswer()	
-	}
 
 
 </script>

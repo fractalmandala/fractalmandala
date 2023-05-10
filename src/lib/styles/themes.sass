@@ -23,12 +23,22 @@ body, html
 	--dur: 0.08s
 	font-family: 'JetBrains Mono', monospace
 
-h5, h6, li, small, cite
+h5, h6, small, cite
 	color: var(--textone)
 	font-family: 'JetBrains Mono', monospace
 
-p
-	color: var(--texttwo)
+p, li, pre
+	color: #a7a7a7
+
+pre
+	overflow-x: auto
+	box-sizing: border-box
+	white-space: pre-line
+	white-space: -moz-pre-line
+	white-space: -pre-line
+	white-space: -o-pre-line
+	word-wrap: break-word
+	word-break: break-word
 
 a
 	text-decoration: none
@@ -58,18 +68,20 @@ a
 
 .dark
 	--borderline: #272727
-	--green: #63D471
+	--green: #10D56C
 	--background: #121212
+	--contraster: #070707
 	--opposite: #FFFFFF
 	--near: #d7d7d7
-	--textone: #373737
-	--texttwo: #676767
+	--textone: #575757
+	--texttwo: #777777
 	--grey: #878787
 
 .light
 	--borderline: #e7e7e7
-	--green: #63D471
+	--green: #10D56C
 	--background: #FFFFFF
+	--contraster: #f1f1f1
 	--opposite: #272727
 	--near: #373737
 	--textone: #878787
@@ -79,7 +91,7 @@ a
 h3, h4
 	font-family: 'Spline Sans', sans-serif
 
-p, li, small, cite, h6, h2, h1, ul
+p, li, small, cite, h6, h2, h1, ul, pre
 	margin-top: 0
 	margin-bottom: 1rem
 	font-family: 'JetBrains Mono', monospace
@@ -89,10 +101,10 @@ ul, li
 	padding-left: 1rem
 	font-family: 'JetBrains Mono', monospace
 
-p, li, ul
+p, li, ul, pre
 	font-size: 15px
 
-p
+p, pre
 	line-height: 1.6
 
 h6
@@ -111,6 +123,10 @@ h5
 
 h5.near
 	color: var(--near)
+
+h5.near.thin
+	color: var(--near)
+	font-weight: 400
 
 h4
 	font-size: 1.44rem
@@ -690,7 +706,6 @@ body, html
 		grid-template-areas: "mainone rightone"
 		.mainone
 			padding-right: 4vw
-			padding-bottom: 64px
 			h1
 				margin-bottom: 2rem
 		.rightone
@@ -707,3 +722,81 @@ body, html
 					color: var(--green)
 			p strong
 				color: var(--opposite)
+	@media screen and (max-width: 1023px)
+		grid-template-columns: 1fr
+		grid-template-areas: "rightone" "mainone"
+		padding-right: 2vw
+		.rightone
+			grid-area: rightone
+			padding-left: 0
+			padding-right: 0
+			padding-top: 16px
+			position: sticky
+			top: 80px
+			z-index: 800
+			background: var(--background)
+			p
+				font-size: 1rem
+				cursor: pointer
+				padding-left: 24px
+				padding-right: 24px
+				&:hover
+					color: var(--green)
+			p strong
+				color: var(--opposite)
+			.rightmenu
+				margin-bottom: 32px
+				.iconchev
+					transition: 0.15s
+					svg path
+						fill: var(--textone)
+				.iconchev.rotated
+					transform: rotate(180deg)
+					svg path
+						fill: var(--opposite)
+		.rightone.opened
+			padding-bottom: 16px
+			margin-bottom: 32px
+			border-bottom: 1px solid var(--borderline)
+		.mainone
+			grid-area: mainone
+			padding-right: 0
+
+
+
+.greenlink
+	color: #10D56C
+	position: relative
+	&:hover
+		color: #10D56C
+		&::after
+			width: 100%
+			margin-left: 0
+	&::after
+		position: absolute
+		bottom: 0
+		left: 0
+		width: 0%
+		height: 1px 
+		background: var(--opposite)
+		transition: 0.15s
+		content: ''
+		margin-left: 50%
+
+.break899
+	background: none
+	border: none
+	font-size: 1rem
+	
+.rightmenu
+	padding: 8px 16px
+	border-radius: 8px
+	cursor: pointer
+	transition: 0.15s
+	border: 1px solid var(--borderline)
+	&:hover
+		box-shadow: 4px 6px 8px var(--contraster)
+
+.dark
+	.break899
+		color: var(--textone)

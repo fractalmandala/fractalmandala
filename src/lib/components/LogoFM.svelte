@@ -30,7 +30,6 @@
 
 .aligner
 	box-sizing: border-box
-	height: 42px
 	position: relative
 	svg
 		position: absolute
@@ -41,6 +40,10 @@
 		#onbelow
 			.char
 				animation: slowdown 0.23s ease forwards
+	@media screen and (min-width: 1024px)
+		height: 42px
+	@media screen and (max-width: 1023px)
+		height: 36px
 
 .char
 	fill: var(--textone)
@@ -116,7 +119,7 @@ svg
 	width: 280px
 	transition: all 0.7s var(--cubea)
 	@media screen and (max-width: 1023px)
-		height: 48px
-		width: 264px
+		height: 36px
+		width: 240px
 
 </style>

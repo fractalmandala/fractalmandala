@@ -5,15 +5,12 @@
 
 </script>
 
-<div class="rta-column bord-bot" class:dark={$visibilityMode} class:light={!$visibilityMode}>
-	<h2>
+<div class="rta-column" class:dark={$visibilityMode} class:light={!$visibilityMode}>
+	<h3 class="bord-bot p-bot-16">
 		{data.title}
-	</h2>
+	</h3>
 </div>
 <div class="rta-column snipstyle p-top-64 p-bot-64" class:dark={$visibilityMode} class:light={!$visibilityMode}>
 	<svelte:component this={data.content}/>
 </div>
 
-<style lang="sass">
-
-</style>

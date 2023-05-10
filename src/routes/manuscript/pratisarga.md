@@ -1,0 +1,8 @@
+---
+title: pratisarga
+sno: 27
+---
+
+Viṣṇu’s defeat of Hiraṇyākṣa is only the beginning of conflict. Each consequent generation of Diti’s children wars with Aditi’s descendants, and in each generation manifests Mahāviṣṇu as a mythic avatāra to vanquish Diti’s sons. On Hiraṇyākṣa’s death the younger Daitya, Hiraṇyakaśipu, swears vengeance. But not all among his clan favour this embitterment. His own son is rebel supreme, openly declaring support of Viṣṇu and the Āditya tribes. The second Deva-Asura war is just around the corner. But where in history can we place these tales? Daityas, Ādityas and Dānavas are at first allied tribes. They follow similar religious practices and live in the same cultural state. As the senior progeny of Kaśyapa, the Daityas are leaders of this vast conglomerate. But Hiraṇyākṣa the elder turns his subjects against him, and so the Ādityas must rally under Viṣṇu to defeat him.
+
+This story is remembered in the Varāhāvatāra tale, and it seeds a generations-long conflict between the descendants of Diti and Aditi. Diti’s younger son, Hiraṇyakaśipu, comes to power after his brother’s defeat, bearing a grudge against Viṣṇu and the Ādityas. We must be realistic and accept that Daityas and Ādityas might not really have been cousin tribes, and even if they were then filiality easily dissolves in a few generations. Perhaps they represent the major tribal divisions post-Holocene, which were either united by a ṛṣi-order or were simply ascribed to a common source in later chronicles. Either way, they were always fighting over the same resources, habitations and seats of power. Remember that there was no notable genetic intrusion into India between 65,000 years BP and ~7000 BC, so in all cases we’re talking of indigenous Indians.

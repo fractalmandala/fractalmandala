@@ -30,6 +30,6 @@ h3
 	margin-top: 0
 
 h5
-	color: var(--texttwo)
+	color: var(--opposite)
 
 </style>

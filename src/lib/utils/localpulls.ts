@@ -68,6 +68,23 @@ export async function themeGeneral(){
 	return eachfiled
 }
 
+export async function manuscript(){
+	const allfiles = import.meta.glob('/src/routes/manuscript/*.md')
+	const filed = Object.entries(allfiles)
+	const eachfiled = await Promise.all(
+		filed.map(async([path, resolver]) => {
+			// @ts-ignore
+			const { metadata } = await resolver()
+			const postPath = path.slice(11,-3)
+			return {
+				meta: metadata,
+				linkpath: postPath
+			}
+		})
+	)
+	return eachfiled
+}
+
 // all md docs inside route docs
 export async function allDocs() {
 	const allPostFiles = import.meta.glob('/src/routes/mandala/docs/*.md')
