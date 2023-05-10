@@ -10,7 +10,6 @@
 	import LogoFMMotif from '$lib/components/LogoFMMotif.svelte'
 	import '$lib/styles/themes.sass'
 	import '$lib/styles/tokens.sass'
-	import { limitNotes, onlyStarred, blogPosts, allCodes, allGenerals, allDocums, TagsFiltered, MidjourneyImages, chatswithGPT } from '$lib/utils/supabase'
 	let codas:any
 	let notes:any
 	let gens:any
@@ -38,56 +37,8 @@
 		fake = !fake
 	}
 
-	function nextTwelve(newLow:number,newHigh:number){
-		low = newLow,
-		high = newHigh
-	}
-
-	function togglePostItem(index:number){
-		expand[index] = !expand[index]
-			for (let i = 0; i < expand.length; i++) {
-			if (i !== index && expand[i] === true) {
-			expand[i] = false;
-			}
-		}
-	}
-
-
-	function toggleOpenItem(index:number){
-		openThis[index] = !openThis[index]
-			for (let i = 0; i < openThis.length; i++) {
-			if (i !== index && openThis[i] === true) {
-			openThis[i] = false;
-			nulled[i] = true
-			}
-		}
-		if ( gridalign === false) {
-			gridalign = true
-		}
-	}
-
-$:	if (browser && openThis) {
-			window.scrollTo({
-				top: 0,
-				behavior: 'smooth'
-			});
-		}
-
 	onMount(() => {
 		Prism.highlightAll();
-
-		(async () => {
-			starred = await onlyStarred()
-			posts = await blogPosts()
-			notes = await limitNotes(limit)
-			sveltecodes = await TagsFiltered('sveltecode')
-			docus = await allDocums()
-			supas = await TagsFiltered('supabase')
-			codas = await allCodes()
-			chats = await chatswithGPT()
-			gens = await allGenerals()
-			images = await MidjourneyImages(imagesLow,imagesHigh)
-		})();
 	})
 </script>
 
