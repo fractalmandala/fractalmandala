@@ -1,17 +1,9 @@
 <script lang="ts">
 
-	import { onMount } from 'svelte'
 	import GPTBox from '$lib/agents/GPTBox.svelte'
 	import '$lib/styles/themes.sass'
 	import '$lib/styles/tokens.sass'
-	import { TagsFiltered } from '$lib/utils/supabase'
-	import { allMandalas } from '$lib/utils/localpulls'
-	let tags = ''
-	let codas:any
 	let fake = false
-	let gridalign = false
-	let posts:any
-	let expand:boolean[] = Array(20).fill(false)
 	let area:boolean[] = Array(9).fill(false)
 	area[1] = true
 	let isChat = false

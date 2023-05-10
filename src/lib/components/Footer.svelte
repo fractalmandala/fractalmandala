@@ -80,7 +80,7 @@
 			</svg>
 		{/if}
 	</div>
-	<small><a href="/about">2023 | Amritanshu Pandey</a></small>
+	<small><a href="/archival/about">2023 | Amritanshu Pandey</a></small>
 </div>
 
 <style lang="sass">
