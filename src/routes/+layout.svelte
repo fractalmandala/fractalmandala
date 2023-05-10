@@ -3,12 +3,13 @@
 	import { onMount } from 'svelte'
 	import visibilityMode from '$lib/stores/visibility'
 	import TransitionPage from '$lib/components/TransitionPage.svelte'
+	import { dev } from '$app/environment';
+	import { inject } from '@vercel/analytics';
 	import { slide } from 'svelte/transition'
 	import { circOut } from 'svelte/easing'
 	import Header from '$lib/components/Header.svelte'
 	import Footer from '$lib/components/Footer.svelte'
 	import Lenis from '@studio-freight/lenis'
-	import { page } from '$app/stores'
 	import '$lib/styles/themes.sass'
 	import '$lib/styles/prism.css'
 
@@ -19,14 +20,12 @@
 	let startsearch:boolean = false
 	let appearance:number = 50
 	let linksonmobile:boolean = true
-	let pageurl:any	
-	let isHover:any
-	let pageurlcut:any
 	let dropMenu = Array(10).fill(false)
 
 	let showrest:boolean = true
 	let fake = false
-	let essayCheck:boolean
+
+	inject({ mode: dev ? 'development' : 'production' });
 
 	function fauxfake(){
 		fake = !fake
