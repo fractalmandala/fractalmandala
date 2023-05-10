@@ -3,6 +3,6 @@
 	import { expoOut, expoIn } from 'svelte/easing'
 </script>
 
-<div in:fly={{ delay: 450, duration: 500, x: 0, y: -600, easing: expoOut}} out:fly={{ delay: 0, duration: 400, x: 0, y: 600, easing: expoIn}}>
+<div in:fly={{ delay: 250, duration: 200, x: 0, y: -600, easing: expoOut}} out:fly={{ delay: 0, duration: 200, x: 0, y: 600, easing: expoIn}}>
 	<slot></slot>
 </div>

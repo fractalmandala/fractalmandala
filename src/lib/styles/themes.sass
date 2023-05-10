@@ -680,19 +680,3 @@ body, html
 					color: var(--green)
 			p strong
 				color: var(--opposite)
-
-a
-	position: relative
-	&::after
-		position: absolute
-		content: ''
-		bottom: 0
-		left: 0
-		height: 1px
-		width: 0%
-		background: var(--opposite)
-		transition: 0.2s
-	&:hover
-		color: var(--green)
-		&::after
-			width: 100%
