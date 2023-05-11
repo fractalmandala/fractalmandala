@@ -1,12 +1,15 @@
 <script lang="ts">
 
+	import { onMount } from 'svelte'
+	import visibilityMode from '$lib/stores/visibility'	
 	import { slide } from 'svelte/transition'
 	import { circOut } from 'svelte/easing'
+	import { gptTitles } from '$lib/utils/supabase'
 	let iW:number
 	let breakPoint:boolean
 	let fake = false
 	let expandRightbar = false
-
+	let titles:any = []
 
 	function toggleRightbar(){
 		expandRightbar = !expandRightbar
@@ -22,11 +25,16 @@
 		breakPoint = false
 	}
 
+	onMount(async() => {
+		titles = await gptTitles()
+	})
+
+
 </script>
 
 <svelte:window bind:outerWidth={iW}/>
 
-<div class="rta-grid grid2 stdfix">
+<div class="rta-grid grid2 stdfix" class:dark={$visibilityMode} class:light={!$visibilityMode}>
 	<div class="rta-column mainone">
 		<slot></slot>
 	</div>
@@ -49,6 +57,15 @@
 		{/if}
 		{#if !breakPoint || expandRightbar}
 		<p transition:slide={{ duration: 200, easing: circOut}}><strong><a href="/gpt">GPT HOME</a></strong></p>
+			{#if titles && titles.length > 0}
+				{#each titles as item}
+					<p>
+						<a href="/gpt/{item.indexing}">
+							{item.title}
+						</a>
+					</p>
+				{/each}
+			{/if}
 		{/if}
 	</div>
 </div>

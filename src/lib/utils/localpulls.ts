@@ -119,3 +119,26 @@ export async function colonizedWritings(){
 	return eachfiled
 }
 
+export async function entireProject(){
+	const themeSvelte = await themeSveltekit();
+	const themeSupa = await themeSupabase();
+	const themeJava = await themeJavascript();
+	const themeGene = await themeGeneral();
+	const archs = await archivalWritings();
+	const colos = await colonizedWritings();
+	
+	const entireItems = [
+		...themeSvelte,
+		...themeSupa,
+		...themeJava,
+		...themeGene,
+		...archs,
+		...colos
+	];
+	
+	return entireItems.map(post => ({
+		heading: post.meta.title,
+		tags: post.meta.tags,
+		url: post.linkpath
+	}));
+}

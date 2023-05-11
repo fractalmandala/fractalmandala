@@ -92,3 +92,23 @@ export async function formentries(){
 		if (error) throw new Error(error.message)
 		return data
 	}
+
+
+export async function newGPT(indexing:number){
+		const { data, error } = await supabase
+		.from('amrit-gpt')
+		.select()
+		.eq('indexing', indexing)
+		.order('id')
+		if (error) throw new Error(error.message)
+		return data		
+	}
+
+export async function gptTitles(){
+		const { data, error } = await supabase
+		.from('vw-gpttitles')
+		.select()
+		.order('indexing')
+		if (error) throw new Error(error.message)
+		return data				
+	}

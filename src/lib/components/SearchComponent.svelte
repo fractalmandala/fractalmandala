@@ -1,17 +1,27 @@
 <script lang="ts">
 
+	import { onMount } from 'svelte'
 	import visibilityMode from '$lib/stores/visibility'
   import type { SearchItem } from '$lib/types/SearchItem'
-	import { searchitems } from '$lib/utils/searchindex'
+	import { entireProject } from '$lib/utils/localpulls'
 	let fake = false
+	let entirety:any
 	let inputElement: HTMLInputElement
 	let inputValue = ''
   let searchResults: SearchItem[] = []
+	let searchitems:any = [];
   let isFocused = false
+	let resultsWindow = false
+
+	async function loadItems(){
+		searchitems = await entireProject()
+	}
+
+	loadItems();
 
  async function handleInput() {
     if (inputValue.length > 2) {
-      searchResults = searchitems.filter((item) =>
+      searchResults = searchitems.filter((item:any) =>
         item.heading.toLowerCase().includes(inputValue.toLowerCase())
       );
     } else {
@@ -32,6 +42,20 @@
 		fake = !fake
 	}
 
+	function closeWindow(){
+		resultsWindow = false
+	}
+
+	$: if ( searchResults.length > 0 ) {
+		resultsWindow = true
+	} else { 
+		resultsWindow = false
+	}
+
+	onMount(async() => {
+		entirety = await entireProject()
+	})
+
 
 </script>
 
@@ -45,20 +69,31 @@
     on:focus={handleFocus}
 	/>
 </form>
-{#if searchResults.length}
-  <div class="search-results rta-column all-p-16 rowgap100">
-		<h6>Results:</h6>
+{#if searchResults.length && resultsWindow}
+  <div class="search-results rta-column p-top-16 bord-bot rowgap100">
     {#each searchResults as result}
-			<a href={result.url}>
       <p class="tt-c ta-r">
+				<a href={result.url}>
 				{result.heading}
+				</a>
 			</p>
-			</a>	
     {/each}
+		<small on:click={closeWindow} on:keydown={fauxfake}>Close</small>
   </div>
 {/if}
 
 <style lang="sass">
+
+.search-results p
+	font-size: 14px
+	margin-top: 0
+	margin-bottom: 4px
+	&:hover
+		color: var(--green)
+
+.search-results small
+	color: var(--green)
+	cursor: pointer
 
 .dark.comp-search
 	input
@@ -70,8 +105,12 @@
 		padding: 6px 0 6px 4px
 		box-shadow: 8px 7px 12px #010101
 		color: var(--opposite)
+		outline: none
 		&::placeholder
 			text-transform: uppercase
 			color: var(--textone)
+		&:focus
+			border: 1px solid var(--borderline)
+			border-radius: 6px
 
 </style>
