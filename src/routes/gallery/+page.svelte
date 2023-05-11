@@ -1,6 +1,13 @@
 <script lang="ts">
 
+	import { onMount } from 'svelte'
 	import visibilityMode from '$lib/stores/visibility'
+	import { fullGallery } from '$lib/utils/supabase'
+	let images:any
+
+	onMount(async() => {
+		images = await fullGallery()
+	})
 
 </script>
 

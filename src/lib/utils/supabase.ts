@@ -45,44 +45,7 @@ export const searchWord = async() => {
 }
 */
 
-export async function MidjourneyImages(imagesLow:any,imagesHigh:any){
-	const { data, error } = await supabase
-	.from('amrit-gallery')
-	.select()
-	.range(imagesLow,imagesHigh)
-	.order('id', {ascending: false})
-	if (error) throw new Error(error.message)
-	return data
-}
 
-export async function limitedImages(limit:number){
-	const { data, error } = await supabase
-	.from('amrit-gallery')
-	.select()
-	.order('id', {ascending: false})
-	.limit(limit)
-	if (error) throw new Error(error.message)
-	return data
-}
-
-export async function MidjourneyTagged(tag:any){
-	const { data, error } = await supabase
-	.from('amrit-gallery')
-	.select()
-	.eq('tag',tag)
-	.order('id', {ascending: false})
-	if (error) throw new Error(error.message)
-	return data
-}
-
-export async function MidjourneyLight(id: any){
-	const { data, error } = await supabase
-	.from('amrit-gallery')
-	.select()
-	.eq('id', id)
-	if (error) throw new Error(error.message)
-	return data
-}
 
 export async function formentries(){
 		const { data, error } = await supabase
@@ -112,3 +75,32 @@ export async function gptTitles(){
 		if (error) throw new Error(error.message)
 		return data				
 	}
+
+export async function fullGallery(){
+		const { data, error } = await supabase
+		.from('amrit-gallery')
+		.select()
+		.order('id')
+		if ( error ) throw new Error(error.message)
+		return data
+	}
+
+export async function limitGallery(genre:string){
+		const { data, error } = await supabase
+		.from('amrit-gallery')
+		.select()
+		.eq('genre',genre)
+		.order('id')
+		if ( error ) throw new Error(error.message)
+		return data
+	}
+
+export async function singleImage(id:number){
+		const { data, error } = await supabase
+		.from('amrit-gallery')
+		.select()
+		.eq('id',id)
+		if ( error ) throw new Error(error.message)
+		return data
+	}
+

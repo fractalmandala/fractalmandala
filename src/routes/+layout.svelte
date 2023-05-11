@@ -307,7 +307,7 @@
 
 .grid3.dark
 	background-color: hsla(0,0%,7%,1)
-	background-image: radial-gradient(at 56% 96%, hsla(130,90%,6%,1) 0px, transparent 50%), radial-gradient(at 0% 0%, hsla(0,0%,7%,1) 0px, transparent 100%)
+	background-image: radial-gradient(at 90% 90%, hsla(130,90%,6%,0.47) 0px, transparent 50%), radial-gradient(at 0% 0%, hsla(0,0%,7%,1) 0px, transparent 100%)
 
 .grid3.light
 	background-color: hsla(0,0%,100%,1)
