@@ -1,6 +1,9 @@
 <script lang="ts">
+
+	import visibilityMode from '$lib/stores/visibility'
 	import { alertAction, hotKeyAction } from 'svelte-legos';
-	import { fade } from 'svelte/transition';
+	import { slide } from 'svelte/transition'
+	import { quadIn } from 'svelte/easing'
 	import ApiKeyForm from './APIKeyForm.svelte';
 	import { APIKeyStore } from './APIKeyStore';
 	import OpenAiControlsForm from './OpenAIControlsForm.svelte';
@@ -22,54 +25,25 @@
 	}
 </script>
 
-<section
-	class="fixed inset-0 z-20"
-	transition:fade={{ duration: 150 }}
+<div class="rta-column rowgap300 p-top-32"
+	transition:slide={{ easing: quadIn }}
 	use:hotKeyAction={{ code: 'Escape', cb: onClose }}
->
-	<div class="hidden absolute w-full h-full bg-black opacity-75 md:flex" />
-	<div class="absolute inset-0 bg-white rounded-md p-4 flex flex-col md:inset-4 md:flex-row">
-		<button
-			on:click={onClose}
-			class="absolute right-4 top-4 border border-black  p-1 rounded-full hover:bg-black hover:text-white cursor-pointer"
-		>
-			<small>CROSS</small>
-		</button>
-		<div
-			class="flex space-x-4 border-b py-4 md:space-x-0 items-start justify-start md:h-full md:flex-col md:space-y-4 text-xl px-4 md:border-r md:border-b-0 border-[var(--border-color)] text-gray-300"
-		>
-			<button
-				on:click={() => (currentActiveTab = 0)}
-				class={currentActiveTab === 0 ? 'text-black' : ''}>Key</button
-			>
-			<button
-				on:click={() => (currentActiveTab = 1)}
-				class={currentActiveTab === 1 ? 'text-black' : ''}>Controls</button
-			>
-			<button
-				use:alertAction={{
+	class:light={!$visibilityMode} class:dark={$visibilityMode}>
+		<div class="rta-row colgap100 xend">
+			<button on:click={() => (currentActiveTab = 0)} class="hollow">Key</button>
+			<button on:click={() => (currentActiveTab = 1)} class="hollow">Controls</button>
+			<button class="hollow" use:alertAction={{
 					title: 'Are you sure?',
 					description: 'This will remove all your data, messages and API key!',
 					onOk: handleLogout
-				}}>Logout</button
+				}}>Logout
+			</button
 			>
 		</div>
 		{#if currentActiveTab === 0}
-			<div class="flex flex-1 items-center justify-center h-full">
-				<div class="w-full lg:w-[50%]">
-					<h1 class="text-3xl mb-4 text-center">Update your key</h1>
-					<ApiKeyForm initialValue={$APIKeyStore} CTALabel="Save" onDone={onClose} />
-				</div>
-			</div>
+			<ApiKeyForm initialValue={$APIKeyStore} CTALabel="Save" onDone={onClose} />
 		{/if}
 		{#if currentActiveTab === 1}
-			<div class="h-full overflow-auto">
-				<OpenAiControlsForm
-					subtitle="Define your global settings here, this will apply to all the conversations by default."
-					onUpdate={handleOpenAIControlsUpdate}
-					controls={$openAIGlobalControls}
-				/>
-			</div>
+			<OpenAiControlsForm onUpdate={handleOpenAIControlsUpdate} controls={$openAIGlobalControls}/>
 		{/if}
-	</div>
-</section>
+</div>

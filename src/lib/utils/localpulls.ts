@@ -142,3 +142,30 @@ export async function entireProject(){
 		url: post.linkpath
 	}));
 }
+
+export async function gptCombiner(){
+		const { data, error } = await supabase
+		.from('vw-gpttitles')
+		.select()
+		.order('indexing')
+		if (error) throw new Error(error.message)
+		return data.map(item => ({
+			heading: item.title,
+			url: `/gptpro/${item.indexing}`
+		}));			
+	}
+
+export async function combinedProject() {
+    const projos = await entireProject();
+    const gptItems = await gptCombiner();
+    
+    const entireItems = [
+        ...projos,
+        ...gptItems
+    ];
+    
+    return entireItems.map(post => ({
+        heading: post.heading,
+        url: post.url
+    }));
+}

@@ -1,9 +1,11 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte'
+	import { gptTitles } from '$lib/utils/supabase'
 	import { APIKeyStore } from '$lib/gptapp/APIKeyStore';
 	import Home from '$lib/gptapp/Home.svelte';
 	import Messenger from '$lib/gptapp/Messenger.svelte';
+	import SidebarSettings from '$lib/gptapp/SidebarSettings.svelte';
 	import visibilityMode from '$lib/stores/visibility'
 	import { slide } from 'svelte/transition'
 	import { circOut } from 'svelte/easing'
@@ -11,6 +13,7 @@
 	let breakPoint:boolean
 	let fake = false
 	let expandRightbar = false
+	let titles:any = []
 
 	function toggleRightbar(){
 		expandRightbar = !expandRightbar
@@ -34,14 +37,17 @@
 		isLoading = false;
 	}
 
+	onMount(async() => {
+		titles = await gptTitles()
+	})
+
 </script>
 
 <svelte:window bind:outerWidth={iW}/>
 
 <div class="rta-grid grid2 stdfix" class:light={!$visibilityMode} class:dark={$visibilityMode}>
 	<div class="rta-column mainone">
-		<h3 class="bord-bot p-bot-16">GPT Pro</h3>
-		<p class="bord-bot p-bot-32">A WIP reverse-engineered build referencing the fantastic <a href="https://gptpro.sh/" target="_blank" rel="noreferrer">GPTPro</a> by <a href="https://twitter.com/ankurpsinghal" target="_blank" rel="noreferrer">Ankur Singhal</a> (who also created <a href="https://sveltelegos.com/" target="_blank" rel="noreferrer">Svelte Legos</a>).</p>
+		<slot></slot>
 		<div class="rta-column p-top-32">
 			{#if !isLoading && $APIKeyStore !== null && isValidKey}
 				<Messenger apiKey={$APIKeyStore} />
@@ -49,7 +55,6 @@
 				<Home {onDone} />
 			{/if}
 		</div>
-		<slot></slot>
 	</div>
 	<div class="rta-column rightone" class:opened={expandRightbar}>
 		{#if breakPoint}
@@ -69,8 +74,48 @@
 		</div>
 		{/if}
 		{#if !breakPoint || expandRightbar}
-		<p transition:slide={{ duration: 200, easing: circOut}}><strong><a href="/gptpro">GPT HOME</a></strong></p>
+			<div class="rta-column" transition:slide={{ easing: circOut }}>
+				{#if !isLoading && $APIKeyStore !== null && isValidKey}
+					<SidebarSettings />
+				{/if}
+			</div>
+			<div class="rta-column p-top-32 bord-top ta-r holdsarchive" transition:slide={{ easing: circOut }} data-lenis-prevent>
+				<h6>Older:</h6>
+				{#if titles && titles.length > 0}
+					{#each titles as item}
+						<p>
+							<a href="/gptpro/{item.indexing}">
+								{item.title}
+							</a>
+						</p>
+					{/each}
+				{/if}
+			</div>
 		{/if}
 	</div>
 </div>
+
+<style lang="sass">
+
+.holdsarchive
+	@media screen and (min-width: 1024px)
+		height: calc(100vh - 320px)
+		overflow-y: scroll
+		p
+			margin-bottom: 12px
+			line-height: 1.2
+
+.holdsarchive::-webkit-scrollbar
+	width: 1px
+
+.holdsarchive::-webkit-scrollbar-track
+	width: 1px
+
+.holdsarchive::-webkit-scrollbar-thumb
+	background: #10D56C
+
+h6
+	color: var(--opposite)
+
+</style>
 

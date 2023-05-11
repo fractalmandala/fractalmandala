@@ -1,37 +1,30 @@
 <script lang="ts">
-
-	import visibilityMode from '$lib/stores/visibility'
-	import { ChatCompletion } from '$lib/gptapp/GPT';
-	import { scrollToBottomAction, alertAction, windowSizeStore, messagesStore } from 'svelte-legos';
-	import type { Bot, ChatConversation, ChatMessage, OpenAIControls } from '$lib/gptapp/types';
+	import visibilityMode from '$lib/stores/visibility';
+	import { alertAction, windowSizeStore } from 'svelte-legos';
+	import type { Bot, ChatConversation, OpenAIControls } from '$lib/gptapp/types';
 	import { conversationsStore, localStorageMiddleware } from '$lib/gptapp/conversationsStore';
 	import ConversationView from '$lib/gptapp/ConversationView.svelte';
 	import { filtersStore } from '$lib/gptapp/filterStore';
-	import Loader from '$lib/assets/Loader.svelte'
-	import MessageView from '$lib/gptapp/MessageView.svelte';
-	import MessageInputBar from '$lib/gptapp/MessageInputBar.svelte';
-	import { writable } from 'svelte/store';
 	import SettingsModal from './SettingsModal.svelte';
 	import BotsListView from './BotsListView.svelte';
 	import ConversationSettingsModal from './ConversationSettingsModal.svelte';
 	import { areEqualShallow } from './utils';
 	import { openAIGlobalControls } from './openAIControlsStore';
-	import { GetBotById, GetBotNameByBotId } from './Bots';
 	import { onMount } from 'svelte';
-	import GptLoadingMessages from './GPTLoadingMessages.svelte';
+	import Revolver from '$lib/assets/Revolver.svelte'
+	import Archive from '$lib/icons/Archive.svelte'
+	import Delete from '$lib/icons/Delete.svelte'
+	import List from '$lib/icons/List.svelte'
+	import Settings from '$lib/icons/Settings.svelte'
+	import Star from '$lib/icons/Star.svelte'
+	import Tag from '$lib/icons/Tag.svelte'
 
-	export let apiKey: string;
 	const conversations = localStorageMiddleware(conversationsStore(), 'conversations');
-
+	let fake = false;
 	let currentSelectedConversationId: string | null = null;
-
-	let isLoading: boolean = false;
-	const currentMessagePrompt = writable('');
-	const inputRef = writable<HTMLTextAreaElement | null>(null);
 
 	let isSettingsOpen = false;
 
-	$: currentMessage = $currentMessagePrompt.trim();
 	$: currentSelectedConversation = $conversations.find(
 		(conversation) => conversation.id === currentSelectedConversationId
 	);
@@ -41,115 +34,16 @@
 
 	const { isArchived: isArchivedFilter, isFavorite: isFavoriteFilter } = filtersStore();
 
-	function handleSend() {
-		if (!apiKey || typeof apiKey !== 'string' || apiKey.trim().length === 0) {
-			console.warn('OpenAI API key not defined');
-			return;
-		}
+	function toggleSettingsView() {
+		isSettingsOpen = !isSettingsOpen;
+	}
 
-		if (currentMessage.length > 0 && currentSelectedConversation !== undefined) {
-			const userMessage = {
-				id: Math.random().toString(),
-				content: currentMessage,
-				from: 'user'
-			} as ChatMessage;
+	function toggleBotsList() {
+		isBotsListVisible = !isBotsListVisible;
+	}
 
-			isLoading = true;
-
-			ChatCompletion(
-				apiKey,
-				currentSelectedConversation.botId,
-				currentSelectedConversation.messages.concat([userMessage]),
-				currentSelectedConversation.controls || $openAIGlobalControls
-				// controller.signal
-			)
-				.then((res: any) => {
-					// setData(res);
-					const {
-						choices: [
-							{
-								message: { content }
-							}
-						]
-					} = res;
-
-					conversations.update((conversations) => {
-						return conversations.map((conversation) => {
-							if (conversation.id === currentSelectedConversationId) {
-								if (conversation.messages.length === 0) {
-									return {
-										...conversation,
-										updatedAt: Date.now(),
-										subTitle: userMessage.content,
-										messages: [
-											...conversation.messages,
-											userMessage,
-											{
-												id: Math.random().toString(),
-												content,
-												from: 'assistant'
-											}
-										]
-									};
-								} else {
-									return {
-										...conversation,
-										updatedAt: Date.now(),
-										messages: [
-											...conversation.messages,
-											userMessage,
-											{
-												id: Math.random().toString(),
-												content,
-												from: 'assistant'
-											}
-										]
-									};
-								}
-							}
-
-							return conversation;
-						});
-					});
-
-					currentMessagePrompt.set('');
-				})
-				.catch((e) => {
-					if (e.message === 'Invalid API key provided!') {
-						messagesStore('Invalid API key provided!');
-						isSettingsOpen = true;
-					} else if (e.message === 'The user aborted a request.') {
-					} else {
-						messagesStore(e.message);
-					}
-				})
-				.finally(() => {
-					// clearTimeout(timer);
-					isLoading = false;
-					setTimeout(() => {
-						$inputRef?.focus();
-					}, 1);
-				});
-
-			// let timer: any;
-			// let controller: any;
-
-			// function start() {
-			// 	if (!currentSelectedConversation) return;
-
-			// 	controller = new AbortController();
-
-			// 	clearTimeout(timer);
-			// 	timer = setTimeout(() => {
-			// 		controller.abort();
-			// 		controller = undefined;
-			// 		isLoading = false;
-			// 		start();
-			// 	}, 1000);
-			// }
-
-			// start();
-		}
+	function fauxfake() {
+		fake = !fake;
 	}
 
 	function handleConversationClick(conversation: ChatConversation) {
@@ -290,34 +184,80 @@
 </script>
 
 <div class="rta-column" class:light={!$visibilityMode} class:dark={$visibilityMode}>
-
-	<div class="rta-column rowgap400">
-
-		{#if currentSelectedConversation}
-
-			<div class="rta-column rowgap200 actualchat-container">
-				<div class="rta-column" use:scrollToBottomAction>
-					{#if currentSelectedConversation.messages.length === 0 && !isLoading}
-						<h6 class="is-green p-top-32 bord-top tt-u" style="margin-bottom: 0">Agent: <span>{GetBotNameByBotId(currentSelectedConversation.botId)}</span></h6>
-					{:else}
-					{#each currentSelectedConversation.messages as message}
-						<MessageView {message} />
-					{/each}
-					{#if isLoading}
-						<GptLoadingMessages />
-					{/if}
-					{/if}
-				</div>
-				<MessageInputBar
-					disabled={isLoading}
-					onSend={handleSend}
-					value={currentMessagePrompt}
-					ref={inputRef}
-				/>
+	<div class="rta-row ycenter colgap100 xend mainrow">
+		<!--
+		<div class="rta-row colgap100" aria-hidden on:click={(e) => { e.stopPropagation(); }} use:clickOutsideAction={{ cb: handleFilterClickOutside, trigger: filterRef }}>
+			<div class="rta-row" on:click={() => (currentSelectedConversationId = null)} aria-hidden>
+				<label for="is-archived">Archived</label>
+				<input type="checkbox" id="is-archived" bind:checked={$isArchivedFilter} />
 			</div>
+			<div class="rta-row" on:click={() => (currentSelectedConversationId = null)} aria-hidden>
+				<label for="is-favorite">Favorite</label>
+				<input type="checkbox" id="is-favorite" bind:checked={$isFavoriteFilter} />
+			</div>
+		</div>
+		-->
+		<button
+			use:alertAction={{
+				title: 'Are you sure?',
+				description: "You won't be able to recover this conversation!",
+				onOk: handleDeleteClick
+			}}
+			class="blank-button"
+			>
+			<Delete/>
+		</button>
+		<button on:click={handleArchiveClick} class="blank-button">
+			<Archive/>
+		</button>
+		<button on:click={handleFavoriteClick} class="blank-button">
+			<Star/>
+		</button>
+		<button on:click={handlePinClick} class="blank-button">
+			<Tag/>
+		</button>
+		<button on:click={toggleBotsList} class="blank-button">
+			<List/>
+		</button>
+		<button class="blank-button" on:click={toggleSettingsView}>
+			<Settings/>
+		</button>
+		<a class="blank-button" href="/gptpro">
+			<Revolver/>
+		</a>
+	</div>
 
+	{#if isBotsListVisible || pinnedConversations.length + filteredConversations.length === 0}
+		<BotsListView onBotClick={handleBotClick} />
+	{/if}
+
+	<div class="rta-column rowgap400 p-top-16">
+		{#if currentSelectedConversation}
+			<div class="rta-column colgap100 xright">
+				{#if !isSidebarVisible}
+					<button on:click={() => (isSidebarVisible = true)}>
+						<span><small>ICON</small></span>
+						<span><small>ICON</small></span>
+					</button>
+				{/if}
+				<div class="rta-row xend ycenter colgap200 p-bot-16">
+				</div>
+			</div>
 		{/if}
 	</div>
+
+	{#if isSidebarVisible}
+		<div class="rta-column ta-r p-top-16 p-bot-16 bord-top bord-bot">
+			<h6>Latest:</h6>
+			{#each pinnedConversations as conversation}
+				<ConversationView {conversation} {handleConversationClick} />
+			{/each}
+			{#each filteredConversations as conversation}
+				<ConversationView {conversation} {handleConversationClick} />
+			{/each}
+		</div>
+	{/if}
+
 </div>
 
 {#if isSettingsOpen}
@@ -334,17 +274,13 @@
 
 <style lang="sass">
 
+.mainrow
+	.blank-button
+		height: 20px
 
-.dark
-	.actualchat-container
-		background: rgba(8, 8, 8, 0.64)
-		border-radius: 16px
-		box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1)
-		backdrop-filter: blur(6.9px)
-		-webkit-backdrop-filter: blur(6.9px)
-		border: 1px solid rgba(255, 255, 255, 0.14)
-		@media screen and (min-width: 1024px)
-			padding: 24px
+h6
+	color: var(--opposite)
+	margin-bottom: 8px
 
 
 </style>

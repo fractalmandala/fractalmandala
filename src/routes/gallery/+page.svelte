@@ -1,6 +1,14 @@
-<div class="rta-column">
+<script lang="ts">
+
+	import visibilityMode from '$lib/stores/visibility'
+
+</script>
+
+<div class="rta-column" class:light={!$visibilityMode} class:dark={$visibilityMode}>
+	<h3 class="bord-bot p-bot-16">Midjourney Gallery</h3>
 	<p>
-		Midjourney is awesome! And honestly, anyone prancing about with the "AI art is not true art" has just spent way too long being in very high opinion of themselves, combined with an inner Luddite they may or may not recognize.
+		Midjourney is awesome! And anyone prancing about with the "AI art is not true art" has just spent way too long being in very high opinion of themselves, combined with an inner Luddite they may or may not recognize.
+		One may well have a dislike for it, or simply prefer to not engage at all. But to declare on behalf of the rest of humanity that it isn't true art is frankly, ignorant and silly.
 	</p>
 	<p>
 		Below is a sampling of the kind of explorations I want to make with Midjourney, and in the sidebar you can look at stuff I've created thus far.

@@ -35,6 +35,8 @@
 	&:hover
 		#onbelow
 			.char
+				fill: white
+				stroke: white
 				animation: slowdown 0.23s ease forwards
 	@media screen and (min-width: 1024px)
 		height: 42px

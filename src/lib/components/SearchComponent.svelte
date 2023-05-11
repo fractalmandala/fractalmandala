@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte'
 	import visibilityMode from '$lib/stores/visibility'
   import type { SearchItem } from '$lib/types/SearchItem'
-	import { entireProject } from '$lib/utils/localpulls'
+	import { combinedProject } from '$lib/utils/localpulls'
 	let fake = false
 	let entirety:any
 	let inputElement: HTMLInputElement
@@ -14,7 +14,7 @@
 	let resultsWindow = false
 
 	async function loadItems(){
-		searchitems = await entireProject()
+		searchitems = await combinedProject()
 	}
 
 	loadItems();
@@ -53,7 +53,7 @@
 	}
 
 	onMount(async() => {
-		entirety = await entireProject()
+		entirety = await combinedProject()
 	})
 
 
@@ -70,30 +70,32 @@
 	/>
 </form>
 {#if searchResults.length && resultsWindow}
-  <div class="search-results rta-column p-top-16 bord-bot rowgap100">
+	<small class="p-top-16 is-green point tt-u" on:click={closeWindow} on:keydown={fauxfake}>Close</small>
+  <div class="search-results rta-column bord-bot rowgap100" data-lenis-prevent>
     {#each searchResults as result}
-      <p class="tt-c ta-r">
+      <p class="tt-c">
 				<a href={result.url}>
 				{result.heading}
 				</a>
 			</p>
     {/each}
-		<small on:click={closeWindow} on:keydown={fauxfake}>Close</small>
   </div>
 {/if}
 
 <style lang="sass">
 
+.search-results
+	height: calc(100vh - 320px)
+	overflow-y: scroll
+	text-align: left
+	align-items: flex-start
+
 .search-results p
-	font-size: 14px
+	font-size: 12px
 	margin-top: 0
 	margin-bottom: 4px
 	&:hover
 		color: var(--green)
-
-.search-results small
-	color: var(--green)
-	cursor: pointer
 
 .dark.comp-search
 	input

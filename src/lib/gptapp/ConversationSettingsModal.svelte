@@ -1,4 +1,6 @@
 <script lang="ts">
+
+	import visibilityMode from '$lib/stores/visibility'
 	import { hotKeyAction } from 'svelte-legos';
 	import { fade } from 'svelte/transition';
 	import OpenAiControlsForm from './OpenAIControlsForm.svelte';
@@ -12,29 +14,17 @@
 	const params = controls;
 </script>
 
-<section
-	class="fixed inset-0 z-20"
+<div
+	class="rta-column"
 	transition:fade={{ duration: 150 }}
 	use:hotKeyAction={{ code: 'Escape', cb: onClose }}
->
-	<div
-		class="hidden absolute w-full h-full bg-black opacity-75 md:flex"
-		on:click={onClose}
-		aria-hidden
-	/>
+	class:light={!$visibilityMode} class:dark={$visibilityMode}
+	>
+	<div class="rta-column" on:click={onClose} aria-hidden/>
 	<div class="absolute inset-0 bg-white rounded-md md:inset-x-80 md:inset-y-20">
-		<button
-			on:click={onClose}
-			class="absolute right-4 top-4 border border-black  p-1 rounded-full hover:bg-black hover:text-white cursor-pointer"
-		>
-			<small>CROS</small>
+		<button on:click={onClose} class="secondbutton">
+			Close
 		</button>
-		<div class="flex h-full">
-			<OpenAiControlsForm
-				subtitle="These settings will only apply to the current selected conversation."
-				{onUpdate}
-				controls={params}
-			/>
-		</div>
+		<OpenAiControlsForm {onUpdate} controls={params}/>
 	</div>
-</section>
+</div>

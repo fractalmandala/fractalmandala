@@ -16,12 +16,17 @@
 	import '$lib/styles/prism.css'
 
 	let y:number
+	let isKnowing = false
 	let screenWidth:number
 	let breakPoint:boolean
 	let appearance:number = 50
 	let dropMenu = Array(10).fill(false)
 	let fake = false
 	let expandMobilemenu = false
+
+	function toggleKnowing(){
+		isKnowing = !isKnowing
+	}
 
 	function toggleMobilemenu(){
 		if ( breakPoint === true ) {
@@ -105,9 +110,11 @@
 <div id="appcontainer" class="rta-grid grid3" class:light={!$visibilityMode} class:dark={$visibilityMode}>
 	<div class="rta-column leftone" class:opened={expandMobilemenu} transition:slide={{ duration: 300, easing: circOut}} data-lenis-prevent>
 		<div class="rta-column leftcontainer">
-			<div class="rta-column">
+			<div class="rta-column searcher" data-lenis-prevent>
 				<Searcher/>
 			</div>
+			{#if !dropMenu[7]}
+			<div class="rta-column" transition:slide={{ duration: 340, easing: circOut}}>
 			<div class="rta-column dropsection m-top-16" on:click={() => toggleMenuDrop(4)} on:keydown={fauxfake}>
 				<div class="rta-row ycenter between">
 					<p class="tt-u" class:opened={dropMenu[4]}>Featured</p>
@@ -191,27 +198,46 @@
 			</div>		
 			{#if dropMenu[3]}
 			<div class="rta-column insidedrop p-top-16" transition:slide={{ duration: 200, easing: circOut}} on:click={toggleMobilemenu} on:keydown={fauxfake}>
-				<p><a href="/gpt">GPT</a></p>
+				<p><a href="/gptpro">GPT</a></p>
 				<p><a href="/play">Play</a></p>
 			</div>
 			{/if}	
 			</div>
 			<div class="rta-column dropsection" on:click={() => toggleMenuDrop(6)} on:keydown={fauxfake}>
-			<div class="rta-row ycenter between">
+				<div class="rta-row ycenter between">
 				<p class="tt-u" class:opened={dropMenu[6]}>Archival</p>
 				<div class="iconchev" class:rotated={dropMenu[6]}>
 					<svg width="13" height="9" viewBox="0 0 13 9" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M2.66345 0.187622L0.413452 2.43762L6.41345 8.43762L12.4135 2.43762L10.1635 0.187622L6.41345 3.93762L2.66345 0.187622Z" fill="black"/>
 					</svg>
 				</div>
-			</div>		
-			{#if dropMenu[6]}
-			<div class="rta-column insidedrop p-top-16" transition:slide={{ duration: 200, easing: circOut}} on:click={toggleMobilemenu} on:keydown={fauxfake}>
+				</div>		
+				{#if dropMenu[6]}
+				<div class="rta-column insidedrop p-top-16" transition:slide={{ duration: 200, easing: circOut}} on:click={toggleMobilemenu} on:keydown={fauxfake}>
 				<p><a href="/archival/writings">General Writings</a></p>
 				<p><a href="/archival/museo">Musings</a></p>
 				<p><a href="/archival/ancient">Ancient Stuff</a></p>
+				</div>
+				{/if}	
 			</div>
-			{/if}	
+			</div>
+			{/if}
+			<div class="rta-column dropsection" on:click={() => toggleMenuDrop(7)} on:keydown={fauxfake} transition:slide={{ duration: 340, easing: circOut}}>
+				<div class="rta-row ycenter between">
+					<p class="tt-u" class:opened={dropMenu[7]}>Knowledge</p>
+					<div class="iconchev" class:rotated={dropMenu[7]}>
+						<svg width="13" height="9" viewBox="0 0 13 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M2.66345 0.187622L0.413452 2.43762L6.41345 8.43762L12.4135 2.43762L10.1635 0.187622L6.41345 3.93762L2.66345 0.187622Z" fill="black"/>
+						</svg>
+					</div>
+				</div>
+				{#if dropMenu[7]}
+				<div class="rta-column insidedrop p-top-16" transition:slide={{ duration: 200, easing: circOut}} on:click={toggleMobilemenu} on:keydown={fauxfake}>
+				<p><a href="/archival/writings">General Writings</a></p>
+				<p><a href="/archival/museo">Musings</a></p>
+				<p><a href="/archival/ancient">Ancient Stuff</a></p>
+				</div>
+				{/if}							
 			</div>
 		</div>
 	</div>
@@ -227,6 +253,9 @@
 <Footer></Footer>
 
 <style lang="sass">
+
+.searcher
+	overflow-y: scroll
 
 .grid3
 	@media screen and (min-width: 769px)
