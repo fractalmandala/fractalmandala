@@ -102,7 +102,7 @@ p, li, small, cite, h6, h2, h1, ul, pre
 	margin-bottom: 1rem
 	font-family: 'JetBrains Mono', monospace
 
-input, textarea, select
+input, textarea, select, button
 	font-family: 'JetBrains Mono', monospace
 	font-size: 15px
 
@@ -810,3 +810,24 @@ body, html
 .dark
 	.break899
 		color: var(--textone)
+
+.dark, .light
+	.is-green
+		color: var(--green)
+
+.mainbutton
+	background: linear-gradient(91.95deg, #10D56C 0%, #10F026 99.27%)
+	border: 1px solid transparent
+	color: #272727
+	max-width: 160px
+	width: max-content
+	padding: 4px 16px
+	border-radius: 6px
+	transform-origin: center center
+	transition: 0.08s
+	cursor: pointer
+	&:hover
+		border: 1px solid white
+		box-shadow: 5px 8px 12px #020202
+	&:active
+		transform: scale(0.9)
