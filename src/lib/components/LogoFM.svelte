@@ -37,7 +37,6 @@
 			.char
 				fill: white
 				stroke: white
-				animation: slowdown 0.23s ease forwards
 	@media screen and (min-width: 1024px)
 		height: 42px
 		svg
@@ -57,11 +56,6 @@
 	100%
 		fill: rgba(255,255,255,0)
 
-@keyframes slowdown
-	0%
-		filter: blur(22px)
-	100%
-		filter: blur(0px)
 
 #onbelow
 	z-index: 0

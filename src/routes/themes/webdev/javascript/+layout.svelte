@@ -57,7 +57,7 @@
 		<p transition:slide={{ duration: 200, easing: circOut}}><strong><a href="/themes/webdev/javascript">JAVASCRIPT HOME</a></strong></p>
 		{#if theData && theData.length > 0}
 			{#each theData as item, i}
-				<p transition:slide={{ duration: 200, delay: i*20, easing: circOut}}><a href="{item.linkpath}">{item.meta.title}</a></p>
+				<p transition:slide={{ duration: 200, delay: i*20, easing: circOut}} class="spline"><a href="{item.linkpath}">{item.meta.title}</a></p>
 			{/each}
 		{/if}
 		{/if}

@@ -6,7 +6,6 @@
 </script>
 
 <div class="rta-column" class:light={!$visibilityMode} class:dark={$visibilityMode}>
-	<small>Originally published in {data.originallydated}</small>
 	<h3 class="bord-bot p-bot-16">{data.title}</h3>
 	<div class="rta-column blogstyle" class:dark={$visibilityMode} class:light={!$visibilityMode}>
 		<svelte:component this={data.content}/>

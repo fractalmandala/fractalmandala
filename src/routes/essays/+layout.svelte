@@ -49,11 +49,11 @@
 		{/if}
 		{#if !breakPoint || expandRightbar}
 		<p transition:slide={{ duration: 200, easing: circOut}}><strong><a href="/essays">ESSAYS HOME</a></strong></p>
-		<p transition:slide={{ duration: 200, delay: 40, easing: circOut}}><a href="/essays/macrohistoriccase">1. The Macrohistoric Case for India's Civilizational Primacy</a></p>
-		<p transition:slide={{ duration: 200, delay: 60, easing: circOut}}><a href="/essays/historyvsitihasa">2. History is Ontic, Itihāsa Ontologic</a></p>
-		<p transition:slide={{ duration: 200, delay: 80, easing: circOut}}><a href="/essays/rathaasbija">3. Ratha as a Bīja of Civilizational DNA</a></p>
-		<p transition:slide={{ duration: 200, delay: 100, easing: circOut}}><a href="/essays/indiancivcon">4. Indian Civilizational Consciousness</a></p>
-		<p transition:slide={{ duration: 200, delay: 120, easing: circOut}}><a href="/essays/ramasjourney">5. Rāma Journey, the Avatāra in You</a></p>
+		<p transition:slide={{ duration: 200, delay: 40, easing: circOut}} class="spline"><a href="/essays/macrohistoriccase">1. The Macrohistoric Case for India's Civilizational Primacy</a></p>
+		<p transition:slide={{ duration: 200, delay: 60, easing: circOut}} class="spline"><a href="/essays/historyvsitihasa">2. History is Ontic, Itihāsa Ontologic</a></p>
+		<p transition:slide={{ duration: 200, delay: 80, easing: circOut}} class="spline"><a href="/essays/rathaasbija">3. Ratha as a Bīja of Civilizational DNA</a></p>
+		<p transition:slide={{ duration: 200, delay: 100, easing: circOut}} class="spline"><a href="/essays/indiancivcon">4. Indian Civilizational Consciousness</a></p>
+		<p transition:slide={{ duration: 200, delay: 120, easing: circOut}} class="spline"><a href="/essays/ramasjourney">5. Rāma Journey, the Avatāra in You</a></p>
 		{/if}
 	</div>
 </div>

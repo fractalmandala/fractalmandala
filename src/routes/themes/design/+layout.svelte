@@ -49,9 +49,9 @@
 		{/if}
 		{#if !breakPoint || expandRightbar}
 		<p transition:slide={{ duration: 200, easing: circOut}}><strong><a href="/themes/design">DESIGN HOME</a></strong></p>
-		<p transition:slide={{ duration: 200, delay: 40, easing: circOut}}><a href="/themes/design/rainmeter">Rainmeter</a></p>
-		<p transition:slide={{ duration: 200, delay: 60, easing: circOut}}><a href="/themes/design/maps">Maps</a></p>
-		<p transition:slide={{ duration: 200, delay: 80, easing: circOut}}><a href="/themes/design/components">Components Library</a></p>
+		<p transition:slide={{ duration: 200, delay: 40, easing: circOut}} class="spline"><a href="/themes/design/rainmeter">Rainmeter</a></p>
+		<p transition:slide={{ duration: 200, delay: 60, easing: circOut}} class="spline"><a href="/themes/design/maps">Maps</a></p>
+		<p transition:slide={{ duration: 200, delay: 80, easing: circOut}} class="spline"><a href="/themes/design/components">Components Library</a></p>
 		{/if}
 	</div>
 </div>

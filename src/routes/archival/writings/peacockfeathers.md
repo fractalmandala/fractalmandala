@@ -4,6 +4,10 @@ tags: opinion
 originallydated: Jul, 2018
 ---
 
+*As I chronicle in <a href="https://www.brhat.in/dhiti/decolonizationapersonalfootprint" target="_blank" rel="noreferrer">this essay</a> I wrote, I've spent the majority of my life thoroughly colonized. Well into my journey back home- a ghar-vaapsi- now, even I look back at some of my old writings with embarassment.*
+
+*While most works I would outright disown today, in that I no longer hold the beliefs they espouse. This one in particular I intend to "rewrite" one day soon as an intellectual inquiry into what I may write different- and what I may retain as is.*
+
 Born to a family that calls itself Saryuparin Brahmin, from a village Ishaaru in eastern Uttar Pradesh, being brahmin has never been a conscious part of my identity. In a sense, this could be defined as privilege. Privilege is the ability to choose your own identity. And thus I was an atheist, socialist, capitalist, humanist and other things much more than I was a brahmin. I suspect the same is not true for those born to minority groups, where that minority identity is imposed on them by society at every stage of their lives. And so a Dalit is a Dalit first and foremost, while I’m a writer, musician and manager.
 
 The deep caste-based roots of my grandparents on either side notwithstanding, brahminism was never really inculcated in me by my parents. My father never wore the typical brahmin marker, the janeyu thread, and my own ceremony was only done in formality prior to my marriage. That said, it is confessedly fortunate that my wife also hails from a brahmin family, and there may be an entire sociological essay on why it was always more likely that I meet and fall in love with an upper caste Hindu than with anyone else, but if her family was of different origins our marital relations might not have been established so smoothly.

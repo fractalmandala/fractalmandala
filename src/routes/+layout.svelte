@@ -108,9 +108,9 @@
 </Header>
 
 <div id="appcontainer" class="rta-grid grid3" class:light={!$visibilityMode} class:dark={$visibilityMode}>
-	<div class="rta-column leftone" class:opened={expandMobilemenu} transition:slide={{ duration: 300, easing: circOut}} data-lenis-prevent>
-		<div class="rta-column leftcontainer">
-			<div class="rta-column searcher" data-lenis-prevent>
+	<div class="rta-column ytop leftone" class:opened={expandMobilemenu} transition:slide={{ duration: 300, easing: circOut}}>
+		<div class="rta-column ytop leftcontainer">
+			<div class="rta-column ytop searcher">
 				<Searcher/>
 			</div>
 			{#if !dropMenu[7]}
@@ -215,7 +215,7 @@
 				{#if dropMenu[6]}
 				<div class="rta-column insidedrop p-top-16" transition:slide={{ duration: 200, easing: circOut}} on:click={toggleMobilemenu} on:keydown={fauxfake}>
 				<p><a href="/archival/writings">General Writings</a></p>
-				<p><a href="/archival/museo">Musings</a></p>
+				<p><a href="/archival/history">History</a></p>
 				<p><a href="/archival/ancient">Ancient Stuff</a></p>
 				</div>
 				{/if}	
@@ -258,22 +258,25 @@
 	overflow-y: scroll
 
 .grid3
+	transition: 0.3s ease
 	@media screen and (min-width: 769px)
 		grid-template-areas: "leftone midone"
-		grid-template-columns: 280px 1fr
+		grid-template-columns: 296px 1fr
 		.leftone
-			border-right: 1px solid var(--borderline)
-			padding-top: 128px
+			border-right: 1px solid rgba(255,255,255,0.1)
 			padding-left: 24px
 			padding-right: 24px
-			background: var(--contraster)
+			background: rgba(7,7,7,0.71)
+			height: 100vh
+			position: sticky
+			top: 0
 			.leftcontainer
 				height: max-content
 				position: sticky
 				top: 128px
 		.midone
 			padding-left: 4vw
-			padding-top: 128px
+			padding-top: 64px
 			padding-right: 24px
 			padding-bottom: 64px
 	@media screen and (max-width: 768px)
@@ -307,20 +310,21 @@
 
 .grid3.dark
 	background-color: hsla(0,0%,7%,1)
-	background-image: radial-gradient(at 90% 90%, hsla(130,90%,6%,0.47) 0px, transparent 50%), radial-gradient(at 0% 0%, hsla(0,0%,7%,1) 0px, transparent 100%)
+	transition: 0.3s ease
+	background-image: radial-gradient(at 50% 01%, hsla(130,90%,6%,0.75) 0px, transparent 50%), radial-gradient(at 0% 0%, hsla(0,0%,2%,1) 0px, transparent 100%)
 
 .grid3.light
 	background-color: hsla(0,0%,100%,1)
+	transition: 0.3s ease
 	background-image: radial-gradient(at 56% 96%, hsla(130,100%,48%,0.56) 0px, transparent 50%), radial-gradient(at 0% 0%, hsla(0,0%,100%,1) 0px, transparent 50%)
 
 #appcontainer
 	box-sizing: border-box
 	margin: 0
 	padding: 0
-	min-height: calc(100vh - 64px)
+	width: 100vw
 
 .dropsection
-	border-bottom: 1px solid var(--borderline)
 	padding-top: 12px
 	padding-bottom: 12px
 	cursor: pointer
@@ -350,6 +354,7 @@
 	color: var(--opposite)
 
 .insidedrop p
+	font-family: 'Spline Sans', sans-serif
 	cursor: pointer
 	color: var(--texttwo)
 	margin-bottom: 8px

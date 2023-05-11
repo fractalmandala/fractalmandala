@@ -1,4 +1,4 @@
-import BotsData from './bots.json';
+import BotsData from '$lib/gptapp/bots.json';
 import type { Bot } from './types';
 
 function nameToId(name: string) {

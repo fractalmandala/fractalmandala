@@ -73,7 +73,7 @@
 	<small class="p-top-16 is-green point tt-u" on:click={closeWindow} on:keydown={fauxfake}>Close</small>
   <div class="search-results rta-column bord-bot rowgap100" data-lenis-prevent>
     {#each searchResults as result}
-      <p class="tt-c">
+      <p class="tt-c spline">
 				<a href={result.url}>
 				{result.heading}
 				</a>
@@ -84,12 +84,6 @@
 
 <style lang="sass">
 
-.search-results
-	height: calc(100vh - 320px)
-	overflow-y: scroll
-	text-align: left
-	align-items: flex-start
-
 .search-results p
 	font-size: 12px
 	margin-top: 0
@@ -97,14 +91,20 @@
 	&:hover
 		color: var(--green)
 
+p.spline
+	margin-bottom: 0px
+	margin-top: 0
+
+.comp-search
+	input
+		font-family: 'Spline Sans', sans-serif
+
 .dark.comp-search
 	input
 		background: none
-		border-bottom: none
-		border-top: none
-		border-left: 2px solid var(--green)
-		border-right: none
+		border: 1px solid var(--borderline)
 		padding: 6px 0 6px 4px
+		border-radius: 6px
 		box-shadow: 8px 7px 12px #010101
 		color: var(--opposite)
 		outline: none

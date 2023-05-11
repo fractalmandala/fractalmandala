@@ -189,12 +189,12 @@
 		{/if}
 		{#if !breakPoint || expandRightbar}
 		<p on:click={() => toggleSection(1)} on:keydown={fauxfake} transition:slide={{ duration: 200, easing: circOut}}><strong>GALLERY HOME</strong></p>
-		<p on:click={() => toggleSection(2)} on:keydown={fauxfake} transition:slide={{ duration: 200, delay: 40, easing: circOut}}>Abstract</p>
-		<p on:click={() => toggleSection(3)} on:keydown={fauxfake} transition:slide={{ duration: 200, delay: 60, easing: circOut}}>Culture Aesthetic</p>
-		<p on:click={() => toggleSection(4)} on:keydown={fauxfake} transition:slide={{ duration: 200, delay: 80, easing: circOut}}>Maṇḍalas</p>
-		<p on:click={() => toggleSection(5)} on:keydown={fauxfake} transition:slide={{ duration: 200, delay: 100, easing: circOut}}>Misc</p>
-		<p on:click={() => toggleSection(6)} on:keydown={fauxfake} transition:slide={{ duration: 200, delay: 120, easing: circOut}}>Sci-fi</p>
-		<p on:click={() => toggleSection(7)} on:keydown={fauxfake} transition:slide={{ duration: 200, delay: 140, easing: circOut}}>Scrolls of Āryavarta</p>
+		<p on:click={() => toggleSection(2)} on:keydown={fauxfake} transition:slide={{ duration: 200, delay: 40, easing: circOut}} class="spline">Abstract</p>
+		<p on:click={() => toggleSection(3)} on:keydown={fauxfake} transition:slide={{ duration: 200, delay: 60, easing: circOut}} class="spline">Culture Aesthetic</p>
+		<p on:click={() => toggleSection(4)} on:keydown={fauxfake} transition:slide={{ duration: 200, delay: 80, easing: circOut}} class="spline">Maṇḍalas</p>
+		<p on:click={() => toggleSection(5)} on:keydown={fauxfake} transition:slide={{ duration: 200, delay: 100, easing: circOut}} class="spline">Misc</p>
+		<p on:click={() => toggleSection(6)} on:keydown={fauxfake} transition:slide={{ duration: 200, delay: 120, easing: circOut}} class="spline">Sci-fi</p>
+		<p on:click={() => toggleSection(7)} on:keydown={fauxfake} transition:slide={{ duration: 200, delay: 140, easing: circOut}} class="spline">Scrolls of Āryavarta</p>
 		{/if}
 	</div>
 </div>

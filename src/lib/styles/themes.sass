@@ -28,6 +28,7 @@ body, html
 :root
 	--dur: 0.08s
 	font-family: 'JetBrains Mono', monospace
+	--mygradier: linear-gradient(90.16deg, #B1FE64 -0.25%, #24C75B 105.55%)
 
 h5, h6, small, cite
 	color: var(--textone)
@@ -103,6 +104,9 @@ p, li, small, cite, h6, h2, h1, ul, pre
 	margin-top: 0
 	margin-bottom: 1rem
 	font-family: 'JetBrains Mono', monospace
+
+p.spline
+	font-family: 'Spline Sans', sans-serif
 
 input, textarea, select, button
 	font-family: 'JetBrains Mono', monospace
@@ -623,6 +627,13 @@ body, html
 	padding-top: 8px
 .p-top-16
 	padding-top: 16px
+
+.m-top-32
+	@media screen and (min-width: 1024px)
+		margin-top: 32px
+	@media screen and (max-width: 1023px)
+		margin-top: 32px
+
 .m-top-16
 	margin-top: 16px
 .m-bot-4
@@ -720,7 +731,7 @@ body, html
 
 .grid2.stdfix
 	@media screen and (min-width: 1024px)
-		grid-template-columns: 1fr 280px
+		grid-template-columns: 1fr 304px
 		grid-template-areas: "mainone rightone"
 		.mainone
 			padding-right: 4vw

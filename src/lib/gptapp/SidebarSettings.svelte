@@ -10,6 +10,7 @@
 	import ConversationSettingsModal from './ConversationSettingsModal.svelte';
 	import { areEqualShallow } from './utils';
 	import { openAIGlobalControls } from './openAIControlsStore';
+	import { GetBotById, GetBotNameByBotId } from './Bots';
 	import { onMount } from 'svelte';
 	import Revolver from '$lib/assets/Revolver.svelte'
 	import Archive from '$lib/icons/Archive.svelte'
@@ -144,6 +145,7 @@
 		isBotsListVisible = false;
 		currentSelectedConversationId = id;
 		if (isMobile) isSidebarVisible = false;
+		location.reload();
 	}
 
 	let isSidebarVisible = true;
@@ -227,10 +229,6 @@
 		</a>
 	</div>
 
-	{#if isBotsListVisible || pinnedConversations.length + filteredConversations.length === 0}
-		<BotsListView onBotClick={handleBotClick} />
-	{/if}
-
 	<div class="rta-column rowgap400 p-top-16">
 		{#if currentSelectedConversation}
 			<div class="rta-column colgap100 xright">
@@ -248,7 +246,7 @@
 
 	{#if isSidebarVisible}
 		<div class="rta-column ta-r p-top-16 p-bot-16 bord-top bord-bot">
-			<h6>Latest:</h6>
+			<p class="tt-u"><strong>Latest:</strong></p>
 			{#each pinnedConversations as conversation}
 				<ConversationView {conversation} {handleConversationClick} />
 			{/each}
@@ -277,10 +275,5 @@
 .mainrow
 	.blank-button
 		height: 20px
-
-h6
-	color: var(--opposite)
-	margin-bottom: 8px
-
 
 </style>

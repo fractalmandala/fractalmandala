@@ -169,30 +169,6 @@
 		}
 	}
 
-	function handleArchiveClick() {
-		if (currentSelectedConversationId !== null) {
-			conversations.toggleConversationArchive(currentSelectedConversationId);
-		}
-
-		currentSelectedConversationId = null;
-
-		if (isMobile) {
-			isSidebarVisible = true;
-		}
-	}
-
-	function handleFavoriteClick() {
-		if (currentSelectedConversationId !== null) {
-			conversations.toggleConversationFavorite(currentSelectedConversationId);
-		}
-	}
-
-	function handlePinClick() {
-		if (currentSelectedConversationId !== null) {
-			conversations.toggleConversationPinned(currentSelectedConversationId);
-		}
-	}
-
 	let filterRef: HTMLElement;
 	let isFilterOpen = false;
 
@@ -290,15 +266,13 @@
 </script>
 
 <div class="rta-column" class:light={!$visibilityMode} class:dark={$visibilityMode}>
-
+	<BotsListView onBotClick={handleBotClick} />
 	<div class="rta-column rowgap400">
-
-		{#if currentSelectedConversation}
-
+		{#if currentSelectedConversation}	
 			<div class="rta-column rowgap200 actualchat-container">
 				<div class="rta-column" use:scrollToBottomAction>
 					{#if currentSelectedConversation.messages.length === 0 && !isLoading}
-						<h6 class="is-green p-top-32 bord-top tt-u" style="margin-bottom: 0">Agent: <span>{GetBotNameByBotId(currentSelectedConversation.botId)}</span></h6>
+						<h6 class="is-green tt-u" style="margin-bottom: 0">Agent: <span>{GetBotNameByBotId(currentSelectedConversation.botId)}</span></h6>
 					{:else}
 					{#each currentSelectedConversation.messages as message}
 						<MessageView {message} />
@@ -318,6 +292,7 @@
 
 		{/if}
 	</div>
+
 </div>
 
 {#if isSettingsOpen}

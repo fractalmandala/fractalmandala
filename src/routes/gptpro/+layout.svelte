@@ -7,6 +7,7 @@
 	import Messenger from '$lib/gptapp/Messenger.svelte';
 	import SidebarSettings from '$lib/gptapp/SidebarSettings.svelte';
 	import visibilityMode from '$lib/stores/visibility'
+	import BotsListView from '$lib/gptapp/BotsListView.svelte';
 	import { slide } from 'svelte/transition'
 	import { circOut } from 'svelte/easing'
 	let iW:number
@@ -48,7 +49,7 @@
 <div class="rta-grid grid2 stdfix" class:light={!$visibilityMode} class:dark={$visibilityMode}>
 	<div class="rta-column mainone">
 		<slot></slot>
-		<div class="rta-column p-top-32">
+		<div class="rta-column">
 			{#if !isLoading && $APIKeyStore !== null && isValidKey}
 				<Messenger apiKey={$APIKeyStore} />
 			{:else}
@@ -80,10 +81,10 @@
 				{/if}
 			</div>
 			<div class="rta-column p-top-32 bord-top ta-r holdsarchive" transition:slide={{ easing: circOut }} data-lenis-prevent>
-				<h6>Older:</h6>
+				<p class="tt-u"><strong>Older:</strong></p>
 				{#if titles && titles.length > 0}
 					{#each titles as item}
-						<p>
+						<p class="spline">
 							<a href="/gptpro/{item.indexing}">
 								{item.title}
 							</a>
@@ -101,9 +102,9 @@
 	@media screen and (min-width: 1024px)
 		height: calc(100vh - 320px)
 		overflow-y: scroll
-		p
-			margin-bottom: 12px
-			line-height: 1.2
+
+.spline
+	margin-bottom: 6px
 
 .holdsarchive::-webkit-scrollbar
 	width: 1px
@@ -114,8 +115,6 @@
 .holdsarchive::-webkit-scrollbar-thumb
 	background: #10D56C
 
-h6
-	color: var(--opposite)
 
 </style>
 

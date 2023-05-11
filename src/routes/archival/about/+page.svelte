@@ -8,6 +8,9 @@
 		Through <a href="https://wiki.nikiv.dev/" target="_blank" rel="noreferrer">this</a> wonderful knowledge repository I discovered the world of digital gardens, and this website is my attempt at building something similar. I have the dubious record of having killed any plant I've ever tried to grow, so hopefully the digital seeds I sow here stand a better chance!
 	</p>
 	<p>
+		The Fractal Maṇḍala is a digital garden to chronicle what I learn and build. I develop web products, create historical fiction worlds, dabble in psytrance production and write essays on Indian history and civilizational consciousness. Beginning 2023, I have been scaffolding my way in web-dev using a range of online tutorials, and a healthy usage of chatGPT. I'm loving Sveltekit, and that's my select framework for this site. I haven't really tried SCSS, but I use original SASS because I like not having to use curly braces.
+	</p>
+	<p>
 		In this archival section I've gathered together some of the stuff I've created/written in what now feels like the ancient past.
 	</p>
 	<p>

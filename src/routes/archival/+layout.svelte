@@ -2,7 +2,7 @@
 
 	import { onMount } from 'svelte'
 	import visibilityMode from '$lib/stores/visibility'
-	import { archivalWritings, colonizedWritings } from '$lib/utils/localpulls'
+	import { archivalWritings } from '$lib/utils/localpulls'
 	import { slide } from 'svelte/transition'
 	import { circOut } from 'svelte/easing'
 	let iW:number
@@ -28,7 +28,6 @@
 
 	onMount(async() => {
 		writes = await archivalWritings()
-		cols = await colonizedWritings()
 	})
 
 </script>
@@ -58,26 +57,15 @@
 		{/if}
 		{#if !breakPoint || expandRightbar}
 		<p transition:slide={{ duration: 200, easing: circOut}}><strong><a href="/archival">ARCHIVAL HOME</a></strong></p>
-			<p transition:slide={{ duration: 200, delay: 10, easing: circOut}}>General:</p>
 			{#if writes && writes.length > 0}
 				{#each writes as item, i}
-					<p transition:slide={{ duration: 200, delay: i*20, easing: circOut}}>
+					<p transition:slide={{ duration: 200, delay: i*20, easing: circOut}} class="spline">
 						<a href={item.linkpath}>
 							{item.meta.title}
 						</a>
 					</p>
 				{/each}
 			{/if}
-		<p class="bord-top p-top-16" transition:slide={{ duration: 200, delay: 10, easing: circOut}}><a href="/archival/colonized">Colonized Era:</a></p>
-			{#if cols && cols.length > 0}
-				{#each cols as item, i}
-					<p transition:slide={{ duration: 200, delay: i*20, easing: circOut}}>
-						<a href={item.linkpath}>
-							{item.meta.title}
-						</a>
-					</p>
-				{/each}
-			{/if}	
 		{/if}
 	</div>
 </div>

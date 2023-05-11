@@ -14,8 +14,8 @@
 			<div>📌</div>
 		{/if}
 	</div>
-	<div class="rta-column null">
-		<p>
+	<div class="rta-column">
+		<p class="spline">
 			{conversation.subTitle.length > 50
 				? conversation.subTitle.slice(0, 50) + '...'
 				: conversation.subTitle}
@@ -25,3 +25,10 @@
 		{/if}
 	</div>
 </div>
+
+<style lang="sass">
+
+.spline
+	margin-bottom: 8px
+
+</style>

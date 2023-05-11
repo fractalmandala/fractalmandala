@@ -102,8 +102,8 @@ export async function archivalWritings(){
 	return eachfiled
 }
 
-export async function colonizedWritings(){
-	const allfiles = import.meta.glob('/src/routes/archival/colonized/*.md')
+export async function allVideos(){
+	const allfiles = import.meta.glob('/src/routes/videos/*.md')
 	const filed = Object.entries(allfiles)
 	const eachfiled = await Promise.all(
 		filed.map(async([path, resolver]) => {
@@ -125,15 +125,13 @@ export async function entireProject(){
 	const themeJava = await themeJavascript();
 	const themeGene = await themeGeneral();
 	const archs = await archivalWritings();
-	const colos = await colonizedWritings();
 	
 	const entireItems = [
 		...themeSvelte,
 		...themeSupa,
 		...themeJava,
 		...themeGene,
-		...archs,
-		...colos
+		...archs
 	];
 	
 	return entireItems.map(post => ({

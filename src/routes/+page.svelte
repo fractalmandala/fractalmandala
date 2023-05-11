@@ -25,72 +25,29 @@
 	<script src="./src/lib/utils/prismextras.ts"></script>
 </svelte:head>
 
-
 <div class="rta-column" id="panelone" class:dark={$visibilityMode} class:light={!$visibilityMode}>
-	<img src="/images/mands.webp" alt="mandala"/>
-	<Logo width={width}></Logo>
-	<p class="bord-top p-top-32">
-		is a digital garden to chronicle what I learn and build. I develop web products, create historical fiction worlds, dabble in psytrance production and write essays on Indian history and civilizational consciousness.
-	</p>
-	<p>
-		Beginning 2023, I have been scaffolding my way in web-dev using a range of online tutorials, and a healthy usage of chatGPT. I'm loving Sveltekit, and that's my select framework for this site. I haven't really tried SCSS, but I use original SASS because I like not having to use curly braces.
-	</p>
-	<!--
-	<p>
-		Some places I learn from:
-	</p>
-	<div class="rta-grid grid3">
-		<div class="rta-column">
-			<h6>Web Dev Stuff:</h6>
-			<ul>
-				<li>
-					Joy of Code
-				</li>
-			</ul>
-		</div>
-		<div class="rta-column">
-			<h6>Tech, AI, Cool New Things:</h6>
-		</div>
-		<div class="rta-column">
-			<h6>History, Religion, Philosophy:</h6>
-		</div>
+	<div class="rta-row colgap200 ycenter p-bot-32 headersection bord-bot">
+		<img class="mandalaimage" src="/images/mands.webp" alt="mandala"/>
+		<Logo width={width}></Logo>
 	</div>
-	-->
-	<p>Read my essays on Indian civilizational consciousness <a class="greenlink" href="/essays">here.</a></p>
-	<p>My amateur forays in psytrance production can be grooved to here.</p>
-	<p>Experiments with Midjourney-based storytelling, at the <a class="greenlink" href="/gallery">gallery.</a></p>
-	<p>For the rest, the sidebar on left (menu on mobile) should help.</p>
-	<LogoFMMotif/>
 </div>
 
 <style lang="sass">
 
-#panelone
-	position: relative
-	z-index: 0
-	img
-		position: absolute
-		right: 0
-		top: 0
-		filter: saturate(0.01)
-		z-index: -1
-		opacity: 0.05
-		animation: mandaling 16s ease-in infinite 
-		@media screen and (min-width: 1024px)
-			object-fit: cover
-			height: 280px
-	@media screen and (min-width: 1024px)
-		padding-right: 280px
+.mandalaimage
+	object-fit: cover
+	height: 120px
+	width: 120px
+	transform-origin: center center
+	animation: mandaling 24s infinite alternate-reverse
+
 
 @keyframes mandaling
 	0%
-		filter: saturate(0.01)
-		opacity: 0.05
+		transform: rotate(360deg)
 	50%
-		filter: saturate(1)
-		opacity: 1
+		transform: rotate(0deg)
 	100%
-		filter: saturate(0.01)
-		opacity: 0.05
+		transform: rotate(-360deg)
 
 </style>
