@@ -4,6 +4,7 @@
 	import visibilityMode from '$lib/stores/visibility'
 	import TransitionPage from '$lib/components/TransitionPage.svelte'
 	import MobileIcon from '$lib/components/MobileIcon.svelte'
+	import Searcher from '$lib/components/SearchComponent.svelte'
 	import { dev } from '$app/environment';
 	import { inject } from '@vercel/analytics';
 	import { slide } from 'svelte/transition'
@@ -104,7 +105,10 @@
 <div id="appcontainer" class="rta-grid grid3" class:light={!$visibilityMode} class:dark={$visibilityMode}>
 	<div class="rta-column leftone" class:opened={expandMobilemenu} transition:slide={{ duration: 300, easing: circOut}} data-lenis-prevent>
 		<div class="rta-column leftcontainer">
-			<div class="rta-column dropsection" on:click={() => toggleMenuDrop(4)} on:keydown={fauxfake}>
+			<div class="rta-column">
+				<Searcher/>
+			</div>
+			<div class="rta-column dropsection m-top-16" on:click={() => toggleMenuDrop(4)} on:keydown={fauxfake}>
 				<div class="rta-row ycenter between">
 					<p class="tt-u" class:opened={dropMenu[4]}>Featured</p>
 					<div class="iconchev" class:rotated={dropMenu[4]}>
@@ -327,7 +331,7 @@
 	display: flex
 	justify-content: flex-end
 	align-items: center
-	height: 80px
+	height: 64px
 	cursor: pointer
 	@media screen and (min-width: 769px)
 		display: none	

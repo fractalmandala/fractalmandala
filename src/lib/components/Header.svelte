@@ -35,7 +35,7 @@
 		grid-template-rows: 1fr
 		grid-template-areas: "logo area"
 		width: 100%
-		height: 80px
+		height: 64px
 		align-items: start
 		align-content: start
 		position: fixed
@@ -47,14 +47,14 @@
 		top: 0
 		.logo
 			grid-area: logo
-			height: 80px
+			height: 64px
 			width: 360px
 	@media screen and (max-width: 768px)
 		grid-template-columns: 1fr 40px
 		grid-template-rows: 80px
 		grid-template-areas: "logo icon"
 		width: 100%
-		height: 80px
+		height: 64px
 		align-content: start
 		align-items: start
 		padding-left: 24px
@@ -67,13 +67,13 @@
 
 .header.dark
 	box-shadow: 4px 4px 5px #090909
-	background: #121212
+	border-bottom: 1px solid rgba(255,255,255,0.2)
 
 .logo a
 	display: flex
 	flex-direction: row
 	align-items: center
 	justify-content: flex-start
-	height: 80px
+	height: 64px
 
 </style>

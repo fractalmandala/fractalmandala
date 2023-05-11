@@ -85,3 +85,37 @@ export async function manuscript(){
 	return eachfiled
 }
 
+export async function archivalWritings(){
+	const allfiles = import.meta.glob('/src/routes/archival/writings/*.md')
+	const filed = Object.entries(allfiles)
+	const eachfiled = await Promise.all(
+		filed.map(async([path, resolver]) => {
+			// @ts-ignore
+			const { metadata } = await resolver()
+			const postPath = path.slice(11,-3)
+			return {
+				meta: metadata,
+				linkpath: postPath
+			}
+		})
+	)
+	return eachfiled
+}
+
+export async function colonizedWritings(){
+	const allfiles = import.meta.glob('/src/routes/archival/colonized/*.md')
+	const filed = Object.entries(allfiles)
+	const eachfiled = await Promise.all(
+		filed.map(async([path, resolver]) => {
+			// @ts-ignore
+			const { metadata } = await resolver()
+			const postPath = path.slice(11,-3)
+			return {
+				meta: metadata,
+				linkpath: postPath
+			}
+		})
+	)
+	return eachfiled
+}
+

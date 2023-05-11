@@ -108,8 +108,8 @@
 <style lang="sass">
 
 svg
-	width: 27px
-	height: 27px
+	width: 24px
+	height: 24px
 	margin-right: 12px
 	@media screen and (max-width: 1023px)
 		width: 24px
