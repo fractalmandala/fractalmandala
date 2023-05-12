@@ -20,7 +20,7 @@
 
 <div class="foot rta-column colgap100 ta-l">
 	<small>orbis terrarum est non altus satis</small>
-	<small><a href="/archival/about">2023 | Amritanshu Pandey</a></small>
+	<small><a href="/about">2023 | Amritanshu Pandey</a></small>
 </div>
 
 <style lang="sass">
@@ -32,8 +32,7 @@
 	height: 64px
 	padding: 0 40px
 	background: #171717
-	border-top: 1px solid #272727
-	box-shadow: -4px -6px 10px #090909
+	border-top: 1px solid rgba(255,255,255,0.1)
 	small
 		font-size: 10px
 		text-transform: capitalize
@@ -46,6 +45,9 @@
 				color: #10D56C
 	@media screen and (max-width: 1023px)
 		padding: 0 16px
+		align-items: center
+		small
+			font-size: 12px
 
 
 

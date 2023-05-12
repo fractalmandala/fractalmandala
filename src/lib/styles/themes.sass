@@ -643,7 +643,7 @@ body, html
 	@media screen and (min-width: 1024px)
 		padding-bottom: 16px
 	@media screen and (max-width: 1023px)
-		padding-bottom: 8px
+		padding-bottom: 16px
 
 .p-bot-16-m
 	@media screen and (max-width: 1023px)
@@ -728,21 +728,24 @@ body, html
 			color: var(--green)
 			&::after
 				width: 100%
+	@media screen and (min-width: 1024px)
+		padding-right: 4vw
+		padding-left: 4vw
+		padding-top: 32px
 
 .grid2.stdfix
 	@media screen and (min-width: 1024px)
-		grid-template-columns: 1fr 304px
+		grid-template-columns: 1fr 300px
 		grid-template-areas: "mainone rightone"
-		.mainone
-			padding-right: 4vw
-			h1
-				margin-bottom: 2rem
 		.rightone
-			padding-left: 24px
-			border-left: 1px solid var(--borderline)
-			height: max-content
+			text-align: right
+			height: calc(100vh - 128px)
 			position: sticky
-			top: 128px
+			top: 64px
+			padding-top: 48px
+			padding-right: 24px
+			padding-left: 24px
+			overflow-y: scroll
 			p
 				font-size: 0.8rem
 				cursor: pointer
@@ -751,18 +754,18 @@ body, html
 					color: var(--green)
 			p strong
 				color: var(--opposite)
-	@media screen and (max-width: 1023px)
+	@media screen and (max-width: 1023px) and (min-width: 769px)
 		grid-template-columns: 1fr
 		grid-template-areas: "rightone" "mainone"
-		padding-right: 2vw
+		padding-right: 4vw
+		padding-left: 4vw
 		.rightone
 			grid-area: rightone
 			padding-left: 0
 			padding-right: 0
 			padding-top: 16px
 			position: sticky
-			top: 80px
-			z-index: 800
+			top: 64px
 			background: var(--background)
 			p
 				font-size: 1rem
@@ -774,7 +777,7 @@ body, html
 			p strong
 				color: var(--opposite)
 			.rightmenu
-				margin-bottom: 32px
+				margin-bottom: 16px
 				.iconchev
 					transition: 0.15s
 					svg path
@@ -790,8 +793,187 @@ body, html
 		.mainone
 			grid-area: mainone
 			padding-right: 0
+	@media screen and (max-width: 768px)
+		grid-template-columns: 1fr
+		grid-template-areas: "rightone" "mainone"
+		.rightone
+			grid-area: rightone
+			padding-left: 24px
+			padding-right: 24px
+			position: sticky
+			top: 64px
+			padding-top: 16px
+			padding-bottom: 16px
+			backdrop-filter: blur(20px)
+			transition: 0.5s cubic-bezier(0.635, 0.405, 0.535, 0.035)
+			z-index: 900
+			overflow-y: scroll
+			p
+				font-size: 1rem
+				cursor: pointer
+				padding-left: 24px
+				padding-right: 24px
+				&:hover
+					color: var(--green)
+			p strong
+				color: var(--opposite)
+			.rightmenu
+				.iconchev
+					transition: 0.15s
+				.iconchev.rotated
+					transform: rotate(180deg)
+		.rightone.opened
+			padding-bottom: 16px
+			margin-bottom: 32px
+			border-bottom: 1px solid var(--borderline)
+			.rightmenu
+				margin-bottom: 16px
+		.rightone.movedToTop
+			transform: translateY(-64px)
+		.mainone
+			grid-area: mainone
+			padding-right: 24px
+			padding-left: 24px
+			padding-top: 24px
 
+.grid2.stdfix2
+	@media screen and (min-width: 1024px)
+		grid-template-columns: 1fr 200px
+		grid-template-areas: "mainone rightone"
+		.rightone
+			text-align: right
+			height: calc(100vh - 128px)
+			position: sticky
+			top: 64px
+			padding-top: 48px
+			padding-right: 24px
+			padding-left: 24px
+			overflow-y: scroll
+			p
+				font-size: 0.8rem
+				cursor: pointer
+				color: var(--textone)
+				&:hover
+					color: var(--green)
+			p strong
+				color: var(--opposite)
+	@media screen and (max-width: 1023px) and (min-width: 769px)
+		grid-template-columns: 1fr
+		grid-template-areas: "rightone" "mainone"
+		padding-right: 4vw
+		padding-left: 4vw
+		.rightone
+			grid-area: rightone
+			padding-left: 0
+			padding-right: 0
+			padding-top: 16px
+			position: sticky
+			top: 64px
+			background: var(--background)
+			p
+				font-size: 1rem
+				cursor: pointer
+				padding-left: 24px
+				padding-right: 24px
+				&:hover
+					color: var(--green)
+			p strong
+				color: var(--opposite)
+			.rightmenu
+				margin-bottom: 16px
+				.iconchev
+					transition: 0.15s
+					svg path
+						fill: var(--textone)
+				.iconchev.rotated
+					transform: rotate(180deg)
+					svg path
+						fill: var(--opposite)
+		.rightone.opened
+			padding-bottom: 16px
+			margin-bottom: 32px
+			border-bottom: 1px solid var(--borderline)
+		.mainone
+			grid-area: mainone
+			padding-right: 0
+	@media screen and (max-width: 768px)
+		grid-template-columns: 1fr
+		grid-template-areas: "rightone" "mainone"
+		.rightone
+			grid-area: rightone
+			padding-left: 24px
+			padding-right: 24px
+			position: sticky
+			top: 64px
+			padding-top: 16px
+			padding-bottom: 16px
+			backdrop-filter: blur(20px)
+			transition: 0.5s cubic-bezier(0.635, 0.405, 0.535, 0.035)
+			z-index: 900
+			overflow-y: scroll
+			p
+				font-size: 1rem
+				cursor: pointer
+				padding-left: 24px
+				padding-right: 24px
+				&:hover
+					color: var(--green)
+			p strong
+				color: var(--opposite)
+			.rightmenu
+				.iconchev
+					transition: 0.15s
+				.iconchev.rotated
+					transform: rotate(180deg)
+		.rightone.opened
+			padding-bottom: 16px
+			margin-bottom: 32px
+			border-bottom: 1px solid var(--borderline)
+			.rightmenu
+				margin-bottom: 16px
+		.rightone.movedToTop
+			transform: translateY(-64px)
+		.mainone
+			grid-area: mainone
+			padding-right: 24px
+			padding-left: 24px
+			padding-top: 24px
 
+.stickyboy
+	@media screen and (min-width: 1024px)
+		backdrop-filter: blur(12px)
+		padding-top: 48px
+		position: sticky
+		top: 64px
+		padding-left: 4vw
+		padding-right: 4vw
+		h3
+			margin-bottom: 0
+			margin-top: 0
+	@media screen and (max-width: 1023px) and (min-width: 769px)
+		padding-top: 24px
+
+.gallerycolumn
+	@media screen and (min-width: 1024px)
+		padding-left: 4vw
+		padding-right: 4vw
+		padding-top: 48px
+	@media screen and (max-width: 1023px) and (min-width: 769px)
+		padding-top: 24px
+
+.grid2.stdfix.dark
+	@media screen and (max-width: 768px)
+		.rightone
+			background: rgba(0,0,0,0.7)
+			.rightmenu
+				.iconchev
+					svg path
+						fill: var(--opposite)
+				.iconchev.rotated
+					svg path
+						fill: var(--green)
+				.break899
+					color: var(--opposite)
 
 .greenlink
 	color: #10D56C
@@ -887,3 +1069,55 @@ body, html
 	&:hover
 		color: var(--opposite)
 	
+.snipstyle.dark
+	pre[class*="language-"]
+		border: 1px solid var(--borderline)
+		background: var(--contraster)
+		border-radius: 6px
+		padding: 24px
+		margin-bottom: 24px
+
+.usercol small, .gptcol small
+	margin: 0
+	font-size: 12px
+	font-family: 'Spline Sans', san-serif
+	text-transform: uppercase
+	color: #272727
+
+.gptslot
+	.stickyboy
+		z-index: 1
+
+.usercol
+	text-align: right
+	p
+		font-size: 12px
+		color: var(--textone)
+		font-family: 'Spline Sans', san-serif
+	@media screen and (min-width: 1024px)
+		padding-right: 4vw
+		padding-left: 4vw
+
+.gptcol
+	z-index: 0
+	border-top: 1px solid var(--borderline)
+	border-bottom: 1px solid var(--borderline)
+	small, pre
+		margin: 0
+	pre
+		font-size: 14px
+		color: var(--texttwo)
+		margin: 0
+		letter-spacing: -0.5px
+		white-space: pre-line
+	pre.white
+		color: var(--opposite)
+		code
+			color: var(--opposite)
+
+.gptcol, .usercol
+	padding-top: 8px
+	padding-bottom: 8px
+	@media screen and (max-width: 1023px)
+		padding-top: 16px
+		padding-bottom: 16px

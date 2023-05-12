@@ -57,11 +57,11 @@ export async function formentries(){
 	}
 
 
-export async function newGPT(indexing:number){
+export async function newGPT(title:string){
 		const { data, error } = await supabase
 		.from('amrit-gpt')
 		.select()
-		.eq('indexing', indexing)
+		.eq('title', title)
 		.order('id')
 		if (error) throw new Error(error.message)
 		return data		
@@ -76,7 +76,80 @@ export async function gptTitles(){
 		return data				
 	}
 
-export async function fullGallery(){
+	export async function gptSveltekit(){
+		const { data, error } = await supabase
+		.from('amrit-gpttitles')
+		.select()
+		.eq('theme','sveltekit')
+		.order('nextid')
+		if (error) throw new Error(error.message)
+		return data				
+	}
+
+	export async function gptSupabase(){
+		const { data, error } = await supabase
+		.from('amrit-gpttitles')
+		.select()
+		.eq('theme','supabase')
+		.order('nextid')
+		if (error) throw new Error(error.message)
+		return data				
+	}
+
+	export async function gptAI(){
+		const { data, error } = await supabase
+		.from('amrit-gpttitles')
+		.select()
+		.eq('theme','AI')
+		.order('nextid')
+		if (error) throw new Error(error.message)
+		return data				
+	}
+
+	export async function gptAnimation(){
+		const { data, error } = await supabase
+		.from('amrit-gpttitles')
+		.select()
+		.eq('theme','animation')
+		.order('nextid')
+		if (error) throw new Error(error.message)
+		return data				
+	}
+
+	export async function gptWebui(){
+		const { data, error } = await supabase
+		.from('amrit-gpttitles')
+		.select()
+		.eq('theme','webui')
+		.order('nextid')
+		if (error) throw new Error(error.message)
+		return data				
+	}
+
+	export async function gptDharmastuff(){
+		const { data, error } = await supabase
+		.from('amrit-gpttitles')
+		.select()
+		.eq('theme','dharmastuff')
+		.order('nextid')
+		if (error) throw new Error(error.message)
+		return data				
+	}
+
+	export async function gptOther(){
+		const { data, error } = await supabase
+		.from('amrit-gpttitles')
+		.select()
+		.eq('theme','other')
+		.order('nextid')
+		if (error) throw new Error(error.message)
+		return data				
+	}
+
+
+
+
+	export async function fullGallery(){
 		const { data, error } = await supabase
 		.from('amrit-gallery')
 		.select()

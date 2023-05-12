@@ -1,7 +1,7 @@
 import supabase from '$lib/utils/supabase'
 
 export async function themeSveltekit(){
-	const allfiles = import.meta.glob('/src/routes/themes/webdev/sveltekit/*.md')
+	const allfiles = import.meta.glob('/src/routes/sveltekit/*.md')
 	const filed = Object.entries(allfiles)
 	const eachfiled = await Promise.all(
 		filed.map(async([path, resolver]) => {
@@ -18,7 +18,7 @@ export async function themeSveltekit(){
 }
 
 export async function themeSupabase(){
-	const allfiles = import.meta.glob('/src/routes/themes/webdev/supabase/*.md')
+	const allfiles = import.meta.glob('/src/routes/supabase/*.md')
 	const filed = Object.entries(allfiles)
 	const eachfiled = await Promise.all(
 		filed.map(async([path, resolver]) => {
@@ -35,7 +35,7 @@ export async function themeSupabase(){
 }
 
 export async function themeJavascript(){
-	const allfiles = import.meta.glob('/src/routes/themes/webdev/javascript/*.md')
+	const allfiles = import.meta.glob('/src/routes/javascript/*.md')
 	const filed = Object.entries(allfiles)
 	const eachfiled = await Promise.all(
 		filed.map(async([path, resolver]) => {
@@ -52,7 +52,7 @@ export async function themeJavascript(){
 }
 
 export async function themeGeneral(){
-	const allfiles = import.meta.glob('/src/routes/themes/webdev/general/*.md')
+	const allfiles = import.meta.glob('/src/routes/webui/*.md')
 	const filed = Object.entries(allfiles)
 	const eachfiled = await Promise.all(
 		filed.map(async([path, resolver]) => {
@@ -86,7 +86,41 @@ export async function manuscript(){
 }
 
 export async function archivalWritings(){
-	const allfiles = import.meta.glob('/src/routes/archival/writings/*.md')
+	const allfiles = import.meta.glob('/src/routes/writings/archival/*.md')
+	const filed = Object.entries(allfiles)
+	const eachfiled = await Promise.all(
+		filed.map(async([path, resolver]) => {
+			// @ts-ignore
+			const { metadata } = await resolver()
+			const postPath = path.slice(11,-3)
+			return {
+				meta: metadata,
+				linkpath: postPath
+			}
+		})
+	)
+	return eachfiled
+}
+
+export async function archivalHistory(){
+	const allfiles = import.meta.glob('/src/routes/writings/history/*.md')
+	const filed = Object.entries(allfiles)
+	const eachfiled = await Promise.all(
+		filed.map(async([path, resolver]) => {
+			// @ts-ignore
+			const { metadata } = await resolver()
+			const postPath = path.slice(11,-3)
+			return {
+				meta: metadata,
+				linkpath: postPath
+			}
+		})
+	)
+	return eachfiled
+}
+
+export async function archivalMandala(){
+	const allfiles = import.meta.glob('/src/routes/writings/mandala/*.md')
 	const filed = Object.entries(allfiles)
 	const eachfiled = await Promise.all(
 		filed.map(async([path, resolver]) => {
@@ -125,31 +159,34 @@ export async function entireProject(){
 	const themeJava = await themeJavascript();
 	const themeGene = await themeGeneral();
 	const archs = await archivalWritings();
+	const hists = await archivalHistory();
+	const mands = await archivalMandala();
 	
 	const entireItems = [
 		...themeSvelte,
 		...themeSupa,
 		...themeJava,
 		...themeGene,
-		...archs
+		...archs,
+		...hists,
+		...mands
 	];
 	
 	return entireItems.map(post => ({
 		heading: post.meta.title,
-		tags: post.meta.tags,
 		url: post.linkpath
 	}));
 }
 
 export async function gptCombiner(){
 		const { data, error } = await supabase
-		.from('vw-gpttitles')
+		.from('amrit-gpttitles')
 		.select()
-		.order('indexing')
+		.order('nextid')
 		if (error) throw new Error(error.message)
 		return data.map(item => ({
 			heading: item.title,
-			url: `/gptpro/${item.indexing}`
+			url: `/gpt/${item.theme}/${item.indexing}`
 		}));			
 	}
 

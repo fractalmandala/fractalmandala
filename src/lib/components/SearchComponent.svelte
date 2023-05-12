@@ -1,6 +1,8 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte'
+	import { browser } from '$app/environment';
+	import sidebarMode from '$lib/stores/searchbar'
 	import visibilityMode from '$lib/stores/visibility'
   import type { SearchItem } from '$lib/types/SearchItem'
 	import { combinedProject } from '$lib/utils/localpulls'
@@ -46,6 +48,16 @@
 		resultsWindow = false
 	}
 
+	function toggleSidebar() {
+		if (browser) {
+			sidebarMode.update((mode) => {
+				const newMode = !mode;
+				localStorage.setItem('sidebarMode', JSON.stringify(newMode));
+				return newMode;
+			});
+		}
+	}
+
 	$: if ( searchResults.length > 0 ) {
 		resultsWindow = true
 	} else { 
@@ -70,8 +82,8 @@
 	/>
 </form>
 {#if searchResults.length && resultsWindow}
-	<small class="p-top-16 is-green point tt-u" on:click={closeWindow} on:keydown={fauxfake}>Close</small>
-  <div class="search-results rta-column bord-bot rowgap100" data-lenis-prevent>
+  <div class="search-results rta-column bord-bot rowgap100" data-lenis-prevent class:light={!$visibilityMode} class:dark={$visibilityMode} on:click={toggleSidebar} on:keydown={fauxfake}>
+		<p class="p-top-16 is-green point tt-u" on:click={closeWindow} on:keydown={fauxfake}>Close</p>
     {#each searchResults as result}
       <p class="tt-c spline">
 				<a href={result.url}>
@@ -88,31 +100,46 @@
 	font-size: 12px
 	margin-top: 0
 	margin-bottom: 4px
+	text-align: right
 	&:hover
 		color: var(--green)
+	@media screen and (max-width: 768px)
+		font-size: 16px
 
 p.spline
 	margin-bottom: 0px
 	margin-top: 0
 
 .comp-search
+	overflow-y: scroll
+	width: 100%
+	text-align: right
 	input
+		text-align: right
 		font-family: 'Spline Sans', sans-serif
 
-.dark.comp-search
+.dark
 	input
 		background: none
 		border: 1px solid var(--borderline)
-		padding: 6px 0 6px 4px
+		padding: 6px 4px 6px 4px
 		border-radius: 6px
 		box-shadow: 8px 7px 12px #010101
 		color: var(--opposite)
 		outline: none
 		&::placeholder
-			text-transform: uppercase
+			text-transform: lowercase
 			color: var(--textone)
 		&:focus
 			border: 1px solid var(--borderline)
 			border-radius: 6px
+	@media screen and (max-width: 768px)
+		border: 1px solid white
+		border-radius: 8px
+		color: white
+		&::placeholder
+			color: white
+		.is-green
+			color: var(--green)
 
 </style>

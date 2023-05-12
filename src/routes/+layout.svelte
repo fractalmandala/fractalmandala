@@ -1,31 +1,45 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte'
+	import { browser } from '$app/environment';
 	import visibilityMode from '$lib/stores/visibility'
+	import sidebarMode from '$lib/stores/searchbar'
 	import TransitionPage from '$lib/components/TransitionPage.svelte'
-	import MobileIcon from '$lib/components/MobileIcon.svelte'
 	import Searcher from '$lib/components/SearchComponent.svelte'
+	import MobileIcon from '$lib/icons/Menu.svelte'
+	import { themeSveltekit, themeSupabase, themeJavascript, themeGeneral } from '$lib/utils/localpulls'
 	import { dev } from '$app/environment';
 	import { inject } from '@vercel/analytics';
 	import { slide } from 'svelte/transition'
-	import { circOut } from 'svelte/easing'
 	import Header from '$lib/components/Header.svelte'
 	import Footer from '$lib/components/Footer.svelte'
 	import Lenis from '@studio-freight/lenis'
+	import Search from '$lib/icons/Search.svelte'
 	import '$lib/styles/themes.sass'
 	import '$lib/styles/prism.css'
 
 	let y:number
-	let isKnowing = false
 	let screenWidth:number
 	let breakPoint:boolean
 	let appearance:number = 50
 	let dropMenu = Array(10).fill(false)
+	let minDrop = Array(10).fill(false)
 	let fake = false
 	let expandMobilemenu = false
+	let sveltes:any //to store sveltekit posts
+	let supas:any //to store supabase posts
+	let javas:any //to store javascript posts
+	let webgens:any //to store general webui posts
 
-	function toggleKnowing(){
-		isKnowing = !isKnowing
+
+	function toggleSidebar() {
+		if (browser) {
+			sidebarMode.update((mode) => {
+				const newMode = !mode;
+				localStorage.setItem('sidebarMode', JSON.stringify(newMode));
+				return newMode;
+			});
+		}
 	}
 
 	function toggleMobilemenu(){
@@ -49,7 +63,11 @@
 				dropMenu[i] = false
 			}
 		}
+		if ( anySubItem === true ) {
+			minDrop.fill(false)
+		}
 	}
+
 
 	$: if ( screenWidth <= 768 ) {
 		breakPoint = true
@@ -62,6 +80,8 @@
 	} else {
 		appearance = y
 	}
+
+	$: anySubItem = minDrop.some(item => item)
 
 	onMount(async() => {
 		const lenis = new Lenis({
@@ -77,7 +97,11 @@
 		lenis.raf(time)
 		requestAnimationFrame(raf)
 		}
-		requestAnimationFrame(raf)	
+		requestAnimationFrame(raf);
+		sveltes = await themeSveltekit();
+		supas = await themeSupabase();
+		javas = await themeJavascript();
+		webgens = await themeGeneral();
 	})
 
 	export let data
@@ -101,238 +125,190 @@
 	<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Spline+Sans+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Spline+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </svelte:head>
 
-<Header>
-	<div class="mobileicon" slot="mobileicon" on:click={toggleMobilemenu} on:keydown={fauxfake}>
-		<MobileIcon></MobileIcon>
-	</div>
-</Header>
 
-<div id="appcontainer" class="rta-grid grid3" class:light={!$visibilityMode} class:dark={$visibilityMode}>
-	<div class="rta-column ytop leftone" class:opened={expandMobilemenu} transition:slide={{ duration: 300, easing: circOut}}>
-		<div class="rta-column ytop leftcontainer">
-			<div class="rta-column ytop searcher">
-				<Searcher/>
-			</div>
-			{#if !dropMenu[7]}
-			<div class="rta-column" transition:slide={{ duration: 340, easing: circOut}}>
-			<div class="rta-column dropsection m-top-16" on:click={() => toggleMenuDrop(4)} on:keydown={fauxfake}>
-				<div class="rta-row ycenter between">
-					<p class="tt-u" class:opened={dropMenu[4]}>Featured</p>
-					<div class="iconchev" class:rotated={dropMenu[4]}>
-						<svg width="13" height="9" viewBox="0 0 13 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M2.66345 0.187622L0.413452 2.43762L6.41345 8.43762L12.4135 2.43762L10.1635 0.187622L6.41345 3.93762L2.66345 0.187622Z" fill="black"/>
-						</svg>
-					</div>
-				</div>	
-				{#if dropMenu[4]}
-					<div class="rta-column insidedrop p-top-16" transition:slide={{ duration: 200, easing: circOut}} on:click={toggleMobilemenu} on:keydown={fauxfake}>
-						<p><a href="/themes/design/components">Components Library</a></p>
-						<p>Bṛhat Open Library</p>
-						<p>Synaptic Reconnection</p>
-						<p><a href="/manuscript">Fractal Maṇḍala Book</a></p>
-					</div>
-				{/if}
-			</div>
-			<div class="rta-column dropsection" on:click={() => toggleMenuDrop(5)} on:keydown={fauxfake}>
-				<div class="rta-row ycenter between">
-					<p class="tt-u" class:opened={dropMenu[5]}>My Work(s)</p>
-					<div class="iconchev" class:rotated={dropMenu[5]}>
-						<svg width="13" height="9" viewBox="0 0 13 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M2.66345 0.187622L0.413452 2.43762L6.41345 8.43762L12.4135 2.43762L10.1635 0.187622L6.41345 3.93762L2.66345 0.187622Z" fill="black"/>
-						</svg>
-					</div>
-				</div>
-				{#if dropMenu[5]}
-					<div class="rta-column insidedrop p-top-16" transition:slide={{ duration: 200, easing: circOut}} on:click={toggleMobilemenu} on:keydown={fauxfake}>
-						<p><a href="/essays">FM Essays</a></p>
-						<p><a href="/gallery">Gallery</a></p>
-						<p><a href="/videos">Videos</a></p>
-					</div>
-				{/if}
-			</div>
-			<div class="rta-column dropsection" on:click={() => toggleMenuDrop(1)} on:keydown={fauxfake}>
-				<div class="rta-row ycenter between">
-					<p class="tt-u" class:opened={dropMenu[1]}>Web Dev</p>
-					<div class="iconchev" class:rotated={dropMenu[1]}>
-						<svg width="13" height="9" viewBox="0 0 13 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M2.66345 0.187622L0.413452 2.43762L6.41345 8.43762L12.4135 2.43762L10.1635 0.187622L6.41345 3.93762L2.66345 0.187622Z" fill="black"/>
-						</svg>
-					</div>
-				</div>
-				{#if dropMenu[1]}
-					<div class="rta-column insidedrop p-top-16" transition:slide={{ duration: 200, easing: circOut}} on:click={toggleMobilemenu} on:keydown={fauxfake}>
-						<p><a href="/themes/webdev/sveltekit">Sveltekit</a></p>
-						<p><a href="/themes/webdev/supabase">Supabase</a></p>
-						<p><a href="/themes/webdev/javascript">Javascript/TS</a></p>
-						<p><a href="/themes/webdev/general">General</a></p>
-						<p><a href="/themes/webdev">About</a></p>
-					</div>
-				{/if}
-			</div>
-			<div class="rta-column dropsection" on:click={() => toggleMenuDrop(2)} on:keydown={fauxfake}>
-				<div class="rta-row ycenter between">
-					<p class="tt-u" class:opened={dropMenu[2]}>Design</p>
-					<div class="iconchev" class:rotated={dropMenu[2]}>
-						<svg width="13" height="9" viewBox="0 0 13 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M2.66345 0.187622L0.413452 2.43762L6.41345 8.43762L12.4135 2.43762L10.1635 0.187622L6.41345 3.93762L2.66345 0.187622Z" fill="black"/>
-						</svg>
-					</div>
-				</div>		
-				{#if dropMenu[2]}
-					<div class="rta-column insidedrop p-top-16" transition:slide={{ duration: 200, easing: circOut}} on:click={toggleMobilemenu} on:keydown={fauxfake}>
-						<p><a href="/themes/design">How it Started</a></p>
-						<p><a href="/themes/design/rainmeter">Rainmeter</a></p>
-						<p><a href="/themes/design/maps">Maps</a></p>
-						<p><a href="/themes/design/components">Components Library</a></p>
-					</div>
-				{/if}	
-			</div>
-			<div class="rta-column dropsection" on:click={() => toggleMenuDrop(3)} on:keydown={fauxfake}>
-			<div class="rta-row ycenter between">
-				<p class="tt-u" class:opened={dropMenu[3]}>Site Links</p>
-				<div class="iconchev" class:rotated={dropMenu[3]}>
-					<svg width="13" height="9" viewBox="0 0 13 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+<div class="myappbox" class:light={!$visibilityMode} class:dark={$visibilityMode}>
+<div class="rta-column headerbox">
+	<Header>
+		<div class="mobileicon" slot="mobileicon" on:click={toggleMobilemenu} on:keydown={fauxfake}>
+			<MobileIcon></MobileIcon>
+		</div>
+		<div class="searchslot" slot="search" on:click={toggleSidebar} on:keydown={fauxfake}>
+			<Search/>
+		</div>
+	</Header>
+</div>
+<div class="pagebox">
+	<div class="leftone" class:leftsidebar={expandMobilemenu}>
+		<div class="leftsticky">
+		<div class="rta-row ycenter between null p-bot-16 point" on:click={() => toggleMenuDrop(1)} on:keydown={fauxfake}>
+			<p class="tt-u" class:opened={dropMenu[1]}>Writings</p>
+			<div class="iconchev" class:rotated={dropMenu[1]}>
+				<svg width="13" height="9" viewBox="0 0 13 9" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M2.66345 0.187622L0.413452 2.43762L6.41345 8.43762L12.4135 2.43762L10.1635 0.187622L6.41345 3.93762L2.66345 0.187622Z" fill="black"/>
-					</svg>
-				</div>
-			</div>		
-			{#if dropMenu[3]}
-			<div class="rta-column insidedrop p-top-16" transition:slide={{ duration: 200, easing: circOut}} on:click={toggleMobilemenu} on:keydown={fauxfake}>
-				<p><a href="/gptpro">GPT</a></p>
-				<p><a href="/play">Play</a></p>
+				</svg>
 			</div>
-			{/if}	
-			</div>
-			<div class="rta-column dropsection" on:click={() => toggleMenuDrop(6)} on:keydown={fauxfake}>
-				<div class="rta-row ycenter between">
-				<p class="tt-u" class:opened={dropMenu[6]}>Archival</p>
-				<div class="iconchev" class:rotated={dropMenu[6]}>
-					<svg width="13" height="9" viewBox="0 0 13 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+		</div>	
+		{#if dropMenu[1]}
+		<div class="rta-column rowgap100 null bord-bot p-bot-16" transition:slide={{ duration: 200, axis: 'y' }}>
+			<p class="spline"><a href="/writings/mandala">Maṇḍala</a></p>
+			<p class="spline"><a href="/writings/history">History</a></p>
+			<p class="spline"><a href="/writings/archival">Archival</a></p>
+		</div>
+		{/if}
+		<div class="rta-row ycenter between null p-bot-16 point p-top-16" on:click={() => toggleMenuDrop(2)} on:keydown={fauxfake}>
+			<p class="tt-u" class:opened={dropMenu[2]}>Web Dev</p>
+			<div class="iconchev" class:rotated={dropMenu[2]}>
+				<svg width="13" height="9" viewBox="0 0 13 9" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M2.66345 0.187622L0.413452 2.43762L6.41345 8.43762L12.4135 2.43762L10.1635 0.187622L6.41345 3.93762L2.66345 0.187622Z" fill="black"/>
-					</svg>
-				</div>
-				</div>		
-				{#if dropMenu[6]}
-				<div class="rta-column insidedrop p-top-16" transition:slide={{ duration: 200, easing: circOut}} on:click={toggleMobilemenu} on:keydown={fauxfake}>
-				<p><a href="/archival/writings">General Writings</a></p>
-				<p><a href="/archival/history">History</a></p>
-				<p><a href="/archival/ancient">Ancient Stuff</a></p>
-				</div>
-				{/if}	
+				</svg>
 			</div>
+		</div>	
+		{#if dropMenu[2]}
+		<div class="rta-column rowgap100 null bord-bot p-bot-16" transition:slide={{ duration: 200, axis: 'y' }}>
+			<p class="spline"><a href="/sveltekit">Sveltekit</a></p>
+			<p class="spline"><a href="/supabase">Supabase</a></p>
+			<p class="spline"><a href="/javascript">Javascript/TS</a></p>
+			<p class="spline"><a href="/webui">UI</a></p>
+		</div>
+		{/if}
+		<div class="rta-row ycenter between null p-bot-16 point p-top-16" on:click={() => toggleMenuDrop(3)} on:keydown={fauxfake}>
+			<p class="tt-u" class:opened={dropMenu[3]}>Chat GPT</p>
+			<div class="iconchev" class:rotated={dropMenu[3]}>
+				<svg width="13" height="9" viewBox="0 0 13 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M2.66345 0.187622L0.413452 2.43762L6.41345 8.43762L12.4135 2.43762L10.1635 0.187622L6.41345 3.93762L2.66345 0.187622Z" fill="black"/>
+				</svg>
 			</div>
-			{/if}
-			<div class="rta-column dropsection" on:click={() => toggleMenuDrop(7)} on:keydown={fauxfake} transition:slide={{ duration: 340, easing: circOut}}>
-				<div class="rta-row ycenter between">
-					<p class="tt-u" class:opened={dropMenu[7]}>Knowledge</p>
-					<div class="iconchev" class:rotated={dropMenu[7]}>
-						<svg width="13" height="9" viewBox="0 0 13 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M2.66345 0.187622L0.413452 2.43762L6.41345 8.43762L12.4135 2.43762L10.1635 0.187622L6.41345 3.93762L2.66345 0.187622Z" fill="black"/>
-						</svg>
-					</div>
-				</div>
-				{#if dropMenu[7]}
-				<div class="rta-column insidedrop p-top-16" transition:slide={{ duration: 200, easing: circOut}} on:click={toggleMobilemenu} on:keydown={fauxfake}>
-				<p><a href="/archival/writings">General Writings</a></p>
-				<p><a href="/archival/museo">Musings</a></p>
-				<p><a href="/archival/ancient">Ancient Stuff</a></p>
-				</div>
-				{/if}							
-			</div>
+		</div>	
+		{#if dropMenu[3]}
+		<div class="rta-column rowgap100 null bord-bot p-bot-16" transition:slide={{ duration: 200, axis: 'y' }}>
+			<p class="spline"><a href="/gpt/sveltekit">Sveltekit</a></p>
+			<p class="spline"><a href="/gpt/supabase">Supabase</a></p>
+			<p class="spline"><a href="/gpt/webui">UI</a></p>
+			<p class="spline"><a href="/gpt/animation">Animation</a></p>
+			<p class="spline"><a href="/gpt/dharmastuff">Dharmastuff</a></p>
+			<p class="spline"><a href="/gpt/ai">AI</a></p>
+			<p class="spline"><a href="/gpt/other">Other</a></p>
+		</div>
+		{/if}
+		<div class="rta-row ycenter between null p-bot-16 point p-top-16">
+			<p class="tt-u"><a href="/gallery">Gallery</a></p>
+		</div>	
+		<div class="rta-row ycenter between null p-bot-16 point p-top-16">
+			<p class="tt-u"><a href="/videos">Videos</a></p>
+		</div>	
 		</div>
 	</div>
-	{#key data.pathname}
-	<TransitionPage>
-	<div class="rta-column midone">
-		<slot></slot>
+	<div class="midone">
+		{#key data.pathname}
+			<TransitionPage>
+				<slot/>
+			</TransitionPage>
+		{/key}
 	</div>
-	</TransitionPage>
-	{/key}
+</div>
+<div class="rta-column footerbox">
+	<Footer/>
+</div>
 </div>
 
-<Footer></Footer>
 
 <style lang="sass">
 
-.searcher
+.searchingbox
+	top: 64px
+	right: 0
+	position: fixed
+	height: calc(100vh - 64px)
+	width: 300px
+	z-index: 900
 	overflow-y: scroll
+	padding: 24px
 
-.grid3
-	transition: 0.3s ease
-	@media screen and (min-width: 769px)
-		grid-template-areas: "leftone midone"
-		grid-template-columns: 296px 1fr
-		.leftone
-			border-right: 1px solid rgba(255,255,255,0.1)
-			padding-left: 24px
-			padding-right: 24px
-			background: rgba(7,7,7,0.71)
-			height: 100vh
-			position: sticky
-			top: 0
-			.leftcontainer
-				height: max-content
-				position: sticky
-				top: 128px
-		.midone
-			padding-left: 4vw
-			padding-top: 64px
-			padding-right: 24px
-			padding-bottom: 64px
-	@media screen and (max-width: 768px)
-		grid-template-areas: "midone"
-		grid-template-columns: 1fr
-		position: relative
-		.leftone
-			display: none
-			transition: 0.15s
-		.leftone.opened
-			transition: 0.15s
-			position: absolute
-			display: flex
-			flex-direction: column
-			top: 0
-			left: 0
-			width: 100%
-			height: max-content
-			z-index: 900
-			background: var(--background)
-			border-bottom: 1px solid var(--borderline)
-			padding-top: 128px
-			padding-bottom: 64px
-			padding-left: 24px
-			padding-right: 24px
-		.midone
-			padding-left: 4vw
-			padding-top: 80px
-			padding-right: 24px
-			padding-bottom: 64px
+.searchingbox::-webkit-scrollbar
+	width: 2px
+.searchingbox::-webkit-scrollbar-thumb
+	background: #10D56C
 
-.grid3.dark
-	background-color: hsla(0,0%,7%,1)
-	transition: 0.3s ease
-	background-image: radial-gradient(at 50% 01%, hsla(130,90%,6%,0.75) 0px, transparent 50%), radial-gradient(at 0% 0%, hsla(0,0%,2%,1) 0px, transparent 100%)
+.dark.searchingbox
+	background: rgba(0,0,0,0.7)
+	backdrop-filter: blur(10px)
 
-.grid3.light
-	background-color: hsla(0,0%,100%,1)
-	transition: 0.3s ease
-	background-image: radial-gradient(at 56% 96%, hsla(130,100%,48%,0.56) 0px, transparent 50%), radial-gradient(at 0% 0%, hsla(0,0%,100%,1) 0px, transparent 50%)
-
-#appcontainer
+.myappbox
+	display: flex
+	flex-direction: column
 	box-sizing: border-box
-	margin: 0
 	padding: 0
+	margin: 0
+	gap: 0
+	min-height: 100vh
 	width: 100vw
 
-.dropsection
-	padding-top: 12px
-	padding-bottom: 12px
-	cursor: pointer
-	.tt-u
-		margin: 0
-		color: var(--textone)
-		&:hover
-			color: var(--green)
+.headerbox
+	height: 64px
+	position: sticky
+	top: 0
+	z-index: 999
+
+.dark
+	.headerbox
+		background: rgba(7,7,7,0.71)
+
+.footerbox
+	height: 64px
+
+.pagebox
+	min-height: calc(100vh - 128px)
+	display: grid
+	grid-auto-flow: row
+	@media screen and (min-width: 769px)
+		grid-template-columns: 296px 1fr
+		grid-template-areas: "leftone midone"
+		.leftone
+			grid-area: leftone
+			width: 296px
+			border-right: 1px solid rgba(255,255,255,0.1)
+			background: rgba(7,7,7,0.71)
+			padding-left: 24px
+			padding-right: 24px
+			padding-top: 48px
+			height: 100%
+			.leftsticky
+				height: max-content
+				position: sticky
+				top: 112px
+			.spline
+				width: max-content
+		.midone
+			grid-area: midone
+	@media screen and (max-width: 768px)
+		grid-template-columns: 1fr
+		grid-template-areas: midone
+		.leftone
+			display: none
+		.midone
+			grid-one: midone
+		.leftone.leftsidebar
+			display: flex
+			flex-direction: column
+			position: fixed
+			top: 0
+			left: 0
+			width: 100vw
+			height: 100vh
+			padding-top: 160px
+			padding-left: 24px
+			padding-right: 24px
+			overflow-y: scroll
+			z-index: 900
+
+.leftone, .leftone.leftsidebar
+	transition: 0.4s ease
+
+.dark
+	.leftone.leftsidebar
+		@media screen and (max-width: 768px)
+			background: rgba(0,0,0,0.8)
+			backdrop-filter: blur(20px)
 
 .iconchev
 	transition: 0.15s
@@ -344,34 +320,40 @@
 	svg path
 		fill: var(--opposite)
 
-.dropsection
+.tt-u.opened
+	color: var(--green)
+
+.point
 	&:hover
+		p
+			color: var(--opposite)
 		.iconchev
 			svg path
 				fill: var(--green)
 
-.tt-u.opened
-	color: var(--opposite)
-
-.insidedrop p
-	font-family: 'Spline Sans', sans-serif
+.spline
 	cursor: pointer
-	color: var(--texttwo)
-	margin-bottom: 8px
+	position: relative
+	color: var(--opposite)
 	&:hover
-		color: var(--green)
+		&::after
+			width: 100%
+			margin-left: 0
+	&::after
+		position: absolute
+		bottom: 0
+		left: 0
+		width: 0%
+		height: 1px 
+		background: var(--green)
+		transition: 0.15s
+		content: ''
+		margin-left: 50%
 
 .mobileicon
-	display: flex
-	justify-content: flex-end
-	align-items: center
-	height: 64px
-	cursor: pointer
 	@media screen and (min-width: 769px)
-		display: none	
+		display: none
 	@media screen and (max-width: 768px)
-		width: 40px
+		margin-left: 8px
 
 </style>
-
-

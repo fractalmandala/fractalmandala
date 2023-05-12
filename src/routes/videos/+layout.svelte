@@ -5,6 +5,10 @@
 	import { allVideos } from '$lib/utils/localpulls'
 	import { slide } from 'svelte/transition'
 	import { circOut } from 'svelte/easing'
+	let y:number
+	let isInvisible = false
+	let mouseY:number
+	let latestScrollY:number
 	let iW:number
 	let breakPoint:boolean
 	let fake = false
@@ -26,19 +30,38 @@
 		breakPoint = false
 	}
 
+	$: {
+		if ( y > 100 && y > latestScrollY ) {
+			isInvisible = true
+		} else {
+			isInvisible = false
+		}
+		latestScrollY = y
+	}
+
 	onMount(async() => {
-		vids = await allVideos()
+		vids = await allVideos();
+		const handleMouse = (event: {clientY: number;}) => {
+			mouseY = event.clientY
+			if ( mouseY <= 128 ) {
+				isInvisible = false
+			} 
+		}
+		window.addEventListener('mousemove', handleMouse)
+		return() => {
+			window.removeEventListener('mousemove',handleMouse)
+		}
 	})	
 
 </script>
 
-<svelte:window bind:outerWidth={iW}/>
+<svelte:window bind:outerWidth={iW} bind:scrollY={y}/>
 
 <div class="rta-grid grid2 stdfix" class:dark={$visibilityMode} class:light={!$visibilityMode}>
 	<div class="rta-column mainone">
 		<slot></slot>
 	</div>
-	<div class="rta-column rightone" class:opened={expandRightbar}>
+	<div class="rta-column rightone" class:opened={expandRightbar} class:movedToTop={isInvisible} data-lenis-prevent>
 		{#if breakPoint}
 		<div class="rta-row ycenter between rightmenu" on:click={toggleRightbar} on:keydown={fauxfake}>
 			<button class="break899">
@@ -56,11 +79,11 @@
 		</div>
 		{/if}
 		{#if !breakPoint || expandRightbar}
-			<div class="holdsarchive" data-lenis-prevent>
-			<p transition:slide={{ duration: 200, easing: circOut}}><strong><a href="/videos">VIDEOS HOME</a></strong></p>
+			<div class="rta-column" transition:slide={{ easing: circOut }} data-lenis-prevent>
+			<p class="tt-u"><strong><a href="/videos">VIDEOS HOME</a></strong></p>
 			{#if vids && vids.length > 0}
 				{#each vids as item, i}
-					<p transition:slide={{ duration: 200, delay: i*20, easing: circOut}} class="spline">
+					<p class="spline">
 						<a href="{item.linkpath}">
 							{item.meta.title}
 						</a>
@@ -74,18 +97,10 @@
 
 <style lang="sass">
 
-.holdsarchive
+
+.spline
 	@media screen and (min-width: 1024px)
-		height: calc(100vh - 200px)
-		overflow-y: scroll
+		text-align: right
 
-.holdsarchive::-webkit-scrollbar
-	width: 1px
-
-.holdsarchive::-webkit-scrollbar-track
-	width: 1px
-
-.holdsarchive::-webkit-scrollbar-thumb
-	background: #10D56C
 
 </style>

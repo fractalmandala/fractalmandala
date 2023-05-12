@@ -7,9 +7,6 @@
 	font-size: 12px;
 }
 
-#docsinside .hljs {
-	background: #171717
-}
 
 .gptchatboard .hljs, .broGPT .hljs {
 	font-family: 'Spline Sans', sans-serif;

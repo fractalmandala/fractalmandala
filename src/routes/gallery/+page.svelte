@@ -11,8 +11,10 @@
 
 </script>
 
-<div class="rta-column" class:light={!$visibilityMode} class:dark={$visibilityMode}>
+<div class="rta-column stickyboy" class:light={!$visibilityMode} class:dark={$visibilityMode}>
 	<h3 class="bord-bot p-bot-16">Midjourney Gallery</h3>
+</div>
+<div class="rta-column snipstyle p-bot-64" class:light={!$visibilityMode} class:dark={$visibilityMode}>
 	<p>
 		Midjourney is awesome! And anyone prancing about with the "AI art is not true art" has just spent way too long being in very high opinion of themselves, combined with an inner Luddite they may or may not recognize.
 		One may well have a dislike for it, or simply prefer to not engage at all. But to declare on behalf of the rest of humanity that it isn't true art is frankly, ignorant and silly.
