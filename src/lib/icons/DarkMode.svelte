@@ -1,6 +1,7 @@
 <script lang="ts">
 
 	import { browser } from '$app/environment';
+	import { themeMode } from '$lib/stores/globalstores'
 	import visibilityMode from '$lib/stores/visibility';
 	let fake = false;
 
@@ -10,9 +11,9 @@
 
 	function toggleVisibility() {
 		if (browser) {
-			visibilityMode.update((mode) => {
+			themeMode.update((mode) => {
 				const newMode = !mode;
-				localStorage.setItem('visibilityMode', JSON.stringify(newMode));
+				localStorage.setItem('themeMode', JSON.stringify(newMode));
 				return newMode;
 			});
 		}

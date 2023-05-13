@@ -265,7 +265,7 @@
 	});
 </script>
 
-<div class="rta-column" class:light={!$visibilityMode} class:dark={$visibilityMode}>
+<div class="rta-column rowgap200" class:light={!$visibilityMode} class:dark={$visibilityMode}>
 	<BotsListView onBotClick={handleBotClick} />
 	<div class="rta-column rowgap400">
 		{#if currentSelectedConversation}	
@@ -303,7 +303,6 @@
 	<ConversationSettingsModal
 		onUpdate={handleOpenAIControlsUpdateForConversation}
 		controls={currentSelectedConversation?.controls}
-		onClose={() => (isConversationSettingsOpen = false)}
 	/>
 {/if}
 

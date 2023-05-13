@@ -1,16 +1,26 @@
 <script lang="ts">
 
-	import visibilityMode from '$lib/stores/visibility'	
 
+	import { themeMode } from '$lib/stores/globalstores'
+	import GPTBox from '$lib/agents/GPTBox.svelte'
+	let fake = false
+
+	function fauxfake(){
+		fake = !fake
+	}
 
 </script>
 
-<div class="rta-column stickyboy" class:dark={$visibilityMode} class:light={!$visibilityMode}>
-	<h3 class="bord-bot p-bot-16">
-		GPT
-	</h3>
-</div>
-<div class="rta-column snipstyle p-bot-64" class:dark={$visibilityMode} class:light={!$visibilityMode}>
+<svelte:head>
+<title>The Fractal Maṇḍala</title>
+<meta name="description" content="tech, dev, design, dharma"/>
+</svelte:head>
 
+
+<div class="padl1 sides" class:dark={$themeMode} class:light={!$themeMode}>
+
+	
+			<GPTBox></GPTBox>
+		
 </div>
 

@@ -1,7 +1,8 @@
 <script lang="ts">
 
 	import { onMount, afterUpdate } from 'svelte'
-	import visibilityMode from '$lib/stores/visibility'
+	import PageTitle from '$lib/components/PageTitle.svelte'
+	import { themeMode, breakOne, breakTwo } from '$lib/stores/globalstores'
 	import Logo from '$lib/assets/FMLogo.svelte'
 	import Prism from 'prismjs'
 	import '$lib/styles/prism.css'
@@ -9,6 +10,7 @@
 	import LogoFMMotif from '$lib/components/LogoFMMotif.svelte'
 	import '$lib/styles/themes.sass'
 	import '$lib/styles/tokens.sass'
+	let pageTitle = 'Fractal Maṇḍala'
 	let fake = false
 	let iW:number
 	let width = "50%"
@@ -29,16 +31,20 @@
 <svelte:window bind:innerWidth={iW}/>
 
 <svelte:head>
-<title>The Fractal Maṇḍala</title>
+<PageTitle pageTitle={pageTitle}/>
 <meta name="description" content="tech, dev, design, dharma"/>
-	<script src="./src/lib/utils/prismextras.ts"></script>
 </svelte:head>
 
-<div class="rta-column" id="panelone" class:dark={$visibilityMode} class:light={!$visibilityMode}>
+<div class="rta-column stickyboy solo cut" id="panelone" class:dark={$themeMode} class:light={!$themeMode}>
 	<div class="rta-row colgap200 ycenter p-bot-32 headersection bord-bot">
 		<img class="mandalaimage" src="/images/mands.webp" alt="mandala"/>
 		<Logo width={width}></Logo>
 	</div>
+</div>
+<div class="rta-column snipstyle solo p-bot-64" class:dark={$themeMode} class:light={!$themeMode}>
+	<p>{$themeMode}</p>
+	<p>{$breakOne}</p>
+	<p>{$breakTwo}</p>
 </div>
 
 <style lang="sass">

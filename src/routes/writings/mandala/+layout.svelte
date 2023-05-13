@@ -2,7 +2,7 @@
 
 	import { onMount } from 'svelte'
 	import { archivalMandala } from '$lib/utils/localpulls'
-	import visibilityMode from '$lib/stores/visibility'
+	import { themeMode } from '$lib/stores/globalstores'
 	import { slide } from 'svelte/transition'
 	import { circOut } from 'svelte/easing'
 	let y:number
@@ -56,7 +56,7 @@
 
 <svelte:window bind:outerWidth={iW} bind:scrollY={y}/>
 
-<div class="rta-grid grid2 stdfix" class:light={!$visibilityMode} class:dark={$visibilityMode}>
+<div class="rta-grid grid2 stdfix" class:light={!$themeMode} class:dark={$themeMode}>
 	<div class="rta-column mainone">
 		<slot></slot>
 	</div>

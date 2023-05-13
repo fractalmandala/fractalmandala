@@ -48,7 +48,7 @@
 
 <svelte:window bind:scrollY={y} bind:innerWidth={screenWidth}/>
 
-<div class="header" class:dark={$visibilityMode} class:light={!$visibilityMode} class:hiddenHeader={isInvisible}>
+<header class="header" class:dark={$visibilityMode} class:light={!$visibilityMode} class:hiddenHeader={isInvisible}>
 	<div class="logo">
 		<a href="/">
 			<LogoFMMotif></LogoFMMotif>
@@ -57,7 +57,7 @@
 			{/if}
 		</a>
 	</div>
-	<div class="area rta-row ycenter fullH xend">
+	<nav class="area rta-row ycenter fullH xend">
 		<div class="rta-row ycenter colgap200">
 			<Github/>
 			<Twitter/>
@@ -66,8 +66,8 @@
 		</div>
 		<slot name="mobileicon">
 		</slot>
-	</div>
-</div>
+	</nav>
+</header>
 
 <style lang="sass">
 

@@ -2,7 +2,7 @@
 
 	import { onMount } from 'svelte'
 	import { slide } from 'svelte/transition'
-	import visibilityMode from '$lib/stores/visibility'	
+	import { themeMode } from '$lib/stores/globalstores'
 	import { newGPT } from '$lib/utils/supabase'
 	import supabase from '$lib/utils/supabase'
 	import GPTStyler from '$lib/gptapp/GPTStyler.svelte'
@@ -68,10 +68,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-css.min.js" integrity="sha512-mHqYW9rlMztkE8WFB6wIPNWOVtQO50GYBsBRMyA1CMk34zLJ6BrvVy3RVHoIIofugmnoNLGxkuePQ9VT2a3u8w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </svelte:head>
 
-<div class="rta-column stickyboy" class:dark={$visibilityMode} class:light={!$visibilityMode}>
+<div class="rta-column stickyboy" class:dark={$themeMode} class:light={!$themeMode}>
 	<h3 class="bord-bot p-bot-16">{data.title}</h3>
 </div>
-<div class="rta-column snipstyle p-bot-64" class:dark={$visibilityMode} class:light={!$visibilityMode}>
+<div class="rta-column snipstyle p-bot-64" class:dark={$themeMode} class:light={!$themeMode}>
 	{#if chatStream && chatStream.length > 0}
 		{#each chatStream as item, i}
 			{#if item.author === 'user'}

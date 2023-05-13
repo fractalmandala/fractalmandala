@@ -34,32 +34,24 @@
 	const ref = onMountFocusRef();
 </script>
 
-<div transition:slide class="rta-row xcenter-d p-bot-32 ycenter null rowgap100 colgap200 p-top-32" class:light={!$visibilityMode} class:dark={$visibilityMode}>
-	{#each filteredBotsList as bot, i}
-		<p on:click={() => onBotClick(bot)} on:click={() => toggleButton(i)} on:keydown={fauxfake} class="spline tt-u" class:selected={myButton[i]}>
+<div transition:slide class="rta-row colgap200" class:dark={$visibilityMode} class:light={!$visibilityMode}>
+	{#each filteredBotsList as bot}
+		<button on:click={() => onBotClick(bot)} class="blank-button blank2">
 			{bot.name}
-		</p>
+		</button>
 	{/each}
 </div>
 
 <style lang="sass">
 
-.spline
-	cursor: pointer
+.blank-button.blank2
 	color: var(--textone)
-	border: 1px solid var(--textone)
+	font-family: 'Spline Sans', sans-serif
+	text-transform: uppercase
 	font-size: 12px
-	padding: 2px 6px
-	border-radius: 4px
-	transition: 0.12s
+	cursor: pointer
 	&:hover
-		border: 1px solid var(--opposite)
-		color: var(--opposite)
-
-.spline.selected
-	background: #10D56C
-	border: 1px solid #10D56C
-	color: #474747
-		
+		color: var(--green)
 
 </style>
+

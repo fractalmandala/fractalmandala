@@ -18,10 +18,10 @@
 	}
 </script>
 
-<div class="foot rta-column colgap100 ta-l">
+<footer class="foot rta-column colgap100 ta-l">
 	<small>orbis terrarum est non altus satis</small>
 	<small><a href="/about">2023 | Amritanshu Pandey</a></small>
-</div>
+</footer>
 
 <style lang="sass">
 

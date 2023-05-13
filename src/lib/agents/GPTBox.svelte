@@ -1,5 +1,6 @@
 <script lang="ts">
 
+	import { themeMode } from '$lib/stores/globalstores'
 	import BroGPT from '$lib/agents/broGPT.svelte'
 	import Sanskrit from '$lib/agents/Sanskrit.svelte'
 	import Svelter from '$lib/agents/Svelter.svelte'
@@ -28,7 +29,7 @@
 
 </script>
 
-<div class="boxc">
+<div class="boxc" class:dark={$themeMode} class:light={!$themeMode}>
 	<small>Select GPT Agent:</small>
 		<div class="rta-row colgap200">
 			<div class="agents" on:click={() => selectAgent(1)} on:keydown={fauxfake} class:selectedone={selectedAgent[1]}>broGPT</div>

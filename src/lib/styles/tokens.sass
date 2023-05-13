@@ -1,562 +1,260 @@
-$l1: 16px
-$l2: 24px
-$l3: 32px
-$l4: 48px
-$l5: 64px
-$l10: 96px
-$l20: 240px
-$minh: calc(100vh - 80px)
-$gret: #676767
-$line: #272727
-$greenpop: #3ef710
-$greenth: #53DD6c
-$greenhero: #10D56C
-$blue: #227ceb
-$red: #F64241
-$yellow: #f4d301
-$shadow-tube: 6px 6px 10px #090909, -4px -7px 10px #111111
-$shadow-no:	0px 0px 0px #020202, 0px 0px 0px #111111
-$back-tube: #171717
-$trans1: all 0.1s cubic-bezier(1.000, -0.105, 1.000, 0.410)
-$green0: hsla(200,9%,5%,1)
-$green1: hsla(140,80%,60%,0.1)
-$green2: hsla(120,80%,60%,0.2)
-$green3: hsla(120,80%,60%,0.35)
-$green4: hsla(130,90%,45%,1)
-$blue0: hsla(230,80%,20%,0)
-$blue1: hsla(216,90%,30%,0.1)
-$blue2: hsla(216,90%,30%,0.5)
-$blue3: hsla(230,90%,30%,0.5)
-$blue4: hsla(230,100%,40%,1)
-$red0: hsla(10,80%,20%,0)
-$red1: hsla(10,50%,30%,0.1)
-$red2: hsla(10,50%,10%,0.4)
-$red3: hsla(10,80%,20%,0.5)
-$red4: hsla(10,80%,40%,1)
-$yell0: hsla(60,89%,50%,0)
-$yell1: hsla(10,90%,100%,0)
-$yell2: hsla(60,89%,50%,0.1)
-$yell3:  hsla(60,89%,50%,0.6)
-$yell4: hsla(58,80%,50%,1)
-$color-majoryellowafter: hsla(60,89%,50%,0.9)
-$color-majoryellowbefore: hsla(60,89%,50%,0.12)
-$color-majorredafter: hsla(10,80%,40%,1)
-$color-majorredbefore: hsla(10,80%,40%,0.09)
-$color-majorblueafter: hsla(230,80%,40%,1)
-$color-majorbluebefore: hsla(230,80%,20%,0.24)
-$cubea: cubic-bezier(1.000, -0.105, 1.000, 0.410)
-$cubeb: cubic-bezier(0.61, 1, 0.88, 1)
-$dur025s: 0.25s
-$dur015s: 0.15s
-$dur200s: 2s
-$del040s: 0.4s
-$del100s: 1s
-$spacing-large: 64px
-$spacing-mid: 32px
-$spacing-small: 16px
-$font-family-Spline: 'Spline Sans', sans-serif
-$font-family-Jet: 'JetBrains Mono', monospace
-$shadow-level-3: 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12), 0 3px 5px -1px rgba(0,0,0,0.20)
-$media-query-minwidth: 1024px
-$media-query-maxwidth: 1023px
-$padl1left: 64px
-$padl1right: 64px
-$padl1top: 128px
-$padl1bot: 128px
 
-html, body
-	margin: 0
-	box-sizing: border-box
-
-*
-	box-sizing: border-box
+$green: #63D471
+$black: #171717
+$black2: #272727
+$white: #FFFFFF
+$white2: #d7d7d7
+$grey: #676767
+$grey2: #878787
+$grey3: #474747
 
 :root
-	box-sizing: border-box
+	--mygradier: linear-gradient(90.16deg, #B1FE64 -0.25%, #24C75B 105.55%)
 
-a
-	color: inherit
-	text-decoration: none
-	&:hover
-		color: inherit
+sup
+	color: var(--green)
 
-div
-	font-family: 'JetBrains Mono', monospace
+h5, h6, small, cite, li, ol, ul
+	color: var(--textone)
 
-*
-	box-sizing: border-box
-	--green3: $green3
-	--gret: $gret
-	--line: $line
-	--l1: $l1
-	--greenhero: $greenhero
-	--blue: $blue
-	--red: $red
-	--blue: $blue
-	--greenpop: $greenpop
-	--redzero: #F64241
-	--agnostic-link-color: #10C56D
-
-:root
-	box-sizing: border-box
-	--green3: $green3
-	--gret: $gret
-	--line: $line
-	--l1: $l1
-	--greenhero: $greenhero
-	--blue: $blue
-	--red: $red
-	--blue: $blue
-	--greenpop: $greenpop
-
-pre
-	overflow-x: auto
-	box-sizing: border-box
-	white-space: pre-line
-	white-space: -moz-pre-line
-	white-space: -pre-line
-	white-space: -o-pre-line
-	word-wrap: break-word
-	word-break: break-word
-	font-family: 'JetBrains Mono', monospace
-
-.bdr
-	border: 1px solid red
-
-.border
-	border: 1px solid #272727
-	border-radius: 4px
-	background: #090909
-	@media screen and (min-width: 900px)
-		padding: $l5
-	@media screen and (max-width: 899px)
-		padding: 16px
-
-.boxc, .boxr
-	display: flex
-
-.boxc
-	flex-direction: column
-
-.boxr
-	flex-direction: row
-
-.padl1
-	box-sizing: border-box
-	@media screen and (min-width: 1024px)
-		padding: $l10 $l5
-		min-height: $minh
-	@media screen and (max-width: 1023px)
-		padding: $l10 $l2
-
-.padl2
-	@media screen and (min-width: 1024px)
-		padding: $l10 $l20
-		min-height: $minh
-	@media screen and (max-width: 1023px)
-		padding: $l10 $l2
-
-.padl2.sides
-	@media screen and (min-width: 1024px)
-		padding-left: $l20
-		padding-right: $l20
-		padding-top: 0
-		padding-bottom: 0
-		min-height: $minh
-	@media screen and (max-width: 1023px)
-		padding-left: $l2
-		padding-right: $l2
-		padding-top: 0
-		padding-bottom: 0
-
-.thegrid
-	display: grid
-	grid-auto-flow: row
-	@media screen and (min-width: 1024px)
-		grid-template-columns: 1fr 1fr 1fr 1fr
-		grid-template-rows: auto
-		grid-template-areas: ". . . ."
-		gap: 32px 32px
-		padding: 0
-	@media screen and (max-width: 1023px)
-		grid-template-columns: 1fr 1fr
-		grid-template-rows: auto
-		grid-template-areas: ". ."
-		gap: 16px 16px
-		padding-top: 32px
-
-.thegrid.aligned
-	@media screen and (min-width: 1024px)
-		grid-template-rows: auto auto
-		grid-template-areas: "opentab opentab opentab opentab" ". . . ."
-		.tube.opentab
-			grid-area: opentab
-			height: 100%
-	@media screen and (max-width: 1023px)
-		grid-template-rows: auto auto
-		grid-template-areas: "opentab opentab"
-		.tube.opentab
-			grid-area: opentab
-			height: 100%
-
-.tube.green.nulled, .tube.red.nulled, .tube.blue.nulled, .tube.yell.nulled
-	&::before
-		background: #171717
-
-.tube.opentab
-	overflow: hidden
-	box-shadow: $shadow-no
-	&:hover
-		overflow: hidden
-
-.tube.green
-	small
-		color: $greenpop
-
-.tube.yell
-	small
-		color: $yellow
-
-.tube.red
-	small
-		color: $red
-
-.tube.blue
-	small
-		color: $blue
+p, li, pre
+	color: #a7a7a7
 
 
-.tube
-	overflow: hidden
-	box-shadow: $shadow-tube
-	display: flex
-	flex-direction: column
+.dark
+	--rgback: rgba(0,0,0,0.6)
+	--borderline: #272727
+	--green: #10D56C
+	--background: #121212
+	--contraster: #070707
+	--opposite: #FFFFFF
+	--near: #d7d7d7
+	--textone: #575757
+	--texttwo: #777777
+	--grey: #878787
+	--lingrad: linear-gradient(91.95deg, #10D56C 0%, #10F026 99.27%)
+
+.light
+	--rgback: rgba(0,0,0,0.8)
+	--borderline: #e7e7e7
+	--green: #10D56C
+	--background: #FFFFFF
+	--contraster: #f1f1f1
+	--opposite: #272727
+	--near: #373737
+	--textone: #878787
+	--texttwo: #474747
+	--grey: #878787
+	--lingrad: linear-gradient(91.95deg, #10D56C 0%, #10F026 99.27%)
+
+
+.greenlink
+	color: #10D56C
 	position: relative
-	border-radius: 4px
-	justify-content: flex-start
-	align-items: stretch
-	transition: $trans1
-	background: #171717
-	z-index: 1
-	pre
-		white-space: pre-line
-	@media screen and (min-width: 1024px)
-		padding: 16px
-		row-gap: 0
-	@media screen and (max-width: 1023px)
-		padding: 24px
-		justify-content: flex-start
-	&::before
-		position: absolute
-		top: 0
-		left: 0
-		width: 100%
-		height: 100%
-		content: ''
-		filter: blur(40px)
-		z-index: -1
-
-
-.tube
-	h5, small, p
-		margin: 0
-	small
-		color: #474747
-		text-transform: uppercase
-		font-size: 10px
-		font-weight: bold
-		letter-spacing: 1px
-	p
-		color: #474747
-		font-size: 12px
-		border-top: 1px solid #272727
-		padding-top: 4px
-	h5
-		text-transform: capitalize
-		padding-top: 8px
-		padding-bottom: 16px
-		font-size: 16px !important
-		color: white
-		font-weight: 500
-	h6, pre
-		margin: 0
-		font-weight: 400
-		color: white
-		font-size: 16px
-		padding-top: 32px
-		font-family: 'JetBrains Mono', monospace
 	&:hover
-		animation: repeaternull 0.2s ease forwards
-		h6, small, p
-			opacity: 0
-
-.tube.opentab
-	h5
-		font-size: 32px !important
-		padding-bottom: 8px
-	&:hover
-		h6, small, p
-			opacity: 1
-
-.tube.opentab.green
-	background: #171717
-	&::before
-		background-color: #171717
-	small
-		color: $green4
-	&:hover
-		animation: none
-		&::before
-			background-color: #171717
-
-.tube.opentab.blue
-	background: #171717
-	&::before
-		background-color: #171717
-	small
-		color: $green4
-	&:hover
-		animation: none
-		&::before
-			background-color: #171717
-
-.tube.opentab.red
-	background: #171717
-	&::before
-		background-color: #171717
-	small
-		color: $green4
-	&:hover
-		animation: none
-		&::before
-			background-color: #171717
-
-.tube.opentab.yell
-	background: #171717
-	&::before
-		background-color: #171717
-		background: #171717
-	small
-		color: $green4
-	&:hover
-		animation: none
-		&::before
-			background-color: #171717
-
-.tube.opentab.red
-	small
-		color: var(--redzero)
-
-.tube.opentab.yellow
-	small
-		color: $yell4
-
-.tube.image
-	padding: 0
-	img
-		object-fit: cover
-		width: 100%
-		height: 100%
-
-.tube.image.opentab
-	height: 600px
-
-.tube.green
-	&::before
-		background-image: radial-gradient(at 17% 36%, hsla(248,47%,49%,0.1) 0px, transparent 1%), radial-gradient(at 80% 70%, hsla(125,87%,60%,0.2) 0px, transparent 50%)
-		background-size: 400% 400%
-		background-color: $green1
-	&:hover
-		&::before
-			background-color: $green4
-
-.tube.blue
-	&::before
-		background-image: radial-gradient(at 97% 96%, hsla(228,100%,20%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
-		background-size: 400% 400%
-		background-color: $blue1
-	&:hover
-		animation: bordergo $dur025s ease forwards, blueborder $dur015s $cubea $del040s forwards
-		&::before
-			background-color: $blue4
-
-.tube.blue.opentab
-	small
-		color: #227ceb
-	&:hover
-		animation: bordergo $dur025s ease forwards, blueborder $dur015s $cubea $del040s forwards
-
-.tube.red
-	&::before
-		background-image: radial-gradient(at 97% 96%, hsla(228,100%,20%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
-		background-size: 400% 400%
-		background-color: $red1
-	&:hover
-		animation: bordergo $dur025s ease forwards, redborder $dur015s $cubea $del040s forwards
-		&::before
-			background-color: $red4
-
-.tube.red.opentab
-	&:hover
-		animation: bordergo $dur025s ease forwards, redborder $dur015s $cubea $del040s forwards
-
-.tube.yell
-	&::before
-		background-image: radial-gradient(at 97% 96%, hsla(60,80%,20%,1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(65,87%,90%,1) 0px, transparent 50%)
-		background-size: 400% 400%
-		background-color: $yell1
-	&:hover
-		animation: bordergo $dur025s ease forwards, yellowborder $dur015s $cubea $del040s forwards
-		&::before
-			background-color: $yell4
-
-
-.tube.yell.opentab
-	&:hover
-		animation: bordergo $dur025s ease forwards, yellowborder $dur015s $cubea $del040s forwards
-
-@keyframes bordergo
-	0%
-		box-shadow: $shadow-tube
-	100%
-		box-shadow: $shadow-no
-
-
-@keyframes tubegreen
-	0%
-		background-color: $green1
-		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
-		filter: blur(24px)
-		width: 200%
-		height: 200%
-	42%
-		background-color: $green2
-		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
-		filter: blur(102px)
-	70%
-		background-color: $green3
-		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,0.6) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
-		filter: blur(32px)
-	100%
-		background-color: $green4
-		background-image: radial-gradient(at 97% 96%, hsla(108,67%,92%,1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
-		filter: blur(20px)
-		width: 100%
-		height: 100%
-
-@keyframes tubeblue
-	0%
-		background-color: $blue1
-		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
-		filter: blur(4px)
-	44%
-		background-color: $blue2
-		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.4) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
-		filter: blur(10px)
-	70%
-		background-color: $blue3
-		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.6) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
-		filter: blur(3px)
-	100%
-		background-color: $blue4
-		background-image: radial-gradient(at 97% 96%, hsla(235,67%,62%,1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
-		filter: blur(40px)
-
-@keyframes tubered
-	0%
-		background-color: $red1
-		background-image: radial-gradient(at 97% 96%, hsla(228,100%,20%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
-		filter: blur(4px)
-	42%
-		background-color: $red2
-		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.3) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
-		filter: blur(500px)
-	70%
-		background-color: $red3
-		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.6) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
-		filter: blur(3px)
-	100%
-		background-color: $red4
-		background-image: radial-gradient(at 97% 96%, hsla(228,100%,20%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
-		filter: blur(40px)
-
-@keyframes tubeyellow
-	0%
-		background-color: $yell1
-		background-image: radial-gradient(at 97% 96%, hsla(228,100%,20%,0.1) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
-		filter: blur(4px)
-	44%
-		background-color: $yell2
-		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.4) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
-		filter: blur(10px)
-	70%
-		background-color: $yell3
-		background-image: radial-gradient(at 97% 96%, hsla(235,67%,22%,0.6) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
-		filter: blur(3px)
-	100%
-		background-color: $yell4
-		background-image: radial-gradient(at 97% 96%, hsla(228,100%,20%,0.8) 0px, transparent 100%), radial-gradient(at 5% 70%, hsla(325,87%,90%,1) 0px, transparent 50%)
-		filter: blur(30px)
-
-.closebutton
-	display: flex
-	flex-direction: row
-	justify-content: flex-end
-	svg
-		object-fit: contain
-		cursor: pointer
-		width: 27px
-		height: 27px
-
-.opentab.green
-	.closebutton svg
-		&:hover
-			path
-				fill: $green4
-
-.opentab.red
-	.closebutton svg
-		&:hover
-			path
-				fill: $red4
-
-.opentab.blue
-	.closebutton svg
-		&:hover
-			path
-				fill: $blue4
-
-.opentab.yell
-	.closebutton svg
-		&:hover
-			path
-				fill: $yell4
-
-.input-container
-	input
-		background: transparent
-		color: white
-		border: 1px solid #474747
-		border-radius: 3px
-		width: 200px !important
-
-.headerautocomplete
+		color: #10D56C
+		&::after
+			width: 100%
+			margin-left: 0
 	&::after
-		border: 1px solid red
-		content: none
-		contents: none
+		position: absolute
+		bottom: 0
+		left: 0
+		width: 0%
+		height: 1px 
+		background: var(--opposite)
+		transition: 0.15s
+		content: ''
+		margin-left: 50%
 
-.simple-svelte-autocomplete.surge.sh
-	&::after, &::before
-		border: 1px solid red
+.break899
+	background: none
+	border: none
+	font-size: 1rem
+	
+.rightmenu
+	padding: 8px 16px
+	border-radius: 8px
+	cursor: pointer
+	transition: 0.15s
+	border: 1px solid var(--borderline)
+	&:hover
+		box-shadow: 4px 6px 8px var(--contraster)
 
-.autocomplete-list
-	background: #171717
+.dark
+	.break899
+		color: var(--textone)
 
-.genericpad
+.dark, .light
+	.is-green
+		color: var(--green)
+
+.mainbutton
+	background: linear-gradient(91.95deg, #10D56C 0%, #10F026 99.27%)
+	border: 1px solid transparent
+	color: #272727
+	max-width: 160px
+	width: max-content
+	padding: 4px 16px
+	border-radius: 6px
+	transform-origin: center center
+	transition: 0.08s
+	cursor: pointer
+	&:hover
+		border: 1px solid white
+		box-shadow: 5px 8px 12px #020202
+	&:active
+		transform: scale(0.9)
+
+.secondbutton
+	background: none
+	border: 1px solid var(--textone)
+	color: var(--texttwo)
+	max-width: 160px
+	width: max-content
+	padding: 4px 12px
+	border-radius: 6px
+	transform-origin: center center
+	transition: 0.08s
+	cursor: pointer
+	font-size: 14px
+	&:hover
+		background: linear-gradient(91.95deg, #10D56C 0%, #10F026 99.27%)
+		color: #171717
+		transform: scale(0.96)
+
+.secondbutton.selectedsecond
+	background: var(--green)
+	color: var(--background)
+
+.null
+	p
+		margin: 0
 	small
-		text-transform: uppercase
+		margin: 0
+
+.hollow
+	background: none
+	border-top: none
+	border-left: none
+	border-right: none
+	border-bottom: 2px solid var(--green)
+	font-weight: 700
+	text-transform: uppercase
+	padding: 2px 4px
+	color: var(--textone)
+	cursor: pointer
+	transition: 0.08s
+	&:hover
+		color: var(--opposite)
+	
+.snipstyle.dark
+	pre[class*="language-"]
+		border: 1px solid var(--borderline)
+		background: var(--contraster)
+		border-radius: 6px
+		padding: 24px
+		margin-bottom: 24px
+
+.usercol small, .gptcol small
+	margin: 0
+	font-size: 12px
+	font-family: 'Spline Sans', san-serif
+	text-transform: uppercase
+	color: #272727
+
+.gptslot
+	.stickyboy
+		z-index: 1
+
+.usercol
+	text-align: right
+	p
 		font-size: 12px
-	cite
-		color: #474747
-		font-style: normal
+		color: var(--textone)
+		font-family: 'Spline Sans', san-serif
+	@media screen and (min-width: 1024px)
+		padding-right: 4vw
+		padding-left: 4vw
+
+.gptcol
+	z-index: 0
+	border-top: 1px solid var(--borderline)
+	border-bottom: 1px solid var(--borderline)
+	small, pre
+		margin: 0
+	pre
+		font-size: 14px
+		color: var(--texttwo)
+		margin: 0
+		letter-spacing: -0.5px
+		white-space: pre-line
+	pre.white
+		color: var(--opposite)
+		code
+			color: var(--opposite)
+
+.gptcol, .usercol
+	padding-top: 8px
+	padding-bottom: 8px
+	@media screen and (max-width: 1023px)
+		padding-top: 16px
+		padding-bottom: 16px
+
+.rightone::-webkit-scrollbar
+	width: 2px
+.rightone::-webkit-scrollbar-thumb
+	background: #10D56C
+
+.check
+	cursor: pointer
+	position: relative
+	margin: auto
+	width: 18px
+	height: 18px
+	-webkit-tap-highlight-color: transparent
+	transform: translate3d(0, 0, 0)
+	svg
+		position: relative
+		z-index: 1
+		fill: none
+		stroke-linecap: round
+		stroke-linejoin: round
+		stroke: #c8ccd4
+		stroke-width: 1.5
+		transform: translate3d(0, 0, 0)
+		transition: all 0.2s ease
+		path
+			stroke-dasharray: 60
+			stroke-dashoffset: 0
+		polyline
+			stroke-dasharray: 22
+			stroke-dashoffset: 66
+	&::before
+		content: ""
+		position: absolute
+		top: -15px
+		left: -15px
+		width: 48px
+		height: 48px
+		border-radius: 50%
+		background: rgba(34,50,84,0.03)
+		opacity: 0
+		transition: opacity 0.2s ease
+	&:hover
+		&::before
+			opacity: 1
+		svg
+			stroke: #10d56c
+
+#cbx:checked + .check svg, #cby:checked + .check svg
+	stroke: #10d56c
+
+#cbx:checked + .check svg path, #cby:checked + .check svg path
+	stroke-dashoffset: 60
+	transition: all 0.3s linear
+
+#cbx:checked + .check svg polyline, #cby:checked + .check svg polyline
+	stroke-dashoffset: 42
+	transition: all 0.2s linear
+	transition-delay: 0.15s

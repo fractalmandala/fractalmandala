@@ -1,3 +1,15 @@
-import { writable } from 'svelte/store'
+import { writable, derived } from 'svelte/store';
+import { browser } from '$app/environment' 
 
-export const breakPoint = writable(false)
+const initialWidth = browser ? window.innerWidth : 1024;
+export const windowWidth = writable(initialWidth);
+
+export const breakOne = derived(
+  windowWidth,
+  $windowWidth => $windowWidth <= 1023
+);
+
+export const breakTwo = derived(
+  windowWidth,
+  $windowWidth => $windowWidth <= 768
+);

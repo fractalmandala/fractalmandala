@@ -1,7 +1,7 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte'
-	import visibilityMode from '$lib/stores/visibility'
+	import { themeMode } from '$lib/stores/globalstores'
 	import { fullGallery, limitGallery, singleImage } from '$lib/utils/supabase'
 	import { slide } from 'svelte/transition'
 	import { circOut } from 'svelte/easing'
@@ -103,7 +103,7 @@
 
 <svelte:window bind:outerWidth={iW} bind:scrollY={y}/>
 
-<div class="rta-grid grid2 stdfix2" class:light={!$visibilityMode} class:dark={$visibilityMode}>
+<div class="rta-grid grid2 stdfix2" class:light={!$themeMode} class:dark={$themeMode}>
 	<div class="rta-column mainone">
 		{#if selectSection[1]}
 		<slot></slot>

@@ -1,17 +1,17 @@
 <script lang="ts">
 
-	import visibilityMode from '$lib/stores/visibility'	
+	import { themeMode } from '$lib/stores/globalstores'
 
 
 </script>
 
-<div class="rta-column stickyboy" class:dark={$visibilityMode} class:light={!$visibilityMode}>
+<div class="rta-column stickyboy" class:dark={$themeMode} class:light={!$themeMode}>
 	<h3 class="bord-bot p-bot-16">
 		About
 	</h3>
 </div>
 
-<div class="rta-column snipstyle p-bot-64" class:dark={$visibilityMode} class:light={!$visibilityMode}>
+<div class="rta-column snipstyle p-bot-64 solo" class:dark={$themeMode} class:light={!$themeMode}>
 	<p>Hi,</p>
 	<p>
 		I'm Amrit, a writer and creator based in Gurgaon, India. With a decade+ background in management and product development, I currently work as Director of Strategy at <a href="https://www.brhat.in" target="_blank" rel="noreferrer">Bṛhat</a>, a cultural content, research and learning organization. Apart from this site, I also develop and maintain Bṛhat's website and the sister portal <a href="https://www.brhateducation.in" target="_blank" rel="noreferrer">Bṛhat Education.</a>

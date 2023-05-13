@@ -177,3 +177,47 @@ export async function singleImage(id:number){
 		return data
 	}
 
+export async function aphorisms1(){
+	const { data, error } = await supabase
+	.from('brhat-aphorisms')
+	.select()
+	.eq('id',1)
+	if (error) throw new Error(error.message)
+	return data
+}
+
+export async function aphorisms2(){
+	const { data, error } = await supabase
+	.from('brhat-aphorisms')
+	.select()
+	.eq('id',2)
+	if (error) throw new Error(error.message)
+	return data
+}
+
+export async function aphorisms3(){
+	const { data, error } = await supabase
+	.from('brhat-aphorisms')
+	.select()
+	.eq('id',3)
+	if (error) throw new Error(error.message)
+	return data
+}
+
+export async function aphorisms4(){
+	const { data, error } = await supabase
+	.from('brhat-aphorisms')
+	.select()
+	.eq('id',4)
+	if (error) throw new Error(error.message)
+	return data
+}
+
+export async function tripSurfer(){
+	const { data, error } = await supabase
+	.from('amrit-tripsurfer')
+	.select()
+	.order('id')
+	if (error) throw new Error(error.message)
+	return data	
+}

@@ -22,20 +22,30 @@ $easy: cubic-bezier(0.205, 0.655, 0.000, 0.995)
 	font-style: normal
 	font-weight: 400
 
-body, html
-	background: #121212
-
 :root
 	--dur: 0.08s
 	font-family: 'JetBrains Mono', monospace
 	--mygradier: linear-gradient(90.16deg, #B1FE64 -0.25%, #24C75B 105.55%)
 
-h5, h6, small, cite
+sup
+	color: var(--green)
+
+.snipstyle pre, .snipstyle li
+	overflow-x: auto
+	box-sizing: border-box
+	white-space: pre-line
+	white-space: -moz-pre-line
+	white-space: -pre-line
+	white-space: -o-pre-line
+	word-wrap: break-word
+	word-break: break-word
+
+h5, h6, small, cite, li, ol, ul
 	color: var(--textone)
 	font-family: 'JetBrains Mono', monospace
 
 p, li, pre
-	color: #a7a7a7
+	color: var(--near)
 
 pre
 	overflow-x: auto
@@ -84,6 +94,7 @@ a
 	--textone: #575757
 	--texttwo: #777777
 	--grey: #878787
+	--lingrad: linear-gradient(91.95deg, #10D56C 0%, #10F026 99.27%)
 
 .light
 	--rgback: rgba(0,0,0,0.8)
@@ -96,6 +107,8 @@ a
 	--textone: #878787
 	--texttwo: #474747
 	--grey: #878787
+	--lingrad: linear-gradient(91.95deg, #10D56C 0%, #10F026 99.27%)
+
 
 h3, h4
 	font-family: 'Spline Sans', sans-serif
@@ -147,6 +160,7 @@ h5.near.thin
 h4
 	font-size: 1.44rem
 	color: var(--near)
+
 h3
 	font-size: 1.72rem
 	font-weight: 600
@@ -645,6 +659,9 @@ body, html
 	@media screen and (max-width: 1023px)
 		padding-bottom: 16px
 
+.p-bot-8
+	padding-bottom: 8px
+
 .p-bot-16-m
 	@media screen and (max-width: 1023px)
 		padding-bottom: 16px
@@ -707,11 +724,21 @@ body, html
 		color: var(--textone)
 
 .snipstyle
+	img
+		object-fit: contain
+		width: 100%
+		margin: 8px 0 24px 0
 	h4
 		color: var(--near)
 		border-left: 4px solid var(--green)
 		padding-left: 16px
-		margin-top: 3.2rem
+		margin-top: 1.6rem
+	h4.ta-r
+		color: var(--near)
+		border-right: 4px solid var(--green)
+		padding-right: 16px
+		margin-top: 1.6rem		
+		border-left: none
 	a
 		position: relative
 		color: var(--opposite)
@@ -732,10 +759,14 @@ body, html
 		padding-right: 4vw
 		padding-left: 4vw
 		padding-top: 32px
+	
+.snipstyle.solo
+	@media screen and (min-width: 1024px)
+		padding-right: 16vw
 
 .grid2.stdfix
 	@media screen and (min-width: 1024px)
-		grid-template-columns: 1fr 300px
+		grid-template-columns: 1fr 360px
 		grid-template-areas: "mainone rightone"
 		.rightone
 			text-align: right
@@ -754,6 +785,8 @@ body, html
 					color: var(--green)
 			p strong
 				color: var(--opposite)
+		.rightone.nopad
+			padding-top: 0
 	@media screen and (max-width: 1023px) and (min-width: 769px)
 		grid-template-columns: 1fr
 		grid-template-areas: "rightone" "mainone"
@@ -953,6 +986,18 @@ body, html
 	@media screen and (max-width: 1023px) and (min-width: 769px)
 		padding-top: 24px
 
+.stickyboy.cut
+	@media screen and (min-width: 1024px)
+		padding-top: 0
+
+.stickyboy.solo
+	@media screen and (max-width: 768px)
+		padding: 24px 24px 0 24px
+
+.snipstyle.solo
+	@media screen and (max-width: 768px)
+		padding: 0 24px 0 24px
+
 .gallerycolumn
 	@media screen and (min-width: 1024px)
 		padding-left: 4vw
@@ -964,7 +1009,6 @@ body, html
 .grid2.stdfix.dark
 	@media screen and (max-width: 768px)
 		.rightone
-			background: rgba(0,0,0,0.7)
 			.rightmenu
 				.iconchev
 					svg path
@@ -976,10 +1020,10 @@ body, html
 					color: var(--opposite)
 
 .greenlink
-	color: #10D56C
+	color: var(--green)
 	position: relative
 	&:hover
-		color: #10D56C
+		color: var(--green)
 		&::after
 			width: 100%
 			margin-left: 0
@@ -993,11 +1037,6 @@ body, html
 		transition: 0.15s
 		content: ''
 		margin-left: 50%
-
-.break899
-	background: none
-	border: none
-	font-size: 1rem
 	
 .rightmenu
 	padding: 8px 16px
@@ -1008,18 +1047,15 @@ body, html
 	&:hover
 		box-shadow: 4px 6px 8px var(--contraster)
 
-.dark
-	.break899
-		color: var(--textone)
 
 .dark, .light
 	.is-green
 		color: var(--green)
 
 .mainbutton
-	background: linear-gradient(91.95deg, #10D56C 0%, #10F026 99.27%)
+	background: var(--lingrad)
 	border: 1px solid transparent
-	color: #272727
+	color: var(--contraster)
 	max-width: 160px
 	width: max-content
 	padding: 4px 16px
@@ -1029,7 +1065,7 @@ body, html
 	cursor: pointer
 	&:hover
 		border: 1px solid white
-		box-shadow: 5px 8px 12px #020202
+		box-shadow: 5px 8px 12px var(--contraster)
 	&:active
 		transform: scale(0.9)
 
@@ -1046,12 +1082,18 @@ body, html
 	cursor: pointer
 	font-size: 14px
 	&:hover
-		background: linear-gradient(91.95deg, #10D56C 0%, #10F026 99.27%)
+		background: var(--lingrad)
 		color: #171717
 		transform: scale(0.96)
 
+.secondbutton.selectedsecond
+	background: var(--green)
+	color: var(--background)
+
 .null
 	p
+		margin: 0
+	small
 		margin: 0
 
 .hollow
@@ -1069,7 +1111,7 @@ body, html
 	&:hover
 		color: var(--opposite)
 	
-.snipstyle.dark
+.snipstyle
 	pre[class*="language-"]
 		border: 1px solid var(--borderline)
 		background: var(--contraster)
@@ -1082,7 +1124,7 @@ body, html
 	font-size: 12px
 	font-family: 'Spline Sans', san-serif
 	text-transform: uppercase
-	color: #272727
+	color: var(--contraster)
 
 .gptslot
 	.stickyboy
@@ -1121,3 +1163,61 @@ body, html
 	@media screen and (max-width: 1023px)
 		padding-top: 16px
 		padding-bottom: 16px
+
+.rightone::-webkit-scrollbar
+	width: 2px
+.rightone::-webkit-scrollbar-thumb
+	background: #10D56C
+
+.check
+	cursor: pointer
+	position: relative
+	margin: auto
+	width: 18px
+	height: 18px
+	-webkit-tap-highlight-color: transparent
+	transform: translate3d(0, 0, 0)
+	svg
+		position: relative
+		z-index: 1
+		fill: none
+		stroke-linecap: round
+		stroke-linejoin: round
+		stroke: var(--near)
+		stroke-width: 1.5
+		transform: translate3d(0, 0, 0)
+		transition: all 0.2s ease
+		path
+			stroke-dasharray: 60
+			stroke-dashoffset: 0
+		polyline
+			stroke-dasharray: 22
+			stroke-dashoffset: 66
+	&::before
+		content: ""
+		position: absolute
+		top: -15px
+		left: -15px
+		width: 48px
+		height: 48px
+		border-radius: 50%
+		background: var(--background)
+		opacity: 0
+		transition: opacity 0.2s ease
+	&:hover
+		&::before
+			opacity: 1
+		svg
+			stroke: #10d56c
+
+#cbx:checked + .check svg, #cby:checked + .check svg
+	stroke: #10d56c
+
+#cbx:checked + .check svg path, #cby:checked + .check svg path
+	stroke-dashoffset: 60
+	transition: all 0.3s linear
+
+#cbx:checked + .check svg polyline, #cby:checked + .check svg polyline
+	stroke-dashoffset: 42
+	transition: all 0.2s linear
+	transition-delay: 0.15s

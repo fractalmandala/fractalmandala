@@ -134,12 +134,12 @@ p.spline
 			border: 1px solid var(--borderline)
 			border-radius: 6px
 	@media screen and (max-width: 768px)
-		border: 1px solid white
-		border-radius: 8px
-		color: white
-		&::placeholder
+		input
+			border-radius: 8px
 			color: white
-		.is-green
-			color: var(--green)
+			&::placeholder
+				color: white
+			.is-green
+				color: var(--green)
 
 </style>
