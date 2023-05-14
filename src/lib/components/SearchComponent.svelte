@@ -100,7 +100,6 @@
 	font-size: 12px
 	margin-top: 0
 	margin-bottom: 4px
-	text-align: right
 	&:hover
 		color: var(--green)
 	@media screen and (max-width: 768px)
@@ -113,9 +112,7 @@ p.spline
 .comp-search
 	overflow-y: scroll
 	width: 100%
-	text-align: right
 	input
-		text-align: right
 		font-family: 'Spline Sans', sans-serif
 
 input

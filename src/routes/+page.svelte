@@ -41,9 +41,10 @@
 <svelte:window bind:innerWidth={iW}/>
 
 <svelte:head>
-<PageTitle pageTitle={pageTitle}/>
-<meta name="description" content="tech, dev, design, dharma"/>
+	<PageTitle pageTitle={pageTitle}/>
 </svelte:head>
+
+
 
 <div class="rta-column solo cut" id="panelone" class:dark={$themeMode} class:light={!$themeMode}>
 	<div class="rta-row colgap200 ycenter between p-bot-32 headersection bord-bot">

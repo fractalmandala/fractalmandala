@@ -15,3 +15,22 @@ export const svelteTools = [
 		"about": "Render markdown inside Sveltekit."
 	}
 ]
+
+export const svelteLinks = [
+	{
+		"name": "Sveltekit Blog Starter",
+		"url": "https://github.com/mvasigh/sveltekit-mdsvex-blog?ref=sveltethemes.dev"
+	},
+	{
+		"name": "The Pudding Blog Starter",
+		"url": "https://github.com/the-pudding/svelte-starter?ref=sveltethemes.dev"
+	},
+	{
+		"name": "Josh Collinsworth Starter",
+		"url": "https://github.com/josh-collinsworth/sveltekit-blog-starter"
+	},
+	{
+		"name": "Scott Spence MDSvex Blog",
+		"url": "https://github.com/spences10/scottspence.com"
+	}
+]

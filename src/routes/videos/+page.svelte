@@ -1,8 +1,14 @@
 <script lang="ts">
 
 	import { themeMode } from '$lib/stores/globalstores'
+	import PageTitle from '$lib/components/PageTitle.svelte'
+	let pageTitle = 'Gallery'
 
 </script>
+
+<svelte:head>
+	<PageTitle pageTitle={pageTitle}/>
+</svelte:head>
 
 <div class="rta-column text stickyboy" class:dark={$themeMode} class:light={!$themeMode}>
 	<h3 class="bord-bot p-bot-16">Videos</h3>

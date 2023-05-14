@@ -57,6 +57,7 @@
 
 <svelte:window bind:outerWidth={iW} bind:scrollY={y}/>
 
+
 <div class="rta-grid grid2 stdfix" class:dark={$themeMode} class:light={!$themeMode}>
 	<div class="rta-column mainone">
 		<slot></slot>

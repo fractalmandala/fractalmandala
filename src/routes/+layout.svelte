@@ -156,7 +156,7 @@
 		</Header>
 	</div>
 	{/if}
-	<div class="pagebox" class:reader={$readingMode}>
+	<section class="pagebox" class:reader={$readingMode}>
 		<div class="leftone" class:leftsidebar={expandMobilemenu} class:levelzero={$breakZero} class:levelone={$breakOne} class:leveltwo={$breakTwo} transition:slide>
 			<div class="leftsticky">
 				<div
@@ -276,19 +276,19 @@
 			</div>
 		</div>
 		<div class="midone" class:levelzero={$breakZero} class:levelone={$breakOne} class:leveltwo={$breakTwo}>
-				{#if $sidebarMode}
-					<div class="rta-column of-search" transition:slide={{ axis: 'x'}}>
-						<Searcher/>
-					</div>
-				{:else}
-					{#key data.pathname}
-						<TransitionPage>
-							<slot />
-						</TransitionPage>
-					{/key}
-				{/if}
+			{#if $sidebarMode}
+				<div class="rta-column of-search" transition:slide={{ axis: 'x'}}>
+					<Searcher/>
+				</div>
+			{:else}
+				{#key data.pathname}
+					<TransitionPage>
+						<slot />
+					</TransitionPage>
+				{/key}
+			{/if}
 		</div>
-	</div>
+	</section>
 	<div class="rta-column footerbox">
 		<Footer />
 	</div>
@@ -310,7 +310,7 @@
 
 .of-search
 	width: 100%
-	min-height: 100vh
+	min-height: calc(100vh - 128px)
 
 .levelzero
 	.of-search

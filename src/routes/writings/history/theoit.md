@@ -68,7 +68,7 @@ On the PIE climate, Mallory-Adams again concede that *“(the reconstructed word
 
 Apart from Witzel’s reliance on a “cold” place familiar with “wolves and snow,” we do not really know what he means by a temperate climate. But here is a map of temperate locations in the world according to the Koppen climate classification, the most widely used climate classification system in the world:
 
-<img style="width: 75%" src="/images/maptemperate.jpg" alt="map"/>
+<img class="centerimage" style="width: 75%" src="/images/maptemperate.jpg" alt="map"/>
 
 The map above shows locations of the world with degrees of temperate climate. It’s only for the recent decades, and the climate situation in 2000 BC or earlier could have been very different. But this map is a helpful indicator that no classification of the PIE homeland as a temperate/cold place necessarily eliminates India from consideration. In any case, when we say ‘India’ here we mean a very large geography that includes the Tibetan Plateau as well as the Pamir Mountains. 
 
@@ -82,17 +82,17 @@ Both the upper and lower limits for the date of the Ṛgveda are set by taking a
 
 A reconstruction of PIE words for basic kinship ties deserves special attention. Not only because it shows clearly the relationship between IE family branches, but also because it demonstrates a linguistic principle that confirms the OIT model. Consider the following table (rendered without IAST): 
 
-<img style="width: 75%" src="/images/chart1.png" alt="chart"/>
+<img class="centerimage" style="width: 75%" src="/images/chart1.png" alt="chart"/>
 
 The similarities between mother, father, brother and sister are clear in the above languages, even on basic sight and sound. But what of son and daughter, where for Saṃskṛta modern Indo-Aryan speakers would instead wager putra and putrī? The apparent connections between IE languages are not just phonetic or visual. They’re based on a deeper connection in shared root sounds or syllables. Since words can often be borrowed between languages, mere phonetic similarity doesn’t suffice to establish a connection. On this account, the connection between an English son and a Dutch zoon would not have been apparent without the discovery of the Saṃskṛta sūnu. 
 
 Stemming from the root sū, which meant to birth or beget, sūnu meant one who birthed- pushed the family line forward- and also one who sowed or begat seed in the earth. Once the Saṃskṛta sūnu was discovered, a reconstructed PIE word could be established and connections mapped to other IE languages. The roots of daughter too are evident only from an investigation of Saṃskṛta, where it stems from the root duh, which meant to milk, and indicates that the daughter’s role was to milk the cow in the PIE household (incidentally, this confirms that the early PIE state was Neolithic, with animal husbandry and proto-agriculture). Alternately, duh meant to milk, in the sense of a daughter that was of child-bearing age. Both sūnu and duhitṛ are thus built atop biological and vocational roles of the PIE son and daughter. The linguistic principle at play here is what Nicholas Kazanas refers to as the Preservation Principle (PP). Before we define it, let us look at another table, this time of the comparative theonyms (names of gods) in some IE languages: 
 
-<img style="width: 75%" src="/images/chart2.png" alt="chart"/>
+<img class="centerimage" style="width: 75%" src="/images/chart2.png" alt="chart"/>
 
 The above list only considers languages that have retained a considerable set of IE theonyms, but each theonym listed is certain to be IE. We know this because each theonym is present in at least three different families- a situation that could not arise if it were independently developed. In the case of Parjanya, we have the additional evidence of Perkunu from the Slavonic family. Saṃskṛta is presented in the first column to make clear its all-inclusiveness. Of all the IE language families, it has preserved the largest set of theonyms. Further, no two non-Saṃskṛta families have preserved a theonym that is not also present in Saṃskṛta. Now have a look at the earliest that the IE language families have been attested in history: 
 
-<img style="width: 75%" src="/images/chart3.png" alt="chart"/>
+<img class="centerimage" style="width: 75%" src="/images/chart3.png" alt="chart"/>
 
 The current theory has the PIE people originate in the Pontic Steppe in ~3000 BC, spread to Europe over the next thousand years, and begin their journey to India in ~2000 BC- where five centuries later they compose the Ṛgveda. Is it not strange that the IE languages of the original homeland (Balto-Slavic) are attested the latest, only five hundred years ago? And if the PIE people were migrating to Europe between 3000 and 2000 BC, why is it that the first attestations there are found only after 1000 BC? The intellectual deceit here should be obvious. How is it that in the place where the PIE people went first- Europe- the languages are attested much later and only a few IE theonyms present, while in the place where the PIE people went later- India- the language is attested much earlier and that too with the full theonym set? Only in India in fact do the PIE people arrive just in time to compose the largest attested corpus in any IE language- the Vedic- whereas in mainland Europe they did no such thing! 
 

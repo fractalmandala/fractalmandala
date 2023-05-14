@@ -7,9 +7,9 @@
 
 </script>
 
-<svelte:head>
-	<PageTitle pageTitle={data.title}/>
-</svelte:head>
+
+<PageTitle pageTitle={data.title}/>
+
 
 <div class="rta-column stickyboy" class:dark={$themeMode} class:light={!$themeMode}>
 	<h3 class="bord-bot p-bot-16">

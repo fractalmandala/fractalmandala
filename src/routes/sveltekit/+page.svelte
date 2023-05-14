@@ -1,7 +1,7 @@
 <script lang="ts">
 
 	import { themeMode } from '$lib/stores/globalstores'
-	import { svelteTools } from '$lib/utils/sveltekittools'
+	import { svelteTools, svelteLinks } from '$lib/utils/sveltekittools'
 	import PageTitle from '$lib/components/PageTitle.svelte'
 
 	let title = 'Sveltekit Things'
@@ -19,7 +19,7 @@
 	</h3>
 </div>
 <div class="rta-column snipstyle p-bot-64" class:dark={$themeMode} class:light={!$themeMode}>
-	<h6 class="p-bot-16">
+	<h6>
 		A collection of Sveltekit tools, utilities and libraries that I like. 
 	</h6>
 	{#if svelteTools && svelteTools.length > 0}
@@ -33,6 +33,22 @@
 				<small>{item.about}</small>
 			</div>
 		{/each}
+	{/if}
+	<h6 class="p-top-32 bord-top">
+		Bookmarked Links
+	</h6>
+	{#if svelteLinks && svelteLinks.length > 0}
+		<div class="rta-grid grid2 stay2">
+		{#each svelteLinks as item}
+			<div class="rta-column null p-bot-16">
+				<small>
+					<a href="{item.url}" target="_blank" rel="noreferrer">
+						{item.name}
+					</a>
+				</small>
+			</div>
+		{/each}
+		</div>
 	{/if}
 </div>
 
