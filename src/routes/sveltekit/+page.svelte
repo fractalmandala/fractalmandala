@@ -1,7 +1,7 @@
 <script lang="ts">
 
 	import { themeMode } from '$lib/stores/globalstores'
-	import { svelteTools, svelteLinks } from '$lib/utils/sveltekittools'
+	import { svelteTools, svelteLinks, svelteLearn } from '$lib/utils/sveltekittools'
 	import PageTitle from '$lib/components/PageTitle.svelte'
 
 	let title = 'Sveltekit Things'
@@ -38,6 +38,22 @@
 		Bookmarked Links
 	</h6>
 	{#if svelteLinks && svelteLinks.length > 0}
+		<div class="rta-grid grid2 stay2">
+		{#each svelteLinks as item}
+			<div class="rta-column null p-bot-16">
+				<small>
+					<a href="{item.url}" target="_blank" rel="noreferrer">
+						{item.name}
+					</a>
+				</small>
+			</div>
+		{/each}
+		</div>
+	{/if}
+	<h6 class="p-top-32 bord-top">
+		Learn Sveltekit
+	</h6>
+	{#if svelteLearn && svelteLearn.length > 0}
 		<div class="rta-grid grid2 stay2">
 		{#each svelteLinks as item}
 			<div class="rta-column null p-bot-16">

@@ -39,3 +39,10 @@ export const svelteLinks = [
 		"url": "https://github.com/spences10/scottspence.com"
 	}
 ]
+
+export const svelteLearn = [
+	{
+		"name": "Understand How Data Flows In SvelteKit",
+		"url": "https://joyofcode.xyz/sveltekit-data-flow"
+	}
+]
