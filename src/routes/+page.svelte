@@ -109,11 +109,12 @@
 	color: var(--midline)
 
 .catlabel
-	background: var(--lingrad)
+	background: var(--green)
 	font-family: 'Spline Sans', sans-serif
 	text-transform: uppercase
 	font-size: 12px
 	padding: 2px 4px
+	color: var(--background)
 
 
 .leveltwo

@@ -1,6 +1,13 @@
 <script lang="ts">
 
+	import { onMount } from 'svelte'
+	import { gptAI } from '$lib/utils/supabase'
 	import { themeMode } from '$lib/stores/globalstores'
+	let titles:any = []
+
+	onMount(async() => {
+		titles = await gptAI();
+	})
 
 </script>
 
@@ -9,7 +16,14 @@
 		AI
 	</h3>
 </div>
-<div class="rta-column snipstyle p-bot-64" class:dark={$themeMode} class:light={!$themeMode}>
-
+<div class="rta-grid grid2 p-bot-64 colgap400">
+	{#if titles && titles.length > 0}
+		{#each titles as item}
+			<a href="/gpt/ai/{item.indexing}" class="rta-column rowgap100 featurebox2 bord-bot p-bot-32 p-top-32">
+				<h5>
+					{item.title}
+				</h5>
+			</a>
+		{/each}
+	{/if}
 </div>
-

@@ -37,6 +37,10 @@ export const svelteLinks = [
 	{
 		"name": "Scott Spence MDSvex Blog",
 		"url": "https://github.com/spences10/scottspence.com"
+	},
+	{
+		"name": "Sveltekit Lucia Starter",
+		"url": "https://github.com/qwacko/sveltekit-lucia-starter"
 	}
 ]
 
@@ -48,5 +52,9 @@ export const svelteLearn = [
 	{
 		"name": "Page Versus Standalone Endpoints In SvelteKit",
 		"url": "https://joyofcode.xyz/using-sveltekit-endpoints"
+	},
+	{
+		"name": "Let's learn SvelteKit by building a static Markdown blog from scratch",
+		"url": "https://joshcollinsworth.com/blog/build-static-sveltekit-markdown-blog"
 	}
 ]

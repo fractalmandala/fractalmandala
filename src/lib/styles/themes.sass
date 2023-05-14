@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Readex+Pro:wght@200;300;400;500;600;700&display=swap')
 
-$green: #63D471
+$green: #0bc160
 $black: #171717
 $black2: #272727
 $white: #FFFFFF
@@ -36,9 +36,12 @@ sup
 	word-wrap: break-word
 	word-break: break-word
 
-h5, h6, small, cite, li, ol, ul
+h5, h6, small, cite
 	color: var(--textone)
 	font-family: $fontmono
+
+p, li, pre, ol, ul
+	color: var(--opposite)
 
 .snipstyle
 	h5
@@ -55,7 +58,7 @@ h5, h6, small, cite, li, ol, ul
 		&::first-letter
 			color: var(--green)
 			font-size: 1.6rem
-	p, pre, h4, h6, ol li, ul li
+	p, pre, h4, h6, ol li, ul li, li
 		color: var(--opposite)
 	ul, ol
 		color: var(--opposite)
@@ -71,8 +74,9 @@ h5, h6, small, cite, li, ol, ul
 			color: var(--textone)
 			font-size: 1rem
 
-p, li, pre
-	color: var(--opposite)
+.snipstyle.rta-design
+	p
+		font-size: 14px
 
 table
 	th
@@ -121,8 +125,8 @@ a
 .dark
 	--rgback: rgba(0,0,0,0.6)
 	--borderline: #272727
-	--midline: #272727
-	--green: #10D56C
+	--midline: #373737
+	--green: #0bc160
 	--background: #121212
 	--contraster: #101010
 	--opposite: #FFFFFF
@@ -130,13 +134,14 @@ a
 	--textone: #575757
 	--texttwo: #777777
 	--grey: #878787
+	--bord: 1px solid rgba(255,255,255,0.1)
 	--lingrad: linear-gradient(91.95deg, #10D56C 0%, #10F026 99.27%)
 
 .light
 	--rgback: rgba(0,0,0,0.8)
 	--borderline: #e7e7e7
 	--midline: #a7a7a7
-	--green: #10D56C
+	--green: #0bc160
 	--background: #FFFFFF
 	--contraster: #f1f1f1
 	--opposite: #272727
@@ -144,6 +149,7 @@ a
 	--textone: #878787
 	--texttwo: #474747
 	--grey: #878787
+	--bord: 1px solid rgba(0,0,0,0.065)
 	--lingrad: linear-gradient(91.95deg, #10D56C 0%, #10F026 99.27%)
 
 
@@ -822,7 +828,7 @@ body, html
 
 .grid2.stdfix
 	@media screen and (min-width: 1024px)
-		grid-template-columns: 1fr 360px
+		grid-template-columns: 1fr 320px
 		grid-template-areas: "mainone rightone"
 		.rightone
 			text-align: right
@@ -830,6 +836,7 @@ body, html
 			position: sticky
 			top: 64px
 			overflow-y: scroll
+			border-left: var(--bord)
 			p
 				font-size: 0.8rem
 				cursor: pointer
@@ -883,6 +890,7 @@ body, html
 			transition: 0.5s cubic-bezier(0.635, 0.405, 0.535, 0.035)
 			z-index: 900
 			overflow-y: scroll
+			padding-top: 64px
 			p
 				font-size: 1rem
 				cursor: pointer
@@ -900,7 +908,6 @@ body, html
 		.rightone.opened
 			padding-bottom: 16px
 			margin-bottom: 32px
-			border-bottom: 1px solid var(--borderline)
 			.rightmenu
 				margin-bottom: 16px
 		.mainone
@@ -1072,21 +1079,25 @@ body, html
 		transform: scale(0.9)
 
 .secondbutton
-	background: none
-	border: 1px solid var(--textone)
-	color: var(--texttwo)
+	color: var(--background)
 	max-width: 160px
+	background: #0bc160
 	width: max-content
-	padding: 4px 12px
-	border-radius: 6px
+	border: 1px solid transparent
+	padding: 2px 12px 0 12px
+	border-radius: 3px
 	transform-origin: center center
 	transition: 0.08s
+	letter-spacing: -0.12px
 	cursor: pointer
 	font-size: 14px
+	text-transform: capitalize
+	line-height: 1.75
 	&:hover
-		background: var(--lingrad)
-		color: #171717
-		transform: scale(0.96)
+		border: 1px solid #0bc160
+		color: #0bc160
+		background: var(--background)
+
 
 .secondbutton.selectedsecond
 	background: var(--green)
@@ -1130,42 +1141,56 @@ body, html
 	font-size: 12px
 	font-family: 'Spline Sans', san-serif
 	text-transform: uppercase
-	color: var(--contraster)
+	color: var(--midline)
 
 
 .usercol
-	text-align: right
 	p
 		font-size: 12px
-		color: var(--textone)
+		color: var(--midline)
 		font-family: 'Spline Sans', san-serif
-	@media screen and (min-width: 1024px)
-		padding-right: 4vw
-		padding-left: 4vw
+		&:hover
+			color: var(--opposite)
+	pre
+		color: var(--opposite)
+		margin: 0
+		font-size: 15px
+		font-family: $fontmono
+		line-height: 1.2
+		letter-spacing: -0.5px
+	pre.white
+		color: var(--green)
+	small
+		margin: 0
+	border-bottom: 1px solid var(--borderline)
 
 .gptcol
 	z-index: 0
-	border-top: 1px solid var(--borderline)
-	border-bottom: 1px solid var(--borderline)
 	small, pre
 		margin: 0
 	pre
-		font-size: 14px
-		color: var(--texttwo)
-		margin: 0
-		letter-spacing: -0.5px
-		white-space: pre-line
-	pre.white
 		color: var(--opposite)
+		margin: 0
+		white-space: pre-line
+		font-size: 15px
+		font-family: $fontmono
+		line-height: 1.2
+		letter-spacing: -0.5px
+	pre.white
+		color: var(--green)
 		code
 			color: var(--opposite)
 
-.gptcol, .usercol
-	padding-top: 8px
-	padding-bottom: 8px
+.usercol
+	padding-top: 16px
+	padding-bottom: 16px
 	@media screen and (max-width: 1023px)
 		padding-top: 16px
 		padding-bottom: 16px
+
+.gptcol
+	padding-top: 32px
+	padding-bottom: 32px
 
 .rightone::-webkit-scrollbar
 	width: 2px
@@ -1243,11 +1268,11 @@ body, html
 		width: 70%
 
 .levelzero.midone
-	padding: 0 4vw
+	padding: 0 2vw 0 4vw
 	.rightone
 		padding-top: 48px
 		padding-right: 4px
-		padding-left: 64px
+		padding-left: 0px
 	.snipstyle
 		padding-top: 32px
 	.snipstyle.solo
@@ -1266,12 +1291,16 @@ body, html
 			padding-right: 4px
 	.gallerycolumn
 		padding-top: 48px
+	.mainone
+		padding-right: 4vw
 
 .levelone.midone
 	padding: 0 4vw
 	.rightone
 		padding-top: 16px
 		z-index: 1
+		.rta-column
+			overflow-y: scroll
 		.rightmenu
 			padding: 4px 8px
 		.break899
@@ -1288,22 +1317,14 @@ body, html
 		padding-bottom: 32px
 
 .featurebox
-	transition: 0.05s
+	transition: 0.25s
 	border: 1px solid transparent
 	border-radius: 6px
 	cursor: pointer
+	transform-origin: center center
 	&:hover
 		border: 1px solid var(--borderline)
-
-.dark
-	.featurebox
-		&:hover
-			box-shadow: 4px 6px 10px #050505
-
-.light
-	.featurebox
-		&:hover
-			box-shadow: 4px 6px 10px #efefef
+		transform: scale(1.05)
 
 .levelzero
 	.featurebox
@@ -1362,3 +1383,48 @@ body, html
 
 .headerbox.reader
 	transform: translateY(-64px)
+
+.outerunit
+	width: 100%
+	text-align: center
+	cite
+		font-style: normal
+		font-size: 10px
+		text-transform: uppercase
+		text-align: center
+
+.innerunit
+	display: flex
+	align-items: center
+	justify-content: center
+	width: 100%
+	border: 1px solid var(--borderline)
+	border-radius: 6px
+
+.levelzero
+	.innerunit
+		padding: 16px
+		min-height: 88px
+
+.levelone
+	.innerunit
+		padding: 8px
+		min-height: 88px
+
+.leveltwo
+	.innerunit
+		padding: 8px
+		min-height: 80px
+		
+
+.featurebox2
+	h5
+		font-family: 'Spline Sans', sans-serif
+		color: var(--opposite)
+		margin: 0
+		font-size: 1.2rem
+		font-weight: 500
+		text-transform: capitalize
+	&:hover
+		h5
+			color: var(--green)

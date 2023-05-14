@@ -60,7 +60,7 @@
 	<div class="rta-column mainone">
 		<slot></slot>
 	</div>
-	<div class="rta-column rightone" class:opened={expandRightbar} class:movedToTop={isInvisible} data-lenis-prevent>
+	<div class="rta-column rightone" class:opened={expandRightbar} data-lenis-prevent>
 		{#if breakPoint}
 		<div class="rta-row ycenter between rightmenu" on:click={toggleRightbar} on:keydown={fauxfake}>
 			<button class="break899">

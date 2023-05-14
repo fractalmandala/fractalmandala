@@ -154,11 +154,11 @@
 		</Header>
 	</div>
 	{/if}
-	<section class="pagebox" class:reader={$readingMode}>
-		<div class="leftone" class:leftsidebar={expandMobilemenu} class:levelzero={$breakZero} class:levelone={$breakOne} class:leveltwo={$breakTwo} transition:slide>
+	<main class="pagebox" class:reader={$readingMode}>
+		<section class="leftone" class:leftsidebar={expandMobilemenu} class:levelzero={$breakZero} class:levelone={$breakOne} class:leveltwo={$breakTwo} transition:slide data-lenis-prevent>
 			<div class="leftsticky">
 				<div
-					class="rta-row ycenter between null p-bot-16 point"
+					class="rta-row ycenter between null p-bot-8 point"
 					on:click={() => toggleMenuDrop(1)}
 					on:keydown={fauxfake}
 				>
@@ -190,7 +190,7 @@
 					</div>
 				{/if}
 				<div
-					class="rta-row ycenter between null p-bot-16 point p-top-16"
+					class="rta-row ycenter between null p-bot-8 point p-top-16"
 					on:click={() => toggleMenuDrop(2)}
 					on:keydown={fauxfake}
 				>
@@ -223,7 +223,7 @@
 					</div>
 				{/if}
 				<div
-					class="rta-row ycenter between null p-bot-16 point p-top-16"
+					class="rta-row ycenter between null p-bot-8 point p-top-16"
 					on:click={() => toggleMenuDrop(3)}
 					on:keydown={fauxfake}
 				>
@@ -249,7 +249,6 @@
 						transition:slide={{ duration: 200, axis: 'y' }}
 						on:click={toggleMobilemenu} on:keydown={fauxfake}
 					>
-						<p class="spline"><a href="/gpt">Agents</a></p>
 						<p class="spline"><a href="/gpt/sveltekit">Sveltekit</a></p>
 						<p class="spline"><a href="/gpt/supabase">Supabase</a></p>
 						<p class="spline"><a href="/gpt/webui">UI</a></p>
@@ -259,21 +258,21 @@
 						<p class="spline"><a href="/gpt/other">Other</a></p>
 					</div>
 				{/if}
-				<div class="rta-row ycenter between null p-bot-16 point p-top-16">
+				<div class="rta-row ycenter between null p-bot-8 point p-top-16">
 					<p class="tt-u"><a href="/gallery">Gallery</a></p>
 				</div>
-				<div class="rta-row ycenter between null p-bot-16 point p-top-16" on:click={toggleMobilemenu} on:keydown={fauxfake}>
+				<div class="rta-row ycenter between null p-bot-8 point p-top-16" on:click={toggleMobilemenu} on:keydown={fauxfake}>
 					<p class="tt-u"><a href="/videos">Videos</a></p>
 				</div>
-				<div class="rta-row ycenter between null p-bot-16 point p-top-16" on:click={toggleMobilemenu} on:keydown={fauxfake}>
+				<div class="rta-row ycenter between null p-bot-8 point p-top-16" on:click={toggleMobilemenu} on:keydown={fauxfake}>
 					<p class="tt-u"><a href="/music">Music</a></p>
 				</div>
-				<div class="rta-row ycenter between null p-bot-16 point p-top-16" on:click={toggleMobilemenu} on:keydown={fauxfake}>
+				<div class="rta-row ycenter between null p-bot-8 point p-top-16" on:click={toggleMobilemenu} on:keydown={fauxfake}>
 					<p class="tt-u"><a href="/build">Build Area</a></p>
 				</div>
 			</div>
-		</div>
-		<div class="midone" class:levelzero={$breakZero} class:levelone={$breakOne} class:leveltwo={$breakTwo}>
+		</section>
+		<section class="midone" class:levelzero={$breakZero} class:levelone={$breakOne} class:leveltwo={$breakTwo}>
 			{#if $sidebarMode}
 				<div class="rta-column of-search" transition:slide={{ axis: 'x'}}>
 					<Searcher/>
@@ -285,8 +284,8 @@
 					</TransitionPage>
 				{/key}
 			{/if}
-		</div>
-	</section>
+		</section>
+	</main>
 	<div class="rta-column footerbox">
 		<Footer />
 	</div>
@@ -344,13 +343,8 @@
 	.fixed-row
 		border-bottom: 1px solid rgba(0,0,0,0.065)
 
-.dark
-	.headerbox
-		background: rgba(7,7,7,0.71)
-
-.light
-	.headerbox
-		background: #f4f4f4
+.headerbox
+	background: var(--background)
 
 .footerbox
 	height: 64px
@@ -374,6 +368,9 @@
 				height: max-content
 				position: sticky
 				top: 112px
+				display: flex
+				flex-direction: column
+				row-gap: 0 !important
 			.spline
 				width: max-content
 		.midone
@@ -411,7 +408,6 @@
 .dark
 	.leftone
 		@media screen and (min-width: 769px)
-			background: rgba(0,0,0,0.6)
 			border-right: 1px solid rgba(255,255,255,0.1)
 	.leftone.leftsidebar
 		@media screen and (min-width: 769px)
@@ -423,7 +419,6 @@
 .light
 	.leftone
 		@media screen and (min-width: 769px)
-			background: rgba(0,0,0,0.035)
 			border-right: 1px solid rgba(0,0,0,0.065)
 
 

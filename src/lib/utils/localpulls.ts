@@ -153,6 +153,23 @@ export async function allVideos(){
 	return eachfiled
 }
 
+export async function allTest(){
+	const allfiles = import.meta.glob('/src/routes/gpt/svelte/*.md')
+	const filed = Object.entries(allfiles)
+	const eachfiled = await Promise.all(
+		filed.map(async([path, resolver]) => {
+			// @ts-ignore
+			const { metadata } = await resolver()
+			const postPath = path.slice(11,-3)
+			return {
+				meta: metadata,
+				linkpath: postPath
+			}
+		})
+	)
+	return eachfiled
+}
+
 export async function entireProject(){
 	const themeSvelte = await themeSveltekit();
 	const themeSupa = await themeSupabase();
@@ -392,4 +409,22 @@ export async function featuredAll(){
 		tag: post.meta.tags,
 		cat: post.type
 	}));
+}
+
+
+export async function designLibrary(){
+	const allfiles = import.meta.glob('/src/routes/build/designlibrary/*.md')
+	const filed = Object.entries(allfiles)
+	const eachfiled = await Promise.all(
+		filed.map(async([path, resolver]) => {
+			// @ts-ignore
+			const { metadata } = await resolver()
+			const postPath = path.slice(11,-3)
+			return {
+				meta: metadata,
+				linkpath: postPath
+			}
+		})
+	)
+	return eachfiled
 }

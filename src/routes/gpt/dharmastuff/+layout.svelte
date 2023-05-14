@@ -2,7 +2,7 @@
 
 	import { onMount } from 'svelte'
 	import { gptDharmastuff } from '$lib/utils/supabase'
-	import visibilityMode from '$lib/stores/visibility'
+	import { themeMode } from '$lib/stores/globalstores'
 	import { slide } from 'svelte/transition'
 	import { circOut } from 'svelte/easing'
 	let y:number
@@ -57,11 +57,11 @@
 
 <svelte:window bind:outerWidth={iW}/>
 
-<div class="rta-grid grid2 stdfix" class:light={!$visibilityMode} class:dark={$visibilityMode}>
+<div class="rta-grid grid2 stdfix" class:light={!$themeMode} class:dark={$themeMode}>
 	<div class="rta-column mainone">
 		<slot></slot>
 	</div>
-	<div class="rta-column rightone" class:opened={expandRightbar} class:movedToTop={isInvisible} data-lenis-prevent>
+	<div class="rta-column rightone" class:opened={expandRightbar} data-lenis-prevent>
 		{#if breakPoint}
 		<div class="rta-row ycenter between rightmenu" on:click={toggleRightbar} on:keydown={fauxfake}>
 			<button class="break899">
@@ -79,7 +79,7 @@
 		</div>
 		{/if}
 		{#if !breakPoint || expandRightbar}
-			<div class="rta-column" transition:slide={{ easing: circOut }} data-lenis-prevent>
+			<div class="rta-column" transition:slide={{ easing: circOut }}>
 				<p class="tt-u"><strong><a href="/gpt/dharmastuff">Dharmastuff</a></strong></p>
 				{#if titles && titles.length > 0}
 					{#each titles as item}

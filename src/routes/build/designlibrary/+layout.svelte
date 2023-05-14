@@ -1,9 +1,12 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte'
-	import { gptSveltekit } from '$lib/utils/supabase'
+	import { themeMode } from '$lib/stores/globalstores'
+	import { designLibrary } from '$lib/utils/localpulls'
+	import ButtonBasic from '$lib/deslib/ButtonBasic.svelte'
+	import InputText from '$lib/deslib/InputText.svelte'
 	import { slide } from 'svelte/transition'
-	import { circOut } from 'svelte/easing'
+	import { quadIn } from 'svelte/easing'
 	let y:number
 	let isInvisible = false
 	let mouseY:number
@@ -13,6 +16,18 @@
 	let fake = false
 	let expandRightbar = false
 	let titles:any = []
+	let showComponent = Array(30).fill(false)
+
+	function toggleComponent(index:number){
+		showComponent[index] = !showComponent[index]
+			for ( let i = 0; i < showComponent.length; i ++ ) {
+				if ( i !== index && showComponent[i] === true ) {
+					showComponent[i] = false
+				}
+			}
+	}
+
+	$: anyComponent = showComponent.some(item => item)
 
 	function toggleRightbar(){
 		expandRightbar = !expandRightbar
@@ -38,7 +53,7 @@
 	}
 
 	onMount(async() => {
-		titles = await gptSveltekit();
+		titles = await designLibrary();
 		const handleMouse = (event: {clientY: number;}) => {
 			mouseY = event.clientY
 			if ( mouseY <= 128 ) {
@@ -55,11 +70,11 @@
 
 <svelte:window bind:outerWidth={iW} bind:scrollY={y}/>
 
-<div class="rta-grid grid2 stdfix">
-	<div class="rta-column mainone">
+<div class="rta-grid grid2 stdfix" class:light={!$themeMode} class:dark={$themeMode}>
+	<div class="rta-column rowgap200 mainone">
 		<slot></slot>
 	</div>
-	<div class="rta-column rightone" class:opened={expandRightbar} data-lenis-prevent>
+	<div class="rta-column rightone" class:opened={expandRightbar} class:movedToTop={isInvisible} data-lenis-prevent>
 		{#if breakPoint}
 		<div class="rta-row ycenter between rightmenu" on:click={toggleRightbar} on:keydown={fauxfake}>
 			<button class="break899">
@@ -77,26 +92,11 @@
 		</div>
 		{/if}
 		{#if !breakPoint || expandRightbar}
-			<div class="rta-column" transition:slide={{ easing: circOut }}>
-				<p class="tt-u"><strong><a href="/gpt/sveltekit">Sveltekit</a></strong></p>
-				{#if titles && titles.length > 0}
-					{#each titles as item}
-						<p class="spline">
-							<a href="/gpt/sveltekit/{item.indexing}">
-								{item.title}
-							</a>
-						</p>
-					{/each}
-				{/if}
+			<div class="rta-column" transition:slide={{ easing: quadIn }} data-lenis-prevent>
+				<p class="tt-u"><strong><a href="/javascript">Design Library</a></strong></p>
+
 			</div>
 		{/if}
 	</div>
 </div>
-
-<style lang="sass">
-
-.spline
-	margin-bottom: 6px
-
-</style>
 

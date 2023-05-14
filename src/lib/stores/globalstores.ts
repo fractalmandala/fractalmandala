@@ -7,8 +7,8 @@ export const windowWidth = writable(initialWidth);
 export const siteName = 'Fractal Maṇḍala'
 
 const storedThemeMode = browser
-  ? JSON.parse(localStorage.getItem('themeMode') || 'true')
-  : true;
+  ? JSON.parse(localStorage.getItem('themeMode') || 'false')
+  : false;
 
 export const themeMode = writable(storedThemeMode);
 

@@ -47,7 +47,7 @@
 
 .foot.dark
 	border-top: 1px solid rgba(255,255,255,0.1)
-	background: #171717
+	background: var(--background)
 	small
 		color: #474747
 		a
@@ -56,7 +56,7 @@
 
 .foot.light
 	border-top: 1px solid rgba(0,0,0,0.065)
-	background: #f4f4f4
+	background: var(--background)
 	small
 		color: #878787
 		a
