@@ -13,6 +13,11 @@ export const svelteTools = [
 		"name": "MDSvex",
 		"url": "https://mdsvex.pngwn.io/",
 		"about": "Render markdown inside Sveltekit."
+	},
+	{
+		"name": "Svelte Lenis",
+		"url": "https://github.com/sytanta/svelte-lenis",
+		"about": "A complete porting of the Lenis scroll library to Sveltekit."
 	}
 ]
 

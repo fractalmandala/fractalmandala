@@ -4,11 +4,10 @@
 	import { browser } from '$app/environment';
 	import Reading from '$lib/icons/Reading.svelte'
 	import Dark from '$lib/icons/DarkMode.svelte'
-	import { themeMode, breakZero, breakOne, breakTwo, windowWidth, breakZeroOne, readingMode } from '$lib/stores/globalstores'
+	import { themeMode, breakZero, breakOne, breakTwo, windowWidth, readingMode } from '$lib/stores/globalstores'
 	import sidebarMode from '$lib/stores/searchbar';
 	import TransitionPage from '$lib/components/TransitionPage.svelte';
 	import ArrowUp from '$lib/icons/ArrowUp.svelte'
-	import TransitionPage2 from '$lib/components/TransitionPage.svelte';
 	import Searcher from '$lib/components/SearchComponent.svelte';
 	import MobileIcon from '$lib/icons/Menu.svelte';
 	import {
@@ -137,7 +136,6 @@
 	class="myappbox"
 	class:light={!$themeMode}
 	class:dark={$themeMode}
-	class:relative={$sidebarMode}
 >
 	{#if $readingMode}
 		<div class="rta-row fixed-row ycenter" transition:slide>
