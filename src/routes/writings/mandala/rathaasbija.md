@@ -1,7 +1,8 @@
 ---
 title: Ratha as a Bīja of Civilizational DNA
 image: https://rnfvzaelmwbbvfbsppir.supabase.co/storage/v1/object/public/brhatwebsite/05dhiti/01.webp
-tags: fractalmandala
+tags: civilization
+featured: true
 ---
 
 #### Visions of the Maṇḍala

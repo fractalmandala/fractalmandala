@@ -2,6 +2,7 @@
 title: Blockchaining Towards Civilisation 2.0 — Musings on How Blockchain Can Change the World
 tags: opinion
 originallydated: Nov, 2017
+featured: false
 ---
 
 *Disclaimer- This article is an exercise in (possibly outrageous) speculation. I imagine somewhat utopian future states where blockchain is embedded in ways that fundamentally alter civilisation. None of this is guaranteed, but it is definitely possible.*

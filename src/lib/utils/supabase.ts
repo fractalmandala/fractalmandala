@@ -146,9 +146,6 @@ export async function gptTitles(){
 		return data				
 	}
 
-
-
-
 	export async function fullGallery(){
 		const { data, error } = await supabase
 		.from('amrit-gallery')
@@ -156,6 +153,37 @@ export async function gptTitles(){
 		.order('id')
 		if ( error ) throw new Error(error.message)
 		return data
+	}
+
+	export async function recentGallery(){
+		const { data, error } = await supabase
+		.from('amrit-gallery')
+		.select()
+		.order('id', {ascending: false})
+		.limit(6)
+		if ( error ) throw new Error(error.message)
+		return data
+	}
+
+	export async function lastGallery(){
+		const { data, error } = await supabase
+		.from('amrit-gallery')
+		.select()
+		.order('id', {ascending: false})
+		.limit(1)
+		if ( error ) throw new Error(error.message)
+		return data
+	}
+
+	export async function rangeGallery(low:number, top:number){
+		const { data, error } = await supabase
+		.from('amrit-gallery')
+		.select()
+		.order('id', {ascending: false})
+		.gte('id', low)
+		.lte('id', top)
+		if ( error ) throw new Error(error.message)
+		return data		
 	}
 
 export async function limitGallery(genre:string){
@@ -168,11 +196,11 @@ export async function limitGallery(genre:string){
 		return data
 	}
 
-export async function singleImage(id:number){
+export async function singleImage(slug:string){
 		const { data, error } = await supabase
 		.from('amrit-gallery')
 		.select()
-		.eq('id',id)
+		.eq('slug',slug)
 		if ( error ) throw new Error(error.message)
 		return data
 	}

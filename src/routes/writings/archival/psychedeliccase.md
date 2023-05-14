@@ -2,6 +2,7 @@
 title: The Psychedelic Case for Vedic Ṛṣis as Seers
 tags: opinion
 originallydated: May, 2021
+featured: false
 ---
 
 *Disclaimer: This is not a research-based paper but an opinion piece. It is an exercise in speculation.*

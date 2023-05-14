@@ -1,6 +1,7 @@
 ---
 title: Style Pre Tags
 tags: css
+featured: false
 ---
 
 ```css

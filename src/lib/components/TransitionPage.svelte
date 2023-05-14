@@ -1,11 +1,11 @@
 <script>
 
 	import { fly } from 'svelte/transition'
-	import { quartOut, quartInOut } from 'svelte/easing'
+	import { quadOut, quadIn } from 'svelte/easing'
 
 </script>
 
-<div class="transistor" in:fly={{ delay: 500, duration: 400, x: 0, y: 600, easing: quartInOut}} out:fly={{ delay: 0, duration: 450, x: 0, y: 600, easing: quartOut}}>
+<div class="transistor" in:fly={{ delay: 500, duration: 400, y: 900, easing: quadOut}} out:fly={{ delay: 0, duration: 350, opacity: 0, x: 900, easing: quadIn}}>
 	<slot></slot>
 </div>
 

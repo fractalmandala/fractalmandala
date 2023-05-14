@@ -1,9 +1,14 @@
 <script lang="ts">
+
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
-	import { themeMode, breakOne, breakTwo } from '$lib/stores/globalstores'
+	import Reading from '$lib/icons/Reading.svelte'
+	import Dark from '$lib/icons/DarkMode.svelte'
+	import { themeMode, breakZero, breakOne, breakTwo, windowWidth, breakZeroOne, readingMode } from '$lib/stores/globalstores'
 	import sidebarMode from '$lib/stores/searchbar';
 	import TransitionPage from '$lib/components/TransitionPage.svelte';
+	import ArrowUp from '$lib/icons/ArrowUp.svelte'
+	import TransitionPage2 from '$lib/components/TransitionPage.svelte';
 	import Searcher from '$lib/components/SearchComponent.svelte';
 	import MobileIcon from '$lib/icons/Menu.svelte';
 	import {
@@ -109,7 +114,7 @@
 	export let data;
 </script>
 
-<svelte:window bind:scrollY={y} bind:outerWidth={screenWidth}/>
+<svelte:window bind:scrollY={y} bind:outerWidth={screenWidth} bind:innerWidth={$windowWidth}/>
 
 <svelte:head>
 	<!-- Google tag (gtag.js) -->
@@ -123,12 +128,9 @@
 
 		gtag('config', 'G-1JFGGCTBC9');
 	</script>
-	<link rel="preconnect" href="https://fonts.googleapis.com" />
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-	<link
-		href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Spline+Sans+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Spline+Sans:wght@300;400;500;600;700&display=swap"
-		rel="stylesheet"
-	/>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css2?family=Cousine:ital,wght@0,400;0,700;1,400;1,700&family=Spline+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </svelte:head>
 
 <div
@@ -137,7 +139,13 @@
 	class:dark={$themeMode}
 	class:relative={$sidebarMode}
 >
-	<div class="rta-column headerbox">
+	{#if $readingMode}
+		<div class="rta-row fixed-row ycenter" transition:slide>
+			<Reading/>
+			<Dark/>
+		</div>
+	{:else}
+	<div class="rta-column headerbox" transition:slide>
 		<Header>
 			<div class="mobileicon" slot="mobileicon" on:click={toggleMobilemenu} on:keydown={fauxfake}>
 				<MobileIcon />
@@ -147,8 +155,9 @@
 			</div>
 		</Header>
 	</div>
-	<div class="pagebox">
-		<div class="leftone" class:leftsidebar={expandMobilemenu}>
+	{/if}
+	<div class="pagebox" class:reader={$readingMode}>
+		<div class="leftone" class:leftsidebar={expandMobilemenu} class:levelzero={$breakZero} class:levelone={$breakOne} class:leveltwo={$breakTwo} transition:slide>
 			<div class="leftsticky">
 				<div
 					class="rta-row ycenter between null p-bot-16 point"
@@ -261,24 +270,29 @@
 				<div class="rta-row ycenter between null p-bot-16 point p-top-16" on:click={toggleMobilemenu} on:keydown={fauxfake}>
 					<p class="tt-u"><a href="/music">Music</a></p>
 				</div>
+				<div class="rta-row ycenter between null p-bot-16 point p-top-16" on:click={toggleMobilemenu} on:keydown={fauxfake}>
+					<p class="tt-u"><a href="/build">Build Area</a></p>
+				</div>
 			</div>
 		</div>
-		<div class="midone">
-			{#key data.pathname}
-				<TransitionPage>
-					<slot />
-				</TransitionPage>
-			{/key}
+		<div class="midone" class:levelzero={$breakZero} class:levelone={$breakOne} class:leveltwo={$breakTwo}>
+				{#if $sidebarMode}
+					<div class="rta-column of-search" transition:slide={{ axis: 'x'}}>
+						<Searcher/>
+					</div>
+				{:else}
+					{#key data.pathname}
+						<TransitionPage>
+							<slot />
+						</TransitionPage>
+					{/key}
+				{/if}
 		</div>
 	</div>
 	<div class="rta-column footerbox">
 		<Footer />
 	</div>
-	{#if $sidebarMode}
-		<div class="rta-column of-search" transition:slide={{ axis: 'x'}} data-lenis-prevent>
-			<Searcher/>
-		</div>
-	{/if}
+		<ArrowUp/>
 </div>
 
 <style lang="sass">
@@ -294,30 +308,21 @@
 	width: 100vw
 	background: var(--background)
 
-.myappbox.relative
-	position: relative
-	.of-search
-		position: absolute
-		top: 0
-		right: 0
-		width: 360px
-		height: 100vh
-		z-index: 990
-		background: var(--contraster)
-		backdrop-filter: blur(12px)
-		overflow-y: scroll
-		@media screen and (min-width: 769px)
-			padding: 128px 24px 64px 24px
-		@media screen and (max-width: 768px)
-			width: 100vw
-			top: 64px
-			height: calc(100vh - 64px)
-			padding: 32px 24px 64px 24px
+.of-search
+	width: 100%
+	min-height: 100vh
 
-.of-search::-webkit-scrollbar
-	width: 2px
-.of-search::-webkit-scrollbar-thumb
-	background: #10D56C
+.levelzero
+	.of-search
+		padding: 4vw
+
+.levelone
+	.of-search
+		padding: 4vw
+
+.leveltwo
+	.of-search
+		padding: 32px
 
 .headerbox
 	height: 64px
@@ -325,9 +330,29 @@
 	top: 0
 	z-index: 999
 
+.fixed-row
+	height: 48px
+	position: sticky
+	top: 0
+	z-index: 999
+	justify-content: center
+	backdrop-filter: blur(5px)
+
+.dark
+	.fixed-row
+		border-bottom: 1px solid rgba(255,255,255,0.1)
+
+.light
+	.fixed-row
+		border-bottom: 1px solid rgba(0,0,0,0.065)
+
 .dark
 	.headerbox
 		background: rgba(7,7,7,0.71)
+
+.light
+	.headerbox
+		background: #f4f4f4
 
 .footerbox
 	height: 64px
@@ -346,6 +371,7 @@
 			padding-right: 24px
 			padding-top: 48px
 			height: 100%
+			z-index: 100
 			.leftsticky
 				height: max-content
 				position: sticky
@@ -354,14 +380,18 @@
 				width: max-content
 		.midone
 			grid-area: midone
+			z-index: 0
+			min-height: calc(100vh - 128px)
 	@media screen and (max-width: 768px)
 		grid-template-columns: 1fr
 		grid-template-areas: midone
 		.leftone
 			display: none
 			transition: 0.2s ease
+			z-index: 990
 		.midone
 			grid-one: midone
+			z-index: 800
 		.leftone.leftsidebar
 			display: flex
 			flex-direction: column
@@ -392,6 +422,12 @@
 			background: rgba(0,0,0,0.8)
 			backdrop-filter: blur(20px)
 
+.light
+	.leftone
+		@media screen and (min-width: 769px)
+			background: rgba(0,0,0,0.035)
+			border-right: 1px solid rgba(0,0,0,0.065)
+
 
 .iconchev
 	transition: 0.15s
@@ -408,6 +444,12 @@
 
 .tt-u
 	color: var(--opposite)
+
+.leftone.leveltwo
+	p.tt-u
+		font-size: 1.44rem
+	p.spline
+		font-size: 1.28rem
 
 .point
 	&:hover

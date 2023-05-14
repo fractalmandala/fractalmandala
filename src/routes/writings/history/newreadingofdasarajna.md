@@ -1,6 +1,7 @@
 ---
 title: A New Reading of the Dāśarājña, or Battle of Ten Kings, in the Ṛg Veda
 tags: history
+featured: true
 ---
 
 <small class="is-green tt-u">long read</small>

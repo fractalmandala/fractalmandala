@@ -12,12 +12,28 @@ const storedThemeMode = browser
 
 export const themeMode = writable(storedThemeMode);
 
+const storedReadingMode = browser
+	? JSON.parse(localStorage.getItem('readingMode') || 'false')
+	: false;
+
+export const readingMode = writable(storedReadingMode)
+
 export const breakOne = derived(
   windowWidth,
-  $windowWidth => $windowWidth <= 1023
+  $windowWidth => $windowWidth <= 1023 && $windowWidth > 768
 );
 
 export const breakTwo = derived(
   windowWidth,
   $windowWidth => $windowWidth <= 768
+);
+
+export const breakZero = derived(
+	windowWidth,
+	$windowWidth => $windowWidth > 1023
+);
+
+export const breakZeroOne = derived(
+	windowWidth,
+	$windowWidth => $windowWidth <= 1023
 );

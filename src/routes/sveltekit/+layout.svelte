@@ -99,8 +99,5 @@
 .spline
 	margin-bottom: 6px
 
-
-
-
 </style>
 

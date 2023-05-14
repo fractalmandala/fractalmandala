@@ -1,6 +1,7 @@
 ---
 title: Sample Working Code for Lenis in Sveltekit
 tags: scrolls
+featured: false
 ---
 
 ```js

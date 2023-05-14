@@ -1,11 +1,11 @@
 <script lang="ts">
 
 	import { draw } from 'svelte/transition'
-	import visibilityMode from '$lib/stores/visibility'	
+	import { themeMode } from '$lib/stores/globalstores'
 
 </script>
 
-<div class="aligner rta-row ycenter" class:dark={$visibilityMode} class:light={!$visibilityMode}>
+<div class="aligner rta-row ycenter" class:dark={$themeMode} class:light={!$themeMode}>
 	<svg id="onbelow" width="534" height="59" viewBox="0 0 534 59" fill="none" xmlns="http://www.w3.org/2000/svg">
 		<path class="char char1" id="fm1" d="M0.799805 45.0001V1.2001H28.0398V8.1601H8.1798V19.8601H26.4798V26.8201H8.29981V45.0001H0.799805Z" fill="none" stroke="#53DD6C" stroke-width="1px" stroke-linejoin="round"/>
 		<path class="char char2" d="M36.5364 45.0001V1.2001H50.3964C53.3164 1.2001 55.8364 1.7401 57.9564 2.8201C60.1164 3.9001 61.7964 5.4201 62.9964 7.3801C64.1964 9.3001 64.7964 11.5801 64.7964 14.2201C64.7964 17.1001 64.0564 19.6401 62.5764 21.8401C61.1364 24.0401 59.1764 25.6001 56.6964 26.5201L65.3964 45.0001H56.9964L49.3764 27.6001H44.0364V45.0001H36.5364ZM44.0364 21.0001H50.3964C52.5164 21.0001 54.1764 20.4201 55.3764 19.2601C56.5764 18.1001 57.1764 16.5001 57.1764 14.4601C57.1764 12.3801 56.5764 10.7601 55.3764 9.6001C54.1764 8.4001 52.5164 7.8001 50.3964 7.8001H44.0364V21.0001Z" fill="none" stroke="#53DD6C" stroke-width="1px" stroke-linejoin="round"/>
@@ -35,8 +35,8 @@
 	&:hover
 		#onbelow
 			.char
-				fill: white
-				stroke: white
+				fill: var(--opposite)
+				stroke: var(--opposite)
 	@media screen and (min-width: 1024px)
 		height: 42px
 		svg
@@ -61,52 +61,31 @@
 	z-index: 0
 
 #circ1
+	transform-origin: center center
 	animation: firstcircle 8s ease infinite
 	transform: translateY(4px)
 	fill: #10D56C
 
 #circ2
+	transform-origin: center center
 	animation: secondcircle 8s ease infinite
 	transform: translateY(4px)
 
-.aligner
-	&:hover
-		#circ1, #circ2
-			animation: shaker 0.25s ease forwards infinite
-
-@keyframes shaker
-	0%
-		transform: translateX(-2px) translateY(4px)
-	25%
-		transform: translateX(2px) translateY(4px)
-	50%
-		transform: translateX(-2px) translateY(4px)
-	75%
-		transform: translateX(2px) translateY(4px)
-	100%
-		transform: translateX(-2px) translateY(4px)
-
 @keyframes firstcircle
 	0%
-		opacity: 0
 		transform: translateX(0px) translateY(4px)
 	50%
-		opacity: 1
-		transform: translateX(72px) translateY(4px)
+		transform: translateX(36px) translateY(4px)
 	100%
-		opacity: 0
 		transform: translateX(0px) translateY(4px)
 
 @keyframes secondcircle
 	0%
-		opacity: 0
-		transform: translateX(0px) translateY(4px)
+		transform: translateX(-32px) translateY(4px)
 	50%
-		opacity: 1
 		transform: translateX(-64px) translateY(4px)
 	100%
-		opacity: 0
-		transform: translateX(0px) translateY(4px)
+		transform: translateX(-32px) translateY(4px)
 
 svg
 	object-fit: contain

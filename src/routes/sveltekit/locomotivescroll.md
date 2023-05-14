@@ -1,6 +1,7 @@
 ---
 title: Locomotive Scroll in Sveltekit
 tags: scrolls
+featured: false
 ---
 
 ```js

@@ -1,6 +1,7 @@
 ---
 title: Storing User First Visit
 tags: utilities
+featured: false
 ---
 
 Create a file in lib>stores named 'stores.ts'

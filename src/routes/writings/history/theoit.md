@@ -1,6 +1,7 @@
 ---
 title: Bhāratīya Wanderlust - A Defence of the Out-of-India Model (OIT)
 tags: history
+featured: true
 ---
 
 <small class="is-green tt-u">long read</small>

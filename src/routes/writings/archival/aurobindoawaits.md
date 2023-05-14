@@ -2,6 +2,7 @@
 title: The Aurobindo that Awaits
 tags: opinion
 originallydated: Oct, 2022
+featured: true
 ---
 
 #### What is Aurobindo?

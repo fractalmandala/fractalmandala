@@ -1,11 +1,25 @@
 ---
 title: An Exegesis of Ṛg Vedic Chronology
 tags: history
+featured: false
 ---
 
 Vedic literature begins with the Ṛgveda and its ten maṇḍalas, or books. Each maṇḍala is composed of hymns or sūktas, which in turn are made from verses or mantras. There are a total of 1028 sūktas and 10,552 mantras, and this table shows the breakdown:
 
-<img src="/images/mandalaschart.png" alt="chart"/>
+| Maṇḍala | No. of Sūktas | No. of Mantras |
+| :----- | :----- | :----- |
+| 1 | 191 | 2006 |
+| 2 | 43 | 429 |
+| 3 | 62 | 617 |
+| 4 | 58 | 589 |
+| 5 | 87 | 727 |
+| 6 | 75 | 765 |
+| 7 | 104 | 841 |
+| 8 | 103 | 1716 |
+| 9 | 114 | 1108 |
+| 10 | 191 | 1754 |
+
+>
 
 A body of scholarly work has been dedicated to finding a chronology to the Ṛgveda. What do we mean by chronology for a text that was transmitted orally for many generations? Several Vedic hymns contain astronomical data going into the Paleolithic, so are we to say that the Ṛgveda was composed during the Last Glacial Maximum? Add to this Hindu tradition that considers the Vedas apauruṣeya, or authorless and eternal. The claim needs elaboration, for it seems to defy any historical analysis. In his book Hindu Dharma, Swami Chandrasekharendra Sarasvati takes the example of the Law of Gravitation, or the discovery of America by Columbus. In the former case, gravitation exists eternal- independent of Newton’s discovery of it. In the latter case, Columbus’ discovery did not create America, for the land already existed. This is precisely the apauruṣeya nature attributed to Vedic sūktas. Vedic ṛṣis did not create or compose them, they discovered or perceived them. This perception was called a kind of inner sight, and thus were Vedic ṛṣis called dārṣṭas, or seers. Swami Sarasvati makes clear that Vedic ṛṣis were not mantra-kārtas (mantra-creators) but mantra-dārṣṭas (mantra seers).
 
@@ -21,7 +35,16 @@ By 3500-3000 BC India, we find evidence of fire-altars at sites like Bhirrana an
 
 There is broad consensus that the books 2-7 form the Ṛgveda’s oldest core, while books 9 and 10 are chronologically the last. The consensus is specifically on “composition and assembly,” meaning that it bases periodisation along the timeline of metrical hymnology (composition) and formal structure (assembly), where the composition has long antecedents and the assembly forms the tape-recording- a freezing in time. Book 10 is considered to be of a strikingly different language than of the previous books, leading us to conclude that it represents a somewhat later period than the rest of the Ṛgveda. Book 9 is called the Soma Pavamāna, a kind of appendix comprising hymns dedicated to soma, and textual examination suggests that this maṇḍala was put together when the previous eight were already in place. Books 2-7 are called the family maṇḍalas, as each is dominated by hymns of a specific ṛṣi family. In his work The Rigveda – A Historical Analysis, Talageri uses internal data to periodise the family maṇḍalas. His analysis can be summed such:
 
-<img src="/images/rshisofveda.png" alt="rishigroups"/>
+| Maṇḍala | Ṛṣi Family | Primary Composer(s) |
+| :-------- | :----- | :----- |
+| 6 | Āṅgirasa | Bharadvāja Bārhaspatya and immediate descendants |
+| 3 | Vaiśvāmitra | Viśvāmitra Gāthina and immediate descendants |
+| 7 | Vāsiṣṭha | Vasiṣṭha Maitrāvaruṇī | 
+| 4 | Āṅgirasa | Vāmadeva Gautama |
+| 2 | Bhārgava | Gṛtsamada Bhārgava |
+| 5 | Ātreya | Bhauma Atri, Ṣyavaśva Ātreya and others | 
+
+>
 
 Talageri’s analysis is criticised for implying a discrete periodicity between the family books, but this assertion is not necessary to grasp the broader chronology. Take the case of books 6 and 4, both by Āṅgirasa ṛṣis. We know that Gautama ṛṣis were descendants of Gotama and Dīrghatamāsa, of which the latter was contemporaneous to Bṛhaspati. A name such as Vāmadeva Gautama necessarily comes a few generations after Bharadvāja Bārhaspatya. This allows us to conclude that book 4 was not composed before book 6, or that the latter was already in place by the time Vāmadeva began composing the former. In fact the other composers of book 6, with names such as Bhāradvāja and Bārhaspatya, are clearly Bharadvāja’s immediate descendants. Vāmadeva follows him by at least a few generations. Only going by genealogy is no solution of course. Book 10 contains composers such as Māndhātṛ and Pṛthu, but it’s taken as the latest book because it was assembled last. Whatever language Māndhātṛ and Pṛthu spoke in, it could not have been the exact dialect of 3000 BC or later. But their hymns and knowledge were codified by a later culture into its own dialect. Some support for this comes from RV 8-40-12, where Nābhāka Kāṇva says that Māndhātṛ’s ancient songs to Indra and Agni are being sung ‘in a newer speech’ or navīyo avāci.
 

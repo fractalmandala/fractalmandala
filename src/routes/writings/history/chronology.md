@@ -1,9 +1,10 @@
 ---
 title: A New Chronological Framework for Indian History
 tags: history
+featured: false
 ---
 
-##### Abstract
+###### Abstract
 
 It has been two decades since Subhash Kak developed a chronological framework for Indian culture, which set a paradigm for plausible chronology of Vedic literature and the Mahābhārata. This paper builds on the work by tethering the Mahābhārata to 1900-1500 BC, and using Purāṇic tradition to set a chronological framework for Indian History since the onset of the Holocene, i.e. 11,600 years BP. This will propose a reconciliation between 1- Periodisation of the Indus-Sarasvatī Civilisation, 2- Chronology of Vedic Culture, 3- Yuga-Manvantara System and 4- Prominent Purāṇic legends and names. 
 

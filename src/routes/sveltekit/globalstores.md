@@ -1,6 +1,7 @@
 ---
 title: Using Global Stores in Sveltekit
 tags: utilities
+featured: true
 ---
 
 A common use case for a website is the need for global states of theme and breakpoints. Say there are three states we want to track:

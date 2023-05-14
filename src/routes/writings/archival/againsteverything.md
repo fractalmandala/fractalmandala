@@ -2,6 +2,7 @@
 title: Against Everything - an Anti-Paean to the Isms
 tags: opinion
 originallydated: Aug, 2018
+featured: false
 ---
 
 I was young, impressionable, desirous of being a good human.

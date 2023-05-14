@@ -2,6 +2,7 @@
 title: A Response to Harsh Mander
 tags: opinion
 originallydated: Aug, 2020
+featured: false
 ---
 
 This is a response to Harsh Mander’s article published on Scroll, titled “With the Ayodhya ceremony, has the inclusive India of my dreams been lost forever?”

@@ -1,7 +1,8 @@
 ---
-title: The Macrohistoric Case for India's Civilizational Primary
+title: The Macrohistoric Case for India's Civilizational Primacy
 image: https://rnfvzaelmwbbvfbsppir.supabase.co/storage/v1/object/public/brhatwebsite/05dhiti/16.webp
-tags: fractalmandala
+tags: history
+featured: false
 ---
 
 Humanity’s route to ‘progress’ has been a faustian bargain. Every next level of organization, co-operation and productivity has mandated new choices, new sacrifices and new problems. In the Purāṇas, humans are listed alongside cattle, goats and horses as “domesticated animals,” implying that ancient Indians too perceived this bargain.

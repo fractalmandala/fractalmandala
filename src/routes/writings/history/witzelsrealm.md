@@ -1,6 +1,7 @@
 ---
 title: Witzel’s Realm – On Reputationist Concerns Over India’s Reclamation of its History
 tags: history
+featured: true
 ---
 
 

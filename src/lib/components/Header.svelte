@@ -1,12 +1,13 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte'
-	import visibilityMode from '$lib/stores/visibility'	
+	import { themeMode, breakZero, breakOne } from '$lib/stores/globalstores'
 	import LogoFM from '$lib/components/LogoFM.svelte'
 	import LogoFMMotif from '$lib/components/LogoFMMotif.svelte'
 	import DarkMode from '$lib/icons/DarkMode.svelte'
 	import Twitter from '$lib/icons/Twitter.svelte'
 	import Github from '$lib/icons/Github.svelte'
+	import Reading from '$lib/icons/Reading.svelte'
 
 	let screenWidth:number
 	let breakPoint:boolean
@@ -48,7 +49,7 @@
 
 <svelte:window bind:scrollY={y} bind:innerWidth={screenWidth}/>
 
-<header class="header" class:dark={$visibilityMode} class:light={!$visibilityMode} class:hiddenHeader={isInvisible}>
+<header class="header" class:dark={$themeMode} class:light={!$themeMode} class:hiddenHeader={isInvisible}>
 	<div class="logo">
 		<a href="/">
 			<LogoFMMotif></LogoFMMotif>
@@ -59,6 +60,9 @@
 	</div>
 	<nav class="area rta-row ycenter fullH xend">
 		<div class="rta-row ycenter colgap200">
+			{#if $breakZero || $breakOne}
+				<Reading/>
+			{/if}
 			<Github/>
 			<Twitter/>
 			<DarkMode/>
@@ -89,7 +93,6 @@
 		justify-content: stretch
 		padding-left: 24px
 		padding-right: 24px
-		backdrop-filter: blur(20px)
 		top: 0
 		.logo
 			grid-area: logo
@@ -106,18 +109,20 @@
 		padding-left: 24px
 		padding-right: 24px
 		position: fixed
-		backdrop-filter: blur(10px)
 		top: 0
 		.logo
 			grid-area: logo
 
-.header
+.dark.header
+	backdrop-filter: blur(20px)
+
+.light.header
+	backdrop-filter: blur(0px)
+	border-bottom: 1px solid rgba(0,0,0,0.065)
+
+.dark.header
 	border-bottom: 1px solid rgba(255,255,255,0.1)
 
-
-.header.hiddenHeader
-	@media screen and (max-width: 768px)
-		transform: translateY(-64px)
 
 .logo a
 	display: flex

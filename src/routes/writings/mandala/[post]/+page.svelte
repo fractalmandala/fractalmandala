@@ -1,11 +1,12 @@
 <script lang="ts">
 
 	import { themeMode } from '$lib/stores/globalstores'
+
 	export let data
 
 </script>
 
-<div class="rta-column stickyboy" class:dark={$themeMode} class:light={!$themeMode}>
+<div class="rta-column rowgap300 stickyboy" class:dark={$themeMode} class:light={!$themeMode}>
 	<h3 class="bord-bot p-bot-16">
 		{data.title}
 	</h3>

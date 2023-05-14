@@ -1,6 +1,7 @@
 ---
 title: Create a Column of Vector Embeddings for Search Index
 tags: vectors
+featured: true
 ---
 
 This query allows one to create a column of vector embeddings.

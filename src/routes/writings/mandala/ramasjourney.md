@@ -1,7 +1,8 @@
 ---
 title: Rāma's Journey - the Avatāra in You
 image: https://wganhlzrylmkvvaoalco.supabase.co/storage/v1/object/public/images/batch1/505.webp
-tags: fractalmandala
+tags: dharma
+featured: false
 ---
 
 In the previous Fractal Maṇḍala essay, we explored the idea of the ratha (chariot) as a flowering seed in the Dhārmika worldview. This worldview has at its core the Mind, or Consciousness. The affixation of *-man* to √bṛh and √at to make brahman and ātman respectively may be an uncanny phonetic coincidence, but brahman and ātman mean the ‘expansion of Mind’ and ‘descent of Mind’ just the same.

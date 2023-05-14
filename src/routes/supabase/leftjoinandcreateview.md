@@ -1,6 +1,7 @@
 ---
 title: Join Tables and Create a New View
 tags: sql
+featured: false
 ---
 
 Say I want to join 2 tables and create a new view out of them.

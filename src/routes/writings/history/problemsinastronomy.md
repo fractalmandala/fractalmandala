@@ -1,6 +1,7 @@
 ---
 title: Problems in High and/or Astronomically-Derived Chronologies for Indian History
 tags: history
+featured: false
 ---
 
 Since I’ve been building a Paurāṇika chronology, I’ve encountered a range of counter-opinion and counter-arguments online- which is fair and welcome, of course. The framework I propose is by no means water-tight, is admittedly speculative at places, and tries to establish macro-historic links more than precise, chronological certitudes. I see it as a best-fit framework because when taken in the whole, beyond just dates for Mahābhārata and/or Rāmāyaṇa, it establishes linkages which must be accounted for in any chronology of ancient India. But the current literature focusses on the Epics alone, such that a date for, say, the Mahābhārata, throws no questions and thus no answers on dates for Vaivasvat, for Samudra Manthana, for Pṛthu Vainya or even for Svāyambhuva.

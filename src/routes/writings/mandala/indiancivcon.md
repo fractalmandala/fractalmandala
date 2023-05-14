@@ -1,7 +1,8 @@
 ---
 title: Indian Civilizational Consciousness
 image: https://wganhlzrylmkvvaoalco.supabase.co/storage/v1/object/public/images/batch1/434.webp
-tags: fractalmandala
+tags: civilization
+featured: false
 ---
 
 Being of the same basic physio-neurological make, humans are largely the same everywhere, but human cultures are wildly different. The culture we are born to and/or internalize creates a sort of ‘operating system’ inside our minds. By a human OS we mean a set of code (lexical and semiotic memes, normative protocols, cultural motifs and more) that determines the nature of interactions with other individuals, with groups, and among groups. The prevalent OS for our species today is the Western one, of recent origin but widespread installation — built upon a trajectory of colonization, exploitation, slavery and conversion. Decolonization begins with the realization of this, which then proceeds through degrees of uninstallation, but must culminate in the installation of an alternate OS.

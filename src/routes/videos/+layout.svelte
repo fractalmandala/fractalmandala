@@ -94,13 +94,3 @@
 		{/if}
 	</div>
 </div>
-
-<style lang="sass">
-
-
-.spline
-	@media screen and (min-width: 1024px)
-		text-align: right
-
-
-</style>

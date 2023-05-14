@@ -1,6 +1,8 @@
 <script lang="ts">
+
 	import { browser } from '$app/environment';
 	import visibilityMode from '$lib/stores/visibility';
+	import { themeMode } from '$lib/stores/globalstores'
 	let fake = false;
 
 	function fauxfake() {
@@ -18,37 +20,47 @@
 	}
 </script>
 
-<footer class="foot rta-column colgap100 ta-l">
+<footer class="foot rta-column colgap100 ta-l" class:dark={$themeMode} class:light={!$themeMode}>
 	<small>orbis terrarum est non altus satis</small>
 	<small><a href="/about">2023 | Amritanshu Pandey</a></small>
 </footer>
 
 <style lang="sass">
 
-
 .foot
 	justify-content: center
 	align-items: flex-start
 	height: 64px
 	padding: 0 40px
-	background: #171717
-	border-top: 1px solid rgba(255,255,255,0.1)
 	small
 		font-size: 10px
 		text-transform: capitalize
 		margin: 0
-		color: #474747
 		cursor: pointer
 		a
 			text-transform: uppercase
-			&:hover
-				color: #10D56C
 	@media screen and (max-width: 1023px)
 		padding: 0 16px
 		align-items: center
 		small
 			font-size: 12px
 
+.foot.dark
+	border-top: 1px solid rgba(255,255,255,0.1)
+	background: #171717
+	small
+		color: #474747
+		a
+			&:hover
+				color: #10D56C
 
+.foot.light
+	border-top: 1px solid rgba(0,0,0,0.065)
+	background: #f4f4f4
+	small
+		color: #878787
+		a
+			&:hover
+				color: #10D56C
 
 </style>

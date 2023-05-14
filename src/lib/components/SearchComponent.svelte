@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte'
 	import { browser } from '$app/environment';
 	import sidebarMode from '$lib/stores/searchbar'
-	import visibilityMode from '$lib/stores/visibility'
+	import { themeMode } from '$lib/stores/globalstores'
   import type { SearchItem } from '$lib/types/SearchItem'
 	import { combinedProject } from '$lib/utils/localpulls'
 	let fake = false
@@ -72,7 +72,7 @@
 </script>
 
 
-<form class="rta-column comp-search" class:light={!$visibilityMode} class:dark={$visibilityMode}>
+<form class="rta-column comp-search" class:light={!$themeMode} class:dark={$themeMode}>
 	<input type="text" placeholder="Search..."
 		bind:value={inputValue}
 		bind:this={inputElement}
@@ -82,7 +82,7 @@
 	/>
 </form>
 {#if searchResults.length && resultsWindow}
-  <div class="search-results rta-column bord-bot rowgap100" data-lenis-prevent class:light={!$visibilityMode} class:dark={$visibilityMode} on:click={toggleSidebar} on:keydown={fauxfake}>
+  <div class="search-results rta-column bord-bot rowgap100" data-lenis-prevent class:light={!$themeMode} class:dark={$themeMode} on:click={toggleSidebar} on:keydown={fauxfake}>
 		<p class="p-top-16 is-green point tt-u" on:click={closeWindow} on:keydown={fauxfake}>Close</p>
     {#each searchResults as result}
       <p class="tt-c spline">
@@ -118,28 +118,24 @@ p.spline
 		text-align: right
 		font-family: 'Spline Sans', sans-serif
 
-.dark
-	input
-		background: none
+input
+	background: none
+	border: 1px solid var(--borderline)
+	padding: 6px 4px 6px 4px
+	border-radius: 6px
+	color: var(--opposite)
+	outline: none
+	&::placeholder
+		text-transform: lowercase
+		color: var(--textone)
+	&:focus
 		border: 1px solid var(--borderline)
-		padding: 6px 4px 6px 4px
 		border-radius: 6px
-		box-shadow: 8px 7px 12px #010101
-		color: var(--opposite)
-		outline: none
-		&::placeholder
-			text-transform: lowercase
-			color: var(--textone)
-		&:focus
-			border: 1px solid var(--borderline)
-			border-radius: 6px
 	@media screen and (max-width: 768px)
-		input
-			border-radius: 8px
-			color: white
-			&::placeholder
-				color: white
-			.is-green
-				color: var(--green)
+		border-radius: 8px
+		color: var(--opposite)
+		&::placeholder
+			color: var(--opposite)
+
 
 </style>

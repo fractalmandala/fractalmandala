@@ -291,10 +291,3 @@
 	</div>
 	{/if}
 </div>
-
-<style lang="sass">
-
-
-
-</style>
-

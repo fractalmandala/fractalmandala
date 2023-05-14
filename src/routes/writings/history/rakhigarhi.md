@@ -1,6 +1,7 @@
 ---
 title: Rakhigarhi, Genetics
 tags: history
+featured: false
 ---
 
 Among the sciences that we can use to understand and exhume history, genetics is a field that is increasingly finding place. Recent works by Tony Joseph and Shrikant Talageri show us how the same genetic data is subject to different interpretations. There is a simple reason for this- in itself, genetic data tells us nothing about the movement of language and culture. Take the example of English and Western culture, both well entrenched in Indian society. Will we find British DNA in Indians then? Or Arabian DNA in Indian Muslims who practice a culture that arose from there? Or Indian DNA in South East Asia where Hinduism and Buddhism have held influence for hundreds of years? These are only a few of many examples that show that there is no congruence between the movement of genes and culture. History is also replete with cases of ethnic populations mixing with local ones such that the foreign culture and language disappear, but the genetic traces could be found generations later.
