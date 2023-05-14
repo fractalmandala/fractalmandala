@@ -374,6 +374,7 @@
 
 .footerbox
 	height: 64px
+	z-index: 1
 
 .pagebox
 	min-height: calc(100vh - 128px)

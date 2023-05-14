@@ -2,7 +2,10 @@
 
 	import { onMount } from 'svelte'
 	import { slide } from 'svelte/transition'
+	import CheckBox from '$lib/deslib/CheckBox.svelte'
+	import CheckBox2 from '$lib/deslib/CheckBox.svelte'
 	import { newGPT } from '$lib/utils/supabase'
+	import supabase from '$lib/utils/supabase'
 	import Prism from 'prismjs'
 	import '$lib/styles/prism.css'
 
@@ -12,6 +15,7 @@
 	let fullGPT = Array(20).fill(false)
 	let fake = false
 	let chatValue:any
+	let inputAgent = ''
 
 	function toggleChat(index:number){
 		fullChat[index] = !fullChat[index]
@@ -35,6 +39,14 @@
 		fake = !fake
 	}
 
+	export async function updateChat(newID:number){
+		const { error } = await supabase
+		.from('amrit-gpt')
+		.update({ author: inputAgent })
+		.eq('id', newID)
+		if ( error ) throw new Error(error.message)
+	}
+
 	export let data
 
 	onMount(async() => {
@@ -53,32 +65,35 @@
 <div class="rta-column stickyboy">
 	<h3 class="bord-bot p-bot-16">{data.title}</h3>
 </div>
-<div class="rta-column gptstyle p-top-32 p-bot-64">
+<div class="rta-column rowgap300 gptstyle p-top-32 p-bot-64">
 	{#if chatStream && chatStream.length > 0}
 		{#each chatStream as item, i}
 			{#if item.author === 'user'}
-				<div class="rta-column usercol null">
-					<small class="spline">{item.author} | {item.id}</small>
-					<p class="point" on:click={() => toggleChat(i)} on:keydown={fauxfake}>{item.value.slice(0,100)}</p>
+				<div class="rta-column inputtext null">
+					<small>{item.author} | {item.id}</small>
+					<CheckBox/>
+					<pre class="point" on:click={() => toggleChat(i)} on:keydown={fauxfake}>{item.value.slice(0,100)}</pre>
 					{#if fullChat[i]}
 					<pre transition:slide>{item.value}</pre>
 					{/if}
 				</div>
 			{:else}
-				<div class="rta-column rowgap100 gptcol null">
+				<div class="rta-column rowgap200 outputtext null">
+					<CheckBox2/>
 					<small>{item.author} | {item.id}</small>
 					{#if fullGPT[i]}
-					<pre class="white point" on:click={() => toggleGPT(i)} on:keydown={fauxfake}>LESS</pre>
-					<pre class="language-html" transition:slide={{duration: 300}}>
+					<button class="secondbutton" on:click={() => toggleGPT(i)}>LESS</button>
+					<pre transition:slide={{duration: 300}}>
 						{item.value}
 					</pre>
 					{:else}
-					<pre transition:slide={{duration: 300}}>{item.value.slice(0,200)}</pre>
-					<pre class="white point" on:click={() => toggleGPT(i)} on:keydown={fauxfake}>...MORE</pre>
+					<pre transition:slide={{duration: 300}}>
+						{item.value.slice(0,200)}
+					</pre>
+					<button class="secondbutton" on:click={() => toggleGPT(i)}>MORE</button>
 					{/if}
 				</div>
 			{/if}					
 		{/each}
 	{/if}
 </div>
-

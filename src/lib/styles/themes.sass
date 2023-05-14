@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Readex+Pro:wght@200;300;400;500;600;700&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap')
 
 $green: #0bc160
 $black: #171717
@@ -22,6 +23,7 @@ $readex: 'Readex Pro', sans-serif
 	--dur: 0.08s
 	font-family: 'Cousine', monospace
 	--mygradier: linear-gradient(90.16deg, #B1FE64 -0.25%, #24C75B 105.55%)
+	--green: #0bc160
 
 sup
 	color: var(--green)
@@ -1501,3 +1503,52 @@ body, html
 	&:hover
 		h5
 			color: var(--green)
+
+.levelzero
+	.transistor
+		.outputtext, .inputtext
+			padding: 16px
+			border-radius: 4px
+
+.levelone
+	.transistor
+		.outputtext, .inputtext
+			padding: 16px
+			border-radius: 4px
+
+.leveltwo
+	.transistor
+		.outputtext, .inputtext
+			padding: 8px
+			border-radius: 4px
+
+.outputtext, .inputtext
+	font-family: 'JetBrains Mono', monospace
+	pre
+		font-family: 'JetBrains Mono', monospace
+		letter-spacing: -0.4px
+
+.gptstyle
+	small
+		font-family: 'Cousine', monospace
+		text-transform: uppercase
+		font-size: 12px
+		color: var(--midline)
+
+.inputtext pre
+	font-size: 0.88rem
+	line-height: 1.2
+	&:hover
+		color: var(--textone)
+
+.outputtext
+	color: var(--opposite)
+	font-size: 1rem
+	background: var(--contraster)
+	pre
+		color: var(--opposite)
+		font-size: 14px
+		line-height: 1.2
+
+.outputtext, .inputtext
+	border: 1px solid var(--borderline)
