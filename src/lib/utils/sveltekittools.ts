@@ -44,5 +44,9 @@ export const svelteLearn = [
 	{
 		"name": "Understand How Data Flows In SvelteKit",
 		"url": "https://joyofcode.xyz/sveltekit-data-flow"
+	},
+	{
+		"name": "Page Versus Standalone Endpoints In SvelteKit",
+		"url": "https://joyofcode.xyz/using-sveltekit-endpoints"
 	}
 ]

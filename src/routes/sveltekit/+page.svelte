@@ -55,7 +55,7 @@
 	</h6>
 	{#if svelteLearn && svelteLearn.length > 0}
 		<div class="rta-grid grid2 stay2">
-		{#each svelteLinks as item}
+		{#each svelteLearn as item}
 			<div class="rta-column null p-bot-16">
 				<small>
 					<a href="{item.url}" target="_blank" rel="noreferrer">
