@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte'
 	import { themeMode } from '$lib/stores/globalstores'
 	import { archivalHistory } from '$lib/utils/localpulls'
+	import BreadCrumb from '$lib/deslib/BreadCrumb.svelte'
 	import { slide } from 'svelte/transition'
 	import { circOut } from 'svelte/easing'
 	let y:number
@@ -58,6 +59,7 @@
 
 <div class="rta-grid grid2 stdfix" class:light={!$themeMode} class:dark={$themeMode}>
 	<div class="rta-column mainone">
+		<BreadCrumb/>
 		<slot></slot>
 	</div>
 	<div class="rta-column rightone" class:opened={expandRightbar} class:movedToTop={isInvisible} data-lenis-prevent>

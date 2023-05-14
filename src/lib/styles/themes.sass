@@ -228,17 +228,18 @@ h4
 	color: var(--near)
 
 h3
-	font-size: 1.72rem
+	font-size: 2.4rem
 	font-weight: 600
 	color: var(--opposite)
+	padding-top: 16px
 
 h3.bord-bot.p-bot-16
 	margin-top: 0
 h2
-	font-size: 2.2rem
+	font-size: 2.8rem
 	color: var(--borderline)
 h1
-	font-size: 2.4rem
+	font-size: 3.2rem
 	color: var(--opposite)
 	border-bottom: 1px solid var(--green)
 	padding-bottom: 8px
@@ -725,6 +726,8 @@ body, html
 	margin-top: 16px
 .m-bot-16
 	margin-bottom: 16px
+.m-bot-32
+	margin-bottom: 32px
 .m-bot-4
 	margin-bottom: 4px
 
@@ -824,6 +827,37 @@ body, html
 			color: var(--green)
 			&::after
 				width: 100%
+	a.flat
+		color: var(--opposite)
+
+
+.featurebox
+	h5
+		font-family: 'Spline Sans', sans-serif
+		color: var(--opposite)
+		margin: 0
+		font-size: 1.2rem
+		font-weight: 500
+	small
+		text-transform: uppercase
+	&:hover
+		h5
+			color: var(--green)
+
+.snipstyle 
+	.featurebox
+		h5
+			font-family: 'Spline Sans', sans-serif
+			color: var(--opposite)
+			margin: 0
+			font-size: 1.2rem
+			font-weight: 500
+		small
+			text-transform: uppercase
+		&:hover
+			h5
+				color: var(--green)
+			
 	
 
 .grid2.stdfix
@@ -1154,6 +1188,8 @@ body, html
 		margin: 0
 	h1
 		padding: 0
+	h3
+		margin-top: 0
 
 .hollow
 	background: none
@@ -1185,7 +1221,6 @@ body, html
 	text-transform: uppercase
 	color: var(--midline)
 
-
 .usercol
 	p
 		font-size: 12px
@@ -1214,7 +1249,7 @@ body, html
 		color: var(--opposite)
 		margin: 0
 		white-space: pre-line
-		font-size: 15px
+		font-size: 16px
 		font-family: 'Cousine', monospace
 		line-height: 1.2
 		letter-spacing: -0.5px
@@ -1310,17 +1345,15 @@ body, html
 		width: 70%
 
 .levelzero.midone
-	padding: 0 2vw 0 4vw
+	padding: 0 4vw 0 4vw
 	.rightone
 		padding-top: 48px
 		padding-right: 4px
-		padding-left: 0px
-	.snipstyle
+		padding-left: 24px
+	.snipstyle, .gptstyle
 		padding-top: 32px
-	.snipstyle.solo
+	.snipstyle.solo, .gptstyle.solo
 		padding-right: 16vw
-	.stickyboy
-		padding-top: 48px
 	.stickyboy.solo.cut
 		padding-top: 0
 	.rightone2
@@ -1335,6 +1368,8 @@ body, html
 		padding-top: 48px
 	.mainone
 		padding-right: 4vw
+		padding-top: 48px
+		padding-bottom: 32px
 
 .levelone.midone
 	padding: 0 4vw
@@ -1417,11 +1452,7 @@ body, html
 		.rightone2
 			opacity: 0
 		.mainone
-			padding-top: 0
-		.stickyboy.solo, .stdfix, .snipstyle, .solo.cut
-			padding-top: 0
-		h3
-			display: none
+			padding-right: 0
 
 .headerbox.reader
 	transform: translateY(-64px)

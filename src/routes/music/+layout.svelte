@@ -1,14 +1,12 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte'
-	import { gptSupabase } from '$lib/utils/supabase'
 	import { themeMode, breakOne, breakZero, breakTwo } from '$lib/stores/globalstores'
 	import BreadCrumb from '$lib/deslib/BreadCrumb.svelte'
 	import { slide } from 'svelte/transition'
 	import { circOut } from 'svelte/easing'
 	let fake = false
 	let expandRightbar = false
-	let titles:any = []
 
 	function toggleRightbar(){
 		expandRightbar = !expandRightbar
@@ -18,18 +16,15 @@
 		fake = !fake
 	}
 
-	onMount(async() => {
-		titles = await gptSupabase();
-	})
-
 </script>
 
-<div class="rta-grid grid2 stdfix" class:light={!$themeMode} class:dark={$themeMode}>
+
+<div class="rta-grid grid2 stdfix2" class:dark={$themeMode} class:light={!$themeMode}>
 	<div class="rta-column mainone">
-		<BreadCrumb/>	
+		<BreadCrumb/>
 		<slot></slot>
 	</div>
-	<div class="rta-column rightone" class:opened={expandRightbar} data-lenis-prevent>
+	<div class="rta-column rightone" class:opened={expandRightbar}>
 		{#if $breakOne || $breakTwo}
 		<div class="rta-row ycenter between rightmenu" on:click={toggleRightbar} on:keydown={fauxfake}>
 			<button class="break899">
@@ -48,25 +43,8 @@
 		{/if}
 		{#if $breakZero || expandRightbar}
 			<div class="rta-column" transition:slide={{ easing: circOut }}>
-				<p class="tt-u"><strong><a href="/gpt/supabase">Supabase</a></strong></p>
-				{#if titles && titles.length > 0}
-					{#each titles as item}
-						<p class="spline">
-							<a href="/gpt/supabase/{item.indexing}">
-								{item.title}
-							</a>
-						</p>
-					{/each}
-				{/if}
+			<p class="tt-u"><strong><a href="/videos">MUSIC</a></strong></p>
 			</div>
 		{/if}
 	</div>
 </div>
-
-<style lang="sass">
-
-.spline
-	margin-bottom: 6px
-
-</style>
-

@@ -256,6 +256,8 @@
 						<p class="spline"><a href="/gpt/dharmastuff">Dharmastuff</a></p>
 						<p class="spline"><a href="/gpt/ai">AI</a></p>
 						<p class="spline"><a href="/gpt/other">Other</a></p>
+						<p class="spline"><a href="/gpt">AGENT</a></p>
+				
 					</div>
 				{/if}
 				<div class="rta-row ycenter between null p-bot-8 point p-top-16">
@@ -273,6 +275,9 @@
 			</div>
 		</section>
 		<section class="midone" class:levelzero={$breakZero} class:levelone={$breakOne} class:leveltwo={$breakTwo}>
+			<div class="bound-image rta-row">
+				<img src="https://rnfvzaelmwbbvfbsppir.supabase.co/storage/v1/object/public/brhatwebsite/10mandala/ogmandala.webp" alt="mandala"/>
+			</div>
 			{#if $sidebarMode}
 				<div class="rta-column of-search" transition:slide={{ axis: 'x'}}>
 					<Searcher/>
@@ -293,6 +298,27 @@
 </div>
 
 <style lang="sass">
+
+.midone
+	position: relative
+	.bound-image
+		position: fixed
+		align-items: center
+		justify-content: center
+		padding-top: 64px
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
+		z-index: -1
+		img
+			object-fit: contain
+			width: 560px
+			height: 560px
+			margin: auto
+
+.of-search
+	background: var(--background)
 
 .myappbox
 	display: flex

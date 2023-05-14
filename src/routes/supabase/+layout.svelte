@@ -1,16 +1,11 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte'
-	import { themeMode } from '$lib/stores/globalstores'
+	import { themeMode, breakOne, breakZero, breakTwo } from '$lib/stores/globalstores'
 	import { themeSupabase } from '$lib/utils/localpulls'
+	import BreadCrumb from '$lib/deslib/BreadCrumb.svelte'
 	import { slide } from 'svelte/transition'
 	import { circOut } from 'svelte/easing'
-	let y:number
-	let isInvisible = false
-	let mouseY:number
-	let latestScrollY:number
-	let iW:number
-	let breakPoint:boolean
 	let fake = false
 	let expandRightbar = false
 	let titles:any = []
@@ -23,45 +18,19 @@
 		fake = !fake
 	}
 
-	$: if ( iW <= 1023 ) {
-		breakPoint = true
-	} else {
-		breakPoint = false
-	}
-
-	$: {
-		if ( y > 100 && y > latestScrollY ) {
-			isInvisible = true
-		} else {
-			isInvisible = false
-		}
-		latestScrollY = y
-	}
-
 	onMount(async() => {
 		titles = await themeSupabase();
-		const handleMouse = (event: {clientY: number;}) => {
-			mouseY = event.clientY
-			if ( mouseY <= 128 ) {
-				isInvisible = false
-			} 
-		}
-		window.addEventListener('mousemove', handleMouse)
-		return() => {
-			window.removeEventListener('mousemove',handleMouse)
-		}
 	})
 
 </script>
 
-<svelte:window bind:outerWidth={iW} bind:scrollY={y}/>
-
 <div class="rta-grid grid2 stdfix" class:light={!$themeMode} class:dark={$themeMode}>
 	<div class="rta-column mainone">
+		<BreadCrumb/>
 		<slot></slot>
 	</div>
 	<div class="rta-column rightone" class:opened={expandRightbar} data-lenis-prevent>
-		{#if breakPoint}
+		{#if $breakOne || $breakTwo}
 		<div class="rta-row ycenter between rightmenu" on:click={toggleRightbar} on:keydown={fauxfake}>
 			<button class="break899">
 				{#if expandRightbar}
@@ -77,8 +46,8 @@
 			</div>
 		</div>
 		{/if}
-		{#if !breakPoint || expandRightbar}
-			<div class="rta-column" transition:slide={{ easing: circOut }} data-lenis-prevent>
+		{#if $breakZero || expandRightbar}
+			<div class="rta-column" transition:slide={{ easing: circOut }}>
 				<p class="tt-u"><strong><a href="/supabase">Supabase</a></strong></p>
 				{#if titles && titles.length > 0}
 					{#each titles as item}

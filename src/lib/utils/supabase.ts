@@ -160,7 +160,7 @@ export async function gptTitles(){
 		.from('amrit-gallery')
 		.select()
 		.order('id', {ascending: false})
-		.limit(6)
+		.limit(8)
 		if ( error ) throw new Error(error.message)
 		return data
 	}

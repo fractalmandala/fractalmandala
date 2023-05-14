@@ -4,6 +4,7 @@
  	import { themeMode, breakZero, breakOne, breakTwo } from '$lib/stores/globalstores'
 	export let userInput = ''
 	let isFocused:boolean = false
+	export let placeHolder = 'Enter value...'
 
 	function handleFocus(){
 		isFocused = !isFocused
@@ -35,7 +36,7 @@
 		on:blur={handleBlur}
 		on:focus={handleFocus}
 		type="text"
-		placeholder="Enter a value..." 
+		placeholder={placeHolder} 
 		/>
   <button type="submit" class="secondbutton">Submit</button>
 </form>
@@ -46,7 +47,9 @@
 input
 	border: 1px solid var(--borderline)
 	border-radius: 3px
-	padding: 5px 8px
+	padding: 6px 8px
 	color: var(--textone)
+	font-size: 14px
+	letter-spacing: -0.4px
 
 </style>

@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte'
 	import { browser } from '$app/environment';
 	import sidebarMode from '$lib/stores/searchbar'
-	import { themeMode } from '$lib/stores/globalstores'
+	import { themeMode, breakZero, breakOne, breakTwo } from '$lib/stores/globalstores'
   import type { SearchItem } from '$lib/types/SearchItem'
 	import { combinedProject } from '$lib/utils/localpulls'
 	let fake = false
@@ -82,22 +82,26 @@
 	/>
 </form>
 {#if searchResults.length && resultsWindow}
-  <div class="search-results rta-column bord-bot rowgap100" data-lenis-prevent class:light={!$themeMode} class:dark={$themeMode} on:click={toggleSidebar} on:keydown={fauxfake}>
-		<p class="p-top-16 is-green point tt-u" on:click={closeWindow} on:keydown={fauxfake}>Close</p>
-    {#each searchResults as result}
-      <p class="tt-c spline">
-				<a href={result.url}>
-				{result.heading}
+  <div class="search-results rta-column rowgap100 p-top-32 bord-top" data-lenis-prevent class:light={!$themeMode} class:dark={$themeMode} on:click={toggleSidebar} on:keydown={fauxfake} class:levelzero={$breakZero} class:levelone={$breakOne} class:leveltwo={$breakTwo}>
+		<button class="secondbutton m-bot-32" on:click={closeWindow}>Close</button>
+		<div class="rta-column">
+    	{#each searchResults as result}
+      	<a class="rta-row search-out" href={result.url}>
+					<small>{result.type}</small>
+					<h5 class="tt-u">
+					{result.heading}
+					</h5>
+					<cite>{result.cat}</cite>
 				</a>
-			</p>
-    {/each}
+    	{/each}
+		</div>
   </div>
 {/if}
 
 <style lang="sass">
 
-.search-results p
-	font-size: 12px
+.search-results h5
+	font-family: 'Spline Sans', sans-serif
 	margin-top: 0
 	margin-bottom: 4px
 	&:hover
@@ -105,9 +109,6 @@
 	@media screen and (max-width: 768px)
 		font-size: 16px
 
-p.spline
-	margin-bottom: 0px
-	margin-top: 0
 
 .comp-search
 	overflow-y: scroll

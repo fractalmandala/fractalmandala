@@ -1,5 +1,6 @@
 export interface SearchItem {
 	heading: string;
-	tags: string;
-	url: string
+	cat: string;
+	url: string;
+	type: string
 }

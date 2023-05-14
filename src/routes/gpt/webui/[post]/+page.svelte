@@ -71,7 +71,7 @@
 <div class="rta-column stickyboy" class:dark={$themeMode} class:light={!$themeMode}>
 	<h3 class="bord-bot p-bot-16">{data.title}</h3>
 </div>
-<div class="rta-column snipstyle p-top-32 p-bot-64">
+<div class="rta-column gptstyle p-top-32 p-bot-64">
 	{#if chatStream && chatStream.length > 0}
 		{#each chatStream as item, i}
 			{#if item.author === 'user'}

@@ -58,3 +58,22 @@ export const svelteLearn = [
 		"url": "https://joshcollinsworth.com/blog/build-static-sveltekit-markdown-blog"
 	}
 ]
+
+export const bolLinks = [
+	{
+		"name": "GRETIL",
+		"url": "http://gretil.sub.uni-goettingen.de/gretil.html",
+	},
+	{
+		"name": "Ashtadhyayi",
+		"url": "https://ashtadhyayi.com/",
+	},
+	{
+		"name": "Sanskrit Documents",
+		"url": "https://sanskritdocuments.org/sanskrit/purana/",
+	},
+	{
+		"name": "Digital Corpus of Sanskrit",
+		"url": "http://www.sanskrit-linguistics.org/dcs/",
+	}
+]

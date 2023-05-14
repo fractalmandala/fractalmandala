@@ -51,6 +51,7 @@
 	small
 		color: #474747
 		a
+			color: var(--green)
 			&:hover
 				color: #10D56C
 
@@ -60,6 +61,7 @@
 	small
 		color: #878787
 		a
+			color: var(--green)
 			&:hover
 				color: #10D56C
 

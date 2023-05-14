@@ -56,10 +56,6 @@
 	<div class="rta-column mainone">
 		<div class="rta-column rowgap200 p-bot-64 p-top-32" class:dark={$themeMode} class:light={!$themeMode}>
 			{#if featured && featured.length > 0}
-			<div class="rta-row ycenter null">
-				<Motif/>
-				<h1 class="is-fade tt-u">Features</h1>
-			</div>
 				<div class="rta-grid grid2 rowgap200 colgap400">
 				{#each featured as item}
 					<a href="{item.url}" class="rta-column rowgap100 featurebox bord-bot">
@@ -78,10 +74,9 @@
 			{/if}
 		</div>
 	</div>
-	<div class="rta-column rightone2 xright">
-		<div class="rta-column rightstick ta-r" data-lenis-prevent>
+	<div class="rta-column rightone xright">
+		<div class="rta-column p-top-32 rightstick ta-r" data-lenis-prevent>
 			{#if recentImages && recentImages.length > 0}
-			<h3 class="is-fade tt-u">Recent Images</h3>
 				<div class="rta-grid grid2 become4 rowgap200 colgap200">
 					{#each recentImages as item}
 						<div class="rta-image">
@@ -96,17 +91,8 @@
 
 <style lang="sass">
 
-
-.mainone
-	h1
-		font-family: 'Spline Sans', sans-serif
-		border-bottom: none
-
 #panelone
 	background: var(--background)
-
-.is-fade
-	color: var(--midline)
 
 .catlabel
 	background: var(--green)
@@ -121,16 +107,6 @@
 	.featurebox
 		h5
 			font-size: 1.28rem
-
-.zerolevel
-	.rightone2
-		.rightstick
-			width: 80%
-			position: sticky
-			top: 256px
-			height: 480px
-			overflow-y: scroll
-			padding-right: 4px
 
 .rightstick::-webkit-scrollbar
 	width: 2px

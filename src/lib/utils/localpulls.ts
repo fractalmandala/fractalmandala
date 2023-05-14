@@ -10,7 +10,8 @@ export async function themeSveltekit(){
 			const postPath = path.slice(11,-3)
 			return {
 				meta: metadata,
-				linkpath: postPath
+				linkpath: postPath,
+				type: 'Sveltekit'
 			}
 		})
 	)
@@ -27,7 +28,8 @@ export async function themeSupabase(){
 			const postPath = path.slice(11,-3)
 			return {
 				meta: metadata,
-				linkpath: postPath
+				linkpath: postPath,
+				type: 'Supabase'
 			}
 		})
 	)
@@ -44,7 +46,8 @@ export async function themeJavascript(){
 			const postPath = path.slice(11,-3)
 			return {
 				meta: metadata,
-				linkpath: postPath
+				linkpath: postPath,
+				type: 'Javascript'
 			}
 		})
 	)
@@ -61,7 +64,8 @@ export async function themeGeneral(){
 			const postPath = path.slice(11,-3)
 			return {
 				meta: metadata,
-				linkpath: postPath
+				linkpath: postPath,
+				type: 'Web UI'
 			}
 		})
 	)
@@ -95,7 +99,8 @@ export async function archivalWritings(){
 			const postPath = path.slice(11,-3)
 			return {
 				meta: metadata,
-				linkpath: postPath
+				linkpath: postPath,
+				type: 'Writings'
 			}
 		})
 	)
@@ -112,7 +117,8 @@ export async function archivalHistory(){
 			const postPath = path.slice(11,-3)
 			return {
 				meta: metadata,
-				linkpath: postPath
+				linkpath: postPath,
+				type: 'Writings'
 			}
 		})
 	)
@@ -129,7 +135,8 @@ export async function archivalMandala(){
 			const postPath = path.slice(11,-3)
 			return {
 				meta: metadata,
-				linkpath: postPath
+				linkpath: postPath,
+				type: 'Writings'
 			}
 		})
 	)
@@ -146,7 +153,8 @@ export async function allVideos(){
 			const postPath = path.slice(11,-3)
 			return {
 				meta: metadata,
-				linkpath: postPath
+				linkpath: postPath,
+				type: 'Video'
 			}
 		})
 	)
@@ -191,7 +199,9 @@ export async function entireProject(){
 	
 	return entireItems.map(post => ({
 		heading: post.meta.title,
-		url: post.linkpath
+		url: post.linkpath,
+		cat: post.meta.tags,
+		type: post.type
 	}));
 }
 
@@ -203,7 +213,9 @@ export async function gptCombiner(){
 		if (error) throw new Error(error.message)
 		return data.map(item => ({
 			heading: item.title,
-			url: `/gpt/${item.theme}/${item.indexing}`
+			url: `/gpt/${item.theme}/${item.indexing}`,
+			cat: item.theme,
+			type: 'GPT'
 		}));			
 	}
 
@@ -218,7 +230,9 @@ export async function combinedProject() {
     
     return entireItems.map(post => ({
         heading: post.heading,
-        url: post.url
+        url: post.url,
+				cat: post.cat,
+				type: post.type
     }));
 }
 

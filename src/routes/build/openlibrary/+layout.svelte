@@ -1,14 +1,12 @@
 <script lang="ts">
 
-	import { onMount } from 'svelte'
-	import { gptSupabase } from '$lib/utils/supabase'
 	import { themeMode, breakOne, breakZero, breakTwo } from '$lib/stores/globalstores'
+	import { bolLinks } from '$lib/utils/sveltekittools'
 	import BreadCrumb from '$lib/deslib/BreadCrumb.svelte'
 	import { slide } from 'svelte/transition'
 	import { circOut } from 'svelte/easing'
 	let fake = false
 	let expandRightbar = false
-	let titles:any = []
 
 	function toggleRightbar(){
 		expandRightbar = !expandRightbar
@@ -18,15 +16,12 @@
 		fake = !fake
 	}
 
-	onMount(async() => {
-		titles = await gptSupabase();
-	})
-
 </script>
+
 
 <div class="rta-grid grid2 stdfix" class:light={!$themeMode} class:dark={$themeMode}>
 	<div class="rta-column mainone">
-		<BreadCrumb/>	
+		<BreadCrumb/>
 		<slot></slot>
 	</div>
 	<div class="rta-column rightone" class:opened={expandRightbar} data-lenis-prevent>
@@ -48,25 +43,23 @@
 		{/if}
 		{#if $breakZero || expandRightbar}
 			<div class="rta-column" transition:slide={{ easing: circOut }}>
-				<p class="tt-u"><strong><a href="/gpt/supabase">Supabase</a></strong></p>
-				{#if titles && titles.length > 0}
-					{#each titles as item}
-						<p class="spline">
-							<a href="/gpt/supabase/{item.indexing}">
-								{item.title}
+				<p class="tt-u"><strong><a href="/build/openlibrary/intro">Bṛhat Open Library</a></strong></p>
+				<small>
+						Is a labour of ambition and perseverance. My goal is to 360-degree inter-connect every major scripture in Dharma, every Sanskrit word, every Pāṇinian dhātu.
+				</small>
+				<small>
+					A vision that's possible only because I can stand on the shoulders of many who have laboured before me. Here are some of them...
+				</small>
+				{#if bolLinks && bolLinks.length > 0}
+					{#each bolLinks as item}
+						<small>
+							<a class="greenlink" href={item.url} target="_blank" rel="noreferrer">
+								{item.name}
 							</a>
-						</p>
+						</small>
 					{/each}
 				{/if}
 			</div>
 		{/if}
 	</div>
 </div>
-
-<style lang="sass">
-
-.spline
-	margin-bottom: 6px
-
-</style>
-

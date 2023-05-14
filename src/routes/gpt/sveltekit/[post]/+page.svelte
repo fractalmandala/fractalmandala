@@ -53,7 +53,7 @@
 <div class="rta-column stickyboy">
 	<h3 class="bord-bot p-bot-16">{data.title}</h3>
 </div>
-<div class="rta-column snipstyle p-top-32 p-bot-64">
+<div class="rta-column gptstyle p-top-32 p-bot-64">
 	{#if chatStream && chatStream.length > 0}
 		{#each chatStream as item, i}
 			{#if item.author === 'user'}
@@ -69,8 +69,8 @@
 					<small>{item.author} | {item.id}</small>
 					{#if fullGPT[i]}
 					<pre class="white point" on:click={() => toggleGPT(i)} on:keydown={fauxfake}>LESS</pre>
-					<pre class="language-html" transition:slide={{duration: 300}}><code>
-						{item.value}</code>
+					<pre class="language-html" transition:slide={{duration: 300}}>
+						{item.value}
 					</pre>
 					{:else}
 					<pre transition:slide={{duration: 300}}>{item.value.slice(0,200)}</pre>
