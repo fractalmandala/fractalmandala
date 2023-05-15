@@ -1,6 +1,6 @@
 ---
 title: Integrating Sveltekit and Supabase
-tags: supabase
+tag: supabase
 featured: false
 type: sveltekit
 ---

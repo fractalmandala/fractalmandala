@@ -1,6 +1,6 @@
 ---
 title: Toggling in Iterated Dynamic Items
-tags: utilities
+tag: utilities
 featured: true
 type: sveltekit
 ---

@@ -1,6 +1,6 @@
 ---
 title: Join Tables and Create a New View
-tags: sql
+tag: sql
 featured: false
 type: supabase
 ---

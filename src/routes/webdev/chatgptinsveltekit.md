@@ -1,6 +1,6 @@
 ---
 title: ChatGPT in Sveltekit
-tags: ai, chatgpt
+tag: ai, chatgpt
 featured: false
 type: sveltekit
 ---

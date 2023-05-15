@@ -1,6 +1,6 @@
 ---
 title: Check if Any Boolean in Array is True
-tags: utilities
+tag: utilities
 featured: true
 type: sveltekit
 ---

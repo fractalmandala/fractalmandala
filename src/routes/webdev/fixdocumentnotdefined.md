@@ -1,6 +1,6 @@
 ---
 title: Fix Document Not Defined Error
-tags: errors
+tag: errors
 featured: false
 type: sveltekit
 ---

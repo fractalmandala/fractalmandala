@@ -1,6 +1,6 @@
 ---
 title: Create a Column of Vector Embeddings for Search Index
-tags: vectors
+tag: vectors
 featured: true
 type: supabase
 ---

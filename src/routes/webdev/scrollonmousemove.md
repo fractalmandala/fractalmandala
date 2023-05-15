@@ -1,6 +1,6 @@
 ---
 title: Scroll on Mouse Move
-tags: scrolls
+tag: scrolls
 featured: false
 type: sveltekit
 ---

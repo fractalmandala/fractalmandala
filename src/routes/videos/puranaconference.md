@@ -4,5 +4,6 @@ videoid: Lzw_meciDgc
 slug: pbe11
 about: Online presentation of a chronological framework.
 featured: true
-tags: history
+tag: history
+type: video
 ---

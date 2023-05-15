@@ -4,5 +4,6 @@ videoid: -1MJqzXlgQc
 slug: pbe07
 about: Thank you for tuning in. Do not forget to subscribe IGP on YouTube. Press the bell icon for more updates.
 featured: false
-tags: history
+tag: history
+type: video
 ---

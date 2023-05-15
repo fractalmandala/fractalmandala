@@ -1,6 +1,6 @@
 ---
 title: Storing User First Visit
-tags: utilities
+tag: utilities
 featured: false
 type: sveltekit
 ---

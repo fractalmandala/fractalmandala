@@ -1,6 +1,6 @@
 ---
 title: Style Pre Tags
-tags: css
+tag: css
 featured: false
 type: ui
 ---

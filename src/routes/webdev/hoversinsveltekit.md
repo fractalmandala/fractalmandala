@@ -1,6 +1,6 @@
 ---
 title: Simple Hovers in Sveltekit
-tags: animations
+tag: animations
 featured: true
 type: sveltekit
 ---

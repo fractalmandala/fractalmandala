@@ -1,6 +1,6 @@
 ---
 title: Parse and Render Data from Conllu Files
-tags: utilities
+tag: utilities
 featured: true
 type: data
 ---

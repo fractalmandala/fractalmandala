@@ -4,6 +4,7 @@ videoid: 1aCaG0Rbc7Q
 slug: pbe00
 about: Project Bhārata Channel Trailer
 featured: false
-tags: misc
+tag: misc
+type: video
 ---
 

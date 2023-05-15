@@ -1,6 +1,6 @@
 ---
 title: Toggles in Sveltekit
-tags: svelte functions
+tag: svelte functions
 featured: false
 type: sveltekit
 ---

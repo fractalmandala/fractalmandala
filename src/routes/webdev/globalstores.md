@@ -1,6 +1,6 @@
 ---
 title: Using Global Stores in Sveltekit
-tags: utilities
+tag: utilities
 featured: true
 type: sveltekit
 ---

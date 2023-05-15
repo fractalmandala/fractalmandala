@@ -1,6 +1,6 @@
 ---
 title: Create RPC Functions
-tags: postgresql
+tag: postgresql
 featured: false
 type: supabase
 ---
