@@ -2,16 +2,10 @@
 
 	import { onMount } from 'svelte'
 	import { archivalMandala } from '$lib/utils/localpulls'
-	import BreadCrumb from '$lib/deslib/BreadCrumb.svelte'
-	import { themeMode } from '$lib/stores/globalstores'
-	import { slide } from 'svelte/transition'
-	import { circOut } from 'svelte/easing'
+	import { themeMode, breakZero, breakOne, breakTwo } from '$lib/stores/globalstores'
+	import BoxStandard from '$lib/deslib/BoxStandard.svelte'
+	let fullChat = Array(20).fill(false)
 	let y:number
-	let isInvisible = false
-	let mouseY:number
-	let latestScrollY:number
-	let iW:number
-	let breakPoint:boolean
 	let fake = false
 	let expandRightbar = false
 	let titles:any = []
@@ -24,82 +18,43 @@
 		fake = !fake
 	}
 
-	$: if ( iW <= 1023 ) {
-		breakPoint = true
-	} else {
-		breakPoint = false
-	}
-
-	$: {
-		if ( y > 100 && y > latestScrollY ) {
-			isInvisible = true
-		} else {
-			isInvisible = false
+	function toggleChat(index:number){
+		fullChat[index] = !fullChat[index]
+		for ( let i = 0; i < fullChat.length; i ++ ) {
+			if ( i !== index && fullChat[i] === true) {
+				fullChat[i] = false
+			}
 		}
-		latestScrollY = y
 	}
 
 	onMount(async() => {
 		titles = await archivalMandala();
-		const handleMouse = (event: {clientY: number;}) => {
-			mouseY = event.clientY
-			if ( mouseY <= 128 ) {
-				isInvisible = false
-			} 
-		}
-		window.addEventListener('mousemove', handleMouse)
-		return() => {
-			window.removeEventListener('mousemove',handleMouse)
-		}
 	})
 
 </script>
 
-<svelte:window bind:outerWidth={iW} bind:scrollY={y}/>
+<svelte:window bind:scrollY={y}/>
 
-<div class="rta-grid grid2 stdfix" class:light={!$themeMode} class:dark={$themeMode}>
-	<div class="rta-column mainone">
-		<BreadCrumb/>
+<BoxStandard>
+	<div slot="mid"
+		class:dark={$themeMode}
+		class:light={!$themeMode}
+		class:levelzero={$breakZero}
+		class:levelone={$breakOne}
+		class:leveltwo={$breakTwo}
+		>
 		<slot></slot>
 	</div>
-	<div class="rta-column rightone" class:opened={expandRightbar} class:movedToTop={isInvisible} data-lenis-prevent>
-		{#if breakPoint}
-		<div class="rta-row ycenter between rightmenu" on:click={toggleRightbar} on:keydown={fauxfake}>
-			<button class="break899">
-				{#if expandRightbar}
-				Close Subsections
-				{:else}
-				Expand Subsections
-				{/if}
-			</button>
-			<div class="iconchev" class:rotated={expandRightbar}>
-				<svg width="17" height="12" viewBox="0 0 17 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M3.41345 0.187622L0.413452 3.18762L8.41345 11.1876L16.4135 3.18762L13.4135 0.187622L8.41345 5.18762L3.41345 0.187622Z" fill="#FFFFFF"/>
-				</svg>
-			</div>
-		</div>
-		{/if}
-		{#if !breakPoint || expandRightbar}
-			<div class="rta-column" transition:slide={{ easing: circOut }} data-lenis-prevent>
-				<p class="tt-u"><strong><a href="/writings/mandala">Civilization</a></strong></p>
-				{#if titles && titles.length > 0}
-					{#each titles as item}
-						<p class="spline">
-							<a href={item.linkpath}>
-								{item.meta.title}
-							</a>
-						</p>
-					{/each}
-				{/if}
-			</div>
+	<div slot="right">
+		{#if titles && titles.length > 0}
+			{#each titles as item, i}
+				<p class="space">
+					<a href={item.linkpath}>
+						{item.meta.title}
+					</a>
+				</p>
+			{/each}
 		{/if}
 	</div>
-</div>
 
-<style lang="sass">
-
-.spline
-	margin-bottom: 6px
-
-</style>
-
+</BoxStandard>

@@ -4,6 +4,7 @@
 	import { themeMode, breakOne, breakZero, breakTwo } from '$lib/stores/globalstores'
 	import { themeGeneral } from '$lib/utils/localpulls'
 	import BreadCrumb from '$lib/deslib/BreadCrumb.svelte'
+	import BoxStandard from '$lib/deslib/BoxStandard.svelte'
 	import { slide } from 'svelte/transition'
 	import { circOut } from 'svelte/easing'
 	let fake = false
@@ -24,52 +25,28 @@
 
 </script>
 
-<div class="rta-grid grid2 stdfix" class:light={!$themeMode} class:dark={$themeMode}>
-	<div class="rta-column mainone">
-		<BreadCrumb/>
+
+<BoxStandard
+>
+	<div slot="mid"
+		class:dark={$themeMode}
+		class:light={!$themeMode}
+		class:levelzero={$breakZero}
+		class:levelone={$breakOne}
+		class:leveltwo={$breakTwo}
+		>
 		<slot></slot>
 	</div>
-	<div class="rta-column rightone" class:opened={expandRightbar} data-lenis-prevent>
-		{#if $breakOne || $breakTwo}
-		<div class="rta-row ycenter between rightmenu" on:click={toggleRightbar} on:keydown={fauxfake}>
-			<button class="break899">
-				{#if expandRightbar}
-				Close Subsections
-				{:else}
-				Expand Subsections
-				{/if}
-			</button>
-			<div class="iconchev" class:rotated={expandRightbar}>
-				<svg width="17" height="12" viewBox="0 0 17 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M3.41345 0.187622L0.413452 3.18762L8.41345 11.1876L16.4135 3.18762L13.4135 0.187622L8.41345 5.18762L3.41345 0.187622Z" fill="#FFFFFF"/>
-				</svg>
-			</div>
-		</div>
-		{/if}
-		{#if $breakZero || expandRightbar}
-			<div class="rta-column" transition:slide={{ easing: circOut }} data-lenis-prevent>
-				<p class="tt-u"><strong><a href="/webui">WebUI</a></strong></p>
-				{#if titles && titles.length > 0}
-					{#each titles as item}
-						<p class="spline">
-							<a href={item.linkpath}>
-								{item.meta.title}
-							</a>
-						</p>
-					{/each}
-				{/if}
-			</div>
+	<div slot="right">
+		{#if titles && titles.length > 0}
+			{#each titles as item}
+				<p class="space tt-u">
+					<a href={item.linkpath}>
+						{item.meta.title}
+					</a>
+				</p>
+			{/each}
 		{/if}
 	</div>
-</div>
 
-<style lang="sass">
-
-.spline
-	margin-bottom: 6px
-
-
-
-
-</style>
-
+</BoxStandard>

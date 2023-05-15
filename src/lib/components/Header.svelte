@@ -1,65 +1,36 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte'
-	import { themeMode, breakZero, breakOne } from '$lib/stores/globalstores'
+	import BreadCrumb from '$lib/deslib/BreadCrumb.svelte'
+	import { themeMode, breakZero, breakOne, breakTwo } from '$lib/stores/globalstores'
 	import LogoFM from '$lib/components/LogoFM.svelte'
 	import LogoFMMotif from '$lib/components/LogoFMMotif.svelte'
 	import DarkMode from '$lib/icons/DarkMode.svelte'
 	import Twitter from '$lib/icons/Twitter.svelte'
 	import Github from '$lib/icons/Github.svelte'
 	import Reading from '$lib/icons/Reading.svelte'
+	import Unfold from '$lib/icons/Unfold.svelte'
 
-	let screenWidth:number
-	let breakPoint:boolean
 	let y:number
-	let isInvisible = false
-	let mouseY:number
-	let latestScrollY:number
 
-
-	$: if ( screenWidth <= 768 ) {
-		breakPoint = true
-	} else {
-		breakPoint = false
-	}
-
-	$: {
-		if ( y > 100 && y > latestScrollY ) {
-			isInvisible = true
-		} else {
-			isInvisible = false
-		}
-		latestScrollY = y
-	}
-
-	onMount(() => {
-		const handleMouse = (event: {clientY: number;}) => {
-			mouseY = event.clientY
-			if ( mouseY <= 128 ) {
-				isInvisible = false
-			} 
-		}
-		window.addEventListener('mousemove', handleMouse)
-		return() => {
-			window.removeEventListener('mousemove',handleMouse)
-		}
-	})
 
 </script>
 
-<svelte:window bind:scrollY={y} bind:innerWidth={screenWidth}/>
+<svelte:window bind:scrollY={y}/>
 
-<header class="header" class:dark={$themeMode} class:light={!$themeMode} class:hiddenHeader={isInvisible}>
+<header class="header" class:dark={$themeMode} class:light={!$themeMode} class:greener={$breakTwo}>
 	<div class="logo">
 		<a href="/">
-			<LogoFMMotif></LogoFMMotif>
-			{#if !breakPoint}
+			{#if $breakZero}
 				<LogoFM></LogoFM>
+			{:else}
+			<LogoFMMotif></LogoFMMotif>
 			{/if}
 		</a>
 	</div>
-	<nav class="area rta-row ycenter fullH xend">
-		<div class="rta-row ycenter colgap200">
+	<nav class="area rta-row ycenter fullH between">
+		<BreadCrumb/>
+		<div class="rta-row fullH ycenter colgap200">
 			{#if $breakZero || $breakOne}
 				<Reading/>
 			{/if}
@@ -70,6 +41,9 @@
 		</div>
 		<slot name="mobileicon">
 		</slot>
+		{#if $breakTwo}
+			<Unfold/>
+		{/if}
 	</nav>
 </header>
 
@@ -81,7 +55,7 @@
 	z-index: 999
 	transition: 0.5s cubic-bezier(0.635, 0.405, 0.535, 0.035)
 	@media screen and (min-width: 769px)
-		grid-template-columns: 360px 1fr
+		grid-template-columns: 300px 1fr
 		grid-template-rows: 1fr
 		grid-template-areas: "logo area"
 		width: 100%
@@ -113,16 +87,17 @@
 		.logo
 			grid-area: logo
 
-.dark.header
-	backdrop-filter: blur(20px)
-
 .light.header
-	backdrop-filter: blur(0px)
 	border-bottom: 1px solid rgba(0,0,0,0.065)
+
+.light.header.greener
+	background: var(--green)
 
 .dark.header
 	border-bottom: 1px solid rgba(255,255,255,0.1)
 
+.dark.header.greener
+	background: var(--green)
 
 .logo a
 	display: flex

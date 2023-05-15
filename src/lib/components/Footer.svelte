@@ -51,9 +51,9 @@
 	small
 		color: #474747
 		a
-			color: var(--green)
+			color: var(--gret)
 			&:hover
-				color: #10D56C
+				color: var(--gret)
 
 .foot.light
 	border-top: 1px solid rgba(0,0,0,0.065)
@@ -63,6 +63,6 @@
 		a
 			color: var(--green)
 			&:hover
-				color: #10D56C
+				color: var(--gret)
 
 </style>

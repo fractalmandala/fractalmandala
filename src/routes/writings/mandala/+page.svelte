@@ -47,12 +47,10 @@
 
 </script>
 
-<div class="rta-column stickyboy" class:dark={$themeMode} class:light={!$themeMode}>
-	<h3 class="bord-bot p-bot-16">
+	<h1 class="tt-u">
 		Fractal Maṇḍala
-	</h3>
-</div>
-<div class="rta-column text snipstyle p-bot-64" class:dark={$themeMode} class:light={!$themeMode}>
+	</h1>
+<div class="rta-column newblog" class:dark={$themeMode} class:light={!$themeMode}>
 	<p>
 		The 'fractal maṇḍala' is a metaphor for the Indian civilizational conciousness. It signifies a two-fold distinction:
 	</p>
@@ -67,7 +65,7 @@
 	<p>
 		I've written several essays expanding on this, which you can find in the subsection menu. Below are the four essential aphorisms, the caturasūtra, for understanding Indian civilizational consciousness.
 	</p>
-	<div class="rta-column bord-top m-top-16">
+	<div class="rta-column bord-top m-top-16 newblog">
 		<h4>Caturasūtra - the 4 Essential Aphorisms</h4>
 	</div>
 	<p>
@@ -95,7 +93,7 @@
 		</button>	
 	</div>
 	{#if thisSutra[1]}
-		<div class="rta-column rowgap300" transition:slide>
+		<div class="rta-column rowgap300 newblog" transition:slide>
 			{#if sutra1 && sutra1.length > 0}
 				{#each sutra1 as item}
 					<h4>{item.aphorism}</h4>
@@ -140,7 +138,7 @@
 		</div>
 	{/if}
 	{#if thisSutra[2]}
-		<div class="rta-column rowgap300" transition:slide>
+		<div class="rta-column rowgap300 newblog" transition:slide>
 			{#if sutra2 && sutra2.length > 0}
 				{#each sutra2 as item}
 					<h4>{item.aphorism}</h4>
@@ -185,7 +183,7 @@
 		</div>
 	{/if}
 	{#if thisSutra[3]}
-		<div class="rta-column rowgap300" transition:slide>
+		<div class="rta-column rowgap300 newblog" transition:slide>
 			{#if sutra3 && sutra3.length > 0}
 				{#each sutra3 as item}
 					<h4>{item.aphorism}</h4>
@@ -230,7 +228,7 @@
 		</div>
 	{/if}
 	{#if thisSutra[4]}
-		<div class="rta-column rowgap300" transition:slide>
+		<div class="rta-column rowgap300 newblog" transition:slide>
 			{#if sutra4 && sutra4.length > 0}
 				{#each sutra4 as item}
 					<h4>{item.aphorism}</h4>

@@ -15,12 +15,11 @@
 
 </script>
 
-<div class="rta-column stickyboy" class:dark={$themeMode} class:light={!$themeMode}>
-	<h3 class="bord-bot p-bot-16">
-		History
-	</h3>
-</div>
-<div class="rta-column snipstyle p-bot-64" class:dark={$themeMode} class:light={!$themeMode}>
+<h1 class="tt-u">
+	History
+</h1>
+
+<div class="rta-column newblog p-bot-64">
 	<p>
 		My writings in history range from research-based academic essays to speculative or opinionated pieces. I deal primarily with the issue of Indo-European linguistic origins and dispersals, and with tracing the chronological trajectory of Indian civilizational consciousness, as can be gleaned from Paurāṇika records.
 	</p>
@@ -34,7 +33,7 @@
 	{#if fullImage}
 		<img id="bigimage" src="/images/chronologychart.png" alt="full chronology"/>
 	{/if}
-	<button class="mainbutton m-top-16" on:click={toggleImage}>
+	<button class="secondbutton m-top-16" on:click={toggleImage}>
 		{#if fullImage}
 		Close Image
 		{:else}

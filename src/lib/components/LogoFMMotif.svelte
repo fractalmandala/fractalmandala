@@ -1,5 +1,8 @@
 <script lang="ts">
+
+	import { breakTwo } from '$lib/stores/globalstores'
 	let y: number;
+
 </script>
 
 <svelte:window bind:scrollY={y} />
@@ -12,6 +15,7 @@
 	fill="none"
 	xmlns="http://www.w3.org/2000/svg"
 	style="transform: rotate({y / 3}deg)"
+	class:whitened={$breakTwo}
 >
 	<path
 		class="mot-0"
@@ -118,5 +122,9 @@ svg
 svg
 	path
 		fill: #53DD6c
+
+svg.whitened
+	path
+		fill: white
 
 </style>

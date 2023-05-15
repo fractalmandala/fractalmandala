@@ -35,20 +35,20 @@
 	&:hover
 		#onbelow
 			.char
-				fill: var(--opposite)
-				stroke: var(--opposite)
+				fill: var(--lime)
+				stroke: var(--lime)
 	@media screen and (min-width: 1024px)
-		height: 42px
+		height: 64px
 		svg
 			object-fit: contain
-			height: 32px
-			width: 240px
+			height: 40px
+			width: 280px
 	@media screen and (max-width: 1023px)
 		height: 36px
 
 .char
-	fill: var(--textone)
-	stroke: var(--textone)
+	fill: var(--gret)
+	stroke: var(--gret)
 
 @keyframes slowdown2
 	0%
@@ -64,7 +64,7 @@
 	transform-origin: center center
 	animation: firstcircle 8s ease infinite
 	transform: translateY(4px)
-	fill: #10D56C
+	fill: var(--gret)
 
 #circ2
 	transform-origin: center center

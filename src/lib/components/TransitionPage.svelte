@@ -6,7 +6,7 @@
 
 </script>
 
-<div class="transistor" in:fly={{ delay: 500, duration: 400, y: 900, easing: quadOut}} out:fly={{ delay: 0, duration: 350, opacity: 0, x: 900, easing: quadIn}} class:dark={$themeMode} class:light={!$themeMode}>
+<div class="transistor" in:fly={{ delay: 500, duration: 400, y: 900, easing: quadOut}} out:fly={{ delay: 0, duration: 350, opacity: 0, x: 700, easing: quadIn}} class:dark={$themeMode} class:light={!$themeMode}>
 	<slot></slot>
 </div>
 
@@ -15,6 +15,5 @@
 .transistor
 	box-sizing: border-box
 	padding: 0
-	background: var(--background)
 
 </style>

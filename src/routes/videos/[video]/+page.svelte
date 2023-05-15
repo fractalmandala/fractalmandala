@@ -1,18 +1,28 @@
 <script lang="ts">
 
-	import { themeMode } from '$lib/stores/globalstores'
+	import { onMount } from 'svelte'
+	import { themeMode, breakZero, breakOne, breakTwo } from '$lib/stores/globalstores'
+	import { slide } from 'svelte/transition'
+	import { allVideos } from '$lib/utils/localpulls'
+	import BoxStandard from '$lib/deslib/BoxStandard.svelte'
 	import Youtuber from '$lib/components/Youtuber.svelte'
+	let vids:any
 	export let data
+
+	let pageTitle = data.title
+
+	onMount(async() => {
+		vids = await allVideos();
+	})	
 
 </script>
 
-<div class="rta-column stickyboy" class:dark={$themeMode} class:light={!$themeMode}>
-	<h3 class="bord-bot p-bot-16">{data.title}</h3>		
-</div>
-<div class="rta-column rowgap400 snipstyle p-bot-64" class:dark={$themeMode} class:light={!$themeMode}>
-		<Youtuber
+
+
+	<Youtuber
 			youTubeId={data.videoid}
 		/>
-	<p>{data.about}</p>
+	<p class="m-top-32">{data.about}</p>
 	<svelte:component this={data.content}/>
-</div>
+
+

@@ -1,15 +1,18 @@
 <script lang="ts">
 
 	import { themeMode } from '$lib/stores/globalstores'
+	import PageTitle from '$lib/components/PageTitle.svelte'
+
+	let title = 'Supabase'
 
 </script>
 
-<div class="rta-column stickyboy" class:dark={$themeMode} class:light={!$themeMode}>
-	<h3 class="bord-bot p-bot-16">
+<svelte:head>
+	<PageTitle pageTitle={title}/>
+</svelte:head>
+
+
+		<h3 class="tt-u p-top-32-m">
 		Supabase
 	</h3>
-</div>
-<div class="rta-column snipstyle p-bot-64" class:dark={$themeMode} class:light={!$themeMode}>
-
-</div>
 

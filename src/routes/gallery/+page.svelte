@@ -1,15 +1,20 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte'
-	import { themeMode } from '$lib/stores/globalstores'
+	import { themeMode, breakZero, breakOne, breakTwo } from '$lib/stores/globalstores'
 	import { fullGallery, rangeGallery, lastGallery } from '$lib/utils/supabase'
-	let topper = 1000
-	let lower = 550
+	import { scale } from 'svelte/transition'
+	import NavPrev from '$lib/icons/NavPrev.svelte'
+	import NavNext from '$lib/icons/NavNext.svelte'
+	let topper = 7
+	let skew = true
+	let lower = 0
 	let ranges:any
 	let images:any
 	let last:any
 	let fake = false
 	let gallery = true
+	let pageTitle = 'Gallery'
 
 	function toggleGallery(){
 		gallery = !gallery
@@ -19,12 +24,17 @@
 		fake = !fake
 	}
 
-	function newLower(newLow:number){
-		lower = newLow - 11
-		topper = newLow
+	function nextEight(){
+		lower = lower + 7;
+		topper = topper + 7
 	}
 
-	$: if (lower) {
+	function prevEight(){
+		lower -= 7;
+		topper -= 7;
+	}
+
+	$: if (lower || topper) {
 		(async() => {
 			ranges = await rangeGallery(lower, topper)
 		})();
@@ -38,58 +48,50 @@
 
 </script>
 
-<div class="rta-column stickyboy" class:light={!$themeMode} class:dark={$themeMode}>
-	<h3 class="bord-bot p-bot-16">Midjourney Gallery</h3>
-</div>
-<div class="rta-column snipstyle p-bot-64" class:light={!$themeMode} class:dark={$themeMode}>
-	<p>
+
+<div
+	class="solopage"
+	class:levelzero={$breakZero}
+	class:levelone={$breakOne}
+	class:leveltwo={$breakTwo}
+	>
+	<h1 class="tt-u">
+		Gallery
+	</h1>
+	<div class="newblog">
+		<p>
 		Midjourney is awesome! And anyone prancing about with the "AI art is not true art" has just spent way too long being in very high opinion of themselves, combined with an inner Luddite they may or may not recognize.
 		One may well have a dislike for it, or simply prefer to not engage at all. But to declare on behalf of the rest of humanity that it isn't true art is frankly, ignorant and silly.
-	</p>
-	{#if gallery}
-	{#if last && last.length > 0}
-		<div class="rta-row colgap100 p-bot-32">
-		{#each last as item}
-			<button class="secondbutton point" on:click={() => newLower(item.id)}>{item.id}</button>
-		{/each}
-		<button class="secondbutton point" on:click={toggleGallery}>
-			Large View
-		</button>
-		</div>
-	{/if}
+		</p>
+	</div>
+		<div class="rta-column newblog p-bot-64" class:dark={$themeMode} class:light={!$themeMode}>
 		{#if ranges && ranges.length > 0}
-		<div class="rta-grid grid4 colgap300 rowgap300">
-		{#each ranges as item}
-			<a class="rta-image height-30" href="/gallery/{item.slug}">
-				<img src={item.link} alt={item.slug}/>
-			</a>
-		{/each}
-		</div>
+			<div class="rta-grid grid4 colgap300 rowgap300 m-bot-32">
+				{#each ranges as item}
+					<a class="rta-image height-30" href="/gallery/{item.slug}" transition:scale>
+						<img src={item.link} alt={item.slug}/>
+					</a>
+				{/each}
+			</div>
 		{/if}
-	{/if}
-	{#if !gallery}
-		<button class="secondbutton point" on:click={toggleGallery}>
-		Gallery
-		</button>
-		<div class="rta-image gallery-non p-top-32">
-		{#if last && last.length > 0}
-		{#each last as item}
-		<img src={item.link} alt={item.id}/>
-		{/each}
-		{/if}
+		<div class="rta-row xcenter-d colgap200 ycenter">
+			{#if lower === 0}
+				<div class="rta-row xcenter-d colgap200 ycenter">
+					<button class="blank-button" on:click={nextEight}>
+						<NavNext/>
+					</button>
+					
+				</div>
+			{:else}
+			<button class="blank-button" on:click={prevEight}>
+				<NavPrev/>
+			</button>
+			<button class="blank-button" on:click={nextEight}>
+				<NavNext/>
+			</button>
+			{/if}
 		</div>
-	{/if}
+		</div>
 </div>
 
-<style lang="sass">
 
-.gallery-non
-	height: calc(100vh - 200px)
-
-.rta-image
-	img
-		object-fit: cover
-		height: 100%
-		width: 100%
-
-</style>

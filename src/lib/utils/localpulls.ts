@@ -1,7 +1,7 @@
 import supabase from '$lib/utils/supabase'
 
-export async function themeSveltekit(){
-	const allfiles = import.meta.glob('/src/routes/sveltekit/*.md')
+export async function allWebdev(){
+	const allfiles = import.meta.glob('/src/routes/webdev/*.md')
 	const filed = Object.entries(allfiles)
 	const eachfiled = await Promise.all(
 		filed.map(async([path, resolver]) => {
@@ -11,15 +11,14 @@ export async function themeSveltekit(){
 			return {
 				meta: metadata,
 				linkpath: postPath,
-				type: 'Sveltekit'
 			}
 		})
 	)
 	return eachfiled
 }
 
-export async function themeSupabase(){
-	const allfiles = import.meta.glob('/src/routes/supabase/*.md')
+export async function allWritings(){
+	const allfiles = import.meta.glob('/src/routes/writings/*.md')
 	const filed = Object.entries(allfiles)
 	const eachfiled = await Promise.all(
 		filed.map(async([path, resolver]) => {
@@ -29,15 +28,16 @@ export async function themeSupabase(){
 			return {
 				meta: metadata,
 				linkpath: postPath,
-				type: 'Supabase'
 			}
 		})
 	)
 	return eachfiled
 }
 
-export async function themeJavascript(){
-	const allfiles = import.meta.glob('/src/routes/javascript/*.md')
+
+
+export async function filteredWebdev(type:string){
+	const allfiles = import.meta.glob('/src/routes/webdev/*.md')
 	const filed = Object.entries(allfiles)
 	const eachfiled = await Promise.all(
 		filed.map(async([path, resolver]) => {
@@ -47,15 +47,16 @@ export async function themeJavascript(){
 			return {
 				meta: metadata,
 				linkpath: postPath,
-				type: 'Javascript'
 			}
 		})
 	)
-	return eachfiled
+	const filteredFiled = eachfiled.filter((post ) => post.meta.type === type)
+	return filteredFiled
+	
 }
 
-export async function themeGeneral(){
-	const allfiles = import.meta.glob('/src/routes/webui/*.md')
+export async function filteredWritings(type:string){
+	const allfiles = import.meta.glob('/src/routes/writings/*.md')
 	const filed = Object.entries(allfiles)
 	const eachfiled = await Promise.all(
 		filed.map(async([path, resolver]) => {
@@ -65,12 +66,15 @@ export async function themeGeneral(){
 			return {
 				meta: metadata,
 				linkpath: postPath,
-				type: 'Web UI'
 			}
 		})
 	)
-	return eachfiled
+	const filteredFiled = eachfiled.filter((post ) => post.meta.type === type)
+	return filteredFiled
+	
 }
+
+
 
 export async function manuscript(){
 	const allfiles = import.meta.glob('/src/routes/manuscript/*.md')
@@ -179,19 +183,11 @@ export async function allTest(){
 }
 
 export async function entireProject(){
-	const themeSvelte = await themeSveltekit();
-	const themeSupa = await themeSupabase();
-	const themeJava = await themeJavascript();
-	const themeGene = await themeGeneral();
 	const archs = await archivalWritings();
 	const hists = await archivalHistory();
 	const mands = await archivalMandala();
 	
 	const entireItems = [
-		...themeSvelte,
-		...themeSupa,
-		...themeJava,
-		...themeGene,
 		...archs,
 		...hists,
 		...mands

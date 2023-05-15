@@ -2,6 +2,7 @@
 
 	import { themeMode, breakOne, breakZero, breakTwo } from '$lib/stores/globalstores'
 	import { bolLinks } from '$lib/utils/sveltekittools'
+	import BoxStandard from '$lib/deslib/BoxStandard.svelte'
 	import BreadCrumb from '$lib/deslib/BreadCrumb.svelte'
 	import { slide } from 'svelte/transition'
 	import { circOut } from 'svelte/easing'

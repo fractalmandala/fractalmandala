@@ -1,20 +1,74 @@
 <script lang="ts">
 
-	import { themeMode } from '$lib/stores/globalstores'
-	import PageTitle from '$lib/components/PageTitle.svelte'
-	let pageTitle = 'Gallery'
+	import { onMount } from 'svelte'
+	import { themeMode, breakZero, breakOne, breakTwo } from '$lib/stores/globalstores'
+	import { allVideos } from '$lib/utils/localpulls'
+	import Youtuber from '$lib/components/Youtuber.svelte'
+
+	import { slide } from 'svelte/transition'
+	import { circOut } from 'svelte/easing'
+	let fake = false
+	let expandRightbar = false
+
+	let vids:any
+
+	function toggleRightbar(){
+		expandRightbar = !expandRightbar
+	}
+	
+	function fauxfake(){
+		fake = !fake
+	}
+
+	onMount(async() => {
+		vids = await allVideos();
+	})	
 
 </script>
 
-<svelte:head>
-	<PageTitle pageTitle={pageTitle}/>
-</svelte:head>
 
-<div class="rta-column text stickyboy" class:dark={$themeMode} class:light={!$themeMode}>
-	<h3 class="bord-bot p-bot-16">Videos</h3>
-</div>
-<div class="rta-column snipstyle p-bot-64" class:dark={$themeMode} class:light={!$themeMode}>
+
+<div
+	class="solopage"
+	class:levelzero={$breakZero}
+	class:levelone={$breakOne}
+	class:leveltwo={$breakTwo}
+	>
+	<h1 class="tt-u">
+		Videos
+	</h1>
 	<p>
 		For a very, very brief period in life, I ran a YouTube channel by the name of Project Bhārata. This was also a period where I went on other channels and got to ramble on about stuff in my head. Here you can suffer through them, if you like :)
 	</p>
+	<div class="rta-column rowgap400">
+			{#if vids && vids.length > 0}
+				{#each vids as item, i}
+				<div class="rta-row colgap300">
+					<div class="rta-image height-30 w32">
+						<Youtuber
+							youTubeId={item.meta.videoid}
+						/>
+					</div>
+					<div class="rta-column w64">
+						<h4>{item.meta.title}</h4>
+						<p>{item.meta.about}</p>
+						<a href={item.linkpath}>
+							<button class="secondbutton">
+							Visit Page
+							</button>
+						</div>
+					</div>		
+				{/each}
+			{/if}
+	</div>
 </div>
+
+<style lang="sass">
+
+h4
+	letter-spacing: -2px
+	line-height: 1.12
+
+</style>
+
+

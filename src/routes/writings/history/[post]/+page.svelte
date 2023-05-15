@@ -5,13 +5,21 @@
 
 </script>
 
-<div class="rta-column stickyboy" class:dark={$themeMode} class:light={!$themeMode}>
-	<h3 class="bord-bot p-bot-16">
+<div class="rta-column" class:dark={$themeMode} class:light={!$themeMode}>
+	<h2 class="tt-u p-top-32-m">
 		{data.title}
-	</h3>
+	</h2>
 </div>
-<div class="rta-column snipstyle p-bot-64" class:dark={$themeMode} class:light={!$themeMode}>
+<div class="rta-column newblog p-bot-64" class:dark={$themeMode} class:light={!$themeMode}>
 	<svelte:component this={data.content}/>
 </div>
 
+<style lang="sass">
+
+.newblog
+	white-space: pre-line
+	word-wrap: break-word
+	word-break: break-word
+
+</style>
 

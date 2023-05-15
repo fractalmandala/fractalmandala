@@ -33,7 +33,7 @@
 	width: 27px
 	position: fixed
 	bottom: 20px
-	right: 4vw
+	right: 24px
 	margin-left: auto
 	z-index: 999
 	transform-origin: center center

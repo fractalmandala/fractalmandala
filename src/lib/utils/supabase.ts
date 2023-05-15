@@ -76,6 +76,25 @@ export async function gptTitles(){
 		return data				
 	}
 
+	export async function gptAll(){
+		const { data, error } = await supabase
+		.from('amrit-gpttitles')
+		.select()
+		.order('nextid',{ascending: false})
+		if (error) throw new Error(error.message)
+		return data				
+	}
+
+	export async function gptFiltered(theme:string){
+		const { data, error } = await supabase
+		.from('amrit-gpttitles')
+		.select()
+		.eq('theme',theme)
+		.order('nextid',{ascending: false})
+		if (error) throw new Error(error.message)
+		return data				
+	}
+
 	export async function gptSveltekit(){
 		const { data, error } = await supabase
 		.from('amrit-gpttitles')
@@ -180,8 +199,7 @@ export async function gptTitles(){
 		.from('amrit-gallery')
 		.select()
 		.order('id', {ascending: false})
-		.gte('id', low)
-		.lte('id', top)
+		.range(low,top)
 		if ( error ) throw new Error(error.message)
 		return data		
 	}
@@ -196,11 +214,11 @@ export async function limitGallery(genre:string){
 		return data
 	}
 
-export async function singleImage(slug:string){
+export async function singleImage(id:number){
 		const { data, error } = await supabase
 		.from('amrit-gallery')
 		.select()
-		.eq('slug',slug)
+		.eq('id',id)
 		if ( error ) throw new Error(error.message)
 		return data
 	}

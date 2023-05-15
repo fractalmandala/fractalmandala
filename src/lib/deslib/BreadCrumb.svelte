@@ -1,16 +1,17 @@
 <script lang="ts">
 
 	import { page } from '$app/stores'
+	import { readingMode } from '$lib/stores/globalstores'
 	import ChevRight1 from '$lib/icons/ChevRight.svelte'
 	import ChevRight2 from '$lib/icons/ChevRight.svelte'
 	import ChevRight3 from '$lib/icons/ChevRight.svelte'
 	import ChevRight4 from '$lib/icons/ChevRight.svelte'
 	import ChevRight5 from '$lib/icons/ChevRight.svelte'
 	import ChevRight6 from '$lib/icons/ChevRight.svelte'
-
-	let path = $page.url.pathname;
+	let pathParts:any
+	let path = $page.url.pathname
 	let level:number
-  let pathParts = path.split('/').filter(part => part !== '');
+  pathParts = path.split('/').filter(part => part !== '');
   let [part1, part2, part3, part4] = pathParts;
 	let lone = false
 	let ltwo = false
@@ -63,11 +64,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
 </svelte:head>
 
-<div class="rta-row ycenter rta-breadcrumb">
-	<div class="rta-row incrumb">
-		<a href="/">fractal maṇḍala</a>
-		<ChevRight1/>
-	</div>
+<div class="rta-breadcrumb fullH rta-row ycenter" class:sticky={!$readingMode} class:moreSticky={$readingMode}>
 	{#if part1}
 	<a class="rta-row incrumb" href="/{part1}" class:current={lone}>
 		{part1}
@@ -115,8 +112,18 @@
 		&::after
 			content: none
 	margin-bottom: 8px
-	border-bottom: var(--bord)
 	padding-bottom: 4px
+	position: sticky
+	padding-top: 8px
+	background: var(--background)
+	z-index: 800
+
+.rta-breadcrumb.sticky
+	top: 64px
+
+.rta-breadcrumb.moreSticky
+	top: 48px
+
 
 .incrumb
 	&:hover
