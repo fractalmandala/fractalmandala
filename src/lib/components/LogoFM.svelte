@@ -28,6 +28,51 @@
 
 <style lang="sass">
 
+.char7
+	transform-origin: center center
+
+.char1
+	transition: 0.04s cubic-bezier(1.000, 0.005, 1.000, 0.005)
+
+.char2
+	transition: 0.06s cubic-bezier(0.000, 1.240, 0.875, 0.490)
+
+.char3
+	transition: 0.12s cubic-bezier(0.995, 0.225, 0.000, 0.965)
+
+.char4
+	transition: 0.09s cubic-bezier(0.995, 0.225, 0.750, 0.750)
+
+.char5
+	transition: 0.15s cubic-bezier(0.995, 0.225, 0.000, 0.965)
+
+.char6
+	transition: 0.2s cubic-bezier(1.000, 0.005, 1.000, 0.005)
+
+.char7
+	transition: 0.21s cubic-bezier(0.995, 0.225, 0.750, 0.750)
+
+.char8
+	transition: 0.24s cubic-bezier(0.995, 0.225, 0.000, 0.965)
+
+.char9
+	transition: 0.28s cubic-bezier(1.000, 0.005, 1.000, 0.005)
+
+.char10
+	transition: 0.3s cubic-bezier(0.000, 1.240, 0.875, 0.490)
+
+.char11
+	transition: 0.32s cubic-bezier(0.995, 0.225, 0.750, 0.750)
+
+.char12
+	transition: 0.35s cubic-bezier(0.000, 1.240, 0.875, 0.490)
+
+.char13
+	transition: 0.34s cubic-bezier(0.995, 0.225, 0.000, 0.965)
+
+.char14
+	transition: 0.37s cubic-bezier(1.000, 0.005, 1.000, 0.005)
+
 .aligner
 	box-sizing: border-box
 	svg
@@ -35,8 +80,12 @@
 	&:hover
 		#onbelow
 			.char
-				fill: var(--lime)
-				stroke: var(--lime)
+				fill: var(--gret)
+				stroke: var(--gret)
+			.char7
+				animation: turning 0.24s forwards
+			#circ2
+				transform: translateX(800px)
 	@media screen and (min-width: 1024px)
 		height: 64px
 		svg
@@ -46,9 +95,21 @@
 	@media screen and (max-width: 1023px)
 		height: 36px
 
-.char
-	fill: var(--gret)
-	stroke: var(--gret)
+@keyframes turning
+	0%
+		transform: rotateY(0) translateX(0)
+	100%
+		transform: rotateY(180deg) translateX(72px)
+
+.dark
+	.char
+		fill: #373737
+		stroke: #373737
+
+.light
+	.char
+		fill: #878787
+		stroke: #878787
 
 @keyframes slowdown2
 	0%

@@ -3,6 +3,7 @@ title: A New Reading of the Dāśarājña, or Battle of Ten Kings, in the Ṛg V
 tags: OIT
 featured: true
 type: history
+id: 4
 ---
 
 <small class="is-green tt-u">long read</small>

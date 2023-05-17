@@ -20,6 +20,10 @@
 	background-size: cover
 	background-position: center center
 	background-repeat: no-repeat
+	display: flex
+	flex-direction: column
+	align-items: center
+	justify-content: center
 
 	
 

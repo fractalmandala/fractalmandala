@@ -1,10 +1,13 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import Animations from 'textify.js'
+	import { scale } from 'svelte/transition'
 	import PageTitle from '$lib/components/PageTitle.svelte';
 	import { themeMode, breakOne, breakTwo, breakZero, breakZeroOne } from '$lib/stores/globalstores';
 	import { featuredAll } from '$lib/utils/localpulls';
 	import { recentGallery } from '$lib/utils/supabase';
 	import Logo from '$lib/assets/FMLogo.svelte';
+	import Parallax from '$lib/deslib/Parallax.svelte'
 	import '$lib/styles/prism.css';
 	import '$lib/styles/prismtoolbar.css';
 	import '$lib/styles/themes.sass';
@@ -14,17 +17,20 @@
 	let recentImages: any;
 	let fake = false;
 	let iW: number;
-	let width = '50%';
-	let expand: boolean[] = Array(20).fill(false);
-	expand[8] = true;
-
-	$: if (iW <= 768) {
-		width = '100%';
-	} else {
-		width = '50%';
-	}
 
 	onMount(() => {
+		const { Textify } = Animations;
+		new Textify({
+			selector: ".thish5",
+			duration: 1600,
+			stagger: 100,
+			fade: false,
+			top: false,
+			reveal: true,
+			threshold: 0.8,
+			once: false,
+			scale: 2.5
+		});
 		(async () => {
 			featured = await featuredAll();
 			recentImages = await recentGallery();
@@ -39,94 +45,121 @@
 </svelte:head>
 
 <div class="rta-column" id="panelone" class:dark={$themeMode} class:light={!$themeMode}>
-	<div class="rta-row colgap200 ycenter xend p-bot-32 headersection">
-		<img class="mandalaimage" src="/images/mands.webp" alt="mandala" />
+	<Parallax --parallax="url('https://rnfvzaelmwbbvfbsppir.supabase.co/storage/v1/object/public/brhatwebsite/10mandala/realitywall.webp')">
+		<div class="rta-column back screen"></div>
+	</Parallax>
+</div>
+<div class="rta-column minH yeslink">
+	<div class="rta-accordion minH"
+		class:levelzero={$breakZero}
+		class:levelone={$breakOne}
+		class:leveltwo={$breakTwo}
+		>
+		<div class="rta-column back" id="panel-1">
+			<a href="/writings" class="darken">
+				<h4 class="thish5">Writings</h4>
+			</a>
+		</div>
+		<div class="rta-column back" id="panel-2">
+			<a href="/webdev" class="darken">
+				<h4 class="thish5">Web Dev</h4>
+			</a>
+		</div>
+		<div class="rta-column back" id="panel-3">
+			<a href="/music" class="darken">
+				<h4 class="thish5">Music</h4>
+			</a>
+		</div>
+		<div class="rta-column back" id="panel-4">
+			<a href="/videos" class="darken">
+				<h4 class="thish5">Videos</h4>
+			</a>
+		</div>
+		<div class="rta-column back" id="panel-5">
+			<a href="/gallery" class="darken">
+				<h4 class="thish5">Imagery</h4>
+			</a>
+		</div>
+		<div class="rta-column back" id="panel-6">
+			<a href="/gpt" class="darken">
+				<h4 class="thish5">GPT</h4>
+			</a>
+		</div>
 	</div>
 </div>
-{#if featured && featured.length > 0}
-	<div class="rta-grid grid3 colgap300 rowgap300" class:dark={$themeMode} class:light={!$themeMode}>
-		{#each featured as item}
-			<a href={item.url} class="rta-column rowgap100 null featurebox height-40">
-				<h4 class="tt-u">
-					<a href={item.url}>
-						{item.heading}
-					</a>
-				</h4>
-				<div class="rta-row colgap200 ycenter null">
-					<div class="catlabel">{item.cat}</div>
-					<small>{item.tag}</small>
-				</div>
-			</a>
-		{/each}
-	</div>
-{/if}
 
 <style lang="sass">
 
-.rta-grid.grid3
-	padding-left: 2vw
-	z-index: 10
-	padding-top: 128px
 
 #panelone
-	background: var(--background)
-	z-index: 0
+	height: 100vh
+	overflow-y: hidden
+	align-items: center
 
-.catlabel
-	background: #7DFA1B
-	text-transform: uppercase
-	font-size: 12px
-	padding: 2px 4px
-	color: var(--opposite)
-	font-weight: 600
+.screen
+	background-image: url('/images/screen.png')
+	background-size: cover
+	background-position: center center
+	height: 100%
+	width: 100%
 
-
-.featurebox
-	background: linear-gradient(180deg, #00C05A 0%, #3CDF88 100%)
-	z-index: 10
+.darken
+	display: flex
+	flex-direction: column
+	align-items: center
+	justify-content: center
+	text-align: center
+	height: 100%
+	width: 100%
+	padding-top: 32px
+	background: rgba(0,0,0,0.3)
 	h4
-		letter-spacing: -2px
-		line-height: 1.2
-		color: var(--background)
+		margin: 0
 
-.dark
-	.featurebox
-		h4
-			color: #373737
+.rta-accordion
+	display: flex
 
-.rightstick::-webkit-scrollbar
-	width: 2px
-.rightstick::-webkit-scrollbar-thumb
-	background: #10D56C
-	border-top: 200px solid var(--background)
+.rta-accordion.levelzero
+	flex-direction: row
+	column-gap: 8px
+	.rta-column
+		width: calc(16.66% - 7px)
+		transition: all 0.8s ease
 
-.featurebox
-	small
-		text-transform: uppercase
+.rta-accordion.levelone
+	flex-direction: row
+	column-gap: 8px
+	.rta-column
+		width: calc(16.66% - 7px)
+		transition: all 0.8s ease
 
-.mandalaimage
-	object-fit: cover
-	height: 640px
-	width: 640px
-	transform-origin: center center
-	animation: mandaling 24s infinite alternate-reverse
-	position: fixed
-	z-index: 0
-	top: 64px
-	right: -20%
-	@media screen and (max-width: 768px)
-		height: 80px
-		width: 80px
+.rta-accordion.leveltwo
+	flex-direction: row
+	column-gap: 8px
+	row-gap: 8px
+	flex-wrap: wrap
+	.rta-column
+		width: calc(33.33% - 6px)
+		transition: all 0.8s ease
+		height: 50vh
 
-.headersection
-	padding: 32px 0
 
-@keyframes mandaling
-	0%
-		transform: rotate(360deg)
-	50%
-		transform: rotate(0deg)
-	100%
-		transform: rotate(-360deg)
+#panel-1
+	background-image: url('/images/k-writings.webp')
+
+#panel-2
+	background-image: url('/images/k-webdev.webp')
+
+#panel-3
+	background-image: url('/images/k-music.webp')
+
+#panel-4
+	background-image: url('/images/k-videos.webp')
+
+#panel-5
+	background-image: url('/images/k-images.webp')
+
+#panel-6
+	background-image: url('/images/k-gpt.webp')
 
 </style>

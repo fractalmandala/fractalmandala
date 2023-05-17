@@ -4,6 +4,7 @@ tags: tech
 originallydated: Oct, 2018
 featured: false
 type: archival
+id: 4
 ---
 
 Admittedly, this piece is a few years late. Gone already is the era when ‘disruption’ was spoken as a magic buzzword that could fix everything. We’re past the point where we’ve realised that technology and disruption aren’t all what they were touted to be.

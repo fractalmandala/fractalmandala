@@ -15,25 +15,14 @@
 .rta-icon
 	cursor: pointer
 	svg
-		height: 24px
+		height: 20px
 		object-fit: contain
 		transition: 0.13s
 		transform-origin: center center
-		path
-			fill: var(--gret)
 	&:hover
-		svg path
-			fill: var(--lime)
 		svg
-			transform: scale(0.88)
-
-.rta-icon
-	svg.whitened
-		height: 28px
-		path
-			fill: white
-	&:hover
-		svg path
-			fill: var(--lime)
+			transform: scale(1.2)
+			path
+				fill: var(--gret)
 
 </style>

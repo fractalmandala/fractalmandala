@@ -3,6 +3,7 @@ title: Join Tables and Create a New View
 tag: sql
 featured: false
 type: supabase
+id: 10
 ---
 
 Say I want to join 2 tables and create a new view out of them.

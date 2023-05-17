@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte'
 	import { themeMode, breakZero, breakOne, breakTwo } from '$lib/stores/globalstores'
 	import { tripSurfer } from '$lib/utils/supabase'
+	import { allMusic } from '$lib/utils/localpulls'
 	import Soundclouder1 from '$lib/components/Soundclouder.svelte'
 
 	let thisTrack = Array(20).fill(false)
@@ -25,7 +26,7 @@
 	}
 
 	onMount(async() => {
-		tracks = await tripSurfer();
+		tracks = await allMusic();
 	})
 
 
@@ -33,7 +34,7 @@
 
 
 <div
-	class="solopage"
+	class="solopage zepad y single minH mob"
 	class:levelzero={$breakZero}
 	class:levelone={$breakOne}
 	class:leveltwo={$breakTwo}
@@ -46,14 +47,13 @@
 	</p>
 	<p>In the years since I've dabbled in psytrance production, and as a result have invented the genre of poorly mastered, hastily finished amateur psytrance. You can find some of what I made on <a href="https://open.spotify.com/artist/7kyfFEEMs2Jg6FLF5gpC7O" target="_blank" rel="noreferrer">Spotify</a> or <a href="https://music.youtube.com/channel/UCZpvB_tpsx6Pj3g78uc0rtg" target="_blank" rel="noreferrer">YouTube</a> under the name Tripsurfer.</p>
 	<p>Below I've added tracks uploaded to SoundCloud.</p>
-		<div class="rta-grid grid4 stay2 m-top-16 colgap300 rowgap300">
+	<div class="rta-column rowgap300 m-top-32">
 		{#if tracks && tracks.length > 0}
 			{#each tracks as item, i}
-				<div class="rta-column ingrid" on:click={() => toggleTrack(i)} on:keydown={fauxfake} class:opened={thisTrack[i]}>
-					<Soundclouder1 soundcloudLink={item.tracklink}/>
+				<div class="rta-column">
+					<Soundclouder1 soundcloudLink={item.meta.soundcloudLink}/>
 				</div>
 			{/each}
 		{/if}
-		</div>
-
+	</div>
 </div>

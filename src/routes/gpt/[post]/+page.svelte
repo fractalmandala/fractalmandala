@@ -28,9 +28,8 @@
 </script>
 
 
-<div class="rta-column stickyboy">
-	<h3 class="bord-bot p-bot-16">{data.title}</h3>
-</div>
+<h5 class="bord-bot p-bot-16">{data.title}</h5>
+
 <div class="rta-column rowgap300 gptstyle p-top-32 p-bot-64">
 	{#each blocks as block}
   	{#if block.type === 'text'}

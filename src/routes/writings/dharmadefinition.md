@@ -4,6 +4,7 @@ tags: opinion
 originallydated: May, 2021
 featured: false
 type: archival
+id: 9
 ---
 
 When speaking of dharma, or trying to define it, we operate from one or more out of the following 3 definition-categories:

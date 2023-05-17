@@ -3,6 +3,7 @@ title: ChatGPT in Sveltekit
 tag: ai, chatgpt
 featured: false
 type: sveltekit
+id: 1
 ---
 
 I was able to integrate chatGPT into my Sveltekit project thanks to the wonderful tutorial and <a href="https://github.com/huntabyte/chatty" target="_blank" rel="noreferrer">accompanying code</a> by Huntabyte. So what you read below is simply a modification of this original integration.

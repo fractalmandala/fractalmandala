@@ -56,12 +56,43 @@ export async function formentries(){
 		return data
 	}
 
+export async function allGPT(){
+		const { data, error } = await supabase
+		.from('amrit-gpt')
+		.select()
+		.order('id')
+		if (error) throw new Error(error.message)
+		return data		
+	}
+
 
 export async function newGPT(title:string){
 		const { data, error } = await supabase
 		.from('amrit-gpt')
 		.select()
 		.eq('title', title)
+		.order('id')
+		if (error) throw new Error(error.message)
+		return data		
+	}
+
+export async function evenGPT(title:string){
+		const { data, error } = await supabase
+		.from('amrit-gpt')
+		.select()
+		.eq('title', title)
+		.eq('typeof','even')
+		.order('id')
+		if (error) throw new Error(error.message)
+		return data		
+	}
+
+export async function oddGPT(title:string){
+		const { data, error } = await supabase
+		.from('amrit-gpt')
+		.select()
+		.eq('title', title)
+		.eq('typeof','odd')
 		.order('id')
 		if (error) throw new Error(error.message)
 		return data		

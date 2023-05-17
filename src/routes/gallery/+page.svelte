@@ -50,7 +50,7 @@
 
 
 <div
-	class="solopage"
+	class="solopage zepad y minH mob"
 	class:levelzero={$breakZero}
 	class:levelone={$breakOne}
 	class:leveltwo={$breakTwo}

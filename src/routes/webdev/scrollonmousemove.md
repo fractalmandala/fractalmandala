@@ -3,6 +3,7 @@ title: Scroll on Mouse Move
 tag: scrolls
 featured: false
 type: sveltekit
+id: 14
 ---
 
 ```html

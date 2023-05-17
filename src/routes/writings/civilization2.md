@@ -4,6 +4,7 @@ tags: opinion
 originallydated: Nov, 2017
 featured: false
 type: archival
+id: 5
 ---
 
 *Disclaimer- This article is an exercise in (possibly outrageous) speculation. I imagine somewhat utopian future states where blockchain is embedded in ways that fundamentally alter civilisation. None of this is guaranteed, but it is definitely possible.*

@@ -1,37 +1,36 @@
 <script lang="ts">
 
 	import { browser } from '$app/environment';
-	import visibilityMode from '$lib/stores/visibility';
 	import { themeMode } from '$lib/stores/globalstores'
+	import Twitter from '$lib/icons/Twitter.svelte'
+	import Github from '$lib/icons/Github.svelte'
 	let fake = false;
 
 	function fauxfake() {
 		fake = !fake;
 	}
 
-	function toggleVisibility() {
-		if (browser) {
-			visibilityMode.update((mode) => {
-				const newMode = !mode;
-				localStorage.setItem('visibilityMode', JSON.stringify(newMode));
-				return newMode;
-			});
-		}
-	}
 </script>
 
 <footer class="foot rta-column colgap100 ta-l" class:dark={$themeMode} class:light={!$themeMode}>
-	<small>orbis terrarum est non altus satis</small>
-	<small><a href="/about">2023 | Amritanshu Pandey</a></small>
+	<div class="rta-row colgap50">
+		<Github/>
+		<Twitter/>
+	</div>
+	<div class="rta-column">
+		<small><a href="/about">2023 | Amritanshu Pandey</a></small>
+	</div>
 </footer>
 
 <style lang="sass">
 
+.rta-row
+	margin-bottom: 4px
+
 .foot
 	justify-content: center
-	align-items: flex-start
+	align-items: center
 	height: 64px
-	padding: 0 40px
 	small
 		font-size: 10px
 		text-transform: capitalize
@@ -39,6 +38,9 @@
 		cursor: pointer
 		a
 			text-transform: uppercase
+	@media screen and (min-width: 1024px)
+		padding-right: 256px
+		padding-left: 256px
 	@media screen and (max-width: 1023px)
 		padding: 0 16px
 		align-items: center
@@ -47,17 +49,14 @@
 
 .foot.dark
 	border-top: 1px solid rgba(255,255,255,0.1)
-	background: var(--background)
 	small
 		color: #474747
-		a
-			color: var(--gret)
-			&:hover
+		&:hover
+			a
 				color: var(--gret)
 
 .foot.light
 	border-top: 1px solid rgba(0,0,0,0.065)
-	background: var(--background)
 	small
 		color: #878787
 		a

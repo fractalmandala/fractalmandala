@@ -3,6 +3,7 @@ title: Storing User First Visit
 tag: utilities
 featured: false
 type: sveltekit
+id: 15
 ---
 
 Create a file in lib>stores named 'stores.ts'

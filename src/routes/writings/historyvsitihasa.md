@@ -4,6 +4,7 @@ image: https://rnfvzaelmwbbvfbsppir.supabase.co/storage/v1/object/public/brhatwe
 tags: civilization
 featured: true
 type: fractal maṇḍala
+id: 3
 ---
 
 At one point in the 1998 movie Pi, the protagonist’s professor shouts out- *“if you look for the number pi everywhere, you will find the number pi everywhere!”* We can understand the exasperation, for confirmation bias and recursive thinking are not unfamiliar in common experience. The reference is made here to preamble the following article, which may well be a similar case of ‘finding pi-s everywhere.’ Alternatively, it could be a relevant observation on itihāsa, or Indian civilisational memory. The latter proposition finds strength from previous notices of macro-historical memory in Indian itihāsa.

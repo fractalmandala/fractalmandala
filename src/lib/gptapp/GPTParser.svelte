@@ -1,5 +1,5 @@
 <script lang="ts">
-
+//@ts-nocheck
 	import { onMount } from 'svelte'
 	import { slide } from 'svelte/transition'
 	import { themeMode, breakZero, breakOne, breakTwo } from '$lib/stores/globalstores'
@@ -12,15 +12,19 @@
 	let rawBlocks = response.split('```');
 
 	let blocks:any = [];
-  for (let i = 0; i < rawBlocks.length; i++) {
-    if (i % 2 === 0) {
-      blocks.push({ type: 'text', content: rawBlocks[i] });
-    } else {
-      const [language, ...codeLines] = rawBlocks[i].split('\n');
-      const code = codeLines.join('\n');
-      blocks.push({ type: 'code', language: language.trim(), code: code.trim() });
-    }
-  }
+	for (let i = 0; i < rawBlocks.length; i++) {
+	  if (i % 2 === 0) {
+	    blocks.push({ type: 'text', content: rawBlocks[i] });
+	  } else {
+	    let [language, ...codeLines] = rawBlocks[i].split('\n');
+	    const code = codeLines.join('\n');
+	    if (!language || language.trim() === '') {
+	      language = 'javascript';
+	    }
+	    blocks.push({ type: 'code', language: language.trim(), code: code.trim() });
+	  }
+	}
+
 
 	function handleCopyDone(){
 		confirmCopy = !confirmCopy
@@ -53,9 +57,9 @@
 	<slot name="button"></slot>
 	{#each blocks as block}
 		{#if block.type === 'text'}
-			<pre>{block.content}</pre>
+			<pre class="cutthis">{block.content}</pre>
 		{:else}
-		<div class="rta-column codeparent m-top-32">
+		<div class="rta-column codeparent">
 			<div class="rta-row ycenter between">
 				<small>{block.language}</small>
 				<button class="blank-button"
@@ -74,14 +78,9 @@
 
 <style lang="sass">
 
-.levelzero
-	.codeparent
-		border: var(--bord)
-		background: var(--opposite)
-		border-radius: 4px
-		padding: 16px
-		.codeblock
-			padding: 32px 16px 16px 16px
-			border-top: 1px solid var(--near)
+.cutthis
+	margin-bottom: 0
+	margin-top: 0
+
 
 </style>

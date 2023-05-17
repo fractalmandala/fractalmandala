@@ -18,11 +18,16 @@
 </script>
 
 
-
+<div class="zepad all single minH mob">
+	<h2 class="tt-u">
+		{data.title}
+	</h2>
+	<div class="rta-column newblog" class:dark={$themeMode} class:light={!$themeMode}>
 	<Youtuber
 			youTubeId={data.videoid}
 		/>
 	<p class="m-top-32">{data.about}</p>
-	<svelte:component this={data.content}/>
-
+		<svelte:component this={data.content}/>
+	</div>
+</div>
 

@@ -35,25 +35,16 @@
 
 </script>
 
-<BoxStandard
-	skipCrumb={skipCrumb}
-	skew={skew}
-	isNulled={isNulled}
->
-	<div slot="mid"
+	<div
 		class:dark={$themeMode}
 		class:light={!$themeMode}
 		class:levelzero={$breakZero}
 		class:levelone={$breakOne}
 		class:leveltwo={$breakTwo}
+		class="rta-column"
 		>
-		<div class="rta-column">
 		<Parallax --parallax="url('{data.link}')"/>
-		</div>
-	</div>
-	<div slot="right">
-		<p class="space tt-u"><a href="/gallery">Gallery Home</a></p>
-		<p class="space tt-u"><a href="https://www.midjourney.com/app/" target="_blank" rel="noreferrer">Midjourney</a></p>
+	<div class="thenav">
 		{#if prevR && prevR.length > 0 && nextR && nextR.length > 0}
 			{#each nextR as item}
 			<button class="blank-button seca">
@@ -71,7 +62,7 @@
 			{/each}
 		{/if}
 	</div>
-</BoxStandard>
+	</div>
 
 <style lang="sass">
 
@@ -81,5 +72,10 @@
 .rta-column
 	height: 100vh
 	width: 100%
+	position: relative
+	.thenav
+		position: absolute
+		bottom: 32px
+		right: 80px
 
 </style>

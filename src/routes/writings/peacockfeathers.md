@@ -4,6 +4,7 @@ tags: opinion
 originallydated: Jul, 2018
 featured: false
 type: archival
+id: 3
 ---
 
 *As I chronicle in <a href="https://www.brhat.in/dhiti/decolonizationapersonalfootprint" target="_blank" rel="noreferrer">this essay</a> I wrote, I've spent the majority of my life thoroughly colonized. Well into my journey back home- a ghar-vaapsi- now, even I look back at some of my old writings with embarassment.*

@@ -3,6 +3,7 @@ title: An Exegesis of Ṛg Vedic Chronology
 tags: chronology
 featured: false
 type: history
+id: 3
 ---
 
 Vedic literature begins with the Ṛgveda and its ten maṇḍalas, or books. Each maṇḍala is composed of hymns or sūktas, which in turn are made from verses or mantras. There are a total of 1028 sūktas and 10,552 mantras, and this table shows the breakdown:

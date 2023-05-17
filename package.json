@@ -50,6 +50,7 @@
 		"flexsearch": "^0.7.31",
 		"gpt3-tokenizer": "^1.1.5",
 		"highlight.js": "^11.7.0",
+		"langchain": "^0.0.75",
 		"lucide-svelte": "^0.206.0",
 		"node-html-parser": "^6.1.5",
 		"openai": "^3.2.1",

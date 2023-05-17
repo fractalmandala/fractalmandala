@@ -3,6 +3,7 @@ title: Integrating Sveltekit and Supabase
 tag: supabase
 featured: false
 type: sveltekit
+id: 17
 ---
 
 This is an example of how to integrate Supabase with Sveltekit. Some caveats to keep in mind:

@@ -29,7 +29,7 @@
 
 
 <div
-	class="solopage"
+	class="solopage zepad y minH mob"
 	class:levelzero={$breakZero}
 	class:levelone={$breakOne}
 	class:leveltwo={$breakTwo}
@@ -40,7 +40,7 @@
 	<p>
 		For a very, very brief period in life, I ran a YouTube channel by the name of Project Bhārata. This was also a period where I went on other channels and got to ramble on about stuff in my head. Here you can suffer through them, if you like :)
 	</p>
-	<div class="rta-column rowgap400">
+	<div class="rta-column rowgap600 m-top-32">
 			{#if vids && vids.length > 0}
 				{#each vids as item, i}
 				<div class="rta-row colgap300">
@@ -66,7 +66,7 @@
 <style lang="sass">
 
 h4
-	letter-spacing: -2px
+	letter-spacing: -1px
 	line-height: 1.12
 
 </style>

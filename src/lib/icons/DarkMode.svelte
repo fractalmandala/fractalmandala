@@ -42,12 +42,10 @@
 		transition: 0.13s
 		transform-origin: center center
 		path
-			fill: var(--gret)
+			fill: var(--opposite)
 	&:hover
-		svg path
-			fill: var(--lime)
 		svg
-			transform: scale(0.88)
+			transform: scale(1.2)
 
 .rta-icon
 	svg.whitened
@@ -56,6 +54,6 @@
 			fill: white
 	&:hover
 		svg path
-			fill: var(--lime)
+			fill: var(--gret)
 
 </style>

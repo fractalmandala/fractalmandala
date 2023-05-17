@@ -2,13 +2,14 @@
 
 	import { onMount } from 'svelte'
 	import { themeMode, breakZero, breakOne, breakTwo } from '$lib/stores/globalstores'
+	import { resizableAction } from "svelte-legos";
 	import { slide } from 'svelte/transition'
 	import BoxStandard from '$lib/deslib/BoxStandard.svelte'
 	import ExpandDown1 from '$lib/icons/ExpandDown.svelte'
 	import ExpandDown2 from '$lib/icons/ExpandDown.svelte'
 	import GPTParser from '$lib/gptapp/GPTParser.svelte'
 	import GPTParser2 from '$lib/gptapp/GPTParser.svelte'
-	import { newGPT, gptSveltekit } from '$lib/utils/supabase'
+	import { newGPT, gptSveltekit, evenGPT, oddGPT } from '$lib/utils/supabase'
 	import supabase from '$lib/utils/supabase'
 	import Prism from 'prismjs'
 	import '$lib/styles/prism.css'
@@ -22,6 +23,8 @@
 	let fake = false
 	let inputAgent = ''
 	let rotated = true
+	let evens:any
+	let odds:any
 
 	function toggleChat(index:number){
 		fullChat[index] = !fullChat[index]
@@ -60,6 +63,8 @@
 		pageTitle = data.title
 		chatStream = await newGPT(thisTitle);
 		titles = await gptSveltekit();
+		evens = await evenGPT(thisTitle);
+		odds = await oddGPT(thisTitle);
 		Prism.highlightAll();
 	})
 
@@ -71,88 +76,53 @@
 </svelte:head>
 
 
-<div class="chatstream"
+<div class="rta-column null"
 	class:dark={$themeMode}
 	class:light={!$themeMode}
 	class:levelzero={$breakZero}
 	class:levelone={$breakOne}
 	class:leveltwo={$breakTwo}
 	>
-	<h3 class="tt-u">
+	<h4 class="tt-u p-bot-32">
 		{data.title}
-	</h3>
+	</h4>
 	{#if chatStream && chatStream.length > 0}
+
 		{#each chatStream as item, i}
-			{#if i % 2 === 0 }
-							
-			<div class="rta-column inputtext rowgap100 null" class:flatten={fullChat[i]}>
-				{#if !fullChat[i]}
-				<small>User | {item.id}</small>
-				<pre class="point" on:click={() => toggleChat(i)} on:keydown={fauxfake}>{item.value.slice(0,200)}</pre>
-				{/if}
-				{#if fullChat[i]}
-				<GPTParser response={item.value}>
-					<button slot="button" class="secondbutton" on:click={() => toggleChat(i)}>Close</button>
-				</GPTParser>
-				{/if}
-			</div>
-			{:else}
-				<div class="rta-column outputtext rowgap100 null">
-					<small>GPT | {item.id}</small>
-					{#if fullGPT[i]}
-					<GPTParser2 response={item.value}/>
-							<button class="rta-icon rta-row ycenter blank-button" on:click={() => toggleGPT(i)}>
-								<ExpandDown2 rotated={rotated}/>
-							</button>
-						{:else}
-						<pre transition:slide={{duration: 300}}>
-							{item.value.slice(0,200)}
-						</pre>
-						<button class="rta-icon rta-row ycenter blank-button" on:click={() => toggleGPT(i)}>
-							<ExpandDown1/>
-						</button>
-					{/if}
-				</div>
-				{/if}			
-			{/each}
-		{/if}
+			<div class="rta-column overlord bord-bot m-bot-16 p-bot-16"
+
+			>
+				{#if fullGPT[i]}
+				<GPTParser2 response={item.value}/>
+					<button class="rta-row ycenter blank-button" on:click={() => toggleGPT(i)}>
+						<ExpandDown2 rotated={rotated}/>
+					</button>
+				{:else}
+				<pre class="cutthis" transition:slide={{duration: 300}}>
+					{item.value.slice(0,100)}
+				</pre>
+				<button class="rta-row ycenter blank-button" on:click={() => toggleGPT(i)}>
+					<ExpandDown1/>
+				</button>
+			{/if}	
+		</div>
+	{/each}
+	{/if}
 	</div>
 
 
 <style lang="sass">
 
-.rta-column
-	small
-		text-transform: uppercase
-		font-family: 'Spline Sans', sans-serif
-
 .levelzero
-	.rta-column
-		margin-bottom: 24px
-		border-bottom: var(--bord)
-		padding-bottom: 32px
-		small
-			font-size: 12px
-		pre
-			letter-spacing: -0.9px
-			white-space: pre-line
-	.inputtext
-		pre
-			color: var(--midline)
-			font-size: 14px
-			white-space: pre-line
-		small
-			color: var(--midline)
-	.outputtext
-		small
-			color: var(--green)
-		pre
-			color: var(--opposite)
-			font-size: 1.08rem
-			white-space: pre-line
+	align-items: center
+	.overlord
+		width: 640px
 
-.chatstream.levelzero
-	padding: 64px 20vw 64px 8vw
-
+pre
+	color: var(--opposite)
+	
+pre
+	font-size: 18px
 
 </style>
+

@@ -4,6 +4,7 @@ tags: psychedelics
 originallydated: Oct, 2018
 featured: false
 type: psychedelia
+id: 3
 ---
 
 Drug apologists such as myself have a tendency to overstate the matter, and to emphasise the good while glossing over the bad. Let’s begin with the example of marijuana, a mostly benign substance and essentially a type of grass. People like me are quick to tell you how absurd it is that a roll of paper stuffed with 4000+ chemicals (modern cigarettes) is legal while a roll of grass is not. We are often found criticising a democratic state that does not allow its citizens to form their own relationships with a plant. This critique is not invalid, and with the support of increasing data that shows the medical benefits of marijuana, the era of complete legalisation may not be too far away.

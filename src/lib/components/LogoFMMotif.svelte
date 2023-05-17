@@ -7,15 +7,15 @@
 
 <svelte:window bind:scrollY={y} />
 
+<div class="rta-row ycenter">
 <svg
 	class="mot"
-	width="20"
-	height="22"
+	width="100%"
+	height="100%"
 	viewBox="0 0 20 22"
 	fill="none"
 	xmlns="http://www.w3.org/2000/svg"
 	style="transform: rotate({y / 3}deg)"
-	class:whitened={$breakTwo}
 >
 	<path
 		class="mot-0"
@@ -104,27 +104,21 @@
 		y2="16"
 		gradientUnits="userSpaceOnUse"
 	>
-		<stop stop-color="#2E031F" />
-		<stop offset="1" stop-color="#EA69FF" />
+		<stop stop-color="#0BC160" />
+		<stop offset="1" stop-color="#0BC160" />
 	</linearGradient>
 </svg>
-
+</div>
 <style lang="sass">
 
 svg
-	width: 24px
-	height: 24px
+	width: 30px
+	height: 30px
 	margin-right: 12px
-	@media screen and (max-width: 1023px)
-		width: 24px
-		height: 24px
 
 svg
 	path
-		fill: #53DD6c
+		fill: #0BC160
 
-svg.whitened
-	path
-		fill: white
 
 </style>

@@ -3,6 +3,7 @@ title: Locomotive Scroll in Sveltekit
 tag: scrolls
 featured: false
 type: sveltekit
+id: 12
 ---
 
 ```js

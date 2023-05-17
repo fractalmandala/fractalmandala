@@ -3,6 +3,7 @@ title: The Broad Contours of Ancient Indian History
 tags: chronology
 featured: false
 type: history
+id: 10
 ---
 
 Evidence suggests that civilisation has existed in the Indian subcontinent since at least the Younger Dryas, and in this post I’ll outline the broad contours of history as it happened between ~10000 B.C. and ~3000 B.C.

@@ -3,6 +3,7 @@ title: Hugging Face
 tag: ai
 featured: true
 type: other
+id: 7
 ---
 
 ```javascript

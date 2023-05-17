@@ -3,6 +3,7 @@ title: Toggles in Sveltekit
 tag: svelte functions
 featured: false
 type: sveltekit
+id: 18
 ---
 
 In this guide I'll walk you through the basics of toggling categories in Sveltekit. First, let's take a look at the code snippet provided:

@@ -3,6 +3,7 @@ title: Simple Hovers in Sveltekit
 tag: animations
 featured: true
 type: sveltekit
+id: 6
 ---
 
 Toggle and hover functions are quite simple in Sveltekit, and you can figure out a lot of transition/animation on the pages through these. 

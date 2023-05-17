@@ -3,6 +3,7 @@ title: Create RPC Functions
 tag: postgresql
 featured: false
 type: supabase
+id: 13
 ---
 
 RPC functions in Supabase can be called via JS at web front-ends. This basically opens a way to run SQL queries in the website to fetch and render data.

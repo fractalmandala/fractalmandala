@@ -3,6 +3,7 @@ title: Toggling in Iterated Dynamic Items
 tag: utilities
 featured: true
 type: sveltekit
+id: 9
 ---
 
 If we have an array of booleans, dynamic in count, we can set up a toggling function like so.

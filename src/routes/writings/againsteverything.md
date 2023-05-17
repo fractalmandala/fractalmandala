@@ -4,6 +4,7 @@ tags: opinion
 originallydated: Aug, 2018
 featured: false
 type: archival
+id: 2
 ---
 
 I was young, impressionable, desirous of being a good human.

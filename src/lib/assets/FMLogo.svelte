@@ -4,7 +4,7 @@
 	export let width: string;
 </script>
 
-<div class="fmlogo rta-column xright ycenter null" style="width={width}">
+<div class="fmlogo" style="width={width}">
 <svg width="641" height="76" viewBox="0 0 641 76" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="Frame" clip-path="url(#clip0_2_6)">
 <path id="Vector" d="M451.232 75.02C449.307 75.02 447.787 74.5133 446.672 73.5C445.557 72.5373 445 71.22 445 69.548C445 67.8253 445.557 66.4573 446.672 65.444C447.787 64.4813 449.307 64 451.232 64C453.157 64 454.677 64.4813 455.792 65.444C456.907 66.4573 457.464 67.8253 457.464 69.548C457.464 71.22 456.907 72.5373 455.792 73.5C454.677 74.5133 453.157 75.02 451.232 75.02Z" fill="#00C05A"/>
@@ -128,8 +128,6 @@
 </clipPath>
 </defs>
 </svg>
-
-	<p class="tt-u is-fade"><a href="/about">About</a></p>
 </div>
 
 <style lang="sass">
@@ -137,10 +135,5 @@
 svg
 	object-fit: contain
 	width: 100%
-
-.tt-u
-	&:hover
-		color: var(--green)
-
 
 </style>

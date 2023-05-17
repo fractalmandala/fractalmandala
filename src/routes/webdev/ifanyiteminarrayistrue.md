@@ -3,6 +3,7 @@ title: Check if Any Boolean in Array is True
 tag: utilities
 featured: true
 type: sveltekit
+id: 8
 ---
 
 For an array of booleans, say 'theseItems', we can create a new variable that is true is any item in the array is true, and false otherwise.

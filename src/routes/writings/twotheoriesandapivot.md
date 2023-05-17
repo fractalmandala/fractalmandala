@@ -3,6 +3,7 @@ title: 2 Theories and a Pivot - Aryans Simplified in 10 Steps
 tags: OIT
 featured: false
 type: history
+id: 1
 ---
 
 <img style="height: 400px" src="/images/theoriesandpivot.png" alt="titlehero"/>

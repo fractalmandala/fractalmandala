@@ -4,6 +4,7 @@ tags: opinion
 originallydated: Aug, 2020
 featured: false
 type: archival
+id: 8
 ---
 
 1. The destruction of a mosque by a mob in 1992, in a constitutional democracy, was regrettable and should have happened differently. The democracy is held to a much higher standard than is the bigoted conqueror, and rightly so.

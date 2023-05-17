@@ -1,21 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Martian+Mono:wght@100;200;300;400;500;600;700;800&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap')
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap')
-
-
-@font-face
-	family: 'Space Grotesk',
-	src: url('/fonts/SpaceGrotesk-VariableFont_wght.ttf') format('ttf')
-	font-style: normal
-	font-weight: 700
-
-@font-face
-	family: 'GrotBold',
-	src: url('/fonts/SpaceGrotesk-VariableFont_wght.ttf') format('ttf')
-	font-style: normal
-	font-weight: 700
-	
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,500;1,600;1,700;1,800&display=swap')
 
 $green: #0bda5d
+$deep: #121212
 $black: #171717
 $black2: #272727
 $white: #FFFFFF
@@ -29,26 +16,33 @@ $cube3: cubic-bezier(0.320, 0.760, 0.875, 0.490)
 $cube4: cubic-bezier(0.000, 1.240, 0.875, 0.490)
 $cube5: cubic-bezier(1.000, 0.005, 1.000, 0.005)
 $easy: cubic-bezier(0.205, 0.655, 0.000, 0.995)
-$fontmono: 'Martian Mono', monospace
-$fontspline: 'Martian Mono', monospace
-$readex: 'IBM Plex Mono', monospace
 
 :root
 	--dur: 0.08s
-	font-family: 'IBM Plex Mono', monospace
+	font-family: 'Sarabun', sans-serif
 	--mygradier: linear-gradient(90.16deg, #B1FE64 -0.25%, #24C75B 105.55%)
-	--green: #0bc160
-	--gret: #00C05A
+	--gret: #0BC160
+	--green: #00C05A
 	--lime: #09e151
-	--current: 'Space Grotesk', sans-serif
-	--second: 'IBM Plex Sans', sans-serif
-	--third: 'Space Grotesk', sans-serif
-	--replace: 'IBM Plex Mono', monospace
+	--current: 'Sarabun', sans-serif
+	--coder: 'Space Grotesk', sans-serif
+	box-sizing: border-box
+
+body, html
+	margin: 0
+	box-sizing: border-box
+
+pre
+	font-family: 'Space Grotesk', sans-serif
+	code
+		font-family: 'Space Grotesk', sans-serif
+code
+	font-family: 'Space Grotesk', sans-serif
 
 sup
-	color: var(--green)
+	color: var(--gret)
 
-.snipstyle pre, .snipstyle li
+.newblog pre, .newblog pre code
 	overflow-x: auto
 	box-sizing: border-box
 	white-space: pre-line
@@ -58,7 +52,7 @@ sup
 	word-wrap: break-word
 	word-break: break-word
 
-h5, h6, small, cite
+h6, small, cite
 	color: var(--textone)
 	font-family: var(--current)
 
@@ -93,11 +87,12 @@ a
 
 
 .dark
+	background: $deep
 	--rgback: rgba(0,0,0,0.6)
+	--transback: rgba(18,18,18,0.8)
 	--borderline: #272727
 	--midline: #373737
-	--green: #0bc160
-	--background: #121212
+	--background: #040404
 	--contraster: #101010
 	--opposite: #FFFFFF
 	--near: #d7d7d7
@@ -107,12 +102,27 @@ a
 	--bord: 1px solid rgba(255,255,255,0.1)
 	--pale: rgba(255,255,255,0.1)
 	--lingrad: linear-gradient(91.95deg, #10D56C 0%, #10F026 99.27%)
+	p
+		color: var(--opposite)
+		font-family: var(--coder)
+	h5
+		color: var(--midline)
+		font-family: var(--coder)
+		&:hover
+			a
+				color: var(--gret)
+	.darken
+		h4
+			padding: 2px 8px
+			&:hover
+				background: rgba(0,0,0,0.9)
 
 .light
+	background: $white
+	--transback: rgba(255,255,255,0.6)
 	--rgback: rgba(0,0,0,0.8)
 	--borderline: #e7e7e7
 	--midline: #a7a7a7
-	--green: #0bc160
 	--background: #FFFFFF
 	--contraster: #f5f5f5
 	--opposite: #272727
@@ -123,16 +133,31 @@ a
 	--bord: 1px solid rgba(0,0,0,0.065)
 	--pale: rgba(0,0,0,0.065)
 	--lingrad: linear-gradient(91.95deg, #10D56C 0%, #10F026 99.27%)
+	p
+		color: var(--opposite)
+		font-family: var(--coder)
+	h5
+		color: var(--texttwo)
+		font-family: var(--coder)
+		&:hover
+			a
+				color: var(--gret)
+	.darken
+		h4
+			padding: 2px 8px
+			color: white
+			&:hover
+				background: rgba(0,0,0,0.9)
 
 h3
-	font-family: var(--current)
-	font-weight: 700
+	font-family: var(--coder)
+	font-weight: 500
 
 
 p, li, small, cite, h6, ul, ol
 	margin-top: 0
 	margin-bottom: 1rem
-	font-family: var(--current)
+	font-family: var(--coder)
 
 pre
 	margin: 0
@@ -141,16 +166,27 @@ p.space
 	font-family: var(--current)
 
 .space
-	p, h5
+	p
 		font-family: var(--current)
 
 h1
 	margin-top: 0
 	margin-bottom: 0
-	font-family: var(--current)
+	font-family: var(--coder)
 	font-weight: 700
-	font-size: 4.8rem
 	color: var(--opposite)
+
+.levelzero
+	h1
+		font-size: 4.8rem
+
+.levelone
+	h1
+		font-size: 4rem
+
+.leveltwo
+	h1
+		font-size: 3.2rem
 
 p.spline
 	font-family: var(--current)
@@ -163,7 +199,7 @@ p.spline
 		font-family: var(--current)
 	blockquote
 		font-style: italic
-		border-left: 4px solid var(--green)
+		border-left: 4px solid var(--gret)
 		margin-left: 1.5rem
 		padding-left: 1.5rem
 		p
@@ -172,15 +208,9 @@ p.spline
 	h4
 		text-transform: uppercase
 		padding-top: 1.2rem
-		font-family: var(--current)
+		font-family: var(--coder)
 	h5
-		color: var(--opposite)
 		font-size: 1.44rem
-		padding: 32px 0
-	h6
-		font-family: var(--current)
-		font-size: 1.2rem
-		font-weight: bold
 	small
 		font-family: var(--current)
 
@@ -196,11 +226,15 @@ p, li, ul, pre, ol
 
 p, pre
 	line-height: 1.6
-
 h6
-	font-size: 0.88rem
-	color: var(--texttwo)
-	font-weight: 400
+	font-size: 1.2rem
+	font-weight: bold
+
+h5
+	font-size: 1.2em
+	margin-top: 8px
+	margin-bottom: 1rem
+	font-family: var(--coder)
 
 .newblog
 	.centerimage
@@ -210,11 +244,6 @@ h6
 .leftone
 	h6
 		text-transform: uppercase
-
-h5
-	font-size: 1.12em
-	margin-top: 8px
-	margin-bottom: 1rem
 
 h5.near
 	color: var(--near)
@@ -266,12 +295,23 @@ h3.bord-bot.p-bot-16
 		margin: 0
 
 h2
-	font-size: 3.6rem
 	color: var(--opposite)
 	letter-spacing: -0.2px
 	line-height: 1.12
 	font-weight: 700
 	font-family: var(--current)
+
+.levelzero
+	h2
+		font-size: 3.6rem
+
+.levelone
+	h2
+		font-size: 3.2rem
+
+.leveltwo
+	h2
+		font-size: 2.7rem
 
 //units
 $unit4: 4px
@@ -284,6 +324,55 @@ $unit48: 48px
 $unit64: 64px
 $unit80: 80px
 $unit128: 128px
+
+.yeslink
+	p
+		a
+			color: var(--gret)
+			position: relative
+			&::after
+				position: absolute
+				content: ''
+				bottom: 0
+				left: 0
+				height: 1px
+				width: 0%
+				margin-left: 50%
+				background: var(--opposite)
+				transition: 0.2s
+			&:hover
+				&::after
+					width: 100%
+					margin-left: 0
+
+.zepad.levelzero, .zepad.levelone
+	padding-left: 80px
+	padding-right: 80px
+
+.zepad.leveltwo
+	padding-left: 32px
+	padding-right: 32px
+
+.zepad.y
+	padding-top: 32px
+	padding-bottom: 32px
+
+.zepad.all
+	padding: 128px 32px 64px 32px
+
+.levelzero
+	.zepad.single
+		width: 800px
+		margin-left: 6vw
+
+.levelone
+	.zepad.single
+		width: 800px
+		margin-left: 4vw
+
+.leveltwo
+	.zepad.y
+		padding-top: 80px
 
 //spacing
 @media screen and (min-width: 1024px)
@@ -441,7 +530,17 @@ body, html
 //sizing
 .minH
 	@media screen and (min-width: 1024px)
-		min-height: 100vh
+		min-height: calc(100vh - 64px)
+
+.minH.mob
+	min-height: calc(100vh - 64px)
+
+
+.height-60
+	@media screen and (min-width: 1024px)
+		height: 60vh
+	@media screen and (max-width: 1023px)
+		height: 20vh
 
 .height-40
 	@media screen and (min-width: 1024px)
@@ -661,6 +760,16 @@ body, html
 		grid-template-areas: ". ."	
 		transition: 0.2s
 
+@media screen and (max-width: 1023px) and (min-width: 787px)
+	.grid6
+		grid-template-columns: 1fr 1fr 1fr
+		grid-template-areas: ". . ." ". . ."
+
+@media screen and (max-width: 786px)
+	.grid6
+		grid-template-columns: 1fr
+		grid-template-areas: "." "." "." "." "." "."
+
 @media screen and (max-width: 1023px)
 	.grid5.stay2
 		grid-template-columns: 1fr 1fr
@@ -786,7 +895,6 @@ body, html
 .blank-button
 	background: none
 	border: none
-	padding: 0
 
 .blank-button2
 	background: none
@@ -800,7 +908,7 @@ body, html
 	&:hover
 		.rta-icon
 			svg path
-				fill: var(--green)
+				fill: var(--gret)
 
 .blank-button2.reading
 	width: 100%
@@ -833,9 +941,14 @@ body, html
 		margin: 8px 0 24px 0
 
 .newblog
+	em
+		font-style: normal
+		a
+			&:hover
+				color: var(--green) 
 	p a
 		position: relative
-		color: var(--green)
+		color: var(--gret)
 		&::after
 			position: absolute
 			content: ''
@@ -843,10 +956,10 @@ body, html
 			left: 0
 			height: 1px
 			width: 0%
-			background: var(--green)
+			background: var(--gret)
 			transition: 0.2s
 		&:hover
-			color: var(--green)
+			color: var(--gret)
 			&::after
 				width: 100%
 	a.flat
@@ -892,7 +1005,7 @@ body, html
 				cursor: pointer
 				color: var(--textone)
 				&:hover
-					color: var(--green)
+					color: var(--gret)
 			p strong
 				color: var(--opposite)
 	@media screen and (max-width: 1023px) and (min-width: 769px)
@@ -909,7 +1022,7 @@ body, html
 				padding-left: 24px
 				padding-right: 24px
 				&:hover
-					color: var(--green)
+					color: var(--gret)
 			p strong
 				color: var(--opposite)
 			.rightmenu
@@ -945,7 +1058,7 @@ body, html
 				padding-left: 24px
 				padding-right: 24px
 				&:hover
-					color: var(--green)
+					color: var(--gret)
 			p strong
 				color: var(--opposite)
 			.rightmenu
@@ -972,15 +1085,15 @@ body, html
 						fill: var(--opposite)
 				.iconchev.rotated
 					svg path
-						fill: var(--green)
+						fill: var(--gret)
 				.break899
 					color: var(--opposite)
 
 .greenlink
-	color: var(--green)
+	color: var(--gret)
 	position: relative
 	&:hover
-		color: var(--green)
+		color: var(--gret)
 		&::after
 			width: 100%
 			margin-left: 0
@@ -1004,7 +1117,7 @@ body, html
 
 .dark, .light
 	.is-green
-		color: var(--green)
+		color: var(--gret)
 
 .mainbutton
 	background: var(--lingrad)
@@ -1023,51 +1136,7 @@ body, html
 	&:active
 		transform: scale(0.9)
 
-.dark
-	.secondbutton
-		color: var(--background)
-		max-width: 160px
-		background: #0bc160
-		width: max-content
-		border: 2px solid transparent
-		padding: 2px 12px 0 12px
-		border-radius: 3px
-		transform-origin: center center
-		transition: 0.08s
-		letter-spacing: -0.12px
-		cursor: pointer
-		font-size: 14px
-		font-weight: 500
-		text-transform: capitalize
-		line-height: 1.75
-		&:hover
-			border: 2px solid #0bc160
-			color: #0bc160
-			background: var(--background)
-
-.light
-	.secondbutton
-		color: var(--background)
-		max-width: 160px
-		background: #0bc160
-		width: max-content
-		border: 2px solid transparent
-		padding: 2px 12px 0 12px
-		border-radius: 3px
-		transform-origin: center center
-		transition: 0.08s
-		letter-spacing: -0.12px
-		cursor: pointer
-		font-size: 14px
-		text-transform: capitalize
-		font-weight: 500
-		line-height: 1.75
-		&:hover
-			border: 2px solid #0bc160
-			color: #0bc160
-			background: var(--background)
-
-.secondbutton
+.secondbutton, .dark .secondbutton, .light .secondbutton
 	color: var(--background)
 	max-width: 160px
 	background: var(--gret)
@@ -1080,14 +1149,14 @@ body, html
 	letter-spacing: -0.12px
 	cursor: pointer
 	font-size: 14px
-	text-transform: capitalize
+	text-transform: uppercase
 	font-weight: 500
 	line-height: 1.75
+	font-family: var(--coder)
 	&:hover
 		border: 2px solid var(--gret)
 		color: var(--gret)
 		background: var(--background)
-
 
 .secondbutton.selected
 	background: var(--background)
@@ -1099,7 +1168,7 @@ body, html
 		margin: 0
 	small
 		margin: 0
-	h4, h1
+	h4, h1, h6, h5
 		margin: 0
 	h1
 		padding: 0
@@ -1111,7 +1180,7 @@ body, html
 	border-top: none
 	border-left: none
 	border-right: none
-	border-bottom: 2px solid var(--green)
+	border-bottom: 2px solid var(--gret)
 	font-weight: 700
 	text-transform: uppercase
 	padding: 2px 4px
@@ -1124,7 +1193,6 @@ body, html
 .usercol small, .gptcol small
 	margin: 0
 	font-size: 12px
-	font-family: 'Spline Sans', san-serif
 	text-transform: uppercase
 	color: var(--midline)
 
@@ -1132,44 +1200,20 @@ body, html
 	p
 		font-size: 12px
 		color: var(--midline)
-		font-family: 'Spline Sans', san-serif
 		&:hover
 			color: var(--opposite)
 	pre
 		color: var(--opposite)
 		margin: 0
 		font-size: 15px
-		font-family: 'Spline Sans', san-serif
 		line-height: 1.2
 		letter-spacing: -0.5px
 	pre.white
-		color: var(--green)
+		color: var(--gret)
 	small
 		margin: 0
-	border-bottom: 1px solid var(--borderline)
 
-.newblog
-	pre
-		font-family: 'Martian Mono', monospace
-	code
-		font-family: 'Martian Mono', monospace
 
-.gptcol
-	z-index: 0
-	small, pre
-		margin: 0
-	pre
-		color: var(--opposite)
-		margin: 0
-		white-space: pre-line
-		font-size: 16px
-		font-family: 'Martian Mono', monospace
-		line-height: 1.2
-		letter-spacing: -0.5px
-	pre.white
-		color: var(--green)
-		code
-			color: var(--opposite)
 
 .usercol
 	padding-top: 16px
@@ -1258,7 +1302,10 @@ body, html
 		width: 70%
 
 
-
+.newblog
+	pre
+		code
+			white-space: pre-line
 
 .featurebox
 	transition: 0.25s
@@ -1353,17 +1400,6 @@ body, html
 		min-height: 80px
 		
 
-.somebox
-	h5
-		font-family: 'Spline Sans', sans-serif
-		color: var(--opposite)
-		margin: 0
-		font-size: 1.2rem
-		font-weight: 500
-		text-transform: capitalize
-	&:hover
-		h5
-			color: var(--green)
 
 .gptstyle
 	small
@@ -1379,47 +1415,22 @@ body, html
 		line-height: 1.2
 		&:hover
 			a
-				color: var(--green)
+				color: var(--gret)
 	@media screen and (max-width: 1023px)
 		p
 			font-size: 21px
-
-.chatstream
-	font-family: 'Martian Mono', monospace
-	p, pre
-		font-family: 'Martian Mono', monospace
-	.inputtext
-		font-family: 'Martian Mono', monospace
-		p
-			font-family: 'Martian Mono', monospace
-		pre
-			font-family: 'Martian Mono', monospace
-			code
-				font-family: 'Martian Mono', monospace
-	.outputtext
-		font-family: 'Martian Mono', monospace
-		p
-			font-family: 'Martian Mono', monospace
-		pre
-			font-family: 'Martian Mono', monospace
-			code
-				font-family: 'Martian Mono', monospace
-
-.codeblock
-	background: var(--opposite)
 
 .holdingpage.levelzero
 	padding: 4vw 24vw 4vw 6vw
 
 .rightmenu
-	background: var(--green)
+	background: var(--gret)
 	border: none
 	width: 100%
 	padding: 12px 16px
 
 .rightmenu
 	button
-		font-family: 'IBM Plex Mono', monospace
 		font-weight: 600
 		color: white
 		text-transform: uppercase
@@ -1430,12 +1441,12 @@ body, html
 		transform: rotate(180deg)
 
 .rightmenu.rotated
-	border: 1px solid var(--green)
+	border: 1px solid var(--gret)
 	background: white
 	button
-		color: var(--green)
+		color: var(--gret)
 	svg path
-		fill: var(--green)
+		fill: var(--gret)
 
 .subsection
 	p
@@ -1453,12 +1464,76 @@ body, html
 		font-weight: 500
 		cursor: pointer
 		&:hover
-			color: var(--green)
-	
+			color: var(--gret)
 
-.newblog
-	pre
-		border: var(--bord)
-		background: var(--opposite)
-		margin: 24px 0
+
+.myappbox
+	position: relative
+	.drop-down
+		position: absolute
+		top: 80px
+		right: 216px
+		width: 240px
+		background: var(--background)
+		z-index: 1000
+		padding: 32px
 		border-radius: 4px
+
+.light
+	.drop-down
+		box-shadow: 0px 0px 0px #e3e3e3
+		transition: box-shadow 0.1s
+		&:hover
+			box-shadow: 5px 3px 7px #e3e3e3, -4px -4px 8px #f1f1f1
+
+.dark	
+	.rta-icon
+		svg
+			path
+				fill: #373737
+.light
+	.rta-icon
+		svg
+			path
+				fill: #878787
+
+.levelzero
+	.drop-down
+		height: 320px
+		text-align: right
+		.tt-u.space a
+			font-size: 21px
+			&:hover
+				color: var(--gret)
+
+.canstick
+	position: sticky
+	top: 112px
+	background: var(--background)
+
+
+.codeblock
+	border: 1px solid var(--midline)
+	background: var(--near)
+	border-radius: 4px
+	margin-top: 4px
+
+.cutthis
+	margin-bottom: 0
+	margin-top: 0
+	padding: 0
+	line-height: 1
+
+.transparent-button
+	background: var(--transback)
+	backdrop-filter: blur(5px)
+	border: 1px solid var(--opposite)
+	color: var(--opposite)
+	font-family: var(--coder)
+	padding: 6px 16px
+	border-radius: 3px
+	transform-origin: center center
+	cursor: pointer
+	&:hover
+		transform: scale(0.95)
+		background: var(--gret)

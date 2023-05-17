@@ -26,6 +26,9 @@
 svg
 	cursor: pointer
 	transform-origin: center center
+	&:hover
+		path
+			fill: var(--gret)
 
 svg.rotated
 	transform: rotate(180deg)

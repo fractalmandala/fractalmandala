@@ -110,6 +110,23 @@ export async function allVideos(){
 	return eachfiled
 }
 
+export async function allMusic(){
+	const allfiles = import.meta.glob('/src/routes/music/*.md')
+	const filed = Object.entries(allfiles)
+	const eachfiled = await Promise.all(
+		filed.map(async([path, resolver]) => {
+			// @ts-ignore
+			const { metadata } = await resolver()
+			const postPath = path.slice(11,-3)
+			return {
+				meta: metadata,
+				linkpath: postPath,
+			}
+		})
+	)
+	return eachfiled
+}
+
 export async function entireProject(){
 	const writes = await allWritings();
 	const webs = await allWebdev();

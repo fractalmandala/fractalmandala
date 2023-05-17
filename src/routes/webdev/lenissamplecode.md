@@ -3,6 +3,7 @@ title: Sample Working Code for Lenis in Sveltekit
 tag: scrolls
 featured: false
 type: sveltekit
+id: 11
 ---
 
 ```js

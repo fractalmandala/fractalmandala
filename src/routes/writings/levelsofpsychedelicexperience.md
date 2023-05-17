@@ -4,6 +4,7 @@ tags: psychedelics
 originallydated: Oct, 2018
 featured: false
 type: psychedelia
+id: 2
 ---
 
 We all have that friend who went to Amsterdam, tripped on truffles, and experienced a profound psychedelic trip. But most descriptions in the psychedelic domain are more relative abstractions of the ‘quality’ of a trip than any genuinely scientific charting of hyperspace. In our first psychedelia article, we visited the cardinal rules of having a psychedelic experience. In this article, we examine the various levels that can be attained in this realm. Bear in mind that we will not delve into the issue of how much of a substance to ingest in order to reach any given level. Results in such forays are usually relative, and in any case the first cardinal rule of psychedelia should guide you well through such a query.

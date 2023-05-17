@@ -1,15 +1,13 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte'
-	import BreadCrumb from '$lib/deslib/BreadCrumb.svelte'
 	import { themeMode, breakZero, breakOne, breakTwo } from '$lib/stores/globalstores'
 	import LogoFM from '$lib/components/LogoFM.svelte'
 	import LogoFMMotif from '$lib/components/LogoFMMotif.svelte'
 	import DarkMode from '$lib/icons/DarkMode.svelte'
-	import Twitter from '$lib/icons/Twitter.svelte'
-	import Github from '$lib/icons/Github.svelte'
 	import Reading from '$lib/icons/Reading.svelte'
 	import Unfold from '$lib/icons/Unfold.svelte'
+
 
 	let y:number
 
@@ -22,22 +20,21 @@
 	<div class="logo">
 		<a href="/">
 			{#if $breakZero}
+				<LogoFMMotif></LogoFMMotif>
 				<LogoFM></LogoFM>
 			{:else}
 			<LogoFMMotif></LogoFMMotif>
 			{/if}
 		</a>
 	</div>
-	<nav class="area rta-row ycenter fullH between">
-		<BreadCrumb/>
+	<nav class="area rta-row ycenter fullH xend">
 		<div class="rta-row fullH ycenter colgap200">
 			{#if $breakZero || $breakOne}
 				<Reading/>
 			{/if}
-			<Github/>
-			<Twitter/>
 			<DarkMode/>
 			<slot name="search"></slot>
+			<slot name="dropdown"></slot>
 		</div>
 		<slot name="mobileicon">
 		</slot>
@@ -59,18 +56,16 @@
 		grid-template-rows: 1fr
 		grid-template-areas: "logo area"
 		width: 100%
-		height: 64px
+		height: 72px
 		align-items: start
 		align-content: start
 		position: sticky
 		justify-items: stretch
 		justify-content: stretch
-		padding-left: 24px
-		padding-right: 24px
 		top: 0
 		.logo
 			grid-area: logo
-			height: 64px
+			height: 72px
 			width: 360px
 	@media screen and (max-width: 768px)
 		grid-template-columns: 40px 1fr
@@ -87,14 +82,8 @@
 		.logo
 			grid-area: logo
 
-.light.header
-	border-bottom: 1px solid rgba(0,0,0,0.065)
-
 .light.header.greener
 	background: var(--green)
-
-.dark.header
-	border-bottom: 1px solid rgba(255,255,255,0.1)
 
 .dark.header.greener
 	background: var(--green)
@@ -104,6 +93,6 @@
 	flex-direction: row
 	align-items: center
 	justify-content: flex-start
-	height: 64px
+	height: 72px
 
 </style>

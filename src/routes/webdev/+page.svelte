@@ -5,6 +5,7 @@
 	import { allWebdev, filteredWebdev } from '$lib/utils/localpulls'
 	import { slide } from 'svelte/transition'
 	import { circOut } from 'svelte/easing'
+	import DropDown from '$lib/deslib/DropDown.svelte'
 	let hists:any
 	let filteredItems:any
 	let fake = false
@@ -46,7 +47,7 @@
 </script>
 
 <div
-	class="solopage"
+	class="solopage zepad y minH mob"
 	class:levelzero={$breakZero}
 	class:levelone={$breakOne}
 	class:leveltwo={$breakTwo}
@@ -57,7 +58,9 @@
 	<div class="newblog">
 		<h5 class="near thin">An open world of building and creating...</h5>
 	</div>
-	<div class="rta-row p-bot-16 colgap300 m-top-16">
+	<DropDown>
+		<div slot="mobile-banner">View Themes</div>
+		<div slot="dropdown-part" class="dropsection">
 			<button class="secondbutton"
 				on:click={() => setNewFilter('sveltekit')}
 				class:selected={filter === 'sveltekit'}
@@ -88,17 +91,18 @@
 				>
 				All
 			</button>
-		</div>
+		</div>	
+	</DropDown>
 	<div class="rta-column rowgap100 soloblog newblog bord-top p-top-32">
 		{#if anyFilter}
 			{#if filteredItems && filteredItems.length > 0 }
 				{#each filteredItems as item}
 					<div class="rta-column null" transition:slide>
-						<h3 class="tt-u">
+						<h5 class="tt-u">
 							<a href={item.linkpath}>
 								{item.meta.title}
 							</a>
-						</h3>
+						</h5>
 					</div>
 				{/each}
 			{/if}
@@ -106,11 +110,11 @@
 		{#if hists && hists.length > 0}
 			{#each hists as item}
 				<div class="rta-column null" transition:slide>
-						<h3 class="tt-u">
+						<h5 class="tt-u">
 							<a href={item.linkpath}>
 								{item.meta.title}
 							</a>
-						</h3>				
+						</h5>				
 				</div>
 			{/each}
 		{/if}
@@ -120,13 +124,28 @@
 
 <style lang="sass">
 
-.newblog
-	h3
-		color: var(--textone)
-		cursor: pointer
-		font-weight: 700
-		letter-spacing: -1px
-		&:hover
-			color: var(--gret)
+.levelzero
+	.dropsection
+		display: flex
+		flex-direction: row
+		column-gap: 32px
+		padding: 16px 0
+
+.levelone
+	.dropsection
+		display: flex
+		flex-direction: row
+		column-gap: 32px
+		padding: 16px 0
+
+
+.leveltwo
+	.dropsection
+		display: flex
+		flex-direction: column
+		row-gap: 16px
+		padding: 16px 0
+	.newblog
+		margin-bottom: 16px
 
 </style>

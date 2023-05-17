@@ -41,6 +41,10 @@ export const svelteLinks = [
 	{
 		"name": "Sveltekit Lucia Starter",
 		"url": "https://github.com/qwacko/sveltekit-lucia-starter"
+	},
+	{
+		"name": "Stylo",
+		"url": "https://github.com/papyrs/stylo"
 	}
 ]
 
