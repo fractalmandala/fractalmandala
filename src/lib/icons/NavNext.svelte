@@ -22,6 +22,8 @@
 		object-fit: contain
 		transition: 0.13s
 		transform-origin: center center
+		path
+			fill: var(--thisFill)
 	&:hover
 		svg path
 			fill: #10D56C

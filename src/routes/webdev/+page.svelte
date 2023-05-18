@@ -11,7 +11,6 @@
 	let fake = false
 	let expandRightbar = false
 	let filter = ''
-	let anyFilter = false	
 
 	
 
@@ -19,20 +18,10 @@
 		filter = newFilter
 	}
 
-	function setAll(){
-		filter = ''
-	}
-
 	$: if ( filter ) {
 		(async() => {
 			filteredItems = await filteredWebdev(filter)
 		})()
-	}
-
-	$: if ( filter === '' ) {
-		anyFilter = false
-	} else {
-		anyFilter = true
 	}
 	
 	function fauxfake(){
@@ -47,18 +36,16 @@
 </script>
 
 <div
-	class="solopage zepad y minH mob"
+	class="solopage zepad all minH mob"
 	class:levelzero={$breakZero}
 	class:levelone={$breakOne}
 	class:leveltwo={$breakTwo}
 	>
-	<h1 class="tt-u">
-		Web Development
-	</h1>
-	<div class="newblog">
-		<h5 class="near thin">An open world of building and creating...</h5>
-	</div>
-	<DropDown>
+	<div class="rta-column ycenter can-stick">
+		<h3 class="tt-u">
+			Webdev
+		</h3>
+		<DropDown>
 		<div slot="mobile-banner">View Themes</div>
 		<div slot="dropdown-part" class="dropsection">
 			<button class="secondbutton"
@@ -92,33 +79,23 @@
 				All
 			</button>
 		</div>	
-	</DropDown>
+		</DropDown>
+	</div>
+
 	<div class="rta-column rowgap100 soloblog newblog bord-top p-top-32">
-		{#if anyFilter}
-			{#if filteredItems && filteredItems.length > 0 }
-				{#each filteredItems as item}
-					<div class="rta-column null" transition:slide>
-						<h5 class="tt-u">
-							<a href={item.linkpath}>
-								{item.meta.title}
-							</a>
-						</h5>
-					</div>
-				{/each}
-			{/if}
-		{:else}
+
 		{#if hists && hists.length > 0}
 			{#each hists as item}
 				<div class="rta-column null" transition:slide>
 						<h5 class="tt-u">
 							<a href={item.linkpath}>
-								{item.meta.title}
+								{item.meta.id} - {item.meta.title}
 							</a>
 						</h5>				
 				</div>
 			{/each}
 		{/if}
-		{/if}
+
 	</div>
 </div>
 

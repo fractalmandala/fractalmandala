@@ -1,6 +1,6 @@
 export async function load({ params }: { params: { post: string } }){
 	const post = await import(`../${params.post}.md`)
-	const { title, tag, featured, type } = post.metadata
+	const { title, tag, featured, type, id } = post.metadata
 	const content = post.default
 
 	return {
@@ -8,6 +8,7 @@ export async function load({ params }: { params: { post: string } }){
 		title,
 		tag,
 		featured,
-		type
+		type,
+		id
 	}
 }

@@ -13,12 +13,39 @@
 
 </script>
 
-<div class="zepad all single minH mob">
-	<h2 class="tt-u">
-		{data.title}
-	</h2>
-	<div class="rta-column newblog" class:dark={$themeMode} class:light={!$themeMode}>
+<div class="solopage zepad all minH mob"
+	class:levelzero={$breakZero}
+	class:levelone={$breakOne}
+	class:leveltwo={$breakTwo}
+	>
+	<div class="rta-column rowgap100 ycenter can-stick p-bot-16">
+		<h4 class="tt-u">
+			{data.title}
+		</h4>
+	</div>
+	<div class="rta-column rowgap100 newblog bord-top p-top-32">
 		<svelte:component this={data.content}/>
 	</div>
 
 </div>
+
+<style lang="sass">
+
+
+.levelzero
+	.newblog
+		width: 800px
+		margin-left: 120px
+	.can-stick
+		padding-left: 120px
+
+.levelone
+	.newblog
+		width: 800px
+		margin-left: 0px
+	.can-stick
+		padding-left: 0px
+
+</style>
+
+

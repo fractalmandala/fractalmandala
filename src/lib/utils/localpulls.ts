@@ -14,27 +14,9 @@ export async function allWebdev(){
 			}
 		})
 	)
+	eachfiled.sort((a, b) => b.meta.id - a.meta.id);
 	return eachfiled
 }
-
-export async function allWritings(){
-	const allfiles = import.meta.glob('/src/routes/writings/*.md')
-	const filed = Object.entries(allfiles)
-	const eachfiled = await Promise.all(
-		filed.map(async([path, resolver]) => {
-			// @ts-ignore
-			const { metadata } = await resolver()
-			const postPath = path.slice(11,-3)
-			return {
-				meta: metadata,
-				linkpath: postPath,
-			}
-		})
-	)
-	return eachfiled
-}
-
-
 
 export async function filteredWebdev(type:string){
 	const allfiles = import.meta.glob('/src/routes/webdev/*.md')
@@ -51,8 +33,27 @@ export async function filteredWebdev(type:string){
 		})
 	)
 	const filteredFiled = eachfiled.filter((post ) => post.meta.type === type)
+	filteredFiled.sort((a, b) => b.meta.id - a.meta.id);
 	return filteredFiled
 	
+}
+
+export async function allWritings(){
+	const allfiles = import.meta.glob('/src/routes/writings/*.md')
+	const filed = Object.entries(allfiles)
+	const eachfiled = await Promise.all(
+		filed.map(async([path, resolver]) => {
+			// @ts-ignore
+			const { metadata } = await resolver()
+			const postPath = path.slice(11,-3)
+			return {
+				meta: metadata,
+				linkpath: postPath,
+			}
+		})
+	)
+	eachfiled.sort((a, b) => b.meta.id - a.meta.id);
+	return eachfiled
 }
 
 export async function filteredWritings(type:string){
@@ -70,6 +71,7 @@ export async function filteredWritings(type:string){
 		})
 	)
 	const filteredFiled = eachfiled.filter((post ) => post.meta.type === type)
+	filteredFiled.sort((a, b) => b.meta.id - a.meta.id);
 	return filteredFiled
 	
 }
@@ -130,19 +132,17 @@ export async function allMusic(){
 export async function entireProject(){
 	const writes = await allWritings();
 	const webs = await allWebdev();
-	const mands = allVideos();
 	
 	const entireItems = [
 		...writes,
 		...webs,
-		...mands,
 	];
 	
 	return entireItems.map(post => ({
 		heading: post.meta.title,
 		url: post.linkpath,
 		cat: post.meta.tags,
-		type: post.type
+		type: post.meta.type
 	}));
 }
 

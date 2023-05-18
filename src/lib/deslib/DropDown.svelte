@@ -47,7 +47,7 @@
 	flex-direction: row
 	.dropsection
 		flex-direction: row
-		column-gap: 24px
+		column-gap: 8px
 
 .rta-dropdown.leveltwo
 	flex-direction: column

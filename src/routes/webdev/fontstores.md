@@ -1,7 +1,7 @@
 ---
 title: Store of Fonts
 tag: typography
-type: webdev
+type: ui
 featured: true
 id: 4
 ---

@@ -71,7 +71,7 @@
 		theColor = "var(--opposite)"
 	}
 
-	onMount(() => {
+	onMount(async () => {
 		linkpath = $page.url.pathname;
 		const lenis = new Lenis({
 			duration: 2.2,
@@ -117,14 +117,13 @@
 	class:levelone={$breakOne}
 	class:leveltwo={$breakTwo}
 	>
-	<header class="rowgap200 headerbox">
+	<header class="rta-row between ycenter headerbox">
 		<a href="/">
 			<Motif/>
 		</a>
-		<div class="xleft ybetween fullH separator">
+		<div class="rta-row colgap200 xend">
 			{#if !$breakTwo || mobileMenu}
-			{#key linkpath}
-			<nav class="rta-column null" class:whiten={whiteHeader} class:oppen={!whiteHeader}>
+			<nav class="rta-row ycenter colgap200 null" class:whiten={whiteHeader} class:oppen={!whiteHeader}>
 				<p><a href="/gpt">GPT</a></p>
 				<p><a href="/writings">writings</a></p>	
 				<p><a href="/webdev">webdev</a></p>
@@ -132,14 +131,11 @@
 				<p><a href="/music">music</a></p>
 				<p><a href="/videos">videos</a></p>
 			</nav>
-			{/key}
 			{/if}
-			<div class="iconholder rowgap200">
-				<DarkMode/>
-				<button class="blank-button">
-					<Search/>
-				</button>
-			</div>
+			<DarkMode/>
+			<button class="blank-button">
+				<Search/>
+			</button>
 			{#if $breakTwo}
 			<button class="blank-button" on:click={toggleMobileMenu}>
 			<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -149,19 +145,22 @@
 			{/if}
 		</div>
 	</header>
-	<section class="restpage rta-column">
-		<main class="rta-column minH" bind:this={ref} class:levelzero={$breakZero} class:levelone={$breakOne} class:leveltwo={$breakTwo}>
+
+	<div class="progressline" style="width: {perCent * 100}%" class:sticky={!$readingMode} class:moreSticky={$readingMode}></div>
+
+	<main class="pagebox minH" bind:this={ref}>
+		<section class="midone" class:levelzero={$breakZero} class:levelone={$breakOne} class:leveltwo={$breakTwo}>
 			{#key data.pathname}
 				<TransitionPage>
 					<slot />
 				</TransitionPage>
 			{/key}
-		</main>
-		<div class="rta-column footerbox">
-			<Footer />
-		</div>
-		<ArrowUp/>
-	</section>
+		</section>
+	</main>
+	<div class="rta-column footerbox">
+		<Footer />
+	</div>
+	<ArrowUp/>
 </div>
 
 
@@ -183,23 +182,40 @@
 			font-size: 32px
 			color: white
 
+.light
+	.blank-button
+		svg path
+			fill: var(--gret)
+
 nav
 	p
-		font-size: 18px
+		font-size: 16px
 		text-transform: uppercase
 		color: var(--opposite)
-		font-weight: 500
 		&:hover
 			a
 				color: var(--gret)
 
 nav.whiten
-	p, p a
+	p
 		color: white
 
 nav.oppen
-	p, p a
+	p
 		color: var(--opposite)
+
+.progressline
+	height: 0
+	background: var(--green)
+	z-index: 1000
+	position: sticky
+	top: 80px
+
+.progressline.sticky
+	top: 64px
+
+.progressline.moreSticky
+	top: 48px
 
 .blank-button
 	cursor: pointer
@@ -209,81 +225,18 @@ nav.oppen
 				fill: var(--gret)
 
 .myappbox
-	display: grid
-	grid-auto-flow: row
+	display: flex
+	flex-direction: column
+	box-sizing: border-box
 	margin: 0
 	gap: 0
 	width: 100vw
 	box-sizing: border-box
 
-.myappbox.levelzero
-	grid-template-columns: 112px 1fr
-	grid-template-areas: "headerbox restpage"
-	.headerbox
-		grid-area: headerbox
-		padding-left: 24px
-		height: 100vh
-		width: 112px
-		flex-direction: column
-		.separator
-			display: flex
-			flex-direction: column
-			justify-content: space-between
-			align-items: flex-start
-			.iconholder
-				display: flex
-				flex-direction: column
-	.restpage
-		grid-area: restpage
-		margin-left: -112px
-
-.myappbox.levelone
-	grid-template-columns: 112px 1fr
-	grid-template-areas: "headerbox restpage"
-	.headerbox
-		grid-area: headerbox
-		padding-left: 24px
-		height: 100vh
-		width: 112px
-		flex-direction: column
-		.separator
-			display: flex
-			flex-direction: column
-			justify-content: space-between
-			align-items: flex-start
-			.iconholder
-				display: flex
-				flex-direction: column
-	.restpage
-		grid-area: restpage
-		margin-left: -112px
-
-.myappbox.leveltwo
-	grid-template-columns: 1fr
-	grid-template-areas: "headerbox" "restpage"
-	.headerbox
-		grid-area: headerbox
-		height: 64px
-		width: 100vw
-		flex-direction: row
-		margin-bottom: -64px
-		align-items: center
-		.separator
-			display: flex
-			flex-direction: row
-			justify-content: space-between
-			column-gap: 16px
-			width: 100%
-			.iconholder
-				display: flex
-				flex-direction: row
-				justify-content: flex-end
-				column-gap: 16px
-				width: 100%
-
 
 .headerbox
-	display: flex
+	height: 64px
+	margin-bottom: -64px
 	position: sticky
 	top: 0
 	z-index: 999
@@ -297,16 +250,24 @@ nav.oppen
 	height: 64px
 	z-index: 1
 
+.headerbox
+	width: 100%
+
 .levelzero
 	.headerbox
-		padding: 32px 0
+		padding: 0 32px
 
 .levelone
 	.headerbox
-		padding: 32px 0
+		padding: 0 24px
 
 .leveltwo
 	.headerbox
 		padding: 0 16px
+
+.pagebox
+	display: grid
+	grid-auto-flow: row
+	min-height: calc(100vh - 128px)
 
 </style>

@@ -37,12 +37,12 @@
 .rta-icon
 	cursor: pointer
 	svg
-		height: 24px
+		height: 32px
 		object-fit: contain
 		transition: 0.13s
 		transform-origin: center center
 		path
-			fill: #0BC160
+			fill: var(--background)
 	&:hover
 		svg
 			transform: scale(1.2)

@@ -47,18 +47,17 @@
 </script>
 
 <div
-	class="solopage zepad y minH mob"
+	class="solopage zepad all minH mob"
 	class:levelzero={$breakZero}
 	class:levelone={$breakOne}
 	class:leveltwo={$breakTwo}
 	>
-	<h1 class="tt-u">
-		Writing
-	</h1>
-	<div class="newblog">
-		<h5 class="near thin">my great catharsis, my great solace...</h5>
-	</div>
-	<DropDown>
+
+	<div class="rta-column ycenter can-stick">
+		<h3 class="tt-u">
+			Writings
+		</h3>
+		<DropDown>
 		<div slot="mobile-banner">View Themes</div>
 		<div slot="dropdown-part" class="dropsection">
 			<button class="secondbutton"
@@ -92,7 +91,8 @@
 				All
 			</button>
 		</div>
-	</DropDown>
+		</DropDown>
+	</div>
 	<div class="rta-column rowgap100 soloblog newblog bord-top p-top-32">
 		{#if anyFilter}
 			{#if filteredItems && filteredItems.length > 0 }
@@ -147,5 +147,7 @@
 		padding: 16px 0
 	.newblog
 		margin-bottom: 16px
+
+
 
 </style>

@@ -87,7 +87,6 @@ a
 
 
 .dark
-	background: $deep
 	--rgback: rgba(0,0,0,0.6)
 	--transback: rgba(18,18,18,0.8)
 	--borderline: #272727
@@ -118,7 +117,6 @@ a
 				background: rgba(0,0,0,0.9)
 
 .light
-	background: $white
 	--transback: rgba(255,255,255,0.6)
 	--rgback: rgba(0,0,0,0.8)
 	--borderline: #e7e7e7
@@ -346,25 +344,22 @@ $unit128: 128px
 					margin-left: 0
 
 .zepad.levelzero, .zepad.levelone
-	padding-left: 80px
-	padding-right: 80px
+	padding-left: 200px
+	padding-right: 64px
 
 .zepad.all.levelzero, .zepad.all.levelone
-	padding: 128px 80px 64px 80px
+	padding: 0px 64px 64px 200px
 
 .zepad.all.leveltwo
-	padding: 128px 32px 64px 32px
+	padding: 80px 32px 64px 32px
 
 .zepad.leveltwo
 	padding-left: 32px
 	padding-right: 32px
 
 .zepad.y
-	padding-top: 32px
-	padding-bottom: 32px
-
-.zepad.all
-	padding: 128px 80px 64px 80px
+	padding-top: 64px
+	padding-bottom: 64px
 
 .zepad.thin.levelzero
 	padding: 80px 32px 32px 32px
@@ -1329,6 +1324,7 @@ body, html
 
 .newblog
 	pre
+		background: var(--borderline)
 		code
 			white-space: pre-line
 
@@ -1585,3 +1581,34 @@ body, html
 
 .gpt-user, .gpt-asst
 	padding: 8px 16px
+
+
+.ProseMirror
+	border-radius: 6px
+	background: var(--background)
+	padding: 8px
+
+.webdev
+	pre
+		background: var(--contraster)
+		margin-bottom: 16px
+
+.can-stick
+	h3
+		font-weight: 700
+
+.levelzero
+	.can-stick
+		position: sticky
+		top: 0
+		background: var(--background)
+		z-index: 600
+		padding-top: 32px
+
+.levelone
+	.can-stick
+		position: sticky
+		top: 0
+		background: var(--background)
+		z-index: 600
+		padding-top: 32px

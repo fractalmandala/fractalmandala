@@ -29,14 +29,19 @@
 
 
 <div
-	class="solopage zepad y minH mob"
+	class="solopage zepad all minH mob"
 	class:levelzero={$breakZero}
 	class:levelone={$breakOne}
 	class:leveltwo={$breakTwo}
 	>
-	<h1 class="tt-u">
-		Videos
-	</h1>
+
+	<div class="rta-column ycenter can-stick">
+		<h3 class="tt-u">
+			Videos
+		</h3>
+	</div>
+	<div class="rta-column rowgap100 soloblog newblog bord-top p-top-32">
+
 	<p>
 		For a very, very brief period in life, I ran a YouTube channel by the name of Project Bhārata. This was also a period where I went on other channels and got to ramble on about stuff in my head. Here you can suffer through them, if you like :)
 	</p>
@@ -60,6 +65,7 @@
 					</div>		
 				{/each}
 			{/if}
+	</div>
 	</div>
 </div>
 

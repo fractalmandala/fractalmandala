@@ -50,21 +50,22 @@
 
 
 <div
-	class="solopage zepad y minH mob"
+	class="solopage zepad all minH mob"
 	class:levelzero={$breakZero}
 	class:levelone={$breakOne}
 	class:leveltwo={$breakTwo}
 	>
-	<h1 class="tt-u">
-		Gallery
-	</h1>
-	<div class="newblog">
+
+	<div class="rta-column ycenter can-stick">
+		<h3 class="tt-u">
+			Gallery
+		</h3>
+	</div>
+	<div class="rta-column rowgap100 soloblog newblog bord-top p-top-32">
 		<p>
 		Midjourney is awesome! And anyone prancing about with the "AI art is not true art" has just spent way too long being in very high opinion of themselves, combined with an inner Luddite they may or may not recognize.
 		One may well have a dislike for it, or simply prefer to not engage at all. But to declare on behalf of the rest of humanity that it isn't true art is frankly, ignorant and silly.
 		</p>
-	</div>
-		<div class="rta-column newblog p-bot-64" class:dark={$themeMode} class:light={!$themeMode}>
 		{#if ranges && ranges.length > 0}
 			<div class="rta-grid grid4 colgap300 rowgap300 m-bot-32">
 				{#each ranges as item}
@@ -91,7 +92,8 @@
 			</button>
 			{/if}
 		</div>
-		</div>
+	</div>
+
 </div>
 
 

@@ -53,20 +53,18 @@
 
 
 <div
-	class="solopage zepad all y minH mob"
+	class="solopage zepad all minH mob"
 	class:levelzero={$breakZero}
 	class:levelone={$breakOne}
 	class:leveltwo={$breakTwo}
 	>
-	<div class="rta-row ycenter colgap400">
+	<div class="rta-column ycenter can-stick">
 		<h3 class="tt-u">
 			GPTBoi and Others...
 		</h3>
-	</div>
-
-	<DropDown>
-		<div slot="mobile-banner">View Areas</div>
-		<div slot="dropdown-part" class="dropsection">
+		<DropDown>
+			<div slot="mobile-banner">View Areas</div>
+			<div slot="dropdown-part" class="dropsection">
 			<button class="secondbutton"
 				on:click={() => setNewFilter('supabase')}
 				class:selected={filter === 'supabase'}
@@ -115,8 +113,9 @@
 				>
 				All
 			</button>
-		</div>
-	</DropDown>
+			</div>
+		</DropDown>
+	</div>
 	<div class="rta-column rowgap100 soloblog newblog bord-top p-top-32">
 	{#if anyFilter}
 		{#if filtered && filtered.length > 0}
@@ -148,6 +147,26 @@
 
 
 <style lang="sass">
+
+.can-stick
+	h3
+		font-weight: 700
+
+.levelzero
+	.can-stick
+		position: sticky
+		top: 0
+		background: var(--background)
+		z-index: 600
+		padding-top: 32px
+
+.levelone
+	.can-stick
+		position: sticky
+		top: 0
+		background: var(--background)
+		z-index: 600
+		padding-top: 32px
 
 .levelzero
 	.dropsection

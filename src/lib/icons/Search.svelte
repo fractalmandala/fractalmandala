@@ -14,14 +14,13 @@
 
 .rta-icon
 	cursor: pointer
-	padding-top: 2px
 	svg
-		height: 24px
+		height: 32px
 		object-fit: contain
 		transition: 0.13s
 		transform-origin: center center
 		path
-			fill: var(--gret)
+			fill: var(--background)
 	&:hover
 		svg
 			transform: scale(1.2)

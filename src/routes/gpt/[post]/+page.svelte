@@ -4,15 +4,7 @@
 	import { themeMode, breakZero, breakOne, breakTwo } from '$lib/stores/globalstores'
 	import ChevronRight from '$lib/icons/ChevFRight.svelte'
 	import ChevronLeft from '$lib/icons/ChevFLeft.svelte'
-	import { resizableAction } from "svelte-legos";
-	import { slide } from 'svelte/transition'
-	import BoxStandard from '$lib/deslib/BoxStandard.svelte'
-	import ExpandDown1 from '$lib/icons/ExpandDown.svelte'
-	import ExpandDown2 from '$lib/icons/ExpandDown.svelte'
-	import GPTParser from '$lib/gptapp/GPTParser.svelte'
-	import GPTParser2 from '$lib/gptapp/GPTParser.svelte'
 	import { newGPT, gptSveltekit, evenGPT, oddGPT } from '$lib/utils/supabase'
-	import Pagination from '$lib/deslib/Pagination.svelte'
 	import { marked } from 'marked'
 	import supabase from '$lib/utils/supabase'
 	import Prism from 'prismjs'
@@ -27,7 +19,6 @@
 	let fullGPT = Array(20).fill(false)
 	let fake = false
 	let inputAgent = ''
-	let rotated = true
 	let evens:any
 	let odds:any
 
@@ -90,23 +81,26 @@
 </svelte:head>
 
 
-<div class="zepad all single minH mob null"
+<div class="solopage zepad all minH mob"
 	class:levelzero={$breakZero}
 	class:levelone={$breakOne}
 	class:leveltwo={$breakTwo}
 	>
-	<div class="rta-row rta-pagination p-bot-16">
-		<a href="/gpt/{data.previd}" class="blank-button">
-			<ChevronLeft --thisFill="#0BC160"/>
-		</a>
-		<a href="/gpt/{data.nextid}" class="blank-button">
-			<ChevronRight --thisFill="#0BC160"/>
-		</a>
+	<div class="rta-column rowgap100 ycenter can-stick p-bot-16">
+		<h4 class="tt-u">
+			{data.title}
+		</h4>
+		<div class="rta-row rta-pagination">
+			<a href="/gpt/{data.previd}" class="blank-button">
+				<ChevronLeft --thisFill="#0BC160"/>
+			</a>
+			<a href="/gpt/{data.nextid}" class="blank-button">
+				<ChevronRight --thisFill="#0BC160"/>
+			</a>
+		</div>
 	</div>
-	<h4 class="tt-u p-bot-16 bord-top p-top-16">
-		{data.title}
-	</h4>
-	<div class="rta-column rowgap100" class:dark={$themeMode} class:light={!$themeMode}>
+
+	<div class="rta-column rowgap100 soloblog newblog bord-top p-top-32">
 		{#if chatStream && chatStream.length > 0}
 			{#each chatStream as item, i}
 				<div class="rta-column rowgap200 overlord bord-bot m-top-16 m-bot-16 p-bot-16 boxno-{i}"
@@ -122,6 +116,11 @@
 
 .overlord
 	font-size: 14px
+	line-height: 1
+
+.levelzero
+	.overlord
+		width: 800px
 
 .rta-pagination
 	.blank-button

@@ -2,7 +2,7 @@
 title: Parse and Render Data from Conllu Files
 tag: utilities
 featured: true
-type: data
+type: other
 id: 2
 ---
 
