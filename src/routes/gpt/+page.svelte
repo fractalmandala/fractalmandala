@@ -15,7 +15,6 @@
 	let anyFilter = false;
 	let showAgent = true;
 	let fake = false;
-	export let apiKey: string;
 
 	function toggleAgent(){
 		showAgent = !showAgent
@@ -54,51 +53,17 @@
 
 
 <div
-	class="solopage zepad y minH mob"
+	class="solopage zepad all y minH mob"
 	class:levelzero={$breakZero}
 	class:levelone={$breakOne}
 	class:leveltwo={$breakTwo}
 	>
 	<div class="rta-row ycenter colgap400">
-		<h1 class="tt-u">
+		<h3 class="tt-u">
 			GPTBoi and Others...
-		</h1>
-		<button class="secondbutton" on:click={toggleAgent}>
-			Open Agent
-		</button>
+		</h3>
 	</div>
-	{#if showAgent}
-		<div class="rta-grid grid2">
-			<div class="rta-column rightcolumn">
-				<p>Select Agent:</p>
-				<div class="rta-row colgap300">
-					<button class="secondbutton">
-						GPTBoi
-					</button>
-					<button class="secondbutton">
-						Svelte Lowda
-					</button>
-					<button class="secondbutton">
-						Supabaser
-					</button>
-					<button class="secondbutton">
-						Dhatuboi
-					</button>
-					<button class="secondbutton">
-						Dharmabot
-					</button>
-				</div>
-				<div class="single p-top-64">
-					<Messenger apiKey={apiKey}/>
-				</div>
-			</div>
-			<div class="rta-column leftcolumn">
-				<div class="chat-container rta-column">
-				</div>				
-			</div>
-		</div>
-	{/if}
-	{#if !showAgent}
+
 	<DropDown>
 		<div slot="mobile-banner">View Areas</div>
 		<div slot="dropdown-part" class="dropsection">
@@ -178,7 +143,7 @@
 		{/each}
 	{/if}
 	</div>
-	{/if}
+
 </div>
 
 

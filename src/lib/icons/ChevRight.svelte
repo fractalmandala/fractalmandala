@@ -9,11 +9,11 @@
 .rta-icon
 	cursor: pointer
 	svg
-		height: 16px
+		height: 24px
 		object-fit: contain
 		transition: 0.13s
 		transform-origin: center center
 		path
-			fill: var(--midline)
+			fill: var(--thisFill)
 
 </style>

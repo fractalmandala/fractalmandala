@@ -20,6 +20,8 @@
 		object-fit: contain
 		transition: 0.13s
 		transform-origin: center center
+		path
+			fill: var(--gret)
 	&:hover
 		svg
 			transform: scale(1.2)

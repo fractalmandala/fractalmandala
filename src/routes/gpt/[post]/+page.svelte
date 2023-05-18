@@ -2,6 +2,8 @@
 
 	import { onMount } from 'svelte'
 	import { themeMode, breakZero, breakOne, breakTwo } from '$lib/stores/globalstores'
+	import ChevronRight from '$lib/icons/ChevFRight.svelte'
+	import ChevronLeft from '$lib/icons/ChevFLeft.svelte'
 	import { resizableAction } from "svelte-legos";
 	import { slide } from 'svelte/transition'
 	import BoxStandard from '$lib/deslib/BoxStandard.svelte'
@@ -10,6 +12,8 @@
 	import GPTParser from '$lib/gptapp/GPTParser.svelte'
 	import GPTParser2 from '$lib/gptapp/GPTParser.svelte'
 	import { newGPT, gptSveltekit, evenGPT, oddGPT } from '$lib/utils/supabase'
+	import Pagination from '$lib/deslib/Pagination.svelte'
+	import { marked } from 'marked'
 	import supabase from '$lib/utils/supabase'
 	import Prism from 'prismjs'
 	import '$lib/styles/prism.css'
@@ -86,23 +90,46 @@
 </svelte:head>
 
 
-<div class="zepad all single minH mob"
+<div class="zepad all single minH mob null"
 	class:levelzero={$breakZero}
 	class:levelone={$breakOne}
 	class:leveltwo={$breakTwo}
 	>
-	<h2 class="tt-u">
+	<div class="rta-row rta-pagination p-bot-16">
+		<a href="/gpt/{data.previd}" class="blank-button">
+			<ChevronLeft --thisFill="#0BC160"/>
+		</a>
+		<a href="/gpt/{data.nextid}" class="blank-button">
+			<ChevronRight --thisFill="#0BC160"/>
+		</a>
+	</div>
+	<h4 class="tt-u p-bot-16 bord-top p-top-16">
 		{data.title}
-	</h2>
-	<div class="rta-column newblog" class:dark={$themeMode} class:light={!$themeMode}>
+	</h4>
+	<div class="rta-column rowgap100" class:dark={$themeMode} class:light={!$themeMode}>
 		{#if chatStream && chatStream.length > 0}
 			{#each chatStream as item, i}
-				<div class="rta-column rowgap600 p-top-16 overlord bord-bot m-bot-16 p-bot-16 boxno-{i}"
+				<div class="rta-column rowgap200 overlord bord-bot m-top-16 m-bot-16 p-bot-16 boxno-{i}"
 					>
-					<GPTParser2 response={item.value}/>
+					{@html marked.parse(item.value)}
 				</div>
 			{/each}
 		{/if}
 	</div>
 </div>
 
+<style lang="sass">
+
+.overlord
+	font-size: 14px
+
+.rta-pagination
+	.blank-button
+		transform-origin: center center
+		transition: 0.09s
+		padding: 0
+		&:hover
+			transform: scale(0.9)
+
+
+</style>

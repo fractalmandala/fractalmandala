@@ -1,5 +1,7 @@
 <script lang="ts">
+
 	import { ChatCompletion } from '$lib/gptapp/GPT';
+	import { SSE } from 'sse.js'
 	import { themeMode, breakZero, breakOne, breakTwo } from '$lib/stores/globalstores';
 	import { scrollToBottomAction, alertAction, windowSizeStore, messagesStore } from 'svelte-legos';
 	import type { Bot, ChatConversation, ChatMessage, OpenAIControls } from '$lib/gptapp/types';
@@ -16,7 +18,7 @@
 	import { openAIGlobalControls } from '$lib/gptapp/openAIControlsStore';
 	import { GetBotById, GetBotNameByBotId } from '$lib/gptapp/Bots';
 	import { onMount } from 'svelte';
-	import GptLoadingMessages from '$lib/gptapp/GPTLoadingMessages.svelte';
+	import GptLoadingMessages from '$lib/gptapp/GPTLoadingMessages.svelte';;
 	import Archive from '$lib/icons/Archive.svelte';
 	import Delete from '$lib/icons/Delete.svelte';
 	import List from '$lib/icons/List.svelte';
@@ -26,22 +28,25 @@
 	import Send from '$lib/icons/Send.svelte'
 	import Add from '$lib/icons/Add.svelte'
 	import Renew from '$lib/icons/Renew.svelte'
-
+	let currentSelectedConversationId: string | null = null;
+	let isLoading: boolean = false;
+	let isSettingsOpen = false;
+	let msgId = 1;
+	let nowBot:any
 	export let apiKey: string;
+
+
 	const conversations = localStorageMiddleware(conversationsStore(), 'conversations');
 
-	let currentSelectedConversationId: string | null = null;
-
-	let isLoading: boolean = false;
+	
 	const currentMessagePrompt = writable('');
 	const inputRef = writable<HTMLInputElement | null>(null);
-
-	let isSettingsOpen = false;
 
 	$: currentMessage = $currentMessagePrompt.trim();
 	$: currentSelectedConversation = $conversations.find(
 		(conversation) => conversation.id === currentSelectedConversationId
 	);
+	$: nowBot = {GetBotNameByBotId};
 
 	const windowSize = windowSizeStore();
 	$: isMobile = $windowSize.width < 768;
@@ -78,8 +83,8 @@
 								message: { content }
 							}
 						]
-					} = res;
-
+					} = res;	
+					console.log(res);
 					conversations.update((conversations) => {
 						return conversations.map((conversation) => {
 							if (conversation.id === currentSelectedConversationId) {
@@ -304,6 +309,11 @@
 	class:dark={$themeMode}
 	class:light={!$themeMode}
 >
+
+	{#if currentSelectedConversation}
+	<small class="tt-u agent-label">Current Agent: {GetBotNameByBotId(currentSelectedConversation.botId)}</small>
+	{/if}
+	
 	{#if currentSelectedConversation}
 
 		<div class="rta-column rowgap300 ybetween fullH" use:scrollToBottomAction>
@@ -339,7 +349,13 @@
 
 <style lang="sass">
 
-.levelzero
+
+.agent-label
+	background: var(--gret)
+	color: white
+	padding: 2px 8px
+	border-radius: 8px
+	width: max-content
 
 
 

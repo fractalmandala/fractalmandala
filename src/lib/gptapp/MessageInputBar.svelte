@@ -67,6 +67,8 @@ input
 	border: 1px solid var(--gret)
 	padding: 6px
 	border-radius: 8px
+	input
+		width: 100%
 
 
 </style>

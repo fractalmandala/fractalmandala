@@ -534,16 +534,7 @@
   <!-- Messages -->
   <div class="rta-column rowgap300 allmessages">
     <ul>
-      {#if messages.length > 0}
-        {#each messages?.filter?.(isNotSystemMessage) as { role, content }, index}
-          {@const trueIndex = index + 1}
-          <ChatMessage
-            {role}
-            {content}
-
-          />
-        {/each}
-      {/if}
+ 
     </ul>
   </div>
 

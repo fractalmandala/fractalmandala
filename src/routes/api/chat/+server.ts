@@ -15,7 +15,6 @@ export const POST: RequestHandler = async ({ request }) => {
 		}
 
 		const requestData = await request.json()
-
 		if (!requestData) {
 			throw new Error('No request data')
 		}

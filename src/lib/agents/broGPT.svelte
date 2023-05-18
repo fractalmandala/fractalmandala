@@ -3,11 +3,9 @@
 	import { onMount } from 'svelte'
 	import { breakZero, breakOne, breakTwo } from '$lib/stores/globalstores'
 	import ChatMessages from '$lib/components/ChatMessage.svelte'
-	import type { ChatMessage } from '$lib/buildapp/types'
 	import '$lib/styles/themes.sass'
 	import type { ChatCompletionRequestMessage } from 'openai'
 	import { SSE } from 'sse.js'
-	import supabase from '$lib/utils/supabase'
 	let query: string = ''
 	let answer: string = ''
 	let chatId:any
@@ -15,6 +13,23 @@
 	let loading: boolean = false
 	let chatMessages: ChatCompletionRequestMessage[] = []
 	let fake = false
+	let chatHistory:any
+
+	type Message = {
+    role: 'user' | 'assistant' | 'system';
+    content: string;
+	};
+
+	type ChatHistory = Message[];
+
+	function saveChatHistory(chatHistory: ChatHistory): void {
+    localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
+	}
+
+	function loadChatHistory(): ChatHistory {
+    const chatHistoryString = localStorage.getItem('chatHistory');
+    return chatHistoryString ? JSON.parse(chatHistoryString) : [];
+	}
 
 
 	const handleSubmit = async () => {
@@ -36,6 +51,7 @@
 				if (e.data === '[DONE]') {
 					chatMessages = [...chatMessages, { role: 'assistant', content: answer }]
 					answer = ''
+					saveChatHistory(chatMessages);
 					return
 				}
 
@@ -63,6 +79,10 @@
 		fake = !fake
 	}	
 
+	onMount(() => {
+		chatHistory = loadChatHistory()
+	})
+
 </script>
 
 <div class="boxshowing"
@@ -87,6 +107,17 @@
 			/>
 		<button class="secondbutton" on:click={() => handleSubmit()}>Send</button>
 	</form>
+</div>
+<div>
+	<ul>
+		{#if chatHistory && chatHistory.length > 0}
+		{#each chatHistory as message, i (i)}
+			<li>
+				<strong>{message.role}: </strong> {message.content}
+			</li>
+		{/each}
+		{/if}
+	</ul>
 </div>
 
 <style lang="sass">

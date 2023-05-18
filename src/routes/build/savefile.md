@@ -114,3 +114,15 @@ It will make any day feel sublime
 */
 ```
 
+##### GPT
+
+
+```javascript
+import { marked } from 'marked'
+```
+
+```html
+<pre>
+	{@html marked.parse(message.content)}
+</pre>
+```

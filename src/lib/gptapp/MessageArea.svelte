@@ -1,14 +1,12 @@
 <script lang="ts">
-
 	import { ChatCompletion } from '$lib/gptapp/GPT';
+	import { SSE } from 'sse.js';
+	import { themeMode, breakZero, breakOne, breakTwo } from '$lib/stores/globalstores';
 	import { scrollToBottomAction, alertAction, windowSizeStore, messagesStore } from 'svelte-legos';
 	import type { Bot, ChatConversation, ChatMessage, OpenAIControls } from '$lib/gptapp/types';
 	import { conversationsStore, localStorageMiddleware } from '$lib/gptapp/conversationsStore';
 	import ConversationView from '$lib/gptapp/ConversationView.svelte';
 	import { filtersStore } from '$lib/gptapp/filterStore';
-	import { APIKeyStore } from '$lib/gptapp/APIKeyStore';
-	import Controls from '$lib/gptapp/OpenAIControlsForm.svelte';
-	import APIKeyForm from '$lib/gptapp/APIKeyForm.svelte'
 	import MessageView from '$lib/gptapp/MessageView.svelte';
 	import MessageInputBar from '$lib/gptapp/MessageInputBar.svelte';
 	import { writable } from 'svelte/store';
@@ -20,57 +18,37 @@
 	import { GetBotById, GetBotNameByBotId } from '$lib/gptapp/Bots';
 	import { onMount } from 'svelte';
 	import GptLoadingMessages from '$lib/gptapp/GPTLoadingMessages.svelte';
-	import Add from '$lib/icons/ArrowUp.svelte';
 	import Archive from '$lib/icons/Archive.svelte';
 	import Delete from '$lib/icons/Delete.svelte';
 	import List from '$lib/icons/List.svelte';
 	import Settings from '$lib/icons/Settings.svelte';
 	import Star from '$lib/icons/Star.svelte';
 	import Tag from '$lib/icons/Tag.svelte';
-	import Reading from '$lib/icons/Reading.svelte'
-
-	let APIKey = false
-	let isControls = false
-	let botList = false
-
+	import Send from '$lib/icons/Send.svelte';
+	import Add from '$lib/icons/Add.svelte';
+	import Renew from '$lib/icons/Renew.svelte';
+	let currentSelectedConversationId: string | null = null;
+	let isLoading: boolean = false;
+	let isSettingsOpen = false;
+	let msgId = 1;
+	let nowBot: any;
 	export let apiKey: string;
+
 	const conversations = localStorageMiddleware(conversationsStore(), 'conversations');
 
-	let currentSelectedConversationId: string | null = null;
-
-	let isLoading: boolean = false;
 	const currentMessagePrompt = writable('');
-	const inputRef = writable<HTMLTextAreaElement | null>(null);
-
-	let isSettingsOpen = false;
+	const inputRef = writable<HTMLInputElement | null>(null);
 
 	$: currentMessage = $currentMessagePrompt.trim();
 	$: currentSelectedConversation = $conversations.find(
 		(conversation) => conversation.id === currentSelectedConversationId
 	);
+	$: nowBot = { GetBotNameByBotId };
 
 	const windowSize = windowSizeStore();
 	$: isMobile = $windowSize.width < 768;
 
 	const { isArchived: isArchivedFilter, isFavorite: isFavoriteFilter } = filtersStore();
-
-	function toggleBotList(){
-		botList = !botList
-	}
-	
-	function toggleAPIKey(){
-		APIKey = !APIKey
-		if ( isControls === true ) {
-			isControls = false
-		}
-	}
-
-	function toggleControls(){
-		isControls = !isControls
-		if ( APIKey === true ) {
-			APIKey = false
-		}
-	}
 
 	function handleSend() {
 		if (!apiKey || typeof apiKey !== 'string' || apiKey.trim().length === 0) {
@@ -85,82 +63,73 @@
 				from: 'user'
 			} as ChatMessage;
 
+			conversations.update((conversations) => {
+				return conversations.map((conversation) => {
+					if (conversation.id === currentSelectedConversationId) {
+						return {
+							...conversation,
+							updatedAt: Date.now(),
+							messages: [...conversation.messages, userMessage]
+						};
+					}
+					return conversation;
+				});
+			});
+
 			isLoading = true;
 
-			ChatCompletion(
-				apiKey,
-				currentSelectedConversation.botId,
-				currentSelectedConversation.messages.concat([userMessage]),
-				currentSelectedConversation.controls || $openAIGlobalControls
-				// controller.signal
-			)
-				.then((res: any) => {
-					// setData(res);
-					const {
-						choices: [
-							{
-								message: { content }
-							}
-						]
-					} = res;
+			const eventSource = new SSE('api/chat', {
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				payload: JSON.stringify({
+					messages: [...currentSelectedConversation.messages, userMessage]
+				})
+			});
 
-					conversations.update((conversations) => {
-						return conversations.map((conversation) => {
-							if (conversation.id === currentSelectedConversationId) {
-								if (conversation.messages.length === 0) {
+			eventSource.addEventListener('error', (err) => {
+				console.error('An error occurred: ', err);
+				isLoading = false;
+			});
+
+			eventSource.addEventListener('message', (e: { data: string }) => {
+				try {
+					if (e.data === '[DONE]') {
+						return;
+					}
+
+					const completionResponse = JSON.parse(e.data);
+					const [{ message }] = completionResponse.choices;
+
+					if (message.content) {
+						// Add assistant's message to conversation messages
+						const assistantMessage = {
+							id: Math.random().toString(),
+							content: message.content,
+							from: 'assistant'
+						} as ChatMessage;
+
+						conversations.update((conversations) => {
+							return conversations.map((conversation) => {
+								if (conversation.id === currentSelectedConversationId) {
 									return {
 										...conversation,
 										updatedAt: Date.now(),
-										subTitle: userMessage.content,
-										messages: [
-											...conversation.messages,
-											userMessage,
-											{
-												id: Math.random().toString(),
-												content,
-												from: 'assistant'
-											}
-										]
-									};
-								} else {
-									return {
-										...conversation,
-										updatedAt: Date.now(),
-										messages: [
-											...conversation.messages,
-											userMessage,
-											{
-												id: Math.random().toString(),
-												content,
-												from: 'assistant'
-											}
-										]
+										messages: [...conversation.messages, assistantMessage]
 									};
 								}
-							}
-
-							return conversation;
+								return conversation;
+							});
 						});
-					});
-
-					currentMessagePrompt.set('');
-				})
-				.catch((e) => {
-					if (e.message === 'Invalid API key provided!') {
-						messagesStore('Invalid API key provided!');
-						isSettingsOpen = true;
-					} else if (e.message === 'The user aborted a request.') {
-					} else {
-						messagesStore(e.message);
 					}
-				})
-				.finally(() => {
-					// clearTimeout(timer);
+				} catch (err) {
+					console.error('An error occurred: ', err);
+				} finally {
 					isLoading = false;
-					setTimeout(() => {
-						$inputRef?.focus();
-					}, 1);
-				});
+				}
+			});
+
+			eventSource.stream();
 
 			// let timer: any;
 			// let controller: any;
@@ -311,10 +280,6 @@
 		}
 	}
 
-	function handleOpenAIControlsUpdate(params: OpenAIControls) {
-		openAIGlobalControls.set(params);
-	}
-
 	onMount(() => {
 		if (pinnedConversations.length > 0) {
 			currentSelectedConversationId = pinnedConversations[0].id;
@@ -324,120 +289,51 @@
 	});
 </script>
 
-<section class="rta-column rowgap100">
+<div
+	class="rta-column rowgap200 chatcont fullH"
+	class:levelzero={$breakZero}
+	class:levelone={$breakOne}
+	class:leveltwo={$breakTwo}
+	class:dark={$themeMode}
+	class:light={!$themeMode}
+>
+	{#if currentSelectedConversation}
+		<small class="tt-u agent-label"
+			>Current Agent: {GetBotNameByBotId(currentSelectedConversation.botId)}</small
+		>
+	{/if}
 
 	{#if currentSelectedConversation}
-	<small class="tt-u agent-label">Current Agent: {GetBotNameByBotId(currentSelectedConversation.botId)}</small>
-	{/if}
-
-	<div class="rta-row xstart ycenter bord-bot bord-top p-top-8 p-bot-8">
-		<button class="blank-button" on:click={() => (isSettingsOpen = !isSettingsOpen)}>
-			<Settings />
-		</button>
-		<button class="blank-button" on:click={handleFilterClick} bind:this={filterRef}>
-			<Reading />
-			{#if isFilterOpen}
-				<div
-					aria-hidden
-					on:click={(e) => {
-						e.stopPropagation();
-					}}
-					use:clickOutsideAction={{ cb: handleFilterClickOutside, trigger: filterRef }}
-					class="absolute z-20 text-md text-left top-full left-0 shadow-lg bg-white p-2 rounded-md min-w-[120px] border border-[var(--border-color)] mt-2"
-				>
-					<div class="space-y-2">
-						<div
-							class="flex items-center space-x-2"
-							on:click={() => (currentSelectedConversationId = null)}
-							aria-hidden
-						>
-							<label for="is-archived" class="cursor-pointer">Archived</label>
-							<input type="checkbox" id="is-archived" bind:checked={$isArchivedFilter} />
-						</div>
-						<div
-							class="flex items-center space-x-2"
-							on:click={() => (currentSelectedConversationId = null)}
-							aria-hidden
-						>
-							<label for="is-favorite" class="cursor-pointer">Favorite</label>
-							<input type="checkbox" id="is-favorite" bind:checked={$isFavoriteFilter} />
-						</div>
+		<div class="rta-column rowgap300 ybetween fullH" use:scrollToBottomAction>
+			<div>
+				{#if currentSelectedConversation.messages.length === 0 && !isLoading}
+					<p>Enter a message ↓ and start chatting ⚡️!</p>
+				{:else}
+					<div class="rta-column rowgap200">
+						{#each currentSelectedConversation.messages as message}
+							<MessageView {message} />
+						{/each}
+						{#if isLoading}
+							<GptLoadingMessages />
+						{/if}
 					</div>
-				</div>
-			{/if}
-		</button>
-		<button on:click={handlePinClick} class="blank-button">
-			<Tag />
-		</button>
-		{#if currentSelectedConversation}
-			<button class="blank-button" on:click={handleArchiveClick}>
-				<Archive />
-			</button>
-			<button class="blank-button" style="padding-bottom: 2px" on:click={handleFavoriteClick}>
-				<Star />
-			</button>
-		{/if}
-		<button class="blank-button" on:click={toggleBotList}>
-			<List/>
-		</button>
-	</div>
-
-	{#if isSettingsOpen}
-		<div class="rta-row">
-			<button class="blank-button" on:click={toggleAPIKey}>
-				Key
-			</button>
-			<button class="blank-button" on:click={toggleControls}>
-				Controls
-			</button>
+				{/if}
+			</div>
+			<div>
+				<MessageInputBar
+					disabled={isLoading}
+					onSend={handleSend}
+					value={currentMessagePrompt}
+					ref={inputRef}
+				/>
+			</div>
 		</div>
-		{#if APIKey}
-		<div class="rta-column">
-			<APIKeyForm initialValue={$APIKeyStore}/>
+	{:else}
+		<div class="h-full flex items-center justify-center flex-col">
+			<p class="text-gray-400 mt-4">Pick a bot ← and start chatting ⚡️!</p>
 		</div>
-		{/if}
-		{#if isControls}
-			<Controls onUpdate={handleOpenAIControlsUpdate} controls={$openAIGlobalControls}/>
-		{/if}
 	{/if}
-
-
-	{#if botList || pinnedConversations.length + filteredConversations.length === 0}
-		<BotsListView
-			onBotClick={handleBotClick}
-		/>
-	{/if}
-
-
-	<div class="rta-column rowgap100 p-top-32 null">
-		<h5>All Chats:</h5>
-		{#each pinnedConversations as conversation}
-			<ConversationView
-				{conversation}
-				{handleConversationClick}
-				isSelected={currentSelectedConversationId === conversation.id}
-			/>
-		{/each}
-		{#each filteredConversations as conversation}
-			<ConversationView
-				{conversation}
-				{handleConversationClick}
-				isSelected={currentSelectedConversationId === conversation.id}
-			/>
-		{/each}
-		{#if isBotsListVisible || pinnedConversations.length + filteredConversations.length === 0}
-			<BotsListView onBotClick={handleBotClick} />
-		{/if}
-	</div>
-</section>
-
-
-{#if isConversationSettingsOpen}
-	<ConversationSettingsModal
-		onUpdate={handleOpenAIControlsUpdateForConversation}
-		controls={currentSelectedConversation?.controls}
-	/>
-{/if}
+</div>
 
 <style lang="sass">
 
@@ -448,5 +344,7 @@
 	padding: 2px 8px
 	border-radius: 8px
 	width: max-content
+
+
 
 </style>

@@ -366,14 +366,23 @@ $unit128: 128px
 .zepad.all
 	padding: 128px 80px 64px 80px
 
+.zepad.thin.levelzero
+	padding: 80px 32px 32px 32px
+
+.zepad.thin.levelone
+	padding: 80px 32px 32px 32px
+
+.zepad.thin.leveltwo
+	padding: 80px 32px 32px 32px
+
 .levelzero
 	.zepad.single
-		width: 800px
+		width: 840px
 		margin-left: 6vw
 
 .levelzero
 	.single
-		width: 800px
+		width: 840px
 
 .levelone
 	.zepad.single
@@ -751,7 +760,7 @@ body, html
 		grid-template-areas: ". ."
 		transition: 0.2s
 	.grid2.left0
-		grid-template-columns: 24% 1fr
+		grid-template-columns: 320px 1fr
 		grid-template-areas: ". ."
 	.grid2.right0
 		grid-template-columns: 1fr 24%
@@ -910,6 +919,7 @@ body, html
 .blank-button
 	background: none
 	border: none
+	padding: 0
 
 .blank-button2
 	background: none
@@ -1558,3 +1568,20 @@ body, html
 	.codeparent
 		padding: 24px
 		background: var(--contraster)
+
+.overlord
+	pre
+		border: var(--bord)
+		background: var(--contraster)
+		margin: 16px 0
+		border-radius: 6px
+
+.gpt-sys
+	display: none
+
+.gpt-user
+	background: var(--contraster)
+	text-align: right
+
+.gpt-user, .gpt-asst
+	padding: 8px 16px

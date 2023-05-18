@@ -5,6 +5,7 @@
 	import { page } from '$app/stores';
 	import { mouseStore } from 'svelte-legos';
 	import DarkMode from '$lib/icons/DarkMode.svelte'
+	import Search from '$lib/icons/Search.svelte'
 	import { elementSizeStore } from "svelte-legos";
 	import { themeMode, breakZero, breakOne, breakTwo, windowWidth, readingMode } from '$lib/stores/globalstores'
 	import sidebarMode from '$lib/stores/searchbar';
@@ -132,6 +133,9 @@
 			</nav>
 			{/if}
 			<DarkMode/>
+			<button class="blank-button">
+				<Search/>
+			</button>
 			{#if $breakTwo}
 			<button class="blank-button" on:click={toggleMobileMenu}>
 			<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -189,7 +193,8 @@ nav
 		text-transform: uppercase
 		color: var(--opposite)
 		&:hover
-			color: var(--gret)
+			a
+				color: var(--gret)
 
 nav.whiten
 	p

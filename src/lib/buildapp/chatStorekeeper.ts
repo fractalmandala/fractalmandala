@@ -1,6 +1,9 @@
-import { writable } from 'svelte/store'
 import type { Chat, ChatMessage } from '$lib/buildapp/shared';
-export const chatStreamStore = writable([])
+
+/**
+ * This class is just used to move some lengthy logic out of the stores file.
+ * Contains only static functions and does not temper with the Svelte store.
+ */
 export class ChatStorekeeper {
 	static isFlat(chat: Chat): boolean {
 		return (function checkMessages(messages?: ChatMessage[]): boolean {
