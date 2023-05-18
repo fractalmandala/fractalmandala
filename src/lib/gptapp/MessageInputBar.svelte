@@ -1,16 +1,20 @@
 <script lang="ts">
 
-	import visibilityMode from '$lib/stores/visibility'
+	import { themeMode } from '$lib/stores/globalstores'
 	import { onMount, onDestroy } from 'svelte';
 	import { hotKeyAction, textareaAutosizeAction } from 'svelte-legos';
+	import Send from '$lib/icons/Send.svelte'
+	import Add from '$lib/icons/Add.svelte'
+	import Renew from '$lib/icons/Renew.svelte'
 	import type { Writable } from 'svelte/store';
 
 	export let disabled: boolean;
-	export let ref: Writable<HTMLTextAreaElement | null>;
+	export let ref: Writable<HTMLInputElement | null>;
 	export let onSend: () => void;
 	export let value: Writable<string>;
+	let color = '#0BC160'
 
-	let localRef: HTMLTextAreaElement;
+	let localRef: HTMLInputElement;
 
 	onMount(() => {
 		ref.set(localRef);
@@ -22,11 +26,17 @@
 </script>
 
 <div
-	class="rta-column rowgap200"
-	class:light={!$visibilityMode} class:dark={$visibilityMode}
+	class="rta-row ycenter rowgap300 fullW"
+	class:light={!$themeMode} class:dark={$themeMode}
 >
-	<textarea
-		use:textareaAutosizeAction
+			<button class="blank-button">
+				<Renew/>
+			</button>
+			<button class="blank-button">
+				<Add color={color}/>
+			</button>
+	<div class="rta-row actual-form ycenter colgap300 fullW between">
+	<input
 		use:hotKeyAction={{ code: 'Enter', cb: onSend }}
 		bind:this={localRef}
 		bind:value={$value}
@@ -34,20 +44,29 @@
 		placeholder="Input Area"
 	/>
 	<button
-		class="mainbutton"
+		class="blank-button"
 		on:click={onSend}
 		{disabled}
 	>
-		Send
+		<Send/>
 	</button>
+	</div>
 </div>
 
 <style lang="sass">
 
-textarea
-	min-height: 48px
+.rta-row.ycenter.fullW
+	margin-top: 16px
+
+input
+	border: none
+	outline: none
 	padding: 4px
-	font-size: 14px
-	border-radius: 4px
+
+.actual-form
+	border: 1px solid var(--gret)
+	padding: 6px
+	border-radius: 8px
+
 
 </style>

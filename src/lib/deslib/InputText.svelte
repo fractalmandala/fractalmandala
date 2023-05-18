@@ -1,30 +1,53 @@
 <script lang="ts">
 
+	import { onMount } from 'svelte';
 	import { browser } from '$app/environment'
+	import { hotKeyAction } from 'svelte-legos';
  	import { themeMode, breakZero, breakOne, breakTwo } from '$lib/stores/globalstores'
-	export let userInput = ''
-	let isFocused:boolean = false
-	export let placeHolder = 'Enter value...'
+	import { SetKeyIfPossible } from '$lib/gptapp/APIKeyStore';
 
-	function handleFocus(){
-		isFocused = !isFocused
-	}
+	export let initialValue: string | null = '';
+	export let onDone: () => void = () => {};
 
-	function handleBlur(){
-		userInput = ''
-		isFocused = false
-	}
+	let key = initialValue || '';
+	let disabled = false;
+	let isError = false;
+	let inputRef: HTMLInputElement;
 
-	function handleFormSubmit(){
-		if ( browser ) {
-			localStorage.setItem('key', userInput)
+	const errorMessage = 'Invalid API key. Please make sure your API key is still working properly.';
+
+	function onGetStarted() {
+		if (key.trim().length > 0) {
+			disabled = true;
+			SetKeyIfPossible(key)
+				.then(() => {
+					console.log('Key is valid');
+					onDone();
+				})
+				.catch((e) => {
+					isError = true;
+				})
+				.finally(() => {
+					disabled = false;
+					setTimeout(() => {
+						inputRef?.focus();
+					}, 1);
+				});
 		}
 	}
 
+	onMount(() => {
+		inputRef?.focus();
+	});
+
 </script>
 
+{#if disabled}
+<p>Checking your key...</p>
+{/if}
+
 <form
-	on:submit|preventDefault={handleFormSubmit}
+	on:submit|preventDefault={onGetStarted}
 	class:dark={$themeMode}
 	class:light={!$themeMode}
 	class:levelzero={$breakZero}
@@ -32,13 +55,13 @@
 	class:leveltwo={$breakTwo}
 	>
 	<input 
-		bind:value={userInput}
-		on:blur={handleBlur}
-		on:focus={handleFocus}
+		use:hotKeyAction={{ code: 'Enter', cb: onGetStarted }}
+		{disabled}
+		bind:value={key}
+		bind:this={inputRef}
 		type="text"
-		placeholder={placeHolder} 
 		/>
-  <button type="submit" class="secondbutton">Submit</button>
+  <button type="submit" class="secondbutton" on:click={onGetStarted} {disabled}>Submit</button>
 </form>
 
 <style lang="sass">

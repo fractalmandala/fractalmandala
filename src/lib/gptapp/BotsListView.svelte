@@ -1,6 +1,6 @@
 <script lang="ts">
 
-	import visibilityMode from '$lib/stores/visibility'
+	import { themeMode } from '$lib/stores/globalstores'
 	import { BotsList } from '$lib/gptapp/Bots';
 	import { slide } from 'svelte/transition'
 	import type { Bot } from './types';
@@ -34,9 +34,9 @@
 	const ref = onMountFocusRef();
 </script>
 
-<div transition:slide class="rta-row colgap200" class:dark={$visibilityMode} class:light={!$visibilityMode}>
+<div transition:slide class="rta-column colgap200" class:dark={$themeMode} class:light={!$themeMode}>
 	{#each filteredBotsList as bot}
-		<button on:click={() => onBotClick(bot)} class="blank-button blank2">
+		<button on:click={() => onBotClick(bot)} class="blank-button">
 			{bot.name}
 		</button>
 	{/each}
@@ -44,11 +44,9 @@
 
 <style lang="sass">
 
-.blank-button.blank2
+.blank-button
 	color: var(--textone)
-	font-family: 'Spline Sans', sans-serif
 	text-transform: uppercase
-	font-size: 12px
 	cursor: pointer
 	&:hover
 		color: var(--green)

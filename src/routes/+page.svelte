@@ -122,6 +122,8 @@
 .rta-accordion.levelzero
 	flex-direction: row
 	column-gap: 8px
+	border-top: 8px solid var(--background)
+	border-bottom: 8px solid var(--background)
 	.rta-column
 		width: calc(16.66% - 7px)
 		transition: all 0.8s ease

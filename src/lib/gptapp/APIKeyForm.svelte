@@ -1,6 +1,6 @@
 <script lang="ts">
 
-	import visibilityMode from '$lib/stores/visibility'
+	import { themeMode } from '$lib/stores/globalstores'
 	import { onMount } from 'svelte';
 	import { hotKeyAction } from 'svelte-legos';
 	import { SetKeyIfPossible } from './APIKeyStore';
@@ -41,11 +41,11 @@
 </script>
 
 {#if disabled}
-	<div class="rta-column rowgap100" class:light={!$visibilityMode} class:dark={$visibilityMode}>
+	<div class="rta-column rowgap100" class:light={!$themeMode} class:dark={$themeMode}>
 		<p>Checking your key...</p>
 	</div>
 {:else}
-	<div class="rta-column rowgap100 xright p-bot-32" class:light={!$visibilityMode} class:dark={$visibilityMode}>
+	<div class="rta-column rowgap100 xleft p-bot-32" class:light={!$themeMode} class:dark={$themeMode}>
 		<input
 			use:hotKeyAction={{ code: 'Enter', cb: onGetStarted }}
 			{disabled}

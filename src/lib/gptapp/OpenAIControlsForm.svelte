@@ -1,6 +1,6 @@
 <script lang="ts">
 
-	import visibilityMode from '$lib/stores/visibility'
+	import { themeMode } from '$lib/stores/globalstores'
 	import type { OpenAIControls } from './types';
 	import { slide } from 'svelte/transition'
 	import { quadIn } from 'svelte/easing'
@@ -14,7 +14,7 @@
 
 
 
-<div class="rta-column rowgap200 p-bot-32 null xright" class:light={!$visibilityMode} class:dark={$visibilityMode} transition:slide={{ easing: quadIn }}>
+<div class="rta-column rowgap200 p-bot-32 null xleft" class:light={!$themeMode} class:dark={$themeMode} transition:slide={{ easing: quadIn }}>
 	<select class="primeselect" bind:value={params.model}>
 		<option value="gpt-3.5-turbo">GPT-3.5-TURBO (Default ChatGPT)</option>
 		<option value="gpt-3.5-turbo-0301">GPT-3.5-TURBO-0301</option>
@@ -65,19 +65,17 @@
 	select
 		font-size: 12px
 
-.dark
+.primeselect
+	background: none
+	border: 1px solid var(--borderline)
+	padding: 4px 8px
+	border-radius: 6px
 	color: var(--textone)
-	.primeselect
-		background: none
-		border: 1px solid var(--borderline)
-		padding: 4px 8px
-		border-radius: 6px
-		color: var(--textone)
-		cursor: pointer
-		transition: 0.15s
-		&:hover
-			border: 1px solid var(--opposite)
-			color: var(--opposite)
+	cursor: pointer
+	transition: 0.15s
+	&:hover
+		border: 1px solid var(--opposite)
+		color: var(--opposite)
 
 
 </style>

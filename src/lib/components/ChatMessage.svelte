@@ -2,6 +2,7 @@
 
 
 	import { onMount } from 'svelte'
+	import { themeMode } from '$lib/stores/globalstores'
 	import { chatStreamStore } from '$lib/stores/chatStorekeeper'
 	import { fade } from 'svelte/transition'
 	import { elasticOut } from 'svelte/easing'
@@ -18,9 +19,12 @@
 
 </script>
 
-<div class="boxofchat {type === 'user' ? 'chat-end' : 'chat-start'}" in:fade={{ duration: 300, delay: 50, easing: elasticOut }}>
+<div class="boxofchat {type === 'user' ? 'chat-end' : 'chat-start'}" in:fade={{ duration: 300, delay: 50, easing: elasticOut }}
+	class:dark={$themeMode}
+	class:light={!$themeMode}
+	>
 	<div class="agent {type === 'user' ? 'user' : 'gpt'}">
-		{type === 'user' ? 'user' : 'gpt'}:
+		<small>{type === 'user' ? 'user' : 'gpt'}:</small>
 	</div>
 	<pre class="commbody {type === 'user' ? 'user' : 'gpt'}">
 		{message}
@@ -30,6 +34,14 @@
 
 
 <style lang="sass">
+
+.boxofchat.dark
+	small, pre
+		color: var(--opposite)
+
+.boxofchat.light
+	small, pre
+		color: #474747
 
 pre
 	margin: 4px 0 0 0
@@ -41,21 +53,12 @@ pre
 .agent.user
 	text-transform: uppercase
 	text-align: right
-	color: white
-
-.agent.gpt
-	color: #575757
-
-.commbody.user, .commbody.gpt
-	color: white
-	font-family: 'Spline Sans', sans-serif
 
 .commbody.gpt
 	font-size: 14px
 
 .commbody.user
 	text-align: right
-	color: #575757
 	font-size: 14px
 
 .commbody

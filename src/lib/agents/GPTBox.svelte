@@ -32,26 +32,20 @@
 <div class="boxc" class:dark={$themeMode} class:light={!$themeMode}>
 	<small>Select GPT Agent:</small>
 		<div class="rta-row colgap200">
-			<div class="agents" on:click={() => selectAgent(1)} on:keydown={fauxfake} class:selectedone={selectedAgent[1]}>broGPT</div>
-			<div class="agents" on:click={() => selectAgent(2)} on:keydown={fauxfake} class:selectedtwo={selectedAgent[2]}>the Sanskritist</div>
-			<div class="agents" on:click={() => selectAgent(3)} on:keydown={fauxfake} class:selectedthree={selectedAgent[3]}>Svelta Lowda</div>
-			<div class="agents" on:click={() => selectAgent(4)} on:keydown={fauxfake} class:selectedfour={selectedAgent[4]}>Write</div>
-			<div class="agents" on:click={() => selectAgent(5)} on:keydown={fauxfake} class:selectedfive={selectedAgent[5]}>Test</div>
-			<div class="agents" on:click={() => selectAgent(6)} on:keydown={fauxfake} class:selectedfive={selectedAgent[6]}>Title</div>
-			<div class="agents" on:click={() => selectAgent(7)} on:keydown={fauxfake} class:selectedtwo={selectedAgent[7]}>Arvind</div>
+			<button class="secondbutton" on:click={() => selectAgent(1)} on:keydown={fauxfake} class:selectedone={selectedAgent[1]}>broGPT</button>
+			<button class="secondbutton" on:click={() => selectAgent(2)} on:keydown={fauxfake} class:selectedtwo={selectedAgent[2]}>Svelte Lowda</button>
+			<button class="secondbutton" on:click={() => selectAgent(3)} on:keydown={fauxfake} class:selectedthree={selectedAgent[3]}>Supabaser</button>
+			<button class="secondbutton" on:click={() => selectAgent(4)} on:keydown={fauxfake} class:selectedfour={selectedAgent[4]}>Dhatuboi</button>
+			<button class="secondbutton" on:click={() => selectAgent(5)} on:keydown={fauxfake} class:selectedfive={selectedAgent[5]}>Dharmabot</button>
 		</div>
 		{#if selectedAgent[2]}
-			<Sanskrit></Sanskrit>
-		{:else if selectedAgent[3]}
 			<Svelter></Svelter>
-		{:else if selectedAgent[4]}
+		{:else if selectedAgent[3]}
 			<Writer></Writer>
-		{:else if selectedAgent[5]}
+		{:else if selectedAgent[4]}
 			<Tester></Tester>
-		{:else if selectedAgent[6]}
+		{:else if selectedAgent[5]}
 			<Titler></Titler>
-		{:else if selectedAgent[7]}
-			<Arvind></Arvind>
 		{:else}
 			<BroGPT></BroGPT>
 		{/if}

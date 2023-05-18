@@ -2,6 +2,7 @@
 
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
+	import { page } from '$app/stores';
 	import { mouseStore } from 'svelte-legos';
 	import DarkMode from '$lib/icons/DarkMode.svelte'
 	import { elementSizeStore } from "svelte-legos";
@@ -25,8 +26,10 @@
 	let scrollY:number
 	let perCent:any = '0%'
 	let fake = false;
-	let sideComes = false
+	let whiteHeader = false
 	let mobileMenu = false
+	let linkpath:any
+	let theColor = "var(--opposite)"
 
 	$: size = elementSizeStore(ref);
 	$: perCent = scrollY / $size.height
@@ -59,7 +62,16 @@
 		appearance = y;
 	}
 
+	$: if ( linkpath === '/') {
+		whiteHeader = true
+		theColor = "#FFFFFF"
+	} else {
+		whiteHeader = false
+		theColor = "var(--opposite)"
+	}
+
 	onMount(async () => {
+		linkpath = $page.url.pathname;
 		const lenis = new Lenis({
 			duration: 2.2,
 			orientation: 'vertical',
@@ -110,7 +122,7 @@
 		</a>
 		<div class="rta-row colgap200 xend">
 			{#if !$breakTwo || mobileMenu}
-			<nav class="rta-row ycenter colgap200 null">
+			<nav class="rta-row ycenter colgap200 null" class:whiten={whiteHeader} class:oppen={!whiteHeader}>
 				<p><a href="/gpt">GPT</a></p>
 				<p><a href="/writings">writings</a></p>	
 				<p><a href="/webdev">webdev</a></p>
@@ -179,6 +191,13 @@ nav
 		&:hover
 			color: var(--gret)
 
+nav.whiten
+	p
+		color: white
+
+nav.oppen
+	p
+		color: var(--opposite)
 
 .progressline
 	height: 0

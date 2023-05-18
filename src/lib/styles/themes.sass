@@ -19,12 +19,12 @@ $easy: cubic-bezier(0.205, 0.655, 0.000, 0.995)
 
 :root
 	--dur: 0.08s
-	font-family: 'Sarabun', sans-serif
+	font-family: 'Space Grotesk', sans-serif
 	--mygradier: linear-gradient(90.16deg, #B1FE64 -0.25%, #24C75B 105.55%)
 	--gret: #0BC160
 	--green: #00C05A
 	--lime: #09e151
-	--current: 'Sarabun', sans-serif
+	--current: 'Space Grotesk', sans-serif
 	--coder: 'Space Grotesk', sans-serif
 	box-sizing: border-box
 
@@ -349,6 +349,12 @@ $unit128: 128px
 	padding-left: 80px
 	padding-right: 80px
 
+.zepad.all.levelzero, .zepad.all.levelone
+	padding: 128px 80px 64px 80px
+
+.zepad.all.leveltwo
+	padding: 128px 32px 64px 32px
+
 .zepad.leveltwo
 	padding-left: 32px
 	padding-right: 32px
@@ -358,12 +364,16 @@ $unit128: 128px
 	padding-bottom: 32px
 
 .zepad.all
-	padding: 128px 32px 64px 32px
+	padding: 128px 80px 64px 80px
 
 .levelzero
 	.zepad.single
 		width: 800px
 		margin-left: 6vw
+
+.levelzero
+	.single
+		width: 800px
 
 .levelone
 	.zepad.single
@@ -593,6 +603,9 @@ body, html
 .fullH
 	height: 100%
 
+.fullW
+	width: 100%
+
 .ta-c-d
 	@media screen and (min-width: 1024px)
 		text-align: center
@@ -655,6 +668,8 @@ body, html
 			justify-content: center
 	&.xend
 		justify-content: flex-end
+	&:xstart
+		justify-content: flex-start
 	&.between
 		justify-content: space-between
 	&.ytop
@@ -1513,9 +1528,6 @@ body, html
 
 
 .codeblock
-	border: 1px solid var(--midline)
-	background: var(--near)
-	border-radius: 4px
 	margin-top: 4px
 
 .cutthis
@@ -1537,3 +1549,12 @@ body, html
 	&:hover
 		transform: scale(0.95)
 		background: var(--gret)
+
+.codeparent
+	border: var(--bord)
+	border-radius: 6px
+
+.levelzero
+	.codeparent
+		padding: 24px
+		background: var(--contraster)

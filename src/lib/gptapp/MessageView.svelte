@@ -1,26 +1,37 @@
 <script lang="ts">
 
-	import visibilityMode from '$lib/stores/visibility'
+	import { themeMode } from '$lib/stores/globalstores'
 	import type { ChatMessage } from '$lib/gptapp/types';
+	import { marked } from 'marked'
 	export let message: ChatMessage;
 
 </script>
 
-<div
+<pre
 	class={[
 		'rta-column',
-		message.from === 'user' ? 'bg-gray-100 text-black ml-auto' : 'bg-white mr-auto text-black'
+		message.from === 'user' ? 'usertype' : 'gpttype'
 	].join(' ')}
-	class:light={!$visibilityMode} class:dark={$visibilityMode}
+	class:light={!$themeMode} class:dark={$themeMode}
 >
-	<p>{message.content}</p>
-</div>
+	{@html marked.parse(message.content)}
+</pre>
 
 
 <style lang="sass">
 
-p
-	color: var(--opposite)
 
+
+.usertype
+	text-align: right
+	padding: 0
+	margin: 0
+
+.gpttype
+	text-align: left
+	border: 1px solid var(--borderline)
+	padding: 16px
+	border-radius: 6px
+	background: var(--contraster)
 
 </style>

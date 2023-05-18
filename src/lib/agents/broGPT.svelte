@@ -1,19 +1,21 @@
 <script lang="ts">
 
 	import { onMount } from 'svelte'
-	import ChatMessage from '$lib/components/ChatMessage.svelte'
+	import { breakZero, breakOne, breakTwo } from '$lib/stores/globalstores'
+	import ChatMessages from '$lib/components/ChatMessage.svelte'
+	import type { ChatMessage } from '$lib/buildapp/types'
 	import '$lib/styles/themes.sass'
 	import type { ChatCompletionRequestMessage } from 'openai'
 	import { SSE } from 'sse.js'
 	import supabase from '$lib/utils/supabase'
 	let query: string = ''
 	let answer: string = ''
+	let chatId:any
 	let userprompt:any
 	let loading: boolean = false
 	let chatMessages: ChatCompletionRequestMessage[] = []
 	let fake = false
-	let submittance:string = ''
-	
+
 
 	const handleSubmit = async () => {
 		loading = true
@@ -33,7 +35,6 @@
 				loading = false
 				if (e.data === '[DONE]') {
 					chatMessages = [...chatMessages, { role: 'assistant', content: answer }]
-					submittance = answer
 					answer = ''
 					return
 				}
@@ -64,25 +65,36 @@
 
 </script>
 
+<div class="boxshowing"
+	class:levelzero={$breakZero}
+	class:levelone={$breakOne}
+	class:leveltwo={$breakTwo}
+	>
 {#each chatMessages as message}
-	<ChatMessage type={message.role} message={message.content} />
+	<ChatMessages type={message.role} message={message.content} />
 {/each}
 {#if answer}
-	<ChatMessage type="assistant" message={answer}/>
+	<ChatMessages type="assistant" message={answer}/>
 {/if}
 {#if loading}
-	<ChatMessage type="assistant" message="Loading.." />
+	<ChatMessages type="assistant" message="Loading.." />
 {/if}
+</div>
 <div class="boxr ofform">
 	<form on:submit|preventDefault>
 		<textarea bind:value={query}
 			on:keydown={fauxfake}
 			/>
-		<div class="major green" on:click={() => handleSubmit()} on:keydown={fauxfake}> Send </div>
+		<button class="secondbutton" on:click={() => handleSubmit()}>Send</button>
 	</form>
 </div>
 
 <style lang="sass">
+
+.levelzero.boxshowing
+	border: var(--bord)
+	padding: 32px
+	border-radius: 6px
 
 .ofform
 	width: 100%
@@ -95,19 +107,13 @@
 		gap: 16px
 		width: 100%
 	form textarea
-		font-family: 'Spline Sans', sans-serif
 		height: 64px
-		border: 1px solid #272727
-		color: white
+		border: var(--bord)
+		color: var(--opposite)
 		padding: 16px
-		background: #171717
+		background: var(--background)
 		outline: none
 		width: 80%
-	.major
-		width: calc(20% - 16px)
-		display: flex
-		align-items: center
-		justify-content: center
 
 
 

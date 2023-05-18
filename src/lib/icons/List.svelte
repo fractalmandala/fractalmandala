@@ -17,7 +17,7 @@
 		transform-origin: center center
 	&:hover
 		svg path
-			fill: #10D56C
+			fill: var(--gret)
 		svg
 			transform: scale(0.88)
 
