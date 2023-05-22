@@ -1,0 +1,24 @@
+.prose a {
+  word-break: break-word;
+}
+
+/* Increase contrast in prose class */
+.prose.prose-invert p,
+.prose.prose-invert div,
+.prose.prose-invert ul,
+.prose.prose-invert ol {
+  color: #fff;
+}
+
+.prose code[class*="language-"],
+.prose pre[class*="language-"] {
+}
+
+.prose-invert :not(pre) > code[class*="language-"],
+.prose-invert pre {
+  @apply bg-zinc-950 font-mono my-0;
+  font-weight: 400;
+  font-size: 0.875em;
+  line-height: 1.7142857;
+  border-radius: 0 0 0.375rem 0.375rem;
+}

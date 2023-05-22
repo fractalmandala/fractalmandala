@@ -225,7 +225,7 @@ nav.oppen
 		height: 100vh
 		width: 112px
 		flex-direction: column
-		.separator
+        .separator
 			display: flex
 			flex-direction: column
 			justify-content: space-between

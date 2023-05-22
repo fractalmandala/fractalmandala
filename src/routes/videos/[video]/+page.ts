@@ -1,5 +1,5 @@
-export async function load({ params }: { params: { video: string } }){
-	const post = await import(`../${params.video}.md`)
+export async function load({ params }: { params: { post: string } }){
+	const post = await import(`../${params.post}.md`)
 	const { title, videoid, about, slug, featured, type, tag } = post.metadata
 	const content = post.default
 

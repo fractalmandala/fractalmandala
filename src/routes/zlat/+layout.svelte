@@ -1,273 +1,131 @@
 <script lang="ts">
 
-	import { onMount } from 'svelte';
-	import { browser } from '$app/environment';
-	import { page } from '$app/stores';
-	import { mouseStore } from 'svelte-legos';
-	import DarkMode from '$lib/icons/DarkMode.svelte'
-	import Search from '$lib/icons/Search.svelte'
-	import { elementSizeStore } from "svelte-legos";
-	import { themeMode, breakZero, breakOne, breakTwo, windowWidth, readingMode } from '$lib/stores/globalstores'
-	import sidebarMode from '$lib/stores/searchbar';
-	import TransitionPage from '$lib/components/TransitionPage.svelte';
-	import ArrowUp from '$lib/icons/ArrowUp.svelte'
-	import { dev } from '$app/environment';
-	import Motif from '$lib/components/LogoFMMotif.svelte'
-	import { inject } from '@vercel/analytics';
-	import { slide, fly } from 'svelte/transition';
-	import { quintInOut } from 'svelte/easing'
-	import Footer from '$lib/components/Footer.svelte';
-	import Lenis from '@studio-freight/lenis';
-	import '$lib/styles/themes.sass';
-	import '$lib/styles/prism.css';
+  import { openAiConfig, syncStore, showInitScreen } from "$lib/prompta/stores/stores";
+  import { onMount } from "svelte";
+  import { DatabaseMeta, initDb } from "$lib/prompta/db";
+  import SettingsModal from "$lib/prompta/components/SettingsModal.svelte";
+  import { getSystem } from "$lib/prompta/gui";
+  import classNames from "classnames";
+  import { dev } from "$app/environment";
 
-	let y: number;
-	let appearance: number = 50;
-	let ref: HTMLElement | null = null;
-	let scrollY:number
-	let perCent:any = '0%'
-	let fake = false;
-	let whiteHeader = false
-	let mobileMenu = false
-	let linkpath:any
-	let theColor = "var(--opposite)"
+  const sys = getSystem();
 
-	$: size = elementSizeStore(ref);
-	$: perCent = scrollY / $size.height
+  let appReady = false;
+  onMount(async () => {
+    // throw up after a time if the app is hanging
+    let _timeout = setTimeout(() => {
+      throw new Error("Timed out trying to initialize");
+    }, 15000);
 
-	function toggleMobileMenu(){
-		mobileMenu = !mobileMenu
-	}
+    // @note The whole app assumes the db exists and is ready. Do not render before that
+    try {
+      await initDb();
+    } catch (err: any) {
+      await sys.alert(
+        `There was an error initializing the database. Please try again. If the problem persists, please report it on GitHub.` +
+          err.message
+      );
+      throw err;
+    }
 
-	function toggleSidebar() {
-		if (browser) {
-			sidebarMode.update((mode) => {
-				const newMode = !mode;
-				localStorage.setItem('sidebarMode', JSON.stringify(newMode));
-				return newMode;
-			});
-		}
-	}
+    clearTimeout(_timeout);
 
+    if (!$openAiConfig.apiKey) {
+      $showInitScreen = true;
+      console.warn(`No API key found. Please enter one in the settings.`);
+    }
 
-	inject({ mode: dev ? 'development' : 'production' });
+    appReady = true;
 
-	function fauxfake() {
-		fake = !fake;
-	}
+    const siteId = await DatabaseMeta.getSiteId();
+    console.debug(`App initialized. siteId=${siteId}`);
 
+    const lastSyncChain = $openAiConfig.lastSyncChain;
+    if (lastSyncChain) {
+      console.debug(`Connecting to sync chain: ${lastSyncChain}`);
 
-	$: if (y <= 20) {
-		appearance = 50;
-	} else {
-		appearance = y;
-	}
+      // Not sure why, but this doesn't work if we do it immediately.
+      setTimeout(() => {
+        syncStore.connectTo(lastSyncChain);
+      }, 1000);
+    }
+  });
 
-	$: if ( linkpath === '/') {
-		whiteHeader = true
-		theColor = "#FFFFFF"
-	} else {
-		whiteHeader = false
-		theColor = "var(--opposite)"
-	}
+  function isExternalUrl(href: any) {
+    if (typeof href !== "string") return false;
 
-	onMount(async () => {
-		linkpath = $page.url.pathname;
-		const lenis = new Lenis({
-			duration: 2.2,
-			orientation: 'vertical',
-			gestureOrientation: 'vertical',
-			wheelMultiplier: 0.8,
-			smoothWheel: true,
-			touchMultiplier: 1,
-			infinite: false
-		});
-		function raf(time: any) {
-			lenis.raf(time);
-			requestAnimationFrame(raf);
-		}
-		requestAnimationFrame(raf);
-	});
+    try {
+      const url = new URL(href);
+      return url.origin !== location.origin;
+    } catch (err) {
+      console.debug("Could not parse url", err);
+      return false;
+    }
+  }
 
-	export let data;
+  function handleExternalUrls(e: MouseEvent) {
+    // @ts-ignore
+    const href = e.target.href;
+    if (isExternalUrl(href)) {
+      e.preventDefault();
+      sys.openExternal(href);
+    }
+  }
 
+  let telemetryDisabled = dev;
+  onMount(() => {
+    telemetryDisabled = localStorage.getItem("telemetryDisabled") === "true";
+  });
+
+  const siteMeta = {
+    name: "Prompta",
+    title: "Prompta - Open-source ChatGPT Client",
+    description:
+      "Prompta is an open-source UI client for talking to ChatGPT (and GPT-4). Store all your chats locally. Search them easily. Sync across devices.",
+  };
 </script>
 
-<svelte:window bind:scrollY={y} bind:innerWidth={$windowWidth}/>
+<svelte:window on:click={handleExternalUrls} />
 
 <svelte:head>
-	<!-- Google tag (gtag.js) -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-1JFGGCTBC9"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag() {
-			dataLayer.push(arguments);
-		}
-		gtag('js', new Date());
+  <title>{siteMeta.title}</title>
+  <meta name="description" content={siteMeta.description} />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:title" content={siteMeta.title} />
+  <meta property="og:description" content={siteMeta.description} />
 
-		gtag('config', 'G-1JFGGCTBC9');
-	</script>
+  <link rel="icon" type="image/png" sizes="16x16" href="/icon_16x16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/icon_16x16@2x.png" />
+
+  <!-- NOTE: user-scalable=no is unfortunate, but safari sometimes zooms in automatically when focusing an input which breaks the layout -->
+  <!-- NOTE: viewport-fit=cover may need to be revisited. the current layout doesn't account for notches at all -->
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no"
+  />
+
+  {#if !telemetryDisabled}
+    <script>
+      // prettier-ignore
+      !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+      // prettier-ignore
+      posthog.init('phc_jZwlYsZzRdvtyjOgVSSt4IkuRGZJU37zovr2oj5clAv',{api_host:'https://app.posthog.com'})
+    </script>
+  {/if}
 </svelte:head>
 
 <div
-	class="myappbox"
-	class:light={!$themeMode}
-	class:dark={$themeMode}
-	class:levelzero={$breakZero}
-	class:levelone={$breakOne}
-	class:leveltwo={$breakTwo}
-	>
-	<header class="rta-row between ycenter headerbox">
-		<a href="/">
-			<Motif/>
-		</a>
-		<div class="rta-row colgap200 xend">
-			{#if !$breakTwo || mobileMenu}
-			<nav class="rta-row ycenter colgap200 null" class:whiten={whiteHeader} class:oppen={!whiteHeader}>
-				<p><a href="/gpt">GPT</a></p>
-				<p><a href="/writings">writings</a></p>	
-				<p><a href="/webdev">webdev</a></p>
-				<p><a href="/gallery">gallery</a></p>
-				<p><a href="/music">music</a></p>
-				<p><a href="/videos">videos</a></p>
-			</nav>
-			{/if}
-			<DarkMode/>
-			<button class="blank-button">
-				<Search/>
-			</button>
-			{#if $breakTwo}
-			<button class="blank-button" on:click={toggleMobileMenu}>
-			<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path d="M6 36V33H42V36H6ZM6 25.5V22.5H42V25.5H6ZM6 15V12H42V15H6Z" fill="white"/>
-			</svg>
-			</button>
-			{/if}
-		</div>
-	</header>
-
-	<div class="progressline" style="width: {perCent * 100}%" class:sticky={!$readingMode} class:moreSticky={$readingMode}></div>
-
-	<main class="pagebox minH" bind:this={ref}>
-		<section class="midone" class:levelzero={$breakZero} class:levelone={$breakOne} class:leveltwo={$breakTwo}>
-			{#key data.pathname}
-				<TransitionPage>
-					<slot />
-				</TransitionPage>
-			{/key}
-		</section>
-	</main>
-	<div class="rta-column footerbox">
-		<Footer />
-	</div>
-	<ArrowUp/>
+  class={classNames("overflow-hidden text-white bg-[#1B1B1B] border border-zinc-700", {
+    "rounded-lg": sys.isTauri,
+  })}
+>
+  {#if appReady}
+    <slot />
+    <SettingsModal />
+  {:else}
+    <!-- adding both heights for fallback. not every browser likes svh -->
+    <div class="flex items-center justify-center h-screen" style="height: 100svh;">
+      <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-zinc-700" />
+    </div>
+  {/if}
 </div>
-
-
-<style lang="sass">
-
-.leveltwo
-	nav
-		display: flex
-		flex-direction: column
-		width: 100vw
-		height: 100vh
-		position: fixed
-		background: rgba(0,0,0,0.8)
-		top: 0
-		padding-top: 80px
-		right: 0
-		z-index: 1000
-		p
-			font-size: 32px
-			color: white
-
-.light
-	.blank-button
-		svg path
-			fill: var(--gret)
-
-nav
-	p
-		font-size: 16px
-		text-transform: uppercase
-		color: var(--opposite)
-		&:hover
-			a
-				color: var(--gret)
-
-nav.whiten
-	p
-		color: white
-
-nav.oppen
-	p
-		color: var(--opposite)
-
-.progressline
-	height: 0
-	background: var(--green)
-	z-index: 1000
-	position: sticky
-	top: 80px
-
-.progressline.sticky
-	top: 64px
-
-.progressline.moreSticky
-	top: 48px
-
-.blank-button
-	cursor: pointer
-	&:hover
-		svg
-			path
-				fill: var(--gret)
-
-.myappbox
-	display: flex
-	flex-direction: column
-	box-sizing: border-box
-	margin: 0
-	gap: 0
-	width: 100vw
-	box-sizing: border-box
-
-
-.headerbox
-	height: 64px
-	margin-bottom: -64px
-	position: sticky
-	top: 0
-	z-index: 999
-	svg
-		cursor: pointer
-		&:hover
-			path
-				fill: var(--gret)
-
-.footerbox
-	height: 64px
-	z-index: 1
-
-.headerbox
-	width: 100%
-
-.levelzero
-	.headerbox
-		padding: 0 32px
-
-.levelone
-	.headerbox
-		padding: 0 24px
-
-.leveltwo
-	.headerbox
-		padding: 0 16px
-
-.pagebox
-	display: grid
-	grid-auto-flow: row
-	min-height: calc(100vh - 128px)
-
-</style>
